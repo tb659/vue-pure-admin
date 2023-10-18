@@ -55,8 +55,8 @@ const {
     <tree
       ref="treeRef"
       class="min-w-[200px] mr-2"
-      :treeData="treeData"
-      :treeLoading="treeLoading"
+      :tree-data="treeData"
+      :tree-loading="treeLoading"
       @tree-select="onTreeSelect"
     />
     <div class="w-[calc(100%-200px)]">
@@ -122,7 +122,7 @@ const {
             新增用户
           </el-button>
         </template>
-        <template v-slot="{ size, dynamicColumns }">
+        <template #default="{ size, dynamicColumns }">
           <div
             v-if="selectedNum > 0"
             v-motion-fade
@@ -148,8 +148,8 @@ const {
             </el-popconfirm>
           </div>
           <pure-table
-            row-key="id"
             ref="tableRef"
+            row-key="id"
             adaptive
             align-whole="center"
             table-layout="auto"
@@ -158,7 +158,7 @@ const {
             :data="dataList"
             :columns="dynamicColumns"
             :pagination="pagination"
-            :paginationSmall="size === 'small' ? true : false"
+            :pagination-small="size === 'small' ? true : false"
             :header-cell-style="{
               background: 'var(--el-fill-color-light)',
               color: 'var(--el-text-color-primary)'

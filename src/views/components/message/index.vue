@@ -94,7 +94,9 @@ defineOptions({
               h('span', null, 'Message can be '),
               h('i', { style: 'color: teal' }, 'VNode')
             ]),
-            { customClass: 'el' }
+            {
+              customClass: 'el'
+            }
           )
         "
       >

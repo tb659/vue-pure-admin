@@ -120,13 +120,13 @@ function addDanmu() {
     <div class="flex gap-5">
       <vue-danmaku
         ref="danmaku"
-        class="demo"
         v-model:danmus="danmus"
-        isSuspend
+        class="demo"
+        is-suspend
         v-bind="config"
       >
         <!-- 弹幕slot -->
-        <template v-slot:dm="{ danmu, index }">
+        <template #dm="{ danmu, index }">
           <div class="danmu-item">
             <img class="img" :src="danmu.avatar" />
             <span>{{ index }}{{ danmu.name }}：</span>
@@ -176,9 +176,9 @@ function addDanmu() {
         </p>
         <p class="flex">
           <el-input
+            v-model="danmuMsg"
             type="text"
             placeholder="输入评论后，回车发送弹幕"
-            v-model="danmuMsg"
             @keyup.enter="addDanmu"
           />
         </p>

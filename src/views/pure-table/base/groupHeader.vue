@@ -34,5 +34,5 @@ const columns: TableColumnList = [
 </script>
 
 <template>
-  <pure-table :data="tableDataMore" :columns="columns" alignWhole="center" />
+  <pure-table :data="tableDataMore" :columns="columns" align-whole="center" />
 </template>

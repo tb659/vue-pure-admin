@@ -84,25 +84,25 @@ onMounted(() => {
     <div class="logic-flow-view">
       <!-- 辅助工具栏 -->
       <Control
-        class="demo-control"
         v-if="lf"
+        class="demo-control"
         :lf="lf"
-        :catTurboData="false"
+        :cat-turbo-data="false"
         @catData="catData"
       />
       <!-- 节点面板 -->
-      <NodePanel :lf="lf" :nodeList="nodeList" />
+      <NodePanel :lf="lf" :node-list="nodeList" />
       <!-- 画布 -->
       <div id="turbo" />
       <!-- 数据查看面板 -->
       <el-dialog
+        v-model="dataVisible"
         class="flow-dialog"
         title="数据"
-        v-model="dataVisible"
         width="50%"
       >
         <el-scrollbar>
-          <DataDialog :graphData="graphData" />
+          <DataDialog :graph-data="graphData" />
         </el-scrollbar>
       </el-dialog>
     </div>

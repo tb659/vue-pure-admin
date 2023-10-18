@@ -183,7 +183,7 @@ function onChange({ index, option }) {
     <Segmented :options="optionsBasis" />
     <el-divider />
     <p class="mb-2">默认选中和禁用</p>
-    <Segmented :options="optionsDisabled" :defaultValue="2" />
+    <Segmented :options="optionsDisabled" :default-value="2" />
     <el-divider />
     <p class="mb-2">设置图标</p>
     <Segmented :options="optionsIcon" />

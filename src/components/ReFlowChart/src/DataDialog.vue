@@ -11,7 +11,7 @@ const props = defineProps({
   <vue-json-pretty
     :path="'res'"
     :deep="3"
-    :showLength="true"
+    :show-length="true"
     :data="props.graphData"
   />
 </template>

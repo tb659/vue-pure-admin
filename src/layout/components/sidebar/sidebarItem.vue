@@ -250,7 +250,7 @@ function resolvePath(routePath) {
             {{ transformI18n(onlyOneChild.meta.title) }}
           </span>
         </el-tooltip>
-        <extraIcon :extraIcon="onlyOneChild.meta.extraIcon" />
+        <extraIcon :extra-icon="onlyOneChild.meta.extraIcon" />
       </div>
     </template>
   </el-menu-item>
@@ -275,7 +275,6 @@ function resolvePath(routePath) {
         {{ transformI18n(props.item.meta.title) }}
       </span>
       <div
-        :style="getSubMenuDivStyle(props.item)"
         v-if="
           !(
             isCollapse &&
@@ -283,6 +282,7 @@ function resolvePath(routePath) {
             props.item.parentId === null
           )
         "
+        :style="getSubMenuDivStyle(props.item)"
       >
         <el-tooltip
           v-if="layout !== 'horizontal'"
@@ -304,7 +304,7 @@ function resolvePath(routePath) {
             }}
           </span>
         </el-tooltip>
-        <extraIcon v-if="!isCollapse" :extraIcon="props.item.meta.extraIcon" />
+        <extraIcon v-if="!isCollapse" :extra-icon="props.item.meta.extraIcon" />
       </div>
     </template>
     <sidebar-item

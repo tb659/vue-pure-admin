@@ -101,10 +101,10 @@ const {
           新增角色
         </el-button>
       </template>
-      <template v-slot="{ size, dynamicColumns }">
+      <template #default="{ size, dynamicColumns }">
         <pure-table
           align-whole="center"
-          showOverflowTooltip
+          show-overflow-tooltip
           table-layout="auto"
           :loading="loading"
           :size="size"
@@ -112,7 +112,7 @@ const {
           :data="dataList"
           :columns="dynamicColumns"
           :pagination="pagination"
-          :paginationSmall="size === 'small' ? true : false"
+          :pagination-small="size === 'small' ? true : false"
           :header-cell-style="{
             background: 'var(--el-fill-color-light)',
             color: 'var(--el-text-color-primary)'

@@ -87,8 +87,8 @@ onMounted(() => {
               class="grid-container"
               item-key="grid"
               animation="300"
-              chosenClass="chosen"
-              forceFallback="true"
+              chosen-class="chosen"
+              force-fallback="true"
             >
               <template #item="{ element }">
                 <div :class="'item' + ' ' + 'item-' + element.num">
@@ -110,10 +110,10 @@ onMounted(() => {
             <draggable
               v-model="lists"
               item-key="name"
-              @change="change"
               chosen-class="chosen"
               force-fallback="true"
               animation="300"
+              @change="change"
             >
               <template #item="{ element, index }">
                 <div class="item-single">{{ element.name }} {{ index }}</div>
@@ -132,9 +132,9 @@ onMounted(() => {
             <!-- 拖拽实现元素位置切换 -->
             <div class="cut-container">
               <div
-                class="item-cut"
                 v-for="(item, index) in cutLists"
                 :key="index"
+                class="item-cut"
               >
                 <p>{{ item.name }}</p>
               </div>

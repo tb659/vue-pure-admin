@@ -74,7 +74,7 @@ const {
     <PureTableBar
       title="部门列表（仅演示，操作后不生效）"
       :columns="columns"
-      :tableRef="tableRef?.getTableRef()"
+      :table-ref="tableRef?.getTableRef()"
       @refresh="onSearch"
     >
       <template #buttons>
@@ -86,14 +86,14 @@ const {
           新增部门
         </el-button>
       </template>
-      <template v-slot="{ size, dynamicColumns }">
+      <template #default="{ size, dynamicColumns }">
         <pure-table
           ref="tableRef"
           adaptive
-          :adaptiveConfig="{ offsetBottom: 32 }"
+          :adaptive-config="{ offsetBottom: 32 }"
           align-whole="center"
           row-key="id"
-          showOverflowTooltip
+          show-overflow-tooltip
           table-layout="auto"
           default-expand-all
           :loading="loading"

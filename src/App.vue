@@ -14,7 +14,7 @@ import { ReDialog } from "@/components/ReDialog";
 import zhCn from "element-plus/dist/locale/zh-cn.mjs";
 
 export default defineComponent({
-  name: "app",
+  name: "App",
   components: {
     [ElConfigProvider.name]: ElConfigProvider,
     ReDialog

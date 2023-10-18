@@ -23,6 +23,13 @@ export default defineComponent({
       default: true
     }
   },
+  mounted() {
+    new TypeIt(`.${this.className}`, {
+      strings: this.values,
+      speed: this.speed,
+      cursor: this.cursor
+    }).go();
+  },
   render() {
     return h(
       "span",
@@ -33,12 +40,5 @@ export default defineComponent({
         default: () => []
       }
     );
-  },
-  mounted() {
-    new TypeIt(`.${this.className}`, {
-      strings: this.values,
-      speed: this.speed,
-      cursor: this.cursor
-    }).go();
   }
 });

@@ -21,10 +21,10 @@ const {
     ref="tableRef"
     border
     adaptive
-    :adaptiveConfig="adaptiveConfig"
+    :adaptive-config="adaptiveConfig"
     row-key="id"
-    alignWhole="center"
-    showOverflowTooltip
+    align-whole="center"
+    show-overflow-tooltip
     :loading="loading"
     :loading-config="loadingConfig"
     :data="

@@ -65,7 +65,7 @@ const onAddItem = () => {
 
 <template>
   <div>
-    <pure-table :data="tableData" :columns="columns" maxHeight="500">
+    <pure-table :data="tableData" :columns="columns" max-height="500">
       <template #operation="{ $index }">
         <el-button
           link

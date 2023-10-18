@@ -48,13 +48,13 @@ getReleases().then(({ data }) => {
   <div>
     <el-row :gutter="24">
       <el-col
+        v-motion
         :xs="24"
         :sm="24"
         :md="12"
         :lg="12"
         :xl="12"
         class="mb-[18px]"
-        v-motion
         :initial="{
           opacity: 0,
           y: 100
@@ -78,7 +78,7 @@ getReleases().then(({ data }) => {
               target="_black"
             >
               <TypeIt
-                :className="'type-it2'"
+                :class-name="'type-it2'"
                 :values="[`PureAdmin 版本日志（当前版本 v${version}）`]"
                 :cursor="false"
                 :speed="60"
@@ -106,13 +106,13 @@ getReleases().then(({ data }) => {
       </el-col>
 
       <el-col
+        v-motion
         :xs="24"
         :sm="24"
         :md="12"
         :lg="12"
         :xl="12"
         class="mb-[18px]"
-        v-motion
         :initial="{
           opacity: 0,
           y: 100
@@ -136,7 +136,7 @@ getReleases().then(({ data }) => {
               target="_black"
             >
               <TypeIt
-                :className="'type-it1'"
+                :class-name="'type-it1'"
                 :values="['GitHub信息']"
                 :cursor="false"
                 :speed="120"
@@ -154,13 +154,13 @@ getReleases().then(({ data }) => {
       </el-col>
 
       <el-col
+        v-motion
         :xs="24"
         :sm="24"
         :md="12"
         :lg="8"
         :xl="8"
         class="mb-[18px]"
-        v-motion
         :initial="{
           opacity: 0,
           y: 100
@@ -181,7 +181,7 @@ getReleases().then(({ data }) => {
               target="_black"
             >
               <TypeIt
-                :className="'type-it4'"
+                :class-name="'type-it4'"
                 :values="['GitHub折线图信息']"
                 :cursor="false"
                 :speed="120"
@@ -197,13 +197,13 @@ getReleases().then(({ data }) => {
       </el-col>
 
       <el-col
+        v-motion
         :xs="24"
         :sm="24"
         :md="12"
         :lg="8"
         :xl="8"
         class="mb-[18px]"
-        v-motion
         :initial="{
           opacity: 0,
           y: 100
@@ -224,7 +224,7 @@ getReleases().then(({ data }) => {
               target="_black"
             >
               <TypeIt
-                :className="'type-it3'"
+                :class-name="'type-it3'"
                 :values="['GitHub饼图信息']"
                 :cursor="false"
                 :speed="120"
@@ -240,13 +240,13 @@ getReleases().then(({ data }) => {
       </el-col>
 
       <el-col
+        v-motion
         :xs="24"
         :sm="24"
         :md="24"
         :lg="8"
         :xl="8"
         class="mb-[18px]"
-        v-motion
         :initial="{
           opacity: 0,
           y: 100
@@ -267,7 +267,7 @@ getReleases().then(({ data }) => {
               target="_black"
             >
               <TypeIt
-                :className="'type-it5'"
+                :class-name="'type-it5'"
                 :values="['GitHub柱状图信息']"
                 :cursor="false"
                 :speed="120"

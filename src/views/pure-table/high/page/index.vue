@@ -59,8 +59,8 @@ const {
     <pure-table
       border
       row-key="id"
-      alignWhole="center"
-      showOverflowTooltip
+      align-whole="center"
+      show-overflow-tooltip
       :size="tableSize as any"
       :loading="loading"
       :loading-config="loadingConfig"

@@ -18,9 +18,9 @@ defineOptions({
         prefix="$"
         :duration="1000"
         :color="'#409EFF'"
-        :fontSize="'2em'"
-        :startVal="1"
-        :endVal="1000"
+        :font-size="'2em'"
+        :start-val="1"
+        :end-val="1000"
       />
       <ul class="flex ml-8">
         <ReboundCountTo

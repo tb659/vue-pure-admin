@@ -47,9 +47,9 @@ const dataProps = {
               default-expand-all
               node-key="uniqueId"
               :indent="30"
-              ><template v-slot:default="{ node }">
-                <el-tree-line :node="node" :showLabelLine="true">
-                  <template v-slot:node-label>
+              ><template #default="{ node }">
+                <el-tree-line :node="node" :show-label-line="true">
+                  <template #node-label>
                     <span class="text-sm">
                       {{ transformI18n(node.data.meta.title) }}
                     </span>
@@ -76,14 +76,14 @@ const dataProps = {
               :height="550"
               :default-expanded-keys="expandedKeys"
             >
-              <template v-slot:default="{ node }">
+              <template #default="{ node }">
                 <el-tree-line
                   :node="node"
-                  :treeData="menusData"
-                  :showLabelLine="true"
+                  :tree-data="menusData"
+                  :show-label-line="true"
                   :indent="30"
                 >
-                  <template v-slot:node-label>
+                  <template #node-label>
                     <span class="text-sm">
                       {{ transformI18n(node.data.meta.title) }}
                     </span>
