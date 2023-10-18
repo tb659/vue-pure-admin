@@ -27,8 +27,13 @@ const __APP_INFO__ = {
 };
 
 export default ({ command, mode }: ConfigEnv): UserConfigExport => {
-  const { VITE_CDN, VITE_PORT, VITE_COMPRESSION, VITE_PUBLIC_PATH } =
-    warpperEnv(loadEnv(mode, root));
+  const {
+    VITE_CDN,
+    VITE_PORT,
+    VITE_COMPRESSION,
+    VITE_PUBLIC_PATH,
+    VITE_OUT_DIR
+  } = warpperEnv(loadEnv(mode, root));
   return {
     base: VITE_PUBLIC_PATH,
     root,
@@ -43,7 +48,21 @@ export default ({ command, mode }: ConfigEnv): UserConfigExport => {
       port: VITE_PORT,
       host: "0.0.0.0",
       // 本地跨域代理 https://cn.vitejs.dev/config/server-options.html#server-proxy
-      proxy: {}
+      proxy: {
+        // 第一个代理后端地址
+        "^/base-api/.*": {
+          // target: "http://filtrate.ameeting.com.cn/frame_base",
+          target: "http://localhost:4000/frame_base",
+          changeOrigin: true,
+          rewrite: path => path.replace(/^\/base-api/, "")
+        },
+        // 第二个代理后端地址
+        "^/otherApi/.*": {
+          target: "http://localhost:8080",
+          changeOrigin: true,
+          rewrite: path => path.replace(/^\/otherApi/, "")
+        }
+      }
     },
     plugins: getPluginsList(command, VITE_CDN, VITE_COMPRESSION),
     // https://cn.vitejs.dev/config/dep-optimization-options.html#dep-optimization-options
@@ -52,6 +71,8 @@ export default ({ command, mode }: ConfigEnv): UserConfigExport => {
       exclude
     },
     build: {
+      target: ["ios11", "Chrome 64"],
+      outDir: VITE_OUT_DIR || "./dist",
       sourcemap: false,
       // 消除打包大小超过500kb警告
       chunkSizeWarningLimit: 4000,
