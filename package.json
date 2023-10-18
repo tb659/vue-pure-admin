@@ -43,7 +43,9 @@
     "lint:stylelint": "stylelint --cache --fix \"**/*.{html,vue,css,scss}\" --cache --cache-location node_modules/.cache/stylelint/",
     "lint": "pnpm lint:eslint && pnpm lint:prettier && pnpm lint:stylelint",
     "prepare": "husky install",
-    "preinstall": "npx only-allow pnpm"
+    "preinstall": "npx only-allow pnpm",
+    "commit": "yarn lint && git pull && git add -A && git-cz && git push",
+    "commit:skip-lint": "git pull && git add -A && git-cz && git push"
   },
   "dependencies": {
     "@amap/amap-jsapi-loader": "^1.0.1",
@@ -126,7 +128,9 @@
     "@vue/eslint-config-typescript": "^12.0.0",
     "autoprefixer": "^10.4.16",
     "cloc": "^2.11.0",
+    "commitizen": "^4.3.0",
     "cssnano": "^6.0.1",
+    "cz-git": "^1.7.1",
     "eslint": "^8.50.0",
     "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-vue": "^9.17.0",
@@ -178,6 +182,11 @@
       "sourcemap-codec": "*",
       "w3c-hr-time": "*",
       "stable": "*"
+    }
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-git"
     }
   }
 }
