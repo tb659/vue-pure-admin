@@ -45,11 +45,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div
-    v-loading="loading"
-    class="frame"
-    :element-loading-text="t('status.hsLoad')"
-  >
+  <div v-loading="loading" class="frame" :element-loading-text="t('status.hsLoad')">
     <iframe ref="frameRef" :src="frameSrc" class="frame-iframe" />
   </div>
 </template>

@@ -70,6 +70,8 @@ declare global {
     meta?: CustomizeRouteMeta;
     /** 子路由配置项 */
     children?: Array<RouteChildrenConfigsTable>;
+    /** 路由勾子 */
+    beforeEnter?: NavigationGuardWithThis<undefined> | NavigationGuardWithThis<undefined>[];
   }
 
   /**
@@ -91,6 +93,12 @@ declare global {
       icon?: string | FunctionalComponent | IconifyIcon;
       /** 是否在菜单中显示（默认`true`）`可选` */
       showLink?: boolean;
+      /** 是否在标签中固定（默认`false`）`可选` */
+      affix?: boolean;
+      /** 前端路由 `可选` */
+      frontstage?: boolean;
+      /** 后端路由 `可选` */
+      backstage?: boolean;
       /** 菜单升序排序，值越高排的越后（只针对顶级路由）`可选` */
       rank?: number;
     };

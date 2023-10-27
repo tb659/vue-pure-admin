@@ -12,11 +12,7 @@ import themePreprocessorPlugin from "@pureadmin/theme";
 import VueI18nPlugin from "@intlify/unplugin-vue-i18n/vite";
 import { genScssMultipleScopeVars } from "../src/layout/theme";
 
-export function getPluginsList(
-  command: string,
-  VITE_CDN: boolean,
-  VITE_COMPRESSION: ViteCompression
-) {
+export function getPluginsList(command: string, VITE_CDN: boolean, VITE_COMPRESSION: ViteCompression) {
   const prodMock = true;
   const lifecycle = process.env.npm_lifecycle_event;
   return [
@@ -54,8 +50,6 @@ export function getPluginsList(
       logger: false
     }),
     // 打包分析
-    lifecycle === "report"
-      ? visualizer({ open: true, brotliSize: true, filename: "report.html" })
-      : null
+    lifecycle === "report" ? visualizer({ open: true, brotliSize: true, filename: "report.html" }) : null
   ];
 }

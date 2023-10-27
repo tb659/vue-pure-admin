@@ -116,7 +116,7 @@ login:
   username: 账号
   password: 密码
   verifyCode: 验证码
-  remember: 天内免登录
+  remember: 记住我
   rememberInfo: 勾选并登录后，规定天数内无需输入用户名和密码会自动登入系统
   sure: 确认密码
   forget: 忘记密码?
@@ -153,3 +153,47 @@ login:
   passwordSureReg: 请输入确认密码
   passwordDifferentReg: 两次密码不一致!
   passwordUpdateReg: 修改密码成功
+form:
+  inputText: 请输入
+  selectText: 请选择
+  startTimeText: 开始时间
+  endTimeText: 结束时间
+  query: 查询
+  reset: 重置
+  shrink: 收起
+  expand: 展开
+  required: 该项为必填项
+common:
+  ok: 确定
+  cancel: 取消
+  back: 返回
+  #
+  delMessage: 确定要删除吗？
+  delWarning: 系统提示
+  delNoData: 请选择需要删除的数据
+  delSuccess: 删除成功
+  #
+  enableMessage: 确定要启用吗？
+  enableWarning: 系统提示
+  enableNoData: 请选择需要启用的数据
+  enableSuccess: 启用成功
+  #
+  disableMessage: 确定要禁用吗？
+  disableWarning: 系统提示
+  disableNoData: 请选择需要禁用的数据
+  disableSuccess: 禁用成功
+  #
+  onShelfMessage: 确定要上架吗？
+  onShelfWarning: 系统提示
+  onShelfNoData: 请选择需要上架的数据
+  onShelfSuccess: 上架成功
+  #
+  offShelfMessage: 确定要下架吗？
+  offShelfWarning: 系统提示
+  offShelfNoData: 请选择需要下架的数据
+  offShelfSuccess: 下架成功
+  #
+  auditMessage: 确定要审核吗？
+  auditWarning: 系统提示
+  auditNoData: 请选择需要审核的数据
+  auditSuccess: 审核成功

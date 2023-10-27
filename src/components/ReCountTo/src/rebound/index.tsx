@@ -1,11 +1,5 @@
 import "./rebound.css";
-import {
-  defineComponent,
-  ref,
-  unref,
-  onBeforeMount,
-  onBeforeUnmount
-} from "vue";
+import { defineComponent, ref, unref, onBeforeMount, onBeforeUnmount } from "vue";
 import { reboundProps } from "./props";
 
 export default defineComponent({
@@ -39,10 +33,7 @@ export default defineComponent({
 
     return () => (
       <>
-        <div
-          class="scroll-num"
-          style={{ "--i": props.i, "--delay": props.delay }}
-        >
+        <div class="scroll-num" style={{ "--i": props.i, "--delay": props.delay }}>
           <ul ref="ulRef" style={{ fontSize: "32px" }}>
             <li>0</li>
             <li>1</li>
@@ -59,10 +50,7 @@ export default defineComponent({
 
           <svg width="0" height="0">
             <filter id="blur">
-              <feGaussianBlur
-                in="SourceGraphic"
-                stdDeviation={`0 ${props.blur}`}
-              />
+              <feGaussianBlur in="SourceGraphic" stdDeviation={`0 ${props.blur}`} />
             </filter>
           </svg>
         </div>

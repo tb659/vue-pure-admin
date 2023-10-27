@@ -1,9 +1,4 @@
-import type {
-  VNode,
-  FunctionalComponent,
-  PropType as VuePropType,
-  ComponentPublicInstance
-} from "vue";
+import type { VNode, FunctionalComponent, PropType as VuePropType, ComponentPublicInstance } from "vue";
 import type { ECharts } from "echarts";
 import type { IconifyIcon } from "@iconify/vue";
 import type { TableColumns } from "@pureadmin/table";
@@ -44,14 +39,7 @@ declare global {
   /**
    * 打包压缩格式的类型声明
    */
-  type ViteCompression =
-    | "none"
-    | "gzip"
-    | "brotli"
-    | "both"
-    | "gzip-clear"
-    | "brotli-clear"
-    | "both-clear";
+  type ViteCompression = "none" | "gzip" | "brotli" | "both" | "gzip-clear" | "brotli-clear" | "both-clear";
 
   /**
    * 全局自定义环境变量的类型声明
@@ -66,11 +54,6 @@ declare global {
     VITE_HIDE_HOME: string;
     VITE_COMPRESSION: ViteCompression;
   }
-
-  /**
-   *  继承 `@pureadmin/table` 的 `TableColumns` ，方便全局直接调用
-   */
-  interface TableColumnList extends Array<TableColumns> {}
 
   /**
    * 对应 `public/platform-config.json` 文件的类型声明
@@ -176,5 +159,28 @@ declare global {
     $echarts: ECharts;
     $storage: ResponsiveStorage;
     $config: PlatformConfigs;
+  }
+
+  /**
+   * 请求返回data
+   */
+  interface PureResponseData<T = any> {
+    page: number;
+    rows?: T[];
+    data?: T[];
+    size: number;
+    total: number;
+  }
+
+  /**
+   * 请求返回
+   */
+  interface PureResponse<T> {
+    code: string;
+    data: T;
+    message: string;
+    requestId: null;
+    sign: null;
+    success: boolean;
   }
 }

@@ -116,7 +116,7 @@ login:
   username: Username
   password: Password
   verifyCode: VerifyCode
-  remember: days no need to login
+  remember: Remember me
   rememberInfo: After checking and logging in, will automatically log in to the system without entering your username and password within the specified number of days.
   sure: Sure Password
   forget: Forget Password?
@@ -153,3 +153,47 @@ login:
   passwordSureReg: Please enter confirm password
   passwordDifferentReg: The two passwords do not match!
   passwordUpdateReg: Password has been updated
+form:
+  inputText: Please input
+  selectText: Please select
+  startTimeText: Start time
+  endTimeText: End time
+  query: Query
+  reset: Reset
+  shrink: Put away
+  expand: Expand
+  required: This is required
+common:
+  ok: Ok
+  cancel: Cancel
+  back: Back
+  #
+  delMessage: Delete the data?
+  delWarning: Warning
+  delNoData: Please select the data to delete
+  delSuccess: Deleted successfully
+  #
+  enableMessage: Enable the data?
+  enableWarning: Warning
+  enableNoData: Please select the data to enable
+  enableSuccess: Enabled successfully
+  #
+  disableMessage: Disable the data?
+  disableWarning: Warning
+  disableNoData: Please select the data to disable
+  disableSuccess: Disabled successfully
+  #
+  onShelfMessage: Onshelf the data?
+  onShelfWarning: Warning
+  onShelfNoData: Please select the data to onshelf
+  onShelfSuccess: Onshelfed successfully
+  #
+  offShelfMessage: Offshelf the data?
+  offShelfWarning: Warning
+  offShelfNoData: Please select the data to offshelf
+  offShelfSuccess: Offshelfed successfully
+  #
+  auditMessage: Audit the data?
+  auditWarning: Warning
+  auditNoData: Please select the data to audit
+  auditSuccess: Audited successfully

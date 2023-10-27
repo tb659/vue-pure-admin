@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import Search from "../search/index.vue";
 import Notice from "../notice/index.vue";
+import { SHOW_I18N } from "@/utils/common";
 import SidebarItem from "./sidebarItem.vue";
 import { isAllEmpty } from "@pureadmin/utils";
 import { ref, nextTick, computed } from "vue";
@@ -9,28 +10,17 @@ import { useTranslationLang } from "../../hooks/useTranslationLang";
 import { usePermissionStoreHook } from "@/store/modules/permission";
 import globalization from "@/assets/svg/globalization.svg?component";
 import LogoutCircleRLine from "@iconify-icons/ri/logout-circle-r-line";
+
 import Setting from "@iconify-icons/ri/settings-3-line";
 import Check from "@iconify-icons/ep/check";
 
 const menuRef = ref();
 
-const { t, route, locale, translationCh, translationEn } =
-  useTranslationLang(menuRef);
-const {
-  title,
-  logout,
-  backTopMenu,
-  onPanel,
-  username,
-  userAvatar,
-  avatarsStyle,
-  getDropdownItemStyle,
-  getDropdownItemClass
-} = useNav();
+const { t, route, locale, translationCh, translationEn } = useTranslationLang(menuRef);
+const { title, logout, backTopMenu, onPanel, username, userAvatar, avatarsStyle, getDropdownItemStyle, getDropdownItemClass } =
+  useNav();
 
-const defaultActive = computed(() =>
-  !isAllEmpty(route.meta?.activePath) ? route.meta.activePath : route.path
-);
+const defaultActive = computed(() => (!isAllEmpty(route.meta?.activePath) ? route.meta.activePath : route.path));
 
 nextTick(() => {
   menuRef.value?.handleResize();
@@ -38,21 +28,12 @@ nextTick(() => {
 </script>
 
 <template>
-  <div
-    v-loading="usePermissionStoreHook().wholeMenus.length === 0"
-    class="horizontal-header"
-  >
+  <div v-loading="usePermissionStoreHook().wholeMenus.length === 0" class="horizontal-header">
     <div class="horizontal-header-left" @click="backTopMenu">
       <img src="/logo.svg" alt="logo" />
       <span>{{ title }}</span>
     </div>
-    <el-menu
-      ref="menuRef"
-      router
-      mode="horizontal"
-      class="horizontal-header-menu"
-      :default-active="defaultActive"
-    >
+    <el-menu ref="menuRef" router mode="horizontal" class="horizontal-header-menu" :default-active="defaultActive">
       <sidebar-item
         v-for="route in usePermissionStoreHook().wholeMenus"
         :key="route.path"
@@ -62,14 +43,12 @@ nextTick(() => {
     </el-menu>
     <div class="horizontal-header-right">
       <!-- 菜单搜索 -->
-      <Search />
+      <Search v-if="false" />
       <!-- 通知 -->
-      <Notice id="header-notice" />
+      <Notice v-if="false" id="header-notice" />
       <!-- 国际化 -->
-      <el-dropdown id="header-translation" trigger="click">
-        <globalization
-          class="navbar-bg-hover w-[40px] h-[48px] p-[11px] cursor-pointer outline-none"
-        />
+      <el-dropdown :class="SHOW_I18N ? '' : '!hidden'" id="header-translation" trigger="click">
+        <globalization class="navbar-bg-hover w-[40px] h-[48px] p-[11px] cursor-pointer outline-none" />
         <template #dropdown>
           <el-dropdown-menu class="translation">
             <el-dropdown-item
@@ -104,20 +83,13 @@ nextTick(() => {
         <template #dropdown>
           <el-dropdown-menu class="logout">
             <el-dropdown-item @click="logout">
-              <IconifyIconOffline
-                :icon="LogoutCircleRLine"
-                style="margin: 5px"
-              />
+              <IconifyIconOffline :icon="LogoutCircleRLine" style="margin: 5px" />
               {{ t("buttons.hsLoginOut") }}
             </el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>
-      <span
-        class="set-icon navbar-bg-hover"
-        :title="t('buttons.hssystemSet')"
-        @click="onPanel"
-      >
+      <span class="set-icon navbar-bg-hover" :title="t('buttons.hssystemSet')" @click="onPanel">
         <IconifyIconOffline :icon="Setting" />
       </span>
     </div>

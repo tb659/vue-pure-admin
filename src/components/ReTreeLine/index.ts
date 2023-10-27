@@ -3,11 +3,7 @@ import { isFunction } from "@pureadmin/utils";
 import { h, defineComponent } from "vue";
 import type { PropType } from "vue";
 import "./index.scss";
-import type {
-  TreeNode,
-  TreeData,
-  TreeNodeData
-} from "element-plus/es/components/tree-v2/src/types";
+import type { TreeNode, TreeData, TreeNodeData } from "element-plus/es/components/tree-v2/src/types";
 
 /** 树形连接线组件 */
 export default defineComponent({
@@ -98,9 +94,7 @@ export default defineComponent({
       if (currentNode.level === 1 && !currentNode.parent) {
         // el-tree-v2的第一层node是没有parent的，必需 treeData 创建一个parent
         if (!this.treeData || !Array.isArray(this.treeData)) {
-          throw Error(
-            "if you using el-tree-v2 (Virtualized Tree) of element-plus,element-tree-line required data."
-          );
+          throw Error("if you using el-tree-v2 (Virtualized Tree) of element-plus,element-tree-line required data.");
         }
         parentNode = {
           children: Array.isArray(this.treeData)
@@ -118,9 +112,7 @@ export default defineComponent({
         const index = (parentNode.children || parentNode.childNodes).findIndex(
           item => (item.key || item.id) === (currentNode.key || currentNode.id)
         );
-        lastnodeArr.unshift(
-          index === (parentNode.children || parentNode.childNodes).length - 1
-        );
+        lastnodeArr.unshift(index === (parentNode.children || parentNode.childNodes).length - 1);
       }
       currentNode = parentNode;
     }

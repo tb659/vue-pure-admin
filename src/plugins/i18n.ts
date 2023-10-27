@@ -10,9 +10,7 @@ import zhLocale from "element-plus/dist/locale/zh-cn.mjs";
 
 function siphonI18n(prefix = "zh-CN") {
   return Object.fromEntries(
-    Object.entries(
-      import.meta.glob("../../locales/*.y(a)?ml", { eager: true })
-    ).map(([key, value]: any) => {
+    Object.entries(import.meta.glob("../../locales/*.y(a)?ml", { eager: true })).map(([key, value]: any) => {
       const matched = key.match(/([A-Za-z0-9-_]+)\./i)[1];
       return [matched, value.default];
     })
@@ -66,8 +64,7 @@ export function transformI18n(message: any = "") {
 
   // 处理存储动态路由的title,格式 {zh:"",en:""}
   if (typeof message === "object") {
-    const locale: string | WritableComputedRef<string> | any =
-      i18n.global.locale;
+    const locale: string | WritableComputedRef<string> | any = i18n.global.locale;
     return message[locale?.value];
   }
 
@@ -88,10 +85,7 @@ export const $t = (key: string) => key;
 
 export const i18n: I18n = createI18n({
   legacy: false,
-  locale:
-    storageLocal().getItem<StorageConfigs>(
-      `${responsiveStorageNameSpace()}locale`
-    )?.locale ?? "zh",
+  locale: storageLocal().getItem<StorageConfigs>(`${responsiveStorageNameSpace()}locale`)?.locale ?? "zh",
   fallbackLocale: "en",
   messages: localesConfigs
 });

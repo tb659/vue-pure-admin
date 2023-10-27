@@ -8,10 +8,5 @@ const props = defineProps({
 </script>
 
 <template>
-  <vue-json-pretty
-    :path="'res'"
-    :deep="3"
-    :show-length="true"
-    :data="props.graphData"
-  />
+  <vue-json-pretty :path="'res'" :deep="3" :show-length="true" :data="props.graphData" />
 </template>

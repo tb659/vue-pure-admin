@@ -20,11 +20,7 @@ const toggleClick = () => {
 </script>
 
 <template>
-  <div
-    class="px-3 mr-1 navbar-bg-hover"
-    :title="props.isActive ? '点击折叠' : '点击展开'"
-    @click="toggleClick"
-  >
+  <div class="px-3 mr-1 navbar-bg-hover" :title="props.isActive ? '点击折叠' : '点击展开'" @click="toggleClick">
     <IconifyIconOffline
       :icon="props.isActive ? MenuFold : MenuUnfold"
       class="inline-block align-middle hover:text-primary dark:hover:!text-white"

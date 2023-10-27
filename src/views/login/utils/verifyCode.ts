@@ -7,11 +7,7 @@ const timer = ref(null);
 const text = ref("");
 
 export const useVerifyCode = () => {
-  const start = async (
-    formEl: FormInstance | undefined,
-    props: FormItemProp,
-    time = 60
-  ) => {
+  const start = async (formEl: FormInstance | undefined, props: FormItemProp, time = 60) => {
     if (!formEl) return;
     const initTime = clone(time, true);
     await formEl.validateField(props, isValid => {

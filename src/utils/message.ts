@@ -32,54 +32,82 @@ interface MessageParams {
 
 /** 用法非常简单，参考 src/views/components/message/index.vue 文件 */
 
-/**
- * `Message` 消息提示函数
- */
-const message = (
-  message: string | VNode | (() => VNode),
-  params?: MessageParams
-): MessageHandler => {
-  if (!params) {
-    return ElMessage({
-      message,
-      customClass: "pure-message"
-    });
-  } else {
-    const {
-      icon,
-      type = "info",
-      dangerouslyUseHTMLString = false,
-      customClass = "antd",
-      duration = 2000,
-      showClose = false,
-      center = false,
-      offset = 20,
-      appendTo = document.body,
-      grouping = false,
-      onClose
-    } = params;
+class Message {
+  /**
+   * `Message` 消息提示函数
+   */
+  info(message: string | VNode | (() => VNode), params?: MessageParams): MessageHandler {
+    if (!params) {
+      return ElMessage({
+        message,
+        customClass: "pure-message"
+      });
+    } else {
+      const {
+        icon,
+        type = "info",
+        dangerouslyUseHTMLString = false,
+        customClass = "antd",
+        duration = 2000,
+        showClose = false,
+        center = false,
+        offset = 20,
+        appendTo = document.body,
+        grouping = false,
+        onClose
+      } = params;
 
-    return ElMessage({
-      message,
-      type,
-      icon,
-      dangerouslyUseHTMLString,
-      duration,
-      showClose,
-      center,
-      offset,
-      appendTo,
-      grouping,
-      // 全局搜 pure-message 即可知道该类的样式位置
-      customClass: customClass === "antd" ? "pure-message" : "",
-      onClose: () => (isFunction(onClose) ? onClose() : null)
-    });
+      return ElMessage({
+        message,
+        type,
+        icon,
+        dangerouslyUseHTMLString,
+        duration,
+        showClose,
+        center,
+        offset,
+        appendTo,
+        grouping,
+        // 全局搜 pure-message 即可知道该类的样式位置
+        customClass: customClass === "antd" ? "pure-message" : "",
+        onClose: () => (isFunction(onClose) ? onClose() : null)
+      });
+    }
   }
-};
 
-/**
- * 关闭所有 `Message` 消息提示函数
- */
-const closeAllMessage = (): void => ElMessage.closeAll();
+  /**
+   * 关闭所有 `Message` 消息提示函数
+   */
+  closeAll(): void {
+    ElMessage.closeAll();
+  }
 
-export { message, closeAllMessage };
+  /**
+   * @description: 成功
+   * @param {string} message
+   * @return {*}
+   */
+  success(message = "操作成功", params?: MessageParams) {
+    this.info(message, { ...(params || {}), type: "success" });
+  }
+
+  /**
+   * @description: 警告
+   * @param {string} message
+   * @return {*}
+   */
+  warning(message: string, params?: MessageParams) {
+    this.info(message, { ...(params || {}), type: "warning" });
+  }
+
+  /**
+   * @description: 失败
+   * @param {string} message
+   * @return {*}
+   */
+  error(message: string, params?: MessageParams) {
+    this.info(message, { ...(params || {}), type: "error" });
+  }
+}
+
+export const msg = new Message();

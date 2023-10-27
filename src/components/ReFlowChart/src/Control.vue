@@ -65,20 +65,18 @@ const titleLists = ref([
 ]);
 
 const onControl = (item, key) => {
-  ["zoom", "zoom", "resetZoom", "undo", "redo", "getSnapshot"].forEach(
-    (v, i) => {
-      const domControl = props.lf;
-      if (key === 1) {
-        domControl.zoom(true);
-      }
-      if (key === 6) {
-        emit("catData");
-      }
-      if (key === i) {
-        domControl[v]();
-      }
+  ["zoom", "zoom", "resetZoom", "undo", "redo", "getSnapshot"].forEach((v, i) => {
+    const domControl = props.lf;
+    if (key === 1) {
+      domControl.zoom(true);
     }
-  );
+    if (key === 6) {
+      emit("catData");
+    }
+    if (key === i) {
+      domControl[v]();
+    }
+  });
 };
 
 const onEnter = key => {
@@ -105,11 +103,7 @@ onMounted(() => {
         @mouseenter.prevent="onEnter(key)"
         @mouseleave.prevent="focusIndex = -1"
       >
-        <el-tooltip
-          :content="item.text"
-          :visible="focusIndex === key"
-          placement="right"
-        >
+        <el-tooltip :content="item.text" :visible="focusIndex === key" placement="right">
           <button
             :ref="'controlButton' + key"
             :disabled="item.disabled"
@@ -120,10 +114,7 @@ onMounted(() => {
             }"
             @click="onControl(item, key)"
           >
-            <span
-              :class="'iconfont ' + item.icon"
-              :style="{ fontSize: `${item.size}px` }"
-            />
+            <span :class="'iconfont ' + item.icon" :style="{ fontSize: `${item.size}px` }" />
           </button>
         </el-tooltip>
       </li>

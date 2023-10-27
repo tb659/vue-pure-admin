@@ -1,194 +1,143 @@
-import Axios, {
-  AxiosInstance,
-  AxiosRequestConfig,
-  CustomParamsSerializer
-} from "axios";
-import {
-  PureHttpError,
-  RequestMethods,
-  PureHttpResponse,
-  PureHttpRequestConfig
-} from "./types.d";
-import { stringify } from "qs";
-import NProgress from "../progress";
-import { getToken, formatToken } from "@/utils/auth";
-import { useUserStoreHook } from "@/store/modules/user";
+import { hideLoading, showLoading } from "@/utils/loading";
+import { downloadFileBlob } from "@/utils/file";
+import { http } from "./api-base";
+import { PureHttpResponse, RequestMethods, PureHttpRequestConfig } from "@/utils/http/types";
 
-// 相关配置请参考：www.axios-js.com/zh-cn/docs/#axios-request-config-1
-const defaultConfig: AxiosRequestConfig = {
-  // 请求超时时间
-  timeout: 10000,
-  headers: {
-    Accept: "application/json, text/plain, */*",
-    "Content-Type": "application/json",
-    "X-Requested-With": "XMLHttpRequest"
-  },
-  // 数组格式参数序列化（https://github.com/axios/axios/issues/5142）
-  paramsSerializer: {
-    serialize: stringify as unknown as CustomParamsSerializer
-  }
-};
+export default abstract class BaseRequest {
+  abstract getBaseUrl(): string;
 
-class PureHttp {
-  constructor() {
-    this.httpInterceptorsRequest();
-    this.httpInterceptorsResponse();
+  /** 分页查询 */
+  page<T, Q = Recordable>(params: Q): Promise<PureResponse<T>> {
+    return this.get<T>(``, { params });
   }
 
-  /** token过期后，暂存待执行的请求 */
-  private static requests = [];
-
-  /** 防止重复刷新token */
-  private static isRefreshing = false;
-
-  /** 初始化配置对象 */
-  private static initConfig: PureHttpRequestConfig = {};
-
-  /** 保存当前Axios实例对象 */
-  private static axiosInstance: AxiosInstance = Axios.create(defaultConfig);
-
-  /** 重连原始请求 */
-  private static retryOriginalRequest(config: PureHttpRequestConfig) {
-    return new Promise(resolve => {
-      PureHttp.requests.push((token: string) => {
-        config.headers["Authorization"] = formatToken(token);
-        resolve(config);
-      });
-    });
+  /** 列表查询 */
+  list<T, Q = Recordable>(params: Q): Promise<PureResponse<T>> {
+    return this.get<T>(`/list`, { params });
   }
 
-  /** 请求拦截 */
-  private httpInterceptorsRequest(): void {
-    PureHttp.axiosInstance.interceptors.request.use(
-      async (config: PureHttpRequestConfig): Promise<any> => {
-        // 开启进度条动画
-        NProgress.start();
-        // 优先判断post/get等方法是否传入回调，否则执行初始化设置等回调
-        if (typeof config.beforeRequestCallback === "function") {
-          config.beforeRequestCallback(config);
-          return config;
-        }
-        if (PureHttp.initConfig.beforeRequestCallback) {
-          PureHttp.initConfig.beforeRequestCallback(config);
-          return config;
-        }
-        /** 请求白名单，放置一些不需要token的接口（通过设置请求白名单，防止token过期后再请求造成的死循环问题） */
-        const whiteList = ["/refreshToken", "/login"];
-        return whiteList.find(url => url === config.url)
-          ? config
-          : new Promise(resolve => {
-              const data = getToken();
-              if (data) {
-                const now = new Date().getTime();
-                const expired = parseInt(data.expires) - now <= 0;
-                if (expired) {
-                  if (!PureHttp.isRefreshing) {
-                    PureHttp.isRefreshing = true;
-                    // token过期刷新
-                    useUserStoreHook()
-                      .handRefreshToken({ refreshToken: data.refreshToken })
-                      .then(res => {
-                        const token = res.data.accessToken;
-                        config.headers["Authorization"] = formatToken(token);
-                        PureHttp.requests.forEach(cb => cb(token));
-                        PureHttp.requests = [];
-                      })
-                      .finally(() => {
-                        PureHttp.isRefreshing = false;
-                      });
-                  }
-                  resolve(PureHttp.retryOriginalRequest(config));
-                } else {
-                  config.headers["Authorization"] = formatToken(
-                    data.accessToken
-                  );
-                  resolve(config);
-                }
-              } else {
-                resolve(config);
-              }
-            });
-      },
-      error => {
-        return Promise.reject(error);
-      }
-    );
+  /** 详情查询 */
+  detail<T, Q = string | number>(id: Q): Promise<PureResponse<T>> {
+    return this.get<T>(`/${id}`, null);
   }
 
-  /** 响应拦截 */
-  private httpInterceptorsResponse(): void {
-    const instance = PureHttp.axiosInstance;
-    instance.interceptors.response.use(
-      (response: PureHttpResponse) => {
-        const $config = response.config;
-        // 关闭进度条动画
-        NProgress.done();
-        // 优先判断post/get等方法是否传入回调，否则执行初始化设置等回调
-        if (typeof $config.beforeResponseCallback === "function") {
-          $config.beforeResponseCallback(response);
-          return response.data;
-        }
-        if (PureHttp.initConfig.beforeResponseCallback) {
-          PureHttp.initConfig.beforeResponseCallback(response);
-          return response.data;
-        }
-        return response.data;
-      },
-      (error: PureHttpError) => {
-        const $error = error;
-        $error.isCancelRequest = Axios.isCancel($error);
-        // 关闭进度条动画
-        NProgress.done();
-        // 所有的响应异常 区分来源为取消请求/非取消请求
-        return Promise.reject($error);
-      }
-    );
+  /** 保存  */
+  create<T, VO = Recordable>(data: VO): Promise<PureResponse<T>> {
+    return this.post<T>(``, { data });
   }
 
-  /** 通用请求工具函数 */
-  public request<T>(
-    method: RequestMethods,
-    url: string,
-    param?: AxiosRequestConfig,
-    axiosConfig?: PureHttpRequestConfig
-  ): Promise<T> {
-    const config = {
-      method,
-      url,
-      ...param,
-      ...axiosConfig
-    } as PureHttpRequestConfig;
-
-    // 单独处理自定义请求/响应回调
-    return new Promise((resolve, reject) => {
-      PureHttp.axiosInstance
-        .request(config)
-        .then((response: undefined) => {
-          resolve(response);
-        })
-        .catch(error => {
-          reject(error);
-        });
-    });
+  /** 修改 */
+  update<T, VO = Recordable>(data: VO): Promise<PureResponse<T>> {
+    return this.put<T>(``, { data });
   }
 
-  /** 单独抽离的post工具函数 */
-  public post<T, P>(
-    url: string,
-    params?: AxiosRequestConfig<T>,
-    config?: PureHttpRequestConfig
-  ): Promise<P> {
-    return this.request<P>("post", url, params, config);
+  /** 修改 */
+  updateById<T, VO = Recordable>(id: VO): Promise<PureResponse<T>> {
+    return this.put<T>(`/${id}`, null);
+  }
+
+  /** 删除 */
+  deleteById<T, Q = string | number>(id: Q): Promise<PureResponse<T>> {
+    return this.delete<T>(`/${id}`, null);
+  }
+
+  /** 启用 */
+  enableById<T, Q = string | number>(id: Q): Promise<PureResponse<T>> {
+    return this.put<T>(`/${id}/enable`, null);
+  }
+
+  /** 禁用 */
+  disableById<T, Q = string | number>(id: Q): Promise<PureResponse<T>> {
+    return this.put<T>(`/${id}/disable`, null);
+  }
+
+  /** 根据id批量删除 */
+  deleteBatch<T, VO = Recordable>(data: VO): Promise<PureResponse<T>> {
+    return this.delete<T>(``, { data });
+  }
+
+  /** 根据id批量启用 */
+  enableBatch<T, VO = Recordable>(data: VO): Promise<PureResponse<T>> {
+    return this.put<T>(`/enable`, { data });
+  }
+
+  /** 根据id批量禁用 */
+  disableBatch<T, VO = Recordable>(data: VO): Promise<PureResponse<T>> {
+    return this.put<T>(`/disable`, { data });
+  }
+
+  /** 重置密码 */
+  resetPassword<T, VO = Recordable>(data: VO): Promise<PureResponse<T>> {
+    return this.put<T>(``, { data });
   }
 
   /** 单独抽离的get工具函数 */
-  public get<T, P>(
+  public get<T>(url: string, params?, config?: PureHttpRequestConfig): Promise<PureResponse<T>> {
+    return this.requestNonLoading<T>("get", url, params, config);
+  }
+
+  /** 单独抽离的post工具函数 */
+  public post<T>(url: string, params?, config?: PureHttpRequestConfig): Promise<PureResponse<T>> {
+    return this.requestNonLoading<T>("post", url, params, config);
+  }
+
+  /** 单独抽离的put工具函数 */
+  public put<T>(url: string, params?, config?: PureHttpRequestConfig): Promise<PureResponse<T>> {
+    return this.requestNonLoading<T>("put", url, params, config);
+  }
+
+  /** 单独抽离的delete工具函数 */
+  public delete<T>(url: string, params?, config?: PureHttpRequestConfig): Promise<PureResponse<T>> {
+    return this.requestNonLoading<T>("delete", url, params, config);
+  }
+
+  /** http请求无遮挡 */
+  public requestNonLoading<T>(
+    method: RequestMethods,
     url: string,
-    params?: AxiosRequestConfig<T>,
-    config?: PureHttpRequestConfig
-  ): Promise<P> {
-    return this.request<P>("get", url, params, config);
+    params?,
+    axiosConfig?: PureHttpRequestConfig
+  ): Promise<PureResponse<T>> {
+    return http.request<T>(method, this.getBaseUrl().trim() + url, params, axiosConfig);
+  }
+
+  /** http基本请求  */
+  public request<T>(method: RequestMethods, url: string, params?, axiosConfig?: PureHttpRequestConfig): Promise<PureResponse<T>> {
+    showLoading();
+    return http.request<T>(method, this.getBaseUrl().trim() + url, params, axiosConfig).finally(() => {
+      hideLoading();
+    });
+  }
+
+  /** 文件下载 */
+  public downloadFileRequest<R>(method: RequestMethods, url: string, params?: R): Promise<void> {
+    let response: PureHttpResponse = null;
+    return http
+      .request<void>(method, this.getBaseUrl().trim() + url, params, {
+        responseType: "blob",
+        beforeResponseCallback: function (res: PureHttpResponse) {
+          response = res;
+        }
+      })
+      .then(result => {
+        const contentDisposition = response.headers["content-disposition"];
+        downloadFileBlob(result, response.headers["content-type"], contentDisposition);
+        return Promise.resolve();
+      });
+  }
+  /** 文件上传 */
+  public uploadFileRequest<T>(url: string, files: any[]): Promise<PureResponse<T>> {
+    const fileData = new FormData();
+    files.forEach(file => {
+      fileData.append("file", file);
+    });
+    return http.request<T>(
+      "post",
+      this.getBaseUrl().trim() + url,
+      { data: fileData },
+      {
+        headers: { "content-type": "multiple/form-data" }
+      }
+    );
   }
 }
-
-export const http = new PureHttp();

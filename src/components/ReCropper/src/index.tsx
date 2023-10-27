@@ -6,15 +6,7 @@ import { useResizeObserver } from "@vueuse/core";
 import { longpress } from "@/directives/longpress";
 import { useTippy, directive as tippy } from "vue-tippy";
 import { delay, debounce, isArray, downloadByBase64 } from "@pureadmin/utils";
-import {
-  ref,
-  unref,
-  computed,
-  PropType,
-  onMounted,
-  onUnmounted,
-  defineComponent
-} from "vue";
+import { ref, unref, computed, PropType, onMounted, onUnmounted, defineComponent } from "vue";
 import {
   Reload,
   Upload,
@@ -159,9 +151,7 @@ export default defineComponent({
 
     function croppered() {
       if (!cropper.value) return;
-      const canvas = inCircled.value
-        ? getRoundedCanvas()
-        : cropper.value.getCroppedCanvas();
+      const canvas = inCircled.value ? getRoundedCanvas() : cropper.value.getCroppedCanvas();
       // https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLCanvasElement/toBlob
       canvas.toBlob(blob => {
         if (!blob) return;
@@ -194,14 +184,7 @@ export default defineComponent({
       context.drawImage(sourceCanvas, 0, 0, width, height);
       context.globalCompositeOperation = "destination-in";
       context.beginPath();
-      context.arc(
-        width / 2,
-        height / 2,
-        Math.min(width, height) / 2,
-        0,
-        2 * Math.PI,
-        true
-      );
+      context.arc(width / 2, height / 2, Math.min(width, height) / 2, 0, 2 * Math.PI, true);
       context.fill();
       return canvas;
     }
@@ -213,9 +196,7 @@ export default defineComponent({
       if (event === "scaleY") {
         scaleY = arg = scaleY === -1 ? 1 : -1;
       }
-      arg && isArray(arg)
-        ? cropper.value?.[event]?.(...arg)
-        : cropper.value?.[event]?.(arg);
+      arg && isArray(arg) ? cropper.value?.[event]?.(...arg) : cropper.value?.[event]?.(arg);
     }
 
     function beforeUpload(file) {
@@ -239,11 +220,7 @@ export default defineComponent({
       setup() {
         return () => (
           <div class="flex flex-wrap w-[60px] justify-between">
-            <ElUpload
-              accept="image/*"
-              show-file-list={false}
-              before-upload={beforeUpload}
-            >
+            <ElUpload accept="image/*" show-file-list={false} before-upload={beforeUpload}>
               <Upload
                 class={iconClass.value}
                 v-tippy={{
@@ -408,31 +385,12 @@ export default defineComponent({
   },
 
   render() {
-    const {
-      inSrc,
-      isReady,
-      getClass,
-      getImageStyle,
-      onContextmenu,
-      getWrapperStyle
-    } = this;
+    const { inSrc, isReady, getClass, getImageStyle, onContextmenu, getWrapperStyle } = this;
     const { alt, crossorigin } = this.props;
 
     return inSrc ? (
-      <div
-        ref="tippyElRef"
-        class={getClass}
-        style={getWrapperStyle}
-        onContextmenu={event => onContextmenu(event)}
-      >
-        <img
-          v-show={isReady}
-          ref="imgElRef"
-          style={getImageStyle}
-          src={inSrc}
-          alt={alt}
-          crossorigin={crossorigin}
-        />
+      <div ref="tippyElRef" class={getClass} style={getWrapperStyle} onContextmenu={event => onContextmenu(event)}>
+        <img v-show={isReady} ref="imgElRef" style={getImageStyle} src={inSrc} alt={alt} crossorigin={crossorigin} />
       </div>
     ) : null;
   }

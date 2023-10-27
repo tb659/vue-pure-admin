@@ -128,10 +128,7 @@ Print.prototype = {
     const iframe: HTMLIFrameElement = document.createElement("iframe");
     const f: HTMLIFrameElement = document.body.appendChild(iframe);
     iframe.id = "myIframe";
-    iframe.setAttribute(
-      "style",
-      "position:absolute;width:0;height:0;top:-10px;left:-10px;"
-    );
+    iframe.setAttribute("style", "position:absolute;width:0;height:0;top:-10px;left:-10px;");
     // eslint-disable-next-line prefer-const
     w = f.contentWindow || f.contentDocument;
     // eslint-disable-next-line prefer-const
@@ -188,12 +185,7 @@ Print.prototype = {
           return obj instanceof HTMLElement;
         }
       : function (obj) {
-          return (
-            obj &&
-            typeof obj === "object" &&
-            obj.nodeType === 1 &&
-            typeof obj.nodeName === "string"
-          );
+          return obj && typeof obj === "object" && obj.nodeType === 1 && typeof obj.nodeName === "string";
         },
   /**
    * Set the height of the specified dom element by getting the existing height of the dom element and setting

@@ -41,12 +41,7 @@ const toggleClick = () => {
 
 <template>
   <div class="container">
-    <el-tooltip
-      placement="right"
-      :visible="visible"
-      :effect="tooltipEffect"
-      :content="props.isActive ? '点击折叠' : '点击展开'"
-    >
+    <el-tooltip placement="right" :visible="visible" :effect="tooltipEffect" :content="props.isActive ? '点击折叠' : '点击展开'">
       <IconifyIconOffline
         :icon="MenuFold"
         :class="iconClass"

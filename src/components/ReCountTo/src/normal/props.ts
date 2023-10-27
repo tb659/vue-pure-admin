@@ -21,9 +21,7 @@ export const countToProps = {
   suffix: propTypes.string.def(""),
   useEasing: propTypes.bool.def(true),
   easingFn: {
-    type: Function as PropType<
-      (t: number, b: number, c: number, d: number) => number
-    >,
+    type: Function as PropType<(t: number, b: number, c: number, d: number) => number>,
     default(t: number, b: number, c: number, d: number) {
       return (c * (-Math.pow(2, (-10 * t) / d) + 1) * 1024) / 1023 + b;
     }

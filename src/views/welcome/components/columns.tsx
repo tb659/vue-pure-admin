@@ -94,14 +94,7 @@ export function useColumns() {
           个性签名
         </div>
       ),
-      cellRenderer: () => (
-        <TypeIt
-          className={"github"}
-          values={["办法总比困难多"]}
-          cursor={false}
-          speed={100}
-        />
-      )
+      cellRenderer: () => <TypeIt className={"github"} values={["办法总比困难多"]} cursor={false} speed={100} />
     }
   ];
 

@@ -4,11 +4,7 @@ import { useLayout } from "./useLayout";
 import { themeColorsType } from "../types";
 import { useGlobal } from "@pureadmin/utils";
 import { useEpThemeStoreHook } from "@/store/modules/epTheme";
-import {
-  darken,
-  lighten,
-  toggleTheme
-} from "@pureadmin/theme/dist/browser-utils";
+import { darken, lighten, toggleTheme } from "@pureadmin/theme/dist/browser-utils";
 
 export function useDataThemeChange() {
   const { layoutTheme, layout } = useLayout();

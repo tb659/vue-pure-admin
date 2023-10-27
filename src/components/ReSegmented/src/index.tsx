@@ -1,12 +1,5 @@
 import "./index.css";
-import {
-  h,
-  ref,
-  watch,
-  nextTick,
-  defineComponent,
-  getCurrentInstance
-} from "vue";
+import { h, ref, watch, nextTick, defineComponent, getCurrentInstance } from "vue";
 import type { OptionsType } from "./type";
 import { isFunction, useDark } from "@pureadmin/utils";
 import { useRenderIcon } from "@/components/ReIcon/src/hooks";
@@ -51,9 +44,7 @@ export default defineComponent({
       if (option.disabled || curIndex.value === index) {
         segmentedItembg.value = "";
       } else {
-        segmentedItembg.value = isDark.value
-          ? "#1f1f1f"
-          : "rgba(0, 0, 0, 0.06)";
+        segmentedItembg.value = isDark.value ? "#1f1f1f" : "rgba(0, 0, 0, 0.06)";
       }
     }
 
@@ -89,16 +80,11 @@ export default defineComponent({
         return (
           <label
             ref={`labelRef${index}`}
-            class={[
-              "pure-segmented-item",
-              option?.disabled && "pure-segmented-item-disabled"
-            ]}
+            class={["pure-segmented-item", option?.disabled && "pure-segmented-item-disabled"]}
             style={{
-              background:
-                curMouseActive.value === index ? segmentedItembg.value : "",
+              background: curMouseActive.value === index ? segmentedItembg.value : "",
               color:
-                !option.disabled &&
-                (curIndex.value === index || curMouseActive.value === index)
+                !option.disabled && (curIndex.value === index || curMouseActive.value === index)
                   ? isDark.value
                     ? "rgba(255, 255, 255, 0.85)"
                     : "rgba(0,0,0,.88)"
@@ -111,20 +97,11 @@ export default defineComponent({
             <input type="radio" name="segmented" />
             <div class="pure-segmented-item-label">
               {option.icon && !isFunction(option.label) ? (
-                <span
-                  class="pure-segmented-item-icon"
-                  style={{ marginRight: option.label ? "6px" : 0 }}
-                >
+                <span class="pure-segmented-item-icon" style={{ marginRight: option.label ? "6px" : 0 }}>
                   {h(useRenderIcon(option.icon))}
                 </span>
               ) : null}
-              {option.label ? (
-                isFunction(option.label) ? (
-                  h(option.label)
-                ) : (
-                  <span>{option.label}</span>
-                )
-              ) : null}
+              {option.label ? isFunction(option.label) ? h(option.label) : <span>{option.label}</span> : null}
             </div>
           </label>
         );

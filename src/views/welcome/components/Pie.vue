@@ -1,12 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, watch, type Ref } from "vue";
 import { useAppStoreHook } from "@/store/modules/app";
-import {
-  delay,
-  useDark,
-  useECharts,
-  type EchartOptions
-} from "@pureadmin/utils";
+import { delay, useDark, useECharts, type EchartOptions } from "@pureadmin/utils";
 
 const { isDark } = useDark();
 

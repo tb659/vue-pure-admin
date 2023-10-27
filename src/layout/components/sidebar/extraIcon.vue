@@ -12,9 +12,6 @@ const props = defineProps({
 
 <template>
   <div v-if="props.extraIcon" class="flex justify-center items-center">
-    <component
-      :is="useRenderIcon(toRaw(props.extraIcon))"
-      class="w-[30px] h-[30px]"
-    />
+    <component :is="useRenderIcon(toRaw(props.extraIcon))" class="w-[30px] h-[30px]" />
   </div>
 </template>

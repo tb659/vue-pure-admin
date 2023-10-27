@@ -12,44 +12,28 @@ import { usePermissionStoreHook } from "@/store/modules/permission";
 import { ref, computed, watch, onMounted, onBeforeUnmount } from "vue";
 
 const route = useRoute();
-const showLogo = ref(
-  storageLocal().getItem<StorageConfigs>(
-    `${responsiveStorageNameSpace()}configure`
-  )?.showLogo ?? true
-);
+const showLogo = ref(storageLocal().getItem<StorageConfigs>(`${responsiveStorageNameSpace()}configure`)?.showLogo ?? true);
 
 const { device, pureApp, isCollapse, menuSelect, toggleSideBar } = useNav();
 
 const subMenuData = ref([]);
 
 const menuData = computed(() => {
-  return pureApp.layout === "mix" && device.value !== "mobile"
-    ? subMenuData.value
-    : usePermissionStoreHook().wholeMenus;
+  return pureApp.layout === "mix" && device.value !== "mobile" ? subMenuData.value : usePermissionStoreHook().wholeMenus;
 });
 
-const loading = computed(() =>
-  pureApp.layout === "mix" ? false : menuData.value.length === 0 ? true : false
-);
+const loading = computed(() => (pureApp.layout === "mix" ? false : menuData.value.length === 0 ? true : false));
 
-const defaultActive = computed(() =>
-  !isAllEmpty(route.meta?.activePath) ? route.meta.activePath : route.path
-);
+const defaultActive = computed(() => (!isAllEmpty(route.meta?.activePath) ? route.meta.activePath : route.path));
 
 function getSubMenuData() {
   let path = "";
   path = defaultActive.value;
   subMenuData.value = [];
   // path的上级路由组成的数组
-  const parentPathArr = getParentPaths(
-    path,
-    usePermissionStoreHook().wholeMenus
-  );
+  const parentPathArr = getParentPaths(path, usePermissionStoreHook().wholeMenus);
   // 当前路由的父级路由信息
-  const parenetRoute = findRouteByPath(
-    parentPathArr[0] || path,
-    usePermissionStoreHook().wholeMenus
-  );
+  const parenetRoute = findRouteByPath(parentPathArr[0] || path, usePermissionStoreHook().wholeMenus);
   if (!parenetRoute?.children) return;
   subMenuData.value = parenetRoute?.children;
 }
@@ -78,15 +62,9 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div
-    v-loading="loading"
-    :class="['sidebar-container', showLogo ? 'has-logo' : 'no-logo']"
-  >
+  <div v-loading="loading" :class="['sidebar-container', showLogo ? 'has-logo' : 'no-logo']">
     <Logo v-if="showLogo" :collapse="isCollapse" />
-    <el-scrollbar
-      wrap-class="scrollbar-wrapper"
-      :class="[device === 'mobile' ? 'mobile' : 'pc']"
-    >
+    <el-scrollbar wrap-class="scrollbar-wrapper" :class="[device === 'mobile' ? 'mobile' : 'pc']">
       <el-menu
         router
         unique-opened
@@ -105,11 +83,7 @@ onBeforeUnmount(() => {
         />
       </el-menu>
     </el-scrollbar>
-    <leftCollapse
-      v-if="device !== 'mobile'"
-      :is-active="pureApp.sidebar.opened"
-      @toggleClick="toggleSideBar"
-    />
+    <leftCollapse v-if="device !== 'mobile'" :is-active="pureApp.sidebar.opened" @toggleClick="toggleSideBar" />
   </div>
 </template>
 

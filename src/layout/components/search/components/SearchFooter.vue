@@ -27,12 +27,7 @@ const { device } = useNav();
       <mdiKeyboardEsc class="icon" />
       关闭
     </span>
-    <p
-      v-if="device !== 'mobile' && props.total > 0"
-      class="search-footer-total"
-    >
-      共{{ props.total }}项
-    </p>
+    <p v-if="device !== 'mobile' && props.total > 0" class="search-footer-total">共{{ props.total }}项</p>
   </div>
 </template>
 

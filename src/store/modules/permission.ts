@@ -4,13 +4,16 @@ import { cacheType } from "./types";
 import { constantMenus } from "@/router";
 import { useMultiTagsStoreHook } from "./multiTags";
 import { debounce, getKeyList } from "@pureadmin/utils";
-import { ascending, filterTree, filterNoPermissionTree } from "@/router/utils";
+import { ascending, filterVisibleTree, filterUserAuthMenu } from "@/router/utils";
+import { treeToList } from "@/utils/tree";
 
 export const usePermissionStore = defineStore({
   id: "pure-permission",
   state: () => ({
     // 静态路由生成的菜单
     constantMenus,
+    // 动态路由生成的菜单
+    dynamicMenus: [],
     // 整体路由生成的菜单（静态、动态）
     wholeMenus: [],
     // 缓存页面keepAlive
@@ -19,9 +22,9 @@ export const usePermissionStore = defineStore({
   actions: {
     /** 组装整体路由生成的菜单 */
     handleWholeMenus(routes: any[]) {
-      this.wholeMenus = filterNoPermissionTree(
-        filterTree(ascending(this.constantMenus.concat(routes)))
-      );
+      if (this.wholeMenus.length > 0) return;
+      this.dynamicMenus = treeToList(ascending(routes));
+      this.wholeMenus = filterUserAuthMenu(filterVisibleTree(ascending(this.constantMenus.concat(routes))));
     },
     cacheOperate({ mode, name }: cacheType) {
       const delIndex = this.cachePageList.findIndex(v => v === name);
@@ -41,12 +44,8 @@ export const usePermissionStore = defineStore({
         let cacheLength = this.cachePageList.length;
         const nameList = getKeyList(useMultiTagsStoreHook().multiTags, "name");
         while (cacheLength > 0) {
-          nameList.findIndex(v => v === this.cachePageList[cacheLength - 1]) ===
-            -1 &&
-            this.cachePageList.splice(
-              this.cachePageList.indexOf(this.cachePageList[cacheLength - 1]),
-              1
-            );
+          nameList.findIndex(v => v === this.cachePageList[cacheLength - 1]) === -1 &&
+            this.cachePageList.splice(this.cachePageList.indexOf(this.cachePageList[cacheLength - 1]), 1);
           cacheLength--;
         }
       })();

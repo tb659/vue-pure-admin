@@ -43,9 +43,7 @@ export default [
         }
       ];
       list = list.filter(item => item.username.includes(body?.username));
-      list = list.filter(item =>
-        String(item.status).includes(String(body?.status))
-      );
+      list = list.filter(item => String(item.status).includes(String(body?.status)));
       if (body.phone) list = list.filter(item => item.phone === body.phone);
       if (body.deptId) list = list.filter(item => item.dept.id === body.deptId);
       return {
@@ -124,9 +122,7 @@ export default [
         }
       ];
       list = list.filter(item => item.name.includes(body?.name));
-      list = list.filter(item =>
-        String(item.status).includes(String(body?.status))
-      );
+      list = list.filter(item => String(item.status).includes(String(body?.status)));
       if (body.code) list = list.filter(item => item.code === body.code);
       return {
         success: true,

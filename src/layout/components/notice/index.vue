@@ -28,17 +28,10 @@ notices.value.map(v => (noticesNum.value += v.list.length));
           class="dropdown-tabs"
           :style="{ width: notices.length === 0 ? '200px' : '330px' }"
         >
-          <el-empty
-            v-if="notices.length === 0"
-            description="暂无消息"
-            :image-size="60"
-          />
+          <el-empty v-if="notices.length === 0" description="暂无消息" :image-size="60" />
           <span v-else>
             <template v-for="item in notices" :key="item.key">
-              <el-tab-pane
-                :label="`${item.name}(${item.list.length})`"
-                :name="`${item.key}`"
-              >
+              <el-tab-pane :label="`${item.name}(${item.list.length})`" :name="`${item.key}`">
                 <el-scrollbar max-height="330px">
                   <div class="noticeList-container">
                     <NoticeList :list="item.list" />

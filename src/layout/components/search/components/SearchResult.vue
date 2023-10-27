@@ -34,8 +34,7 @@ const instance = getCurrentInstance()!;
 const itemStyle = computed(() => {
   return item => {
     return {
-      background:
-        item?.path === active.value ? useEpThemeStoreHook().epThemeColor : "",
+      background: item?.path === active.value ? useEpThemeStoreHook().epThemeColor : "",
       color: item.path === active.value ? "#fff" : "",
       fontSize: item.path === active.value ? "16px" : "14px"
     };

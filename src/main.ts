@@ -1,16 +1,21 @@
 import App from "./App.vue";
 import router from "./router";
 import { setupStore } from "@/store";
-import ElementPlus from "element-plus";
 import { useI18n } from "@/plugins/i18n";
 import { getPlatformConfig } from "./config";
 import { createApp, Directive } from "vue";
 import { MotionPlugin } from "@vueuse/motion";
 import { useEcharts } from "@/plugins/echarts";
+import { useElementPlus } from "@/plugins/element-plus";
 import { injectResponsiveStorage } from "@/utils/responsive";
 
-import Table from "@pureadmin/table";
+import PureTable from "@pureadmin/table";
 import PureDescriptions from "@pureadmin/descriptions";
+
+import MtForm from "@/components/ReMtForm";
+import MtTable from "@/components/ReMtTable";
+import MtSearch from "@/components/ReMtSearch";
+import MtTableBar from "@/components/ReMtTableBar";
 
 // 引入重置样式
 import "./style/reset.scss";
@@ -32,11 +37,7 @@ Object.keys(directives).forEach(key => {
 });
 
 // 全局注册`@iconify/vue`图标库
-import {
-  IconifyIconOffline,
-  IconifyIconOnline,
-  FontIcon
-} from "./components/ReIcon";
+import { IconifyIconOffline, IconifyIconOnline, FontIcon } from "./components/ReIcon";
 app.component("IconifyIconOffline", IconifyIconOffline);
 app.component("IconifyIconOnline", IconifyIconOnline);
 app.component("FontIcon", FontIcon);
@@ -53,9 +54,13 @@ getPlatformConfig(app).then(async config => {
   app
     .use(MotionPlugin)
     .use(useI18n)
-    .use(ElementPlus)
-    .use(Table)
+    .use(useEcharts)
+    .use(useElementPlus)
+    .use(PureTable)
     .use(PureDescriptions)
-    .use(useEcharts);
+    .use(MtForm)
+    .use(MtTable)
+    .use(MtSearch)
+    .use(MtTableBar);
   app.mount("#app");
 });

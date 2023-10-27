@@ -41,11 +41,7 @@ const getSectionStyle = computed(() => {
     !hideTabs.value && !layout.value ? "padding-top: 85px;" : "",
     props.fixedHeader
       ? ""
-      : `padding-top: 0;${
-          hideTabs.value
-            ? "min-height: calc(100vh - 48px);"
-            : "min-height: calc(100vh - 86px);"
-        }`
+      : `padding-top: 0;${hideTabs.value ? "min-height: calc(100vh - 48px);" : "min-height: calc(100vh - 86px);"}`
   ];
 });
 
@@ -57,20 +53,15 @@ const transitionMain = defineComponent({
     }
   },
   render() {
-    const transitionName =
-      transitions.value(this.route)?.name || "fade-transform";
+    const transitionName = transitions.value(this.route)?.name || "fade-transform";
     const enterTransition = transitions.value(this.route)?.enterTransition;
     const leaveTransition = transitions.value(this.route)?.leaveTransition;
     return h(
       Transition,
       {
         name: enterTransition ? "pure-classes-transition" : transitionName,
-        enterActiveClass: enterTransition
-          ? `animate__animated ${enterTransition}`
-          : undefined,
-        leaveActiveClass: leaveTransition
-          ? `animate__animated ${leaveTransition}`
-          : undefined,
+        enterActiveClass: enterTransition ? `animate__animated ${enterTransition}` : undefined,
+        leaveActiveClass: leaveTransition ? `animate__animated ${leaveTransition}` : undefined,
         mode: "out-in",
         appear: true
       },
@@ -83,10 +74,7 @@ const transitionMain = defineComponent({
 </script>
 
 <template>
-  <section
-    :class="[props.fixedHeader ? 'app-main' : 'app-main-nofixed-header']"
-    :style="getSectionStyle"
-  >
+  <section :class="[props.fixedHeader ? 'app-main' : 'app-main-nofixed-header']" :style="getSectionStyle">
     <router-view>
       <template #default="{ Component, route }">
         <el-scrollbar
@@ -106,44 +94,20 @@ const transitionMain = defineComponent({
           </el-backtop>
           <div class="grow">
             <transitionMain :route="route">
-              <keep-alive
-                v-if="isKeepAlive"
-                :include="usePermissionStoreHook().cachePageList"
-              >
-                <component
-                  :is="Component"
-                  :key="route.fullPath"
-                  class="main-content"
-                />
+              <keep-alive v-if="isKeepAlive" :include="usePermissionStoreHook().cachePageList">
+                <component :is="Component" :key="route.fullPath" class="main-content" />
               </keep-alive>
-              <component
-                :is="Component"
-                v-else
-                :key="route.fullPath"
-                class="main-content"
-              />
+              <component :is="Component" v-else :key="route.fullPath" class="main-content" />
             </transitionMain>
           </div>
           <Footer v-if="!hideFooter" />
         </el-scrollbar>
         <div v-else class="grow">
           <transitionMain :route="route">
-            <keep-alive
-              v-if="isKeepAlive"
-              :include="usePermissionStoreHook().cachePageList"
-            >
-              <component
-                :is="Component"
-                :key="route.fullPath"
-                class="main-content"
-              />
+            <keep-alive v-if="isKeepAlive" :include="usePermissionStoreHook().cachePageList">
+              <component :is="Component" :key="route.fullPath" class="main-content" />
             </keep-alive>
-            <component
-              :is="Component"
-              v-else
-              :key="route.fullPath"
-              class="main-content"
-            />
+            <component :is="Component" v-else :key="route.fullPath" class="main-content" />
           </transitionMain>
         </div>
       </template>
@@ -170,6 +134,6 @@ const transitionMain = defineComponent({
 }
 
 .main-content {
-  margin: 24px;
+  margin: 16px;
 }
 </style>

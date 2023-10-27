@@ -9,15 +9,7 @@ import { useAppStoreHook } from "@/store/modules/app";
 import { useSettingStoreHook } from "@/store/modules/settings";
 import { deviceDetection, useDark, useGlobal } from "@pureadmin/utils";
 import { useDataThemeChange } from "@/layout/hooks/useDataThemeChange";
-import {
-  h,
-  ref,
-  reactive,
-  computed,
-  onMounted,
-  onBeforeMount,
-  defineComponent
-} from "vue";
+import { h, ref, reactive, computed, onMounted, onBeforeMount, defineComponent } from "vue";
 
 import navbar from "./components/navbar.vue";
 import tag from "./components/tag/index.vue";
@@ -133,13 +125,8 @@ const layoutHeader = defineComponent({
       },
       {
         default: () => [
-          !pureSetting.hiddenSideBar &&
-          (layout.value.includes("vertical") || layout.value.includes("mix"))
-            ? h(navbar)
-            : null,
-          !pureSetting.hiddenSideBar && layout.value.includes("horizontal")
-            ? h(Horizontal)
-            : null,
+          !pureSetting.hiddenSideBar && (layout.value.includes("vertical") || layout.value.includes("mix")) ? h(navbar) : null,
+          !pureSetting.hiddenSideBar && layout.value.includes("horizontal") ? h(Horizontal) : null,
           h(tag)
         ]
       }
@@ -151,36 +138,19 @@ const layoutHeader = defineComponent({
 <template>
   <div ref="appWrapperRef" :class="['app-wrapper', set.classes]">
     <div
-      v-show="
-        set.device === 'mobile' &&
-        set.sidebar.opened &&
-        layout.includes('vertical')
-      "
+      v-show="set.device === 'mobile' && set.sidebar.opened && layout.includes('vertical')"
       class="app-mask"
       @click="useAppStoreHook().toggleSideBar()"
     />
-    <Vertical
-      v-show="
-        !pureSetting.hiddenSideBar &&
-        (layout.includes('vertical') || layout.includes('mix'))
-      "
-    />
-    <div
-      :class="[
-        'main-container',
-        pureSetting.hiddenSideBar ? 'main-hidden' : ''
-      ]"
-    >
+    <Vertical v-show="!pureSetting.hiddenSideBar && (layout.includes('vertical') || layout.includes('mix'))" />
+    <div :class="['main-container', pureSetting.hiddenSideBar ? 'main-hidden' : '']">
       <div v-if="set.fixedHeader">
         <layout-header />
         <!-- 主体内容 -->
         <app-main :fixed-header="set.fixedHeader" />
       </div>
       <el-scrollbar v-else>
-        <el-backtop
-          title="回到顶部"
-          target=".main-container .el-scrollbar__wrap"
-        >
+        <el-backtop title="回到顶部" target=".main-container .el-scrollbar__wrap">
           <backTop />
         </el-backtop>
         <layout-header />

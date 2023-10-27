@@ -34,17 +34,9 @@ const nodeDragNode = item => {
 <template>
   <!-- 左侧bpmn元素选择器 -->
   <div class="node-panel">
-    <div
-      v-for="item in props.nodeList"
-      :key="item.text"
-      class="node-item dark:text-bg_color"
-      @mousedown="nodeDragNode(item)"
-    >
+    <div v-for="item in props.nodeList" :key="item.text" class="node-item dark:text-bg_color" @mousedown="nodeDragNode(item)">
       <div class="node-item-icon" :class="item.class">
-        <div
-          v-if="item.type === 'user' || item.type === 'time'"
-          class="shape"
-        />
+        <div v-if="item.type === 'user' || item.type === 'time'" class="shape" />
       </div>
       <span class="node-label">{{ item.text }}</span>
     </div>

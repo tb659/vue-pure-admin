@@ -1,13 +1,5 @@
 <script setup lang="ts">
-import {
-  ref,
-  unref,
-  watch,
-  reactive,
-  computed,
-  nextTick,
-  onBeforeMount
-} from "vue";
+import { ref, unref, watch, reactive, computed, nextTick, onBeforeMount } from "vue";
 import { getConfig } from "@/config";
 import { useRouter } from "vue-router";
 import panel from "../panel/index.vue";
@@ -36,14 +28,7 @@ const mixRef = ref();
 const verticalRef = ref();
 const horizontalRef = ref();
 
-const {
-  dataTheme,
-  layoutTheme,
-  themeColors,
-  dataThemeChange,
-  setEpThemeColor,
-  setLayoutThemeColor
-} = useDataThemeChange();
+const { dataTheme, layoutTheme, themeColors, dataThemeChange, setEpThemeColor, setLayoutThemeColor } = useDataThemeChange();
 
 /* body添加layout属性，作用于src/style/sidebar.scss */
 if (unref(layoutTheme)) {
@@ -104,11 +89,7 @@ const greyChange = (value): void => {
 
 /** 色弱模式设置 */
 const weekChange = (value): void => {
-  toggleClass(
-    settings.weakVal,
-    "html-weakness",
-    document.querySelector("html")
-  );
+  toggleClass(settings.weakVal, "html-weakness", document.querySelector("html"));
   storageConfigureChange("weak", value);
 };
 
@@ -154,9 +135,7 @@ function onChange(label) {
 
 /** 侧边栏Logo */
 function logoChange() {
-  unref(logoVal)
-    ? storageConfigureChange("showLogo", true)
-    : storageConfigureChange("showLogo", false);
+  unref(logoVal) ? storageConfigureChange("showLogo", true) : storageConfigureChange("showLogo", false);
   emitter.emit("logoChange", unref(logoVal));
 }
 
@@ -169,15 +148,9 @@ function setFalse(Doms): any {
 /** 主题色 激活选择项 */
 const getThemeColor = computed(() => {
   return current => {
-    if (
-      current === layoutTheme.value.theme &&
-      layoutTheme.value.theme !== "light"
-    ) {
+    if (current === layoutTheme.value.theme && layoutTheme.value.theme !== "light") {
       return "#fff";
-    } else if (
-      current === layoutTheme.value.theme &&
-      layoutTheme.value.theme === "light"
-    ) {
+    } else if (current === layoutTheme.value.theme && layoutTheme.value.theme === "light") {
       return "#1d2b45";
     } else {
       return "transparent";
@@ -222,10 +195,8 @@ watch($storage, ({ layout }) => {
 onBeforeMount(() => {
   /* 初始化项目配置 */
   nextTick(() => {
-    settings.greyVal &&
-      document.querySelector("html")?.setAttribute("class", "html-grey");
-    settings.weakVal &&
-      document.querySelector("html")?.setAttribute("class", "html-weakness");
+    settings.greyVal && document.querySelector("html")?.setAttribute("class", "html-grey");
+    settings.weakVal && document.querySelector("html")?.setAttribute("class", "html-weakness");
     settings.tabsVal && tagsChange();
     settings.hideFooter && hideFooterChange();
   });
@@ -246,18 +217,8 @@ onBeforeMount(() => {
 
     <el-divider>导航栏模式</el-divider>
     <ul class="pure-theme">
-      <el-tooltip
-        :effect="tooltipEffect"
-        class="item"
-        content="左侧模式"
-        placement="bottom"
-        popper-class="pure-tooltip"
-      >
-        <li
-          ref="verticalRef"
-          :class="layoutTheme.layout === 'vertical' ? 'is-select' : ''"
-          @click="setLayoutModel('vertical')"
-        >
+      <el-tooltip :effect="tooltipEffect" class="item" content="左侧模式" placement="bottom" popper-class="pure-tooltip">
+        <li ref="verticalRef" :class="layoutTheme.layout === 'vertical' ? 'is-select' : ''" @click="setLayoutModel('vertical')">
           <div />
           <div />
         </li>
@@ -289,11 +250,7 @@ onBeforeMount(() => {
         placement="bottom"
         popper-class="pure-tooltip"
       >
-        <li
-          ref="mixRef"
-          :class="layoutTheme.layout === 'mix' ? 'is-select' : ''"
-          @click="setLayoutModel('mix')"
-        >
+        <li ref="mixRef" :class="layoutTheme.layout === 'mix' ? 'is-select' : ''" @click="setLayoutModel('mix')">
           <div />
           <div />
         </li>
@@ -309,11 +266,7 @@ onBeforeMount(() => {
         :style="getThemeColorStyle(item.color)"
         @click="setLayoutThemeColor(item.themeColor)"
       >
-        <el-icon
-          style="margin: 0.1em 0.1em 0 0"
-          :size="17"
-          :color="getThemeColor(item.themeColor)"
-        >
+        <el-icon style="margin: 0.1em 0.1em 0 0" :size="17" :color="getThemeColor(item.themeColor)">
           <IconifyIconOffline :icon="Check" />
         </el-icon>
       </li>
@@ -354,7 +307,7 @@ onBeforeMount(() => {
           @change="tagsChange"
         />
       </li>
-      <li>
+      <!-- <li>
         <span class="dark:text-white">隐藏页脚</span>
         <el-switch
           v-model="settings.hideFooter"
@@ -364,7 +317,7 @@ onBeforeMount(() => {
           inactive-text="关"
           @change="hideFooterChange"
         />
-      </li>
+      </li> -->
       <li>
         <span class="dark:text-white">侧边栏Logo</span>
         <el-switch
@@ -400,17 +353,8 @@ onBeforeMount(() => {
     </ul>
 
     <el-divider />
-    <el-button
-      type="danger"
-      style="width: 90%; margin: 24px 15px"
-      @click="onReset"
-    >
-      <IconifyIconOffline
-        :icon="Logout"
-        width="15"
-        height="15"
-        style="margin-right: 4px"
-      />
+    <el-button type="danger" style="width: 90%; margin: 24px 15px" @click="onReset">
+      <IconifyIconOffline :icon="Logout" width="15" height="15" style="margin-right: 4px" />
       清空缓存并返回登录页
     </el-button>
   </panel>

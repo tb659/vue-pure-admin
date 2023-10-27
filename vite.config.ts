@@ -27,13 +27,7 @@ const __APP_INFO__ = {
 };
 
 export default ({ command, mode }: ConfigEnv): UserConfigExport => {
-  const {
-    VITE_CDN,
-    VITE_PORT,
-    VITE_COMPRESSION,
-    VITE_PUBLIC_PATH,
-    VITE_OUT_DIR
-  } = warpperEnv(loadEnv(mode, root));
+  const { VITE_CDN, VITE_PORT, VITE_COMPRESSION, VITE_PUBLIC_PATH } = warpperEnv(loadEnv(mode, root));
   return {
     base: VITE_PUBLIC_PATH,
     root,
@@ -50,7 +44,7 @@ export default ({ command, mode }: ConfigEnv): UserConfigExport => {
       // 本地跨域代理 https://cn.vitejs.dev/config/server-options.html#server-proxy
       proxy: {
         // 第一个代理后端地址
-        "^/base-api/.*": {
+        "^/dev-api/.*": {
           // target: "http://filtrate.ameeting.com.cn/frame_base",
           target: "http://localhost:4000/frame_base",
           changeOrigin: true,
@@ -71,8 +65,7 @@ export default ({ command, mode }: ConfigEnv): UserConfigExport => {
       exclude
     },
     build: {
-      target: ["ios11", "Chrome 64"],
-      outDir: VITE_OUT_DIR || "./dist",
+      // target: ["ios11", "Chrome 80"],
       sourcemap: false,
       // 消除打包大小超过500kb警告
       chunkSizeWarningLimit: 4000,
