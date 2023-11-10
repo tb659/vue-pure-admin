@@ -43,8 +43,8 @@ const {
       </template>
       <template #default="{ size, dynamicColumns }">
         <mt-table
-          default-expand-all
           row-key="id"
+          default-expand-all
           :size="size"
           :columns="dynamicColumns"
           :operations="operationList"

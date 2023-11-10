@@ -1,11 +1,8 @@
 import { ref, unref } from "vue";
-import { useData } from "./data";
 import { listToTree } from "@/utils/tree";
 import { deptApi } from "@/api/system/dept";
 import { useTable } from "@/hooks/web/useTable";
 import { DeptData } from "@/api/system/dept/types";
-
-const { searchSchema, formSchema, tableColumns } = useData();
 
 export function useHook() {
   const title = ref("部门");
@@ -75,11 +72,8 @@ export function useHook() {
     title,
     visible,
     loading,
-    formSchema,
     elTableRef,
     tableObject,
-    searchSchema,
-    tableColumns,
     operationList,
     register,
     handleAdd,

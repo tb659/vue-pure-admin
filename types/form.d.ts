@@ -183,6 +183,12 @@ declare global {
     componentProps?: { slots?: Recordable } & ComponentProps;
     /** 是否隐藏 必须是个函数 */
     hidden?: CallableFunction;
+    /** 是否必填 */
+    required?: boolean;
+    /** 插槽 */
+    slots?: Recordable;
+    /** label提示 */
+    labelProps?: Recordable;
     /** 远程加载下拉项 */
     api?: <T = any>() => AxiosPromise<T>;
   };

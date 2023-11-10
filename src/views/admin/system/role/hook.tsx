@@ -2,13 +2,11 @@ import { RoleData } from "@/api/system/role/types";
 import { useTable } from "@/hooks/web/useTable";
 import { roleApi } from "@/api/system/role";
 import { ref, unref } from "vue";
-import { useData } from "./data";
 import { dictApi } from "@/api/system/dict";
 import { DictData } from "@/api/system/dict/types";
 import { msg } from "@/utils/message";
 import { ADMIN_DICT_EDIT_CODE, ADMIN_ROLE_EMBED, ADMIN_USER_ROOT } from "@/utils/common";
 import { useUserStoreHook } from "@/store/modules/user";
-const { searchSchema, formSchema, tableColumns } = useData();
 
 export function useHook() {
   const title = ref("角色");
@@ -97,10 +95,7 @@ export function useHook() {
     title,
     visible,
     loading,
-    formSchema,
     tableObject,
-    searchSchema,
-    tableColumns,
     operationList,
     register,
     handleAdd,

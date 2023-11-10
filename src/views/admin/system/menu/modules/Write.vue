@@ -25,13 +25,8 @@ const props = defineProps({
   }
 });
 
-const rules = reactive({
-  parentId: [required()],
-  name: [required()],
-  code: [required()],
-  path: [required()],
-  cname: [required()]
-});
+const rules = reactive({});
+props.formSchema.filter(schema => schema.required).map(schema => (rules[schema.prop] = [required()]));
 
 const { register, methods, elFormRef } = useForm({
   schema: props.formSchema
@@ -60,12 +55,11 @@ watch(
 watch(
   () => props.currentRow,
   currentRow => {
-    const { setValue, setSchema } = methods;
     /** 原始数据中过滤非按钮菜单 */
     HOME_DERECTORY[0].children = cloneDeep(props.tableList).filter(v => v.type !== MENU_TYPE.B_V);
-    setSchema([{ prop: "parentId", path: "componentProps.data", value: HOME_DERECTORY }]);
+    methods.setSchema([{ prop: "parentId", path: "componentProps.data", value: HOME_DERECTORY }]);
     if (!currentRow) return;
-    setValue(currentRow);
+    methods.setValue(currentRow);
   },
   { deep: true, immediate: true }
 );

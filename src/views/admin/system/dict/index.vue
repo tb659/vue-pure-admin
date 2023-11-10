@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useRenderIcon } from "@/components/ReIcon/src/hooks";
+import { useData } from "./data";
 import { useHook } from "./hook";
 import { ref } from "vue";
 import Write from "./modules/Write.vue";
@@ -13,21 +14,10 @@ defineOptions({
 
 const writeRef = ref<ComponentRef<typeof Write>>();
 
-const {
-  title,
-  visible,
-  loading,
-  formSchema,
-  tableObject,
-  searchSchema,
-  tableColumns,
-  operationList,
-  register,
-  handleAdd,
-  handleDel,
-  handleSubmit,
-  setSearchParams
-} = useHook();
+const { searchSchema, formSchema, tableColumns } = useData();
+
+const { title, visible, loading, tableObject, operationList, register, handleAdd, handleDel, handleSubmit, setSearchParams } =
+  useHook();
 </script>
 
 <template>
@@ -42,6 +32,7 @@ const {
       </template>
       <template #default="{ size, dynamicColumns }">
         <mt-table
+          sels-tag
           row-key="id"
           :size="size"
           :columns="dynamicColumns"

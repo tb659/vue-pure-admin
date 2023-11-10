@@ -45,29 +45,16 @@ export default defineComponent({
 
     const setColumn = (columnProps: TableSetPropsType[], columnsChildren?: TableColumn[]) => {
       const { columns } = unref(getProps);
-      for (const v of columnsChildren || columns) {
+      for (const column of columnsChildren || columns) {
         for (const item of columnProps) {
-          if (v.prop === item.prop) {
-            set(v, item.path, item.value);
-          } else if (v.children?.length) {
-            setColumn(columnProps, v.children);
+          if (column.prop === item.prop) {
+            set(column, item.path, item.value);
+          } else if (column.children?.length) {
+            setColumn(columnProps, column.children);
           }
         }
       }
     };
-
-    const selections = ref<Recordable[]>([]);
-
-    const selectionChange = (selection: Recordable[]) => {
-      selections.value = selection;
-    };
-
-    expose({
-      setProps,
-      setColumn,
-      selections,
-      elTableRef
-    });
 
     const pagination = computed(() => {
       return Object.assign(
@@ -127,6 +114,23 @@ export default defineComponent({
       return bindValue;
     });
 
+    const selections = ref<Recordable[]>([]);
+
+    const selectionChange = (selection: Recordable[]) => {
+      selections.value = selection;
+      console.log(selection);
+    };
+
+    const showSelectionTags = computed(() => {
+      const { selsTag, objKey, labelKey } = unref(getProps);
+      return selsTag && !!objKey && !!labelKey;
+    });
+
+    const handleClose = (row, idx) => {
+      selections.value.splice(idx, 1);
+      elTableRef.value.toggleRowSelection(row, undefined);
+    };
+
     watch(
       () => unref(getProps).pageSize,
       (val: number) => {
@@ -155,6 +159,13 @@ export default defineComponent({
       }
     );
 
+    expose({
+      setProps,
+      setColumn,
+      selections,
+      elTableRef
+    });
+
     const renderTableExpand = () => {
       const { align, headerAlign, expand } = unref(getProps);
       // 渲染展开行
@@ -169,8 +180,8 @@ export default defineComponent({
 
     const renderTreeTableColumn = (columnsChildren: TableColumn[]) => {
       const { align, headerAlign, showOverflowTooltip } = unref(getProps);
-      return columnsChildren.map(v => {
-        const props = { ...v };
+      return columnsChildren.map(column => {
+        const props = { ...column };
         if (props.children) delete props.children;
         return (
           <el-table-column
@@ -178,14 +189,14 @@ export default defineComponent({
             align={align}
             headerAlign={headerAlign}
             {...props}
-            prop={v.prop}
+            prop={column.prop}
           >
             {{
               default: (scope: TableColumnScope) =>
-                v.children && v.children.length
-                  ? renderTableColumns(v.children)
-                  : getSlot(slots, v.prop, scope) || scope.row[v.prop],
-              header: getSlot(slots, `${v.prop}-header`)
+                column.children && column.children.length
+                  ? renderTableColumns(column.children)
+                  : getSlot(slots, column.prop, scope) || scope.row[column.prop],
+              header: getSlot(slots, `${column.prop}-header`)
             }}
           </el-table-column>
         );
@@ -211,7 +222,7 @@ export default defineComponent({
         return (
           <>
             {unref(operations)
-              .filter(v => !(v.hidden && v.hidden(scope.row)))
+              .filter(column => !(column.hidden && column.hidden(scope.row)))
               .map((operation, index) => {
                 return (
                   <el-button
@@ -240,8 +251,17 @@ export default defineComponent({
       );
     };
     const renderTableColumns = (columnsChildren?: TableColumn[]) => {
-      const { columns, reserveIndex, pageSize, currentPage, align, headerAlign, showOverflowTooltip, reserveSelection } =
-        unref(getProps);
+      const {
+        columns,
+        reserveIndex,
+        pageSize,
+        currentPage,
+        align,
+        headerAlign,
+        showOverflowTooltip,
+        reserveSelection,
+        selectable
+      } = unref(getProps);
       return [renderTableExpand()].concat(
         (columnsChildren || columns).map(column => {
           const props = { ...column };
@@ -249,17 +269,15 @@ export default defineComponent({
           if (isFunction(props.hide) && props.hide(attrs)) {
             return props.hide(attrs);
           }
-
           if (isBoolean(props.hide) && props.hide) {
             return props.hide;
           }
-
           return column.type === "selection" ? (
-            <el-table-column type="selection" reserveSelection={reserveSelection} width="48" />
+            <el-table-column type="selection" selectable={selectable} reserveSelection={reserveSelection} width="48" />
           ) : column.type === "index" ? (
             <el-table-column
               type="index"
-              index={column.index ? column.index : index => setIndex(reserveIndex, index, pageSize, currentPage)}
+              index={column.index || (index => setIndex(reserveIndex, index, pageSize, currentPage))}
               align={column.align || align}
               headerAlign={column.headerAlign || headerAlign}
               label={column.label}
@@ -311,6 +329,21 @@ export default defineComponent({
             {...unref(pagination)}
           />
         ) : undefined}
+        {/* 罗列已选择 */}
+        {unref(showSelectionTags) && unref(selections).length ? (
+          <div class="mt-16px">
+            已选择（{unref(selections).length}）：
+            {unref(selections).map((row, idx) => (
+              <el-tag
+                style="margin: 2px 5px"
+                closable={(unref(selections).length !== 1 && unref(getProps).selsSingle) || !unref(getProps).selsSingle}
+                onClose={() => handleClose(row, idx)}
+              >
+                {getSlot(slots, "sels-tag", row) || row[unref(getProps).labelKey]}
+              </el-tag>
+            ))}
+          </div>
+        ) : null}
       </div>
     );
   }

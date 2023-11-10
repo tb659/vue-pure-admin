@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useRenderIcon } from "@/components/ReIcon/src/hooks";
+import { useData } from "./data";
 import { useHook } from "./hook";
 import { ref } from "vue";
 import Write from "./modules/Write.vue";
@@ -12,20 +13,9 @@ defineOptions({
 
 const writeRef = ref<ComponentRef<typeof Write>>();
 
-const {
-  title,
-  visible,
-  loading,
-  formSchema,
-  tableObject,
-  searchSchema,
-  tableColumns,
-  operationList,
-  register,
-  handleAdd,
-  handleSubmit,
-  setSearchParams
-} = useHook();
+const { searchSchema, formSchema, tableColumns } = useData();
+
+const { title, visible, loading, tableObject, operationList, register, handleAdd, handleSubmit, setSearchParams } = useHook();
 </script>
 
 <template>

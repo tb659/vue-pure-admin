@@ -48,7 +48,7 @@ const tabsList = [
 ];
 
 const pageList = computed(() =>
-  copyIconList[currentActiveType.value]
+  copyIconList[currentActiveType.value || "ep:"]
     .filter(i => i.includes(filterValue.value))
     .slice((currentPage.value - 1) * pageSize.value, currentPage.value * pageSize.value)
 );
@@ -73,7 +73,7 @@ function onBeforeEnter() {
   if (isAllEmpty(icon.value)) return;
   setVal();
   // 寻找当前图标在第几页
-  const curIconIndex = copyIconList[currentActiveType.value].findIndex(i => i === icon.value);
+  const curIconIndex = copyIconList[currentActiveType.value || "ep:"].findIndex(i => i === icon.value);
   currentPage.value = Math.ceil((curIconIndex + 1) / pageSize.value);
 }
 
@@ -102,7 +102,7 @@ function onClear() {
 
 watch(
   () => pageList.value,
-  () => (totalPage.value = copyIconList[currentActiveType.value].filter(i => i.includes(filterValue.value)).length),
+  () => (totalPage.value = copyIconList[currentActiveType.value || "ep:"].filter(i => i.includes(filterValue.value)).length),
   { immediate: true }
 );
 watch(
@@ -170,7 +170,7 @@ watch(
               small
               @current-change="onCurrentChange"
             />
-            <el-button class="justify-end mr-2 ml-2" type="danger" size="small" text bg @click="onClear"> 清空 </el-button>
+            <el-button class="justify-end ml-2 mr-2" type="danger" size="small" text bg @click="onClear"> 清空 </el-button>
           </div>
         </el-popover>
       </template>

@@ -55,5 +55,18 @@ export default {
   /** 表格操作项折叠 */
   operationsFoldCount: propTypes.number.def(2),
   /** 表格边框 */
-  border: propTypes.bool.def(false)
+  border: propTypes.bool.def(false),
+  /** 数据 rowKey值 默认id 跨页用到rowKey */
+  objKey: propTypes.string.def("id"),
+  /** 已选择要显示的内容 */
+  labelKey: propTypes.string.def("name"),
+  /** 显示tag 同时必须设置 objKey 和 labelKey */
+  selsTag: propTypes.bool.def(false),
+  /** 选择单选 */
+  selsSingle: propTypes.bool.def(false),
+  /** 表格多选禁选 */
+  selectable: {
+    type: Function,
+    default: () => true
+  }
 };

@@ -3,7 +3,8 @@ import Cookies from "js-cookie";
 import { PROJECT_PREFIX } from "@/utils/common";
 import { config } from "@/utils/http/config";
 
-const TokenKey = config.TOKEN_KEY;
+const TokenKey = config.COOKIE_TOKEN_KEY;
+const SingleCaptcha = config.COOKIE_SINGLE_CAPTCHA;
 
 export function getCookie(key) {
   return Cookies.get(key);
@@ -27,6 +28,18 @@ export function setToken(token) {
 
 export function removeToken() {
   return removeCookie(TokenKey);
+}
+
+export function getSingleCaptcha() {
+  return getCookie(SingleCaptcha);
+}
+
+export function setSingleCaptcha(token) {
+  return setCookie(SingleCaptcha, token);
+}
+
+export function removeSingleCaptcha() {
+  return removeCookie(SingleCaptcha);
 }
 
 export function setLoginInfoCookie(form: loginType, remember: boolean) {

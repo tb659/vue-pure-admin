@@ -21,21 +21,17 @@ const props = defineProps({
   }
 });
 
-const rules = reactive({
-  name: [required()],
-  code: [required()]
-});
+const rules = reactive({});
+props.formSchema.filter(schema => schema.required).map(schema => (rules[schema.prop] = [required()]));
 
 const { register, methods, elFormRef } = useForm({
   schema: props.formSchema
 });
 
-const { setValue, setSchema } = methods;
-
 async function getRole() {
   const res = await roleApi.list<RoleData[]>({});
   if (res) {
-    setSchema([
+    methods.setSchema([
       {
         prop: "roleList",
         path: "componentProps.options",
@@ -51,7 +47,7 @@ watch(
   () => props.currentRow,
   currentRow => {
     if (!currentRow) return;
-    setValue(currentRow);
+    methods.setValue(currentRow);
   },
   { deep: true, immediate: true }
 );

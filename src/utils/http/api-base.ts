@@ -3,11 +3,10 @@ import { PureHttpError, RequestMethods, PureHttpResponse, PureHttpRequestConfig 
 import { stringify } from "qs";
 import { config } from "./config";
 import NProgress from "../progress";
-import { LOGIN_TIMES, MOCK_REQUEST } from "@/utils/common";
-import { getCookie, getToken, setToken } from "@/utils/auth";
-import { useUserStoreHook } from "@/store/modules/user";
 import { msg } from "@/utils/message";
-import { LOGIN_EXPIRE_MINUTES, PROJECT_PREFIX } from "@/utils/common";
+import { useUserStoreHook } from "@/store/modules/user";
+import { getToken, setToken, getCookie, getSingleCaptcha } from "@/utils/auth";
+import { LOGIN_TIMES, MOCK_REQUEST, PROJECT_PREFIX, LOGIN_EXPIRE_MINUTES } from "@/utils/common";
 
 const { result_code, base_url, timeout, SINGLE_CAPTCHA, TOKEN_KEY } = config;
 export const PATH_URL = base_url[import.meta.env.VITE_API_BASEPATH];
@@ -64,7 +63,14 @@ class PureHttp {
     PureHttp.axiosInstance.interceptors.request.use(
       async (config: PureHttpRequestConfig): Promise<any> => {
         if (import.meta.env.VITE_API_BASEPATH === "pro") {
-          if (config.method !== "get" && !config.url.includes("login")) {
+          if (
+            config.method !== "get" &&
+            !(
+              config.url.includes("/login") ||
+              config.url.includes("/change/token") ||
+              config.url.includes("/users/switchUserCorp")
+            )
+          ) {
             msg.warning("模拟环境，禁止操作！");
             return;
           }
@@ -77,6 +83,9 @@ class PureHttp {
         // console.log(config);
         // 开启进度条动画
         NProgress.start();
+        // 携带授权信息
+        getToken() && (config.headers[TOKEN_KEY] = getToken());
+        getSingleCaptcha() && (config.headers[SINGLE_CAPTCHA] = getSingleCaptcha());
         // 优先判断post/get等方法是否传入回调，否则执行初始化设置等回调
         if (typeof config.beforeRequestCallback === "function") {
           config.beforeRequestCallback(config);
@@ -112,10 +121,6 @@ class PureHttp {
                   }
                   resolve(PureHttp.retryOriginalRequest(config));
                 } else {
-                  // 携带授权信息
-                  config.headers[TOKEN_KEY] = data;
-                  getCookie(PROJECT_PREFIX + SINGLE_CAPTCHA) &&
-                    (config.headers[SINGLE_CAPTCHA] = getCookie(PROJECT_PREFIX + SINGLE_CAPTCHA));
                   resolve(config);
                 }
               } else {
@@ -185,7 +190,7 @@ class PureHttp {
     url: string,
     param?: AxiosRequestConfig,
     axiosConfig?: PureHttpRequestConfig
-  ): Promise<T> {
+  ): Promise<PureResponse<T>> {
     const config = {
       method,
       url,

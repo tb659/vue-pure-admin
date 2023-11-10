@@ -3,15 +3,17 @@ import { set } from "lodash-es";
 import { ElForm } from "element-plus";
 import { getSlot } from "@/utils/tsxHelper";
 import { componentMap } from "./componentMap";
+import { IconifyIconOffline } from "@/components/ReIcon";
 import { useRenderRadio } from "./components/useRenderRadio";
 import { useRenderSelect } from "./components/useRenderSelect";
 import { useRenderCheckbox } from "./components/useRenderCheckbox";
-import IconifyIconOnline from "@/components/ReIcon/src/iconifyIconOnline";
 import { computed, defineComponent, onMounted, ref, unref, watch } from "vue";
 
 import { setTextPlaceholder, setGridProp, setComponentProps, setItemComponentSlots, initModel, setFormItemSlots } from "./helper";
 import { findIndex } from "@/utils";
 import { isFunction } from "@pureadmin/utils";
+
+import InfoCircle from "@iconify-icons/fa/info-circle";
 
 export default defineComponent({
   name: "MtForm",
@@ -157,7 +159,7 @@ export default defineComponent({
                   content: () => <span v-html={item.labelMsg}></span>,
                   default: () => (
                     <span class="pt-2 pr-1">
-                      <IconifyIconOnline icon="fa:info-circle" />
+                      <IconifyIconOffline icon={InfoCircle} />
                     </span>
                   )
                 }}

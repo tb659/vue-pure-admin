@@ -5,8 +5,7 @@ import { useForm } from "@/hooks/web/useForm";
 import { RoleData } from "@/api/system/role/types";
 import { menuApi } from "@/api/system/menu";
 import { MenuData } from "@/api/system/menu/types";
-import { listToTree, treeToList } from "@/utils/tree";
-import { MENU_TYPE } from "@/utils/common";
+import { eachTree, listToTree } from "@/utils/tree";
 
 defineOptions({
   name: "WriteForm"
@@ -23,10 +22,8 @@ const props = defineProps({
   }
 });
 
-const rules = reactive({
-  name: [required()],
-  code: [required()]
-});
+const rules = reactive({});
+props.formSchema.filter(schema => schema.required).map(schema => (rules[schema.prop] = [required()]));
 
 const { register, methods, elFormRef } = useForm({
   schema: props.formSchema
@@ -53,17 +50,24 @@ watch(
   list => {
     if (!props.currentRow?.resourceList) return;
     if (list.length && treeRef.value) {
-      // 按钮权限
-      const permissionIdByB = props.currentRow.resourceList.filter(v => +v.permissions === MENU_TYPE.B_V).map(v => v.id);
-      // 菜单权限
-      const permissionIdByM = props.currentRow.resourceList.filter(v => +v.permissions === MENU_TYPE.M_V).map(v => v.id);
-      // 不包含按钮的菜单
-      const menuIdByM = treeToList(menuData.value)
-        .filter(menu => menu.type === MENU_TYPE.M_V && !menu.children)
-        .map(menu => menu.id);
-      // 过滤菜单权限
-      const ids = menuIdByM.filter(menuId => permissionIdByM.filter(permId => menuId === permId).length);
-      defaultExpandedKeys.value = permissionIdByB.concat(ids);
+      // // 按钮权限
+      // const permissionIdByB = props.currentRow.resourceList.filter(v => +v.permissions === MENU_TYPE.B_V).map(v => v.id);
+      // // 菜单权限
+      // const permissionIdByM = props.currentRow.resourceList.filter(v => +v.permissions === MENU_TYPE.M_V).map(v => v.id);
+      // // 不包含按钮的菜单
+      // const menuIdByM = treeToList(menuData.value)
+      //   .filter(menu => menu.type === MENU_TYPE.M_V && !menu.children)
+      //   .map(menu => menu.id);
+      // // 过滤菜单权限
+      // const ids = menuIdByM.filter(menuId => permissionIdByM.filter(permId => menuId === permId).length);
+      // defaultExpandedKeys.value = permissionIdByB.concat(ids);
+      defaultExpandedKeys.value = props.currentRow.resourceList.map(v => v.id);
+      eachTree(list, item => {
+        if (item.children?.length && defaultExpandedKeys.value.includes(item.id)) {
+          const index = defaultExpandedKeys.value.findIndex(v => v === item.id);
+          defaultExpandedKeys.value.splice(index, 1);
+        }
+      });
       treeRef.value.setCheckedKeys(defaultExpandedKeys.value);
     }
   }
@@ -72,9 +76,8 @@ watch(
 watch(
   () => props.currentRow,
   currentRow => {
-    const { setValue } = methods;
     if (!currentRow) return;
-    setValue(currentRow);
+    methods.setValue(currentRow);
   },
   { deep: true, immediate: true }
 );
@@ -90,14 +93,11 @@ watch(
   }
 );
 
-function getList() {
-  return menuList.value;
-}
 defineExpose({
   elFormRef,
   getFormData: methods.getFormData,
   treeRef,
-  getList: () => getList()
+  getList: () => menuList.value
 });
 </script>
 

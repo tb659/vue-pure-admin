@@ -17,7 +17,7 @@ import { PROJECT_PREFIX, SHOW_I18N } from "@/utils/common";
 import { useRenderIcon } from "@/components/ReIcon/src/hooks";
 import { useTranslationLang } from "@/layout/hooks/useTranslationLang";
 import { useDataThemeChange } from "@/layout/hooks/useDataThemeChange";
-import { getCookie, setLoginInfoCookie, setCookie } from "@/utils/auth";
+import { getCookie, setLoginInfoCookie, setSingleCaptcha } from "@/utils/auth";
 import { /* addPathMatch, */ initRouter, getTopMenu } from "@/router/utils";
 // import { usePermissionStoreHook } from "@/store/modules/permission";
 
@@ -56,7 +56,7 @@ const ruleForm = reactive({
 });
 
 const setCaptchaCookie = res => {
-  setCookie(PROJECT_PREFIX + SINGLE_CAPTCHA, res.headers[SINGLE_CAPTCHA]);
+  setSingleCaptcha(res.headers[SINGLE_CAPTCHA]);
 };
 
 const getCaptcha = () => {

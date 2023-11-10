@@ -2,11 +2,8 @@ import { DictData } from "@/api/system/dict/types";
 import { useTable } from "@/hooks/web/useTable";
 import { dictApi } from "@/api/system/dict";
 import { ref, unref } from "vue";
-import { useData } from "./data";
 import { msg } from "@/utils/message";
 import { ADMIN_ROLE_EMBED } from "@/utils/common";
-
-const { searchSchema, formSchema, tableColumns } = useData();
 
 export function useHook() {
   const title = ref("字典");
@@ -81,10 +78,7 @@ export function useHook() {
     title,
     visible,
     loading,
-    formSchema,
     tableObject,
-    searchSchema,
-    tableColumns,
     operationList,
     register,
     handleAdd,

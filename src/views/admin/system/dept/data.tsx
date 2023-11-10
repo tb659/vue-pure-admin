@@ -30,21 +30,36 @@ export function useData() {
 
   const formSchema = reactive<FormSchema[]>([
     {
+      label: "上级部门",
+      prop: "parentDeptId",
+      component: "TreeSelect",
+      colProps: { span: 24 },
+      componentProps: {
+        placeholder: "请选择上级部门",
+        options: [],
+        showCount: true
+      },
+      required: true
+    },
+    {
       label: "部门名称",
       prop: "name",
       component: "Input",
       colProps: { span: 24 },
       componentProps: {
         placeholder: "请输入部门名称"
-      }
+      },
+      required: true
     },
     {
-      label: "编辑器",
-      prop: "info",
-      component: "Editor",
+      label: "部门主管",
+      prop: "managerId",
+      component: "Select",
       colProps: { span: 24 },
       componentProps: {
-        placeholder: "请输入编辑器"
+        placeholder: "选择部门主管",
+        options: [],
+        filterable: true
       }
     },
     {
@@ -53,19 +68,20 @@ export function useData() {
       component: "Input",
       colProps: { span: 24 },
       componentProps: {
-        placeholder: "请输入部门显示顺序"
-      }
+        placeholder: "请输入部门编码"
+      },
+      required: true
     },
     {
       label: "部门状态",
-      labelMsg: "选择禁用则路由将不会出现在侧边栏，也不能被访问",
       prop: "status",
       value: 1,
       component: "Radio",
       colProps: { span: 24 },
       componentProps: {
         options: STATUS_OPTIONS
-      }
+      },
+      required: true
     },
     {
       label: "部门备注",
@@ -75,7 +91,7 @@ export function useData() {
       componentProps: {
         placeholder: "请输入部门备注",
         type: "textarea",
-        rows: "2"
+        rows: 2
       }
     }
   ]);
@@ -139,7 +155,7 @@ export function useData() {
       label: "创建时间",
       minWidth: 180,
       prop: "createTime",
-      formatter: row => dayjs(row.crtDate + row.crtTime).format("YYYY-MM-DD HH:mm:ss")
+      formatter: row => dayjs.unix(row.crtDt).format("YYYY-MM-DD HH:mm:ss")
     },
     {
       label: "操作",

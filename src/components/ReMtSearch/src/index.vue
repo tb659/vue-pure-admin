@@ -9,6 +9,8 @@ import { useRenderIcon } from "@/components/ReIcon/src/hooks";
 
 import Search from "@iconify-icons/fa/search";
 import Refresh from "@iconify-icons/fa/refresh";
+import Up from "@iconify-icons/fa/chevron-up";
+import Down from "@iconify-icons/fa/chevron-down";
 
 defineOptions({
   name: "MtSearch"
@@ -59,8 +61,7 @@ function setVisible() {
 async function search() {
   await unref(elFormRef)?.validate(async isValid => {
     if (isValid) {
-      const { getFormData } = methods;
-      const model = await getFormData();
+      const model = await methods.getFormData();
       emit("search", model);
     }
   });
@@ -69,8 +70,7 @@ async function search() {
 /** 重置按钮事件 */
 async function reset() {
   unref(elFormRef)?.resetFields();
-  const { getFormData } = methods;
-  const model = await getFormData();
+  const model = await methods.getFormData();
   emit("reset", model);
 }
 </script>
@@ -97,7 +97,7 @@ async function reset() {
         </el-button>
         <el-button v-if="expand" text @click="setVisible">
           {{ transformI18n($t(visible ? "form.shrink" : "form.expand")) }}
-          <IconifyIconOnline :icon="visible ? 'ant-design:up-outlined' : 'ant-design:down-outlined'" />
+          <IconifyIconOffline :icon="visible ? Up : Down" />
         </el-button>
       </div>
     </template>
@@ -113,7 +113,7 @@ async function reset() {
       </el-button>
       <el-button v-if="expand" text @click="setVisible">
         {{ transformI18n($t(visible ? "form.shrink" : "form.expand")) }}
-        <IconifyIconOnline :icon="visible ? 'ant-design:up-outlined' : 'ant-design:down-outlined'" />
+        <IconifyIconOffline :icon="visible ? Up : Down" />
       </el-button>
     </div>
   </template>

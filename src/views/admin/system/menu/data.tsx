@@ -49,7 +49,8 @@ export function useData() {
         checkStrictly: true,
         nodeKey: "id",
         data: []
-      }
+      },
+      required: true
     },
     {
       label: "菜单类型",
@@ -91,7 +92,8 @@ export function useData() {
       colProps: { span: 24 },
       componentProps: {
         placeholder: "请输入菜单名称"
-      }
+      },
+      required: true
     },
     {
       label: "显示排序",
@@ -100,7 +102,8 @@ export function useData() {
       colProps: { span: 24 },
       componentProps: {
         placeholder: "请输入菜单显示顺序"
-      }
+      },
+      required: true
     },
     {
       label: "路由地址",
@@ -111,7 +114,8 @@ export function useData() {
       componentProps: {
         placeholder: "请输入访问的路由地址"
       },
-      hidden: ({ model }) => model.type === MENU_TYPE.B_V
+      hidden: ({ model }) => model.type === MENU_TYPE.B_V,
+      required: true
     },
     {
       label: "组件路径",
@@ -133,7 +137,8 @@ export function useData() {
       componentProps: {
         placeholder: "请输入组件name"
       },
-      hidden: ({ model }) => model.type !== MENU_TYPE.M_V
+      hidden: ({ model }) => model.type !== MENU_TYPE.M_V,
+      required: true
     },
     {
       label: "重写路由",
@@ -294,7 +299,7 @@ export function useData() {
       label: "创建时间",
       minWidth: 180,
       prop: "createTime",
-      formatter: row => dayjs(row.crtDate + row.crtTime).format("YYYY-MM-DD HH:mm:ss")
+      formatter: row => dayjs.unix(row.crtDt).format("YYYY-MM-DD HH:mm:ss")
     },
     {
       label: "操作",

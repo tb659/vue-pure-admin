@@ -7,16 +7,17 @@ export interface loginType {
 }
 
 export interface UserData {
-  id: number;
-  dataVersion: number;
-  userId: number;
-  roleList: number[];
-  status: number;
-  username: string;
-  password: string;
-  newPassword: string;
-  confirmPassword: string;
-  expireTime: string;
+  id?: number;
+  dataVersion?: number;
+  userId?: number;
+  roleList?: number[];
+  status?: number;
+  username?: string;
+  realName?: string;
+  password?: string;
+  newPassword?: string;
+  confirmPassword?: string;
+  expireTime?: string;
 }
 
 export interface UserQuery extends BaseQuery {

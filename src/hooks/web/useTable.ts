@@ -49,7 +49,7 @@ export const useTable = <T = any>(config: UseTableConfig) => {
     // AxiosConfig 配置
     params: {},
     // 加载中
-    loading: true,
+    loading: false,
     // 当前行的数据
     currentRow: null
   });

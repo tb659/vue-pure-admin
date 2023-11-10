@@ -32,9 +32,8 @@ const { register, methods, elFormRef } = useForm({
 watch(
   () => props.currentRow,
   currentRow => {
-    const { setValue } = methods;
     if (!currentRow) return;
-    setValue(currentRow);
+    methods.setValue(currentRow);
   },
   { deep: true, immediate: true }
 );

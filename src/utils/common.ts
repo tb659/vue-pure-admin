@@ -41,7 +41,7 @@ export const STATUS_OPTIONS = [
   {
     label: STATUS_TYPE.ENABLED_L,
     value: STATUS_TYPE.ENABLED_V,
-    type: "primary"
+    type: ""
   },
   {
     label: STATUS_TYPE.DISABLED_L,
@@ -53,7 +53,7 @@ export const STATUS_MAP = {
   1: {
     label: STATUS_TYPE.ENABLED_L,
     value: STATUS_TYPE.ENABLED_V,
-    type: "primary"
+    type: ""
   },
   0: {
     label: STATUS_TYPE.DISABLED_L,
@@ -122,4 +122,15 @@ export const MENU_TYPE_MAP = {
   2: { label: MENU_TYPE.M_L, value: MENU_TYPE.M_V, type: "success" },
   3: { label: MENU_TYPE.B_L, value: MENU_TYPE.B_V, type: "" },
   undefined: { label: "" }
+};
+// !-----------------------------------------------------------------------------------------------
+// !----------------------------------------------弹窗宽度------------------------------------------
+// !-----------------------------------------------------------------------------------------------
+/** 弹窗宽度 */
+export const DIALOG_WIDTH_TYPE = {
+  MINI: "400px",
+  SMALL: "600px",
+  DEFAULT: "800px",
+  MIDDLE: "1000px",
+  LARGE: "1200px"
 };

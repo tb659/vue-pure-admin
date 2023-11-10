@@ -7,8 +7,15 @@ import { router, resetRouter } from "@/router";
 import { storageLocal } from "@pureadmin/utils";
 import { getCookie, removeToken, setCookie, setToken } from "@/utils/auth";
 import { loginApi } from "@/api/login";
+import type { UserData } from "@/api/system/user/types";
 
 import { useMultiTagsStoreHook } from "@/store/modules/multiTags";
+
+// 获取user
+export const getUser = key => {
+  const user = storageLocal().getItem(USER_INFO);
+  return user ? (key ? user[key] : user) : "";
+};
 
 export const useUserStore = defineStore({
   id: "pure-user",
@@ -27,7 +34,7 @@ export const useUserStore = defineStore({
     async login(info, beforeRequestCallback) {
       return new Promise((resolve, reject) => {
         loginApi
-          .login(info, beforeRequestCallback)
+          .login<UserData>(info, beforeRequestCallback)
           .then(({ data }) => {
             if (data) {
               this.userInfo = data;
