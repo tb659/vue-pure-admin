@@ -152,6 +152,7 @@ login:
   passwordRuleReg: The password format should be any combination of 8-18 digits
   passwordSureReg: Please enter confirm password
   passwordDifferentReg: The two passwords do not match!
+  passwordUpdate: Password update
   passwordUpdateReg: Password has been updated
 form:
   inputText: Please input

@@ -152,6 +152,7 @@ login:
   passwordRuleReg: 密码格式应为8-18位数字、字母、符号的任意两种组合
   passwordSureReg: 请输入确认密码
   passwordDifferentReg: 两次密码不一致!
+  passwordUpdate: 修改密码
   passwordUpdateReg: 修改密码成功
 form:
   inputText: 请输入

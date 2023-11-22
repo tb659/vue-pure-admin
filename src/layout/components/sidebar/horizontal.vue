@@ -6,19 +6,32 @@ import SidebarItem from "./sidebarItem.vue";
 import { isAllEmpty } from "@pureadmin/utils";
 import { ref, nextTick, computed } from "vue";
 import { useNav } from "@/layout/hooks/useNav";
+import passwordUpdate from "./passwordUpdate.vue";
 import { useTranslationLang } from "../../hooks/useTranslationLang";
 import { usePermissionStoreHook } from "@/store/modules/permission";
 import globalization from "@/assets/svg/globalization.svg?component";
-import LogoutCircleRLine from "@iconify-icons/ri/logout-circle-r-line";
 
-import Setting from "@iconify-icons/ri/settings-3-line";
 import Check from "@iconify-icons/ep/check";
+import Lock from "@iconify-icons/ri/lock-fill";
+import Setting from "@iconify-icons/ri/settings-3-line";
+import LogoutCircleRLine from "@iconify-icons/ri/logout-circle-r-line";
 
 const menuRef = ref();
 
 const { t, route, locale, translationCh, translationEn } = useTranslationLang(menuRef);
-const { title, logout, backTopMenu, onPanel, username, userAvatar, avatarsStyle, getDropdownItemStyle, getDropdownItemClass } =
-  useNav();
+const {
+  title,
+  logout,
+  backTopMenu,
+  onPanel,
+  username,
+  userAvatar,
+  avatarsStyle,
+  getDropdownItemStyle,
+  getDropdownItemClass,
+
+  passwordVisible
+} = useNav();
 
 const defaultActive = computed(() => (!isAllEmpty(route.meta?.activePath) ? route.meta.activePath : route.path));
 
@@ -86,6 +99,10 @@ nextTick(() => {
               <IconifyIconOffline :icon="LogoutCircleRLine" style="margin: 5px" />
               {{ t("buttons.hsLoginOut") }}
             </el-dropdown-item>
+            <el-dropdown-item @click="passwordVisible = true">
+              <IconifyIconOffline :icon="Lock" style="margin: 5px" />
+              {{ t("login.passwordUpdate") }}
+            </el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>
@@ -93,6 +110,9 @@ nextTick(() => {
         <IconifyIconOffline :icon="Setting" />
       </span>
     </div>
+
+    <!-- 修改密码弹窗 -->
+    <password-update :visible="passwordVisible" />
   </div>
 </template>
 

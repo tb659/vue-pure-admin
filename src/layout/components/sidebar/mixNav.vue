@@ -6,16 +6,18 @@ import { SHOW_I18N } from "@/utils/common";
 import { isAllEmpty } from "@pureadmin/utils";
 import { useNav } from "@/layout/hooks/useNav";
 import { transformI18n } from "@/plugins/i18n";
+import passwordUpdate from "./passwordUpdate.vue";
 import { ref, toRaw, watch, onMounted, nextTick } from "vue";
 import { useRenderIcon } from "@/components/ReIcon/src/hooks";
 import { getParentPaths, findRouteByPath } from "@/router/utils";
 import { useTranslationLang } from "../../hooks/useTranslationLang";
 import { usePermissionStoreHook } from "@/store/modules/permission";
 import globalization from "@/assets/svg/globalization.svg?component";
-import LogoutCircleRLine from "@iconify-icons/ri/logout-circle-r-line";
 
-import Setting from "@iconify-icons/ri/settings-3-line";
 import Check from "@iconify-icons/ep/check";
+import Lock from "@iconify-icons/ri/lock-fill";
+import Setting from "@iconify-icons/ri/settings-3-line";
+import LogoutCircleRLine from "@iconify-icons/ri/logout-circle-r-line";
 
 const menuRef = ref();
 const defaultActive = ref(null);
@@ -31,7 +33,9 @@ const {
   getDivStyle,
   avatarsStyle,
   getDropdownItemStyle,
-  getDropdownItemClass
+  getDropdownItemClass,
+
+  passwordVisible
 } = useNav();
 
 function getDefaultActive(routePath) {
@@ -125,6 +129,10 @@ watch(
               <IconifyIconOffline :icon="LogoutCircleRLine" style="margin: 5px" />
               {{ t("buttons.hsLoginOut") }}
             </el-dropdown-item>
+            <el-dropdown-item @click="passwordVisible = true">
+              <IconifyIconOffline :icon="Lock" style="margin: 5px" />
+              {{ t("login.passwordUpdate") }}
+            </el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>
@@ -132,6 +140,9 @@ watch(
         <IconifyIconOffline :icon="Setting" />
       </span>
     </div>
+
+    <!-- 修改密码弹窗 -->
+    <password-update :visible="passwordVisible" />
   </div>
 </template>
 

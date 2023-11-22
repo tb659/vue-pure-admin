@@ -6,12 +6,14 @@ import { SHOW_I18N } from "@/utils/common";
 import { useNav } from "@/layout/hooks/useNav";
 import Breadcrumb from "./sidebar/breadCrumb.vue";
 import topCollapse from "./sidebar/topCollapse.vue";
+import passwordUpdate from "./sidebar/passwordUpdate.vue";
 import { useTranslationLang } from "../hooks/useTranslationLang";
 import globalization from "@/assets/svg/globalization.svg?component";
-import LogoutCircleRLine from "@iconify-icons/ri/logout-circle-r-line";
 
-import Setting from "@iconify-icons/ri/settings-3-line";
 import Check from "@iconify-icons/ep/check";
+import Lock from "@iconify-icons/ri/lock-fill";
+import Setting from "@iconify-icons/ri/settings-3-line";
+import LogoutCircleRLine from "@iconify-icons/ri/logout-circle-r-line";
 
 const {
   layout,
@@ -24,7 +26,9 @@ const {
   avatarsStyle,
   toggleSideBar,
   getDropdownItemStyle,
-  getDropdownItemClass
+  getDropdownItemClass,
+
+  passwordVisible
 } = useNav();
 
 const { t, locale, translationCh, translationEn } = useTranslationLang();
@@ -86,12 +90,19 @@ const { t, locale, translationCh, translationEn } = useTranslationLang();
               <IconifyIconOffline :icon="LogoutCircleRLine" style="margin: 5px" />
               {{ t("buttons.hsLoginOut") }}
             </el-dropdown-item>
+            <el-dropdown-item @click="passwordVisible = true">
+              <IconifyIconOffline :icon="Lock" style="margin: 5px" />
+              {{ t("login.passwordUpdate") }}
+            </el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>
       <span class="set-icon navbar-bg-hover" :title="t('buttons.hssystemSet')" @click="onPanel">
         <IconifyIconOffline :icon="Setting" />
       </span>
+
+      <!-- 修改密码弹窗 -->
+      <password-update :visible="passwordVisible" />
     </div>
   </div>
 </template>
