@@ -25,8 +25,10 @@ const defaultActive = ref(null);
 const { t, route, locale, translationCh, translationEn } = useTranslationLang(menuRef);
 const {
   device,
+  routers,
   logout,
   onPanel,
+  menuSelect,
   resolvePath,
   username,
   userAvatar,
@@ -65,7 +67,14 @@ watch(
 
 <template>
   <div v-if="device !== 'mobile'" v-loading="usePermissionStoreHook().wholeMenus.length === 0" class="horizontal-header">
-    <el-menu ref="menuRef" router mode="horizontal" class="horizontal-header-menu" :default-active="defaultActive">
+    <el-menu
+      ref="menuRef"
+      router
+      mode="horizontal"
+      class="horizontal-header-menu"
+      :default-active="defaultActive"
+      @select="indexPath => menuSelect(indexPath, routers)"
+    >
       <el-menu-item
         v-for="route in usePermissionStoreHook().wholeMenus"
         :key="route.path"

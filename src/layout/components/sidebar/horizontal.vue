@@ -4,9 +4,9 @@ import Notice from "../notice/index.vue";
 import { SHOW_I18N } from "@/utils/common";
 import SidebarItem from "./sidebarItem.vue";
 import { isAllEmpty } from "@pureadmin/utils";
-import { ref, nextTick, computed } from "vue";
 import { useNav } from "@/layout/hooks/useNav";
 import passwordUpdate from "./passwordUpdate.vue";
+import { ref, nextTick, computed, watch } from "vue";
 import { useTranslationLang } from "../../hooks/useTranslationLang";
 import { usePermissionStoreHook } from "@/store/modules/permission";
 import globalization from "@/assets/svg/globalization.svg?component";
@@ -21,9 +21,11 @@ const menuRef = ref();
 const { t, route, locale, translationCh, translationEn } = useTranslationLang(menuRef);
 const {
   title,
+  routers,
   logout,
   backTopMenu,
   onPanel,
+  menuSelect,
   username,
   userAvatar,
   avatarsStyle,
@@ -38,6 +40,13 @@ const defaultActive = computed(() => (!isAllEmpty(route.meta?.activePath) ? rout
 nextTick(() => {
   menuRef.value?.handleResize();
 });
+
+watch(
+  () => route.path,
+  () => {
+    menuSelect(route.path, routers);
+  }
+);
 </script>
 
 <template>
@@ -46,7 +55,14 @@ nextTick(() => {
       <img src="/logo.svg" alt="logo" />
       <span>{{ title }}</span>
     </div>
-    <el-menu ref="menuRef" router mode="horizontal" class="horizontal-header-menu" :default-active="defaultActive">
+    <el-menu
+      ref="menuRef"
+      router
+      mode="horizontal"
+      class="horizontal-header-menu"
+      :default-active="defaultActive"
+      @select="indexPath => menuSelect(indexPath, routers)"
+    >
       <sidebar-item
         v-for="route in usePermissionStoreHook().wholeMenus"
         :key="route.path"

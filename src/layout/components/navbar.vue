@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import Search from "./search/index.vue";
 import Notice from "./notice/index.vue";
-import mixNav from "./sidebar/mixNav.vue";
 import { SHOW_I18N } from "@/utils/common";
 import { useNav } from "@/layout/hooks/useNav";
+import topMixNav from "./sidebar/topMixNav.vue";
 import Breadcrumb from "./sidebar/breadCrumb.vue";
 import topCollapse from "./sidebar/topCollapse.vue";
 import passwordUpdate from "./sidebar/passwordUpdate.vue";
@@ -43,11 +43,11 @@ const { t, locale, translationCh, translationEn } = useTranslationLang();
       @toggleClick="toggleSideBar"
     />
 
-    <Breadcrumb v-if="layout !== 'mix' && device !== 'mobile'" class="breadcrumb-container" />
+    <Breadcrumb v-if="layout !== 'topMix' && device !== 'mobile'" class="breadcrumb-container" />
 
-    <mixNav v-if="layout === 'mix'" />
+    <topMixNav v-if="layout === 'topMix'" />
 
-    <div v-if="layout === 'vertical'" class="vertical-header-right">
+    <div v-if="layout === 'vertical' || layout === 'leftMix'" class="vertical-header-right">
       <!-- 菜单搜索 -->
       <Search v-if="false" />
       <!-- 通知 -->

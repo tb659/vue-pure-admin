@@ -18,7 +18,14 @@ export const useAppStore = defineStore({
     layout: storageLocal().getItem<StorageConfigs>(`${responsiveStorageNameSpace()}layout`)?.layout ?? getConfig().Layout,
     device: deviceDetection() ? "mobile" : "desktop",
     // 作用于 src/views/components/draggable/index.vue 页面，当离开页面并不会销毁 new Swap()，sortablejs 官网也没有提供任何销毁的 api
-    sortSwap: false
+    sortSwap: false,
+    contentFullScreen:
+      storageLocal().getItem<StorageConfigs>(`${responsiveStorageNameSpace}layout`)?.contentFullScreen ??
+      getConfig().ContentFullScreen,
+    // 左侧混合模式固定子菜单
+    leftMixNavFixed:
+      storageLocal().getItem<StorageConfigs>(`${responsiveStorageNameSpace}layout`)?.leftMixNavFixed ??
+      getConfig().LeftMixNavFixed
   }),
   getters: {
     getSidebarStatus(state) {
@@ -29,6 +36,24 @@ export const useAppStore = defineStore({
     }
   },
   actions: {
+    setSortSwap(val) {
+      this.sortSwap = val;
+    },
+    setLayout(layout) {
+      this.layout = layout;
+    },
+    toggleDevice(device: string) {
+      this.device = device;
+    },
+    toggleSideBar(opened?: boolean, resize?: string) {
+      this.TOGGLE_SIDEBAR(opened, resize);
+    },
+    toggleContentFullScreen(flag?: boolean) {
+      this.SET_LOCAL_LAYOUT("contentFullScreen", flag);
+    },
+    toggleLeftMixSubMenuFixed(fixed?: boolean) {
+      this.SET_LOCAL_LAYOUT("leftMixNavFixed", fixed);
+    },
     TOGGLE_SIDEBAR(opened?: boolean, resize?: string) {
       const layout = storageLocal().getItem<StorageConfigs>(`${responsiveStorageNameSpace()}layout`);
       if (opened && resize) {
@@ -47,17 +72,11 @@ export const useAppStore = defineStore({
       }
       storageLocal().setItem(`${responsiveStorageNameSpace()}layout`, layout);
     },
-    async toggleSideBar(opened?: boolean, resize?: string) {
-      await this.TOGGLE_SIDEBAR(opened, resize);
-    },
-    toggleDevice(device: string) {
-      this.device = device;
-    },
-    setLayout(layout) {
-      this.layout = layout;
-    },
-    setSortSwap(val) {
-      this.sortSwap = val;
+    SET_LOCAL_LAYOUT(key: string, data: any) {
+      const layout = storageLocal().getItem<StorageConfigs>(`${responsiveStorageNameSpace()}layout`);
+      layout[key] = data;
+      this[key] = data;
+      storageLocal().setItem(`${responsiveStorageNameSpace()}layout`, layout);
     }
   }
 });

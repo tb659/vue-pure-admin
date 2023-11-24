@@ -65,6 +65,9 @@ declare global {
     FixedHeader?: boolean;
     HiddenSideBar?: boolean;
     MultiTagsCache?: boolean;
+    ContentFullScreen?: boolean;
+    LeftMixNavFixed?: boolean;
+    MixMenuTrigger?: string;
     KeepAlive?: boolean;
     Locale?: string;
     Layout?: string;
@@ -102,6 +105,9 @@ declare global {
     fixedHeader?: boolean;
     hiddenSideBar?: boolean;
     multiTagsCache?: boolean;
+    contentFullScreen?: boolean;
+    leftMixNavFixed?: boolean;
+    mixMenuTrigger?: string;
     keepAlive?: boolean;
     locale?: string;
     layout?: string;
@@ -134,19 +140,24 @@ declare global {
       locale?: string;
     };
     layout: {
-      layout?: string;
       theme?: string;
+      layout?: string;
       darkMode?: boolean;
-      sidebarStatus?: boolean;
       epThemeColor?: string;
+      sidebarStatus?: boolean;
+      leftMixNavFixed?: boolean;
+      contentFullScreen?: boolean;
     };
     configure: {
       grey?: boolean;
       weak?: boolean;
       hideTabs?: boolean;
-      hideFooter?: boolean;
       showLogo?: boolean;
       showModel?: string;
+      hideFooter?: boolean;
+      fixedHeader?: boolean;
+      hiddenSideBar?: boolean;
+      mixMenuTrigger?: string;
       multiTagsCache?: boolean;
     };
     tags?: Array<any>;

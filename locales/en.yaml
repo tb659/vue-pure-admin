@@ -1,3 +1,31 @@
+apps:
+  configuration: Configuration
+  closeConfiguration: Close configuration
+  darkmode: Dark mode
+  navigationMode: Navigation mode
+  leftMenuMode: LeftMenu mode
+  leftMixMenuMode: LeftMixMenu mode
+  topMenuMode: TopMenu Mode
+  topMixMenuMode: TopMixMenu mode
+  systemTheme: System theme
+  interfaceDisplay: Interface display
+  grayMode: Gray mode
+  colorWeakMode: Color weak mode
+  hideTab: Hide tab
+  sidebarLogo: Sidebar logo
+  hiddenSideBar: Sidebar hidden
+  hiddenFooter: Footer hidden
+  fixedHeader: Headder fixed
+  tabPersistence: Tab persistence
+  tabStyle: Tab style
+  card: card
+  smart: smart
+  menuTrigger: MixMenuTrigger
+  click: click
+  hover: hover
+  clearCacheAndToTheLoginPage: Clear cache and to the login page
+  off: off
+  on: on
 buttons:
   hsLoginOut: LoginOut
   hsfullscreen: FullScreen

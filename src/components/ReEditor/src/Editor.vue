@@ -5,9 +5,9 @@ import { IDomEditor, IEditorConfig, i18nChangeLanguage } from "@wangeditor/edito
 import propTypes from "@/utils/propTypes";
 import { isNumber, storageLocal } from "@pureadmin/utils";
 import { ElMessage } from "element-plus";
-import { PROJECT_PREFIX } from "@/utils/common";
+import { responsiveStorageNameSpace } from "@/config";
 
-let locale = storageLocal().getItem<StorageConfigs>(`${PROJECT_PREFIX}locale`)?.locale;
+let locale = storageLocal().getItem<StorageConfigs>(`${responsiveStorageNameSpace()}locale`)?.locale;
 locale === "zh" && (locale = "zh-CN"); // 处理编辑器中文
 
 i18nChangeLanguage(locale);

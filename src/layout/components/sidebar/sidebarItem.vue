@@ -235,13 +235,15 @@ function resolvePath(routePath) {
         <extraIcon v-if="!isCollapse" :extra-icon="props.item.meta.extraIcon" />
       </div>
     </template>
-    <sidebar-item
-      v-for="child in props.item.children"
-      :key="child.path"
-      :is-nest="true"
-      :item="child"
-      :base-path="resolvePath(child.path)"
-      class="nest-menu"
-    />
+    <div :class="[layout === 'leftMix' ? 'left-mix-sidebar-item' : '']">
+      <sidebar-item
+        v-for="child in props.item.children"
+        :key="child.path"
+        :is-nest="true"
+        :item="child"
+        :base-path="resolvePath(child.path)"
+        class="nest-menu"
+      />
+    </div>
   </el-sub-menu>
 </template>

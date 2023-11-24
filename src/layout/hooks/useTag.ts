@@ -1,9 +1,11 @@
-import { ref, unref, watch, computed, reactive, onMounted, CSSProperties, getCurrentInstance } from "vue";
+import { ref, unref, watch, computed, reactive, onMounted, onBeforeMount, CSSProperties, getCurrentInstance } from "vue";
+import { emitter } from "@/utils/mitt";
 import { tagsViewsType } from "../types";
 import { useEventListener } from "@vueuse/core";
 import { useRoute, useRouter } from "vue-router";
 import { transformI18n, $t } from "@/plugins/i18n";
-import { responsiveStorageNameSpace } from "@/config";
+import { useAppStoreHook } from "@/store/modules/app";
+import { getConfig, responsiveStorageNameSpace } from "@/config";
 import { useSettingStoreHook } from "@/store/modules/settings";
 import { useMultiTagsStoreHook } from "@/store/modules/multiTags";
 import { isEqual, isBoolean, storageLocal, toggleClass, hasClass } from "@pureadmin/utils";
@@ -19,6 +21,7 @@ import Close from "@iconify-icons/ep/close";
 export function useTags() {
   const route = useRoute();
   const router = useRouter();
+  const pureApp = useAppStoreHook();
   const instance = getCurrentInstance();
   const pureSetting = useSettingStoreHook();
 
@@ -30,14 +33,19 @@ export function useTags() {
   // 当前右键选中的路由信息
   const currentSelect = ref({});
 
+  const multiTags: any = computed(() => useMultiTagsStoreHook().multiTags);
+
+  const contentFullScreen = computed(() => useAppStoreHook().contentFullScreen);
+
   /** 显示模式，默认灵动模式 */
   const showModel = ref(storageLocal().getItem<StorageConfigs>(`${responsiveStorageNameSpace()}configure`)?.showModel || "smart");
+  /** 隐藏菜单 */
+  const hiddenSideBar = ref(
+    storageLocal().getItem<StorageConfigs>(`${responsiveStorageNameSpace()}configure`)?.hiddenSideBar || getConfig().HiddenSideBar
+  );
   /** 是否隐藏标签页，默认显示 */
   const showTags =
     ref(storageLocal().getItem<StorageConfigs>(`${responsiveStorageNameSpace()}configure`).hideTabs) ?? ref("false");
-  const multiTags: any = computed(() => {
-    return useMultiTagsStoreHook().multiTags;
-  });
 
   const tagsViews = reactive<Array<tagsViewsType>>([
     {
@@ -172,9 +180,7 @@ export function useTags() {
   }
 
   function onContentFullScreen() {
-    pureSetting.hiddenSideBar
-      ? pureSetting.changeSetting({ key: "hiddenSideBar", value: false })
-      : pureSetting.changeSetting({ key: "hiddenSideBar", value: true });
+    pureApp.toggleContentFullScreen(!contentFullScreen.value);
   }
 
   onMounted(() => {
@@ -185,6 +191,11 @@ export function useTags() {
     }
   });
 
+  onBeforeMount(() => {
+    emitter.on("hiddenSideBar", key => {
+      hiddenSideBar.value = key;
+    });
+  });
   watch(
     () => visible.value,
     () => {

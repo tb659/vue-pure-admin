@@ -1,5 +1,6 @@
+import { responsiveStorageNameSpace } from "@/config";
 /** 系统全局前缀 */
-export const PROJECT_PREFIX = "mt_gtrb_";
+export const PROJECT_PREFIX = responsiveStorageNameSpace();
 /** 系统全局是否mock数据 */
 export const MOCK_REQUEST = false;
 /** 登录过期时间 */

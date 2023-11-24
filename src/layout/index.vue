@@ -3,10 +3,11 @@ import "animate.css";
 // 引入 src/components/ReIcon/src/offlineIcon.ts 文件中所有使用addIcon添加过的本地图标
 import "@/components/ReIcon/src/offlineIcon";
 import { setType } from "./types";
+import { useNav } from "./hooks/useNav";
 import { useLayout } from "./hooks/useLayout";
+import { $t, transformI18n } from "@/plugins/i18n";
 import { useResizeObserver } from "@vueuse/core";
 import { useAppStoreHook } from "@/store/modules/app";
-import { useSettingStoreHook } from "@/store/modules/settings";
 import { deviceDetection, useDark, useGlobal } from "@pureadmin/utils";
 import { useDataThemeChange } from "@/layout/hooks/useDataThemeChange";
 import { h, ref, reactive, computed, onMounted, onBeforeMount, defineComponent } from "vue";
@@ -16,14 +17,18 @@ import tag from "./components/tag/index.vue";
 import appMain from "./components/appMain.vue";
 import setting from "./components/setting/index.vue";
 import Vertical from "./components/sidebar/vertical.vue";
+import leftMixNav from "./components/sidebar/leftMixNav.vue";
 import Horizontal from "./components/sidebar/horizontal.vue";
 import backTop from "@/assets/svg/back_top.svg?component";
 
+import SettingIcon from "@iconify-icons/ri/settings-3-line";
+
 const appWrapperRef = ref();
+const { onPanel } = useNav();
+
 const { isDark } = useDark();
 const { layout } = useLayout();
 const isMobile = deviceDetection();
-const pureSetting = useSettingStoreHook();
 const { $storage } = useGlobal<GlobalPropertiesApi>();
 
 const set: setType = reactive({
@@ -35,8 +40,20 @@ const set: setType = reactive({
     return useAppStoreHook().device;
   }),
 
+  contentFullScreen: computed(() => {
+    return useAppStoreHook().contentFullScreen;
+  }),
+
+  hideTabs: computed(() => {
+    return $storage?.configure.hideTabs;
+  }),
+
   fixedHeader: computed(() => {
-    return pureSetting.fixedHeader;
+    return $storage?.configure.fixedHeader;
+  }),
+
+  hiddenSideBar: computed(() => {
+    return $storage?.configure.hiddenSideBar;
   }),
 
   classes: computed(() => {
@@ -44,12 +61,9 @@ const set: setType = reactive({
       hideSidebar: !set.sidebar.opened,
       openSidebar: set.sidebar.opened,
       withoutAnimation: set.sidebar.withoutAnimation,
-      mobile: set.device === "mobile"
+      mobile: set.device === "mobile",
+      tabsHidden: set.hideTabs
     };
-  }),
-
-  hideTabs: computed(() => {
-    return $storage?.configure.hideTabs;
   })
 });
 
@@ -59,6 +73,8 @@ function setTheme(layoutModel: string) {
     layout: `${layoutModel}`,
     theme: $storage.layout?.theme,
     darkMode: $storage.layout?.darkMode,
+    leftMixNavFixed: $storage.layout?.leftMixNavFixed,
+    contentFullScreen: $storage.layout?.contentFullScreen,
     sidebarStatus: $storage.layout?.sidebarStatus,
     epThemeColor: $storage.layout?.epThemeColor
   };
@@ -99,16 +115,6 @@ useResizeObserver(appWrapperRef, entries => {
   }
 });
 
-onMounted(() => {
-  if (isMobile) {
-    toggle("mobile", false);
-  }
-});
-
-onBeforeMount(() => {
-  useDataThemeChange().dataThemeChange();
-});
-
 const layoutHeader = defineComponent({
   render() {
     return h(
@@ -125,55 +131,91 @@ const layoutHeader = defineComponent({
       },
       {
         default: () => [
-          !pureSetting.hiddenSideBar && (layout.value.includes("vertical") || layout.value.includes("mix")) ? h(navbar) : null,
-          !pureSetting.hiddenSideBar && layout.value.includes("horizontal") ? h(Horizontal) : null,
+          !set.contentFullScreen &&
+          (layout.value.includes("vertical") || layout.value.includes("leftMix") || layout.value.includes("topMix"))
+            ? h(navbar)
+            : null,
+          !set.hiddenSideBar && layout.value.includes("horizontal") ? h(Horizontal) : null,
           h(tag)
         ]
       }
     );
   }
 });
+
+onMounted(() => {
+  if (isMobile) {
+    toggle("mobile", false);
+  }
+});
+
+onBeforeMount(() => {
+  useDataThemeChange().dataThemeChange();
+});
 </script>
 
 <template>
-  <div ref="appWrapperRef" :class="['app-wrapper', set.classes]">
-    <div
-      v-show="set.device === 'mobile' && set.sidebar.opened && layout.includes('vertical')"
-      class="app-mask"
-      @click="useAppStoreHook().toggleSideBar()"
-    />
-    <Vertical v-show="!pureSetting.hiddenSideBar && (layout.includes('vertical') || layout.includes('mix'))" />
-    <div :class="['main-container', pureSetting.hiddenSideBar ? 'main-hidden' : '']">
-      <div v-if="set.fixedHeader">
-        <layout-header />
-        <!-- 主体内容 -->
-        <app-main :fixed-header="set.fixedHeader" />
+  <div :class="set.contentFullScreen ? 'fullscreen' : ''">
+    <div :class="['app-wrapper', set.classes]">
+      <div
+        v-show="set.device === 'mobile' && set.sidebar.opened && layout.includes('vertical')"
+        class="app-mask"
+        @click="useAppStoreHook().toggleSideBar()"
+      />
+      <Vertical
+        v-if="(layout.includes('vertical') || layout.includes('topMix')) && !set.hiddenSideBar && !set.contentFullScreen"
+      />
+      <leftMixNav v-if="layout.includes('leftMix') && !set.hiddenSideBar && !set.contentFullScreen" />
+      <div
+        :class="[
+          'main-container',
+          set.hiddenSideBar || set.contentFullScreen ? 'main-hidden' : '',
+          set.hiddenSideBar ? 'sidebar-hidden' : ''
+        ]"
+      >
+        <div v-if="set.fixedHeader">
+          <layout-header />
+          <!-- 主体内容 -->
+          <app-main />
+        </div>
+        <el-scrollbar v-else>
+          <el-backtop title="回到顶部" target=".main-container .el-scrollbar__wrap">
+            <backTop />
+          </el-backtop>
+          <layout-header />
+          <!-- 主体内容 -->
+          <app-main />
+        </el-scrollbar>
       </div>
-      <el-scrollbar v-else>
-        <el-backtop title="回到顶部" target=".main-container .el-scrollbar__wrap">
-          <backTop />
-        </el-backtop>
-        <layout-header />
-        <!-- 主体内容 -->
-        <app-main :fixed-header="set.fixedHeader" />
-      </el-scrollbar>
+      <!-- 系统设置 -->
+      <setting />
+      <span
+        v-if="(set.contentFullScreen && !layout.includes('horizontal')) || (layout.includes('horizontal') && set.hiddenSideBar)"
+        class="fullscreen-set-icon navbar-bg-hover"
+        :title="transformI18n($t('buttons.hssystemSet'))"
+        @click="onPanel"
+      >
+        <IconifyIconOffline :icon="SettingIcon" style="color: #fff" />
+      </span>
     </div>
-    <!-- 系统设置 -->
-    <setting />
   </div>
 </template>
 
 <style lang="scss" scoped>
-.app-wrapper {
-  position: relative;
-  width: 100%;
-  height: 100%;
-
+@mixin clearfix {
   &::after {
     display: table;
     clear: both;
     content: "";
   }
+}
+
+.app-wrapper {
+  @include clearfix;
+
+  position: relative;
+  width: 100%;
+  height: 100%;
 
   &.mobile.openSidebar {
     position: fixed;
@@ -193,5 +235,16 @@ const layoutHeader = defineComponent({
 
 .re-screen {
   margin-top: 12px;
+}
+
+.fullscreen-set-icon {
+  position: fixed;
+  top: 50%;
+  right: 0;
+  z-index: 99999;
+  padding: 5px;
+  cursor: pointer;
+  background: var(--el-color-primary);
+  border-radius: 4px 0 0 4px;
 }
 </style>

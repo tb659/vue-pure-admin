@@ -20,6 +20,8 @@ export type appType = {
   layout: string;
   device: string;
   sortSwap: boolean;
+  contentFullScreen: boolean;
+  leftMixNavFixed: boolean;
 };
 
 export type multiType = {
@@ -32,8 +34,6 @@ export type multiType = {
 
 export type setType = {
   title: string;
-  fixedHeader: boolean;
-  hiddenSideBar: boolean;
 };
 
 export type userType = {

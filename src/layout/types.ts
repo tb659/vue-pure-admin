@@ -51,6 +51,8 @@ export interface setType {
   };
   device: string;
   fixedHeader: boolean;
+  hiddenSideBar: boolean;
+  contentFullScreen: boolean;
   classes: {
     hideSidebar: boolean;
     openSidebar: boolean;

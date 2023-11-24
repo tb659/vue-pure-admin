@@ -5,9 +5,15 @@ import mitt from "mitt";
 type Events = {
   openPanel: string;
   tagViewsChange: string;
+  mixMenuTrigger: string;
   tagViewsShowModel: string;
   logoChange: boolean;
-  changLayoutRoute: string;
+  fixedHeader: boolean;
+  hiddenSideBar: boolean;
+  changLayoutRoute: {
+    indexPath: string;
+    parentPath: string;
+  };
   imageInfo: {
     img: HTMLImageElement;
     height: number;

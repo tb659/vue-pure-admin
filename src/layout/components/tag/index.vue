@@ -5,11 +5,10 @@ import { RouteConfigs } from "../../types";
 import { useTags } from "../../hooks/useTag";
 import { routerArrays } from "@/layout/types";
 import { handleAliveRoute, getTopMenu } from "@/router/utils";
-import { useSettingStoreHook } from "@/store/modules/settings";
 import { useResizeObserver, useFullscreen } from "@vueuse/core";
 import { isEqual, isAllEmpty, debounce } from "@pureadmin/utils";
 import { useMultiTagsStoreHook } from "@/store/modules/multiTags";
-import { ref, watch, unref, toRaw, nextTick, onBeforeUnmount } from "vue";
+import { ref, watch, unref, toRaw, nextTick, onBeforeUnmount, computed } from "vue";
 
 import ExitFullscreen from "@iconify-icons/ri/fullscreen-exit-fill";
 import Fullscreen from "@iconify-icons/ri/fullscreen-fill";
@@ -17,6 +16,7 @@ import ArrowDown from "@iconify-icons/ri/arrow-down-s-line";
 import ArrowRightSLine from "@iconify-icons/ri/arrow-right-s-line";
 import ArrowLeftSLine from "@iconify-icons/ri/arrow-left-s-line";
 import CloseBold from "@iconify-icons/ep/close-bold";
+import { useAppStoreHook } from "@/store/modules/app";
 
 const {
   route,
@@ -30,7 +30,6 @@ const {
   buttonLeft,
   showModel,
   translateX,
-  pureSetting,
   activeIndex,
   getTabStyle,
   iconIsActive,
@@ -45,6 +44,8 @@ const {
   transformI18n,
   onContentFullScreen
 } = useTags();
+
+const contentFullScreen = computed(() => useAppStoreHook().contentFullScreen);
 
 const tabDom = ref();
 const containerDom = ref();
@@ -115,29 +116,31 @@ const handleScroll = (offset: number): void => {
   }
 };
 
-function dynamicRouteTag(value: string): void {
+function dynamicRouteTag(value: string, parentPath: string): void {
   const hasValue = multiTags.value.some(item => {
     return item.path === value;
   });
 
-  function concatPath(arr: object[], value: string) {
+  function concatPath(arr: object[], value: string, parentPath: string) {
     if (!hasValue) {
       arr.forEach((arrItem: any) => {
-        if (arrItem.path === value || arrItem.path === value) {
+        const pathConcat = parentPath + arrItem.path;
+        if (arrItem.path === value || pathConcat === value) {
           useMultiTagsStoreHook().handleTags("push", {
             path: value,
+            parentPath: `/${parentPath.split("/")[1]}`,
             meta: arrItem.meta,
             name: arrItem.name
           });
         } else {
           if (arrItem.children && arrItem.children.length > 0) {
-            concatPath(arrItem.children, value);
+            concatPath(arrItem.children, value, parentPath);
           }
         }
       });
     }
   }
-  concatPath(router.options.routes as any, value);
+  concatPath(router.options.routes as any, value, parentPath);
 }
 
 /** 刷新路由 */
@@ -280,7 +283,7 @@ function onClickDrop(key, item, selectRoute?: RouteConfigs) {
       // 内容区全屏
       onContentFullScreen();
       setTimeout(() => {
-        if (pureSetting.hiddenSideBar) {
+        if (contentFullScreen.value) {
           tagsViews[7].icon = ExitFullscreen;
           tagsViews[7].text = $t("buttons.hscontentExitFullScreen");
         } else {
@@ -401,7 +404,7 @@ function openMenu(tag, e) {
   } else {
     buttonLeft.value = left;
   }
-  useSettingStoreHook().hiddenSideBar ? (buttonTop.value = e.clientY) : (buttonTop.value = e.clientY - 40);
+  contentFullScreen.value ? (buttonTop.value = e.clientY) : (buttonTop.value = e.clientY - 40);
   nextTick(() => {
     visible.value = true;
   });
@@ -458,8 +461,8 @@ onMounted(() => {
   });
 
   //  接收侧边栏切换传递过来的参数
-  emitter.on("changLayoutRoute", indexPath => {
-    dynamicRouteTag(indexPath);
+  emitter.on("changLayoutRoute", ({ indexPath, parentPath }) => {
+    dynamicRouteTag(indexPath, parentPath);
     setTimeout(() => {
       showMenuModel(indexPath);
     });

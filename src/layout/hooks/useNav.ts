@@ -15,8 +15,8 @@ import { router, remainingPaths } from "@/router";
 import { useAppStoreHook } from "@/store/modules/app";
 import { useUserStoreHook } from "@/store/modules/user";
 import { useEpThemeStoreHook } from "@/store/modules/epTheme";
-import { computed, type CSSProperties, ref, reactive } from "vue";
 import { usePermissionStoreHook } from "@/store/modules/permission";
+import { computed, type CSSProperties, ref, reactive, nextTick } from "vue";
 
 const errorInfo = "当前路由配置不正确，请检查配置";
 
@@ -35,6 +35,21 @@ export function useNav() {
       justifyContent: "space-between",
       overflow: "hidden"
     };
+  });
+
+  const getSubTextStyle = computed((): CSSProperties => {
+    if (!isCollapse.value) {
+      return {
+        width: "210px",
+        display: "inline-block",
+        overflow: "hidden",
+        textOverflow: "ellipsis"
+      };
+    } else {
+      return {
+        width: ""
+      };
+    }
   });
 
   /** 用户名 */
@@ -98,6 +113,28 @@ export function useNav() {
     newPassword: "" // 新密码
   });
 
+  // 存放菜单是否存在showTooltip属性标识
+  const hoverMenuMap = new WeakMap();
+  // 存储菜单文本dom元素
+  const menuTextRef = ref(null);
+
+  function hoverMenu(key) {
+    // 如果当前菜单showTooltip属性已存在，退出计算
+    if (hoverMenuMap.get(key)) return;
+
+    nextTick(() => {
+      // 如果文本内容的整体宽度大于其可视宽度，则文本溢出
+      menuTextRef.value?.scrollWidth > menuTextRef.value?.clientWidth
+        ? Object.assign(key, {
+            showTooltip: true
+          })
+        : Object.assign(key, {
+            showTooltip: false
+          });
+      hoverMenuMap.set(key, true);
+    });
+  }
+
   /** 动态title */
   function changeTitle(meta: routeMetaType) {
     const Title = getConfig().Title;
@@ -137,9 +174,31 @@ export function useNav() {
     }
   }
 
-  function menuSelect(indexPath: string) {
-    if (wholeMenus.value.length === 0 || isRemaining(indexPath)) return;
-    emitter.emit("changLayoutRoute", indexPath);
+  function menuSelect(indexPath: string, routers): void {
+    if (wholeMenus.value.length === 0) return;
+    if (isRemaining(indexPath)) return;
+    let parentPath = "";
+    const parentPathIndex = indexPath.lastIndexOf("/");
+    if (parentPathIndex > 0) {
+      parentPath = indexPath.slice(0, parentPathIndex);
+    }
+    /** 找到当前路由的信息 */
+    function findCurrentRoute(indexPath: string, routes) {
+      if (!routes) return console.error(errorInfo);
+      return routes.map(item => {
+        if (item.path === indexPath) {
+          if (item.redirect) {
+            findCurrentRoute(item.redirect, item.children);
+          } else {
+            /** 切换左侧菜单 通知标签页 */
+            emitter.emit("changLayoutRoute", { indexPath, parentPath });
+          }
+        } else {
+          if (item.children) findCurrentRoute(indexPath, item.children);
+        }
+      });
+    }
+    findCurrentRoute(indexPath, routers);
   }
 
   /** 判断路径是否参与菜单 */
@@ -192,6 +251,15 @@ export function useNav() {
     });
   }
 
+  /** 左侧菜单折叠后，当菜单没有图标时只显示第一个文字并加上省略号 */
+  function overflowSlice(text, item?: any) {
+    const newText = (text?.length > 1 ? text.toString().slice(0, 1) : text) + "...";
+    if (item && !(isCollapse.value && item?.parentId === null)) {
+      return layout.value === "topMix" && item?.pathList?.length === 2 && isCollapse.value ? newText : text;
+    }
+    return newText;
+  }
+
   return {
     title,
     device,
@@ -202,6 +270,7 @@ export function useNav() {
     backTopMenu,
     onPanel,
     getDivStyle,
+    getSubTextStyle,
     changeTitle,
     toggleSideBar,
     menuSelect,
@@ -222,6 +291,10 @@ export function useNav() {
     ruleFormRef,
     passwordSubmit,
     passwordLoading,
-    passwordVisible
+    passwordVisible,
+
+    overflowSlice,
+    menuTextRef,
+    hoverMenu
   };
 }

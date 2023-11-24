@@ -6,19 +6,11 @@ import { getConfig } from "@/config";
 export const useSettingStore = defineStore({
   id: "pure-setting",
   state: (): setType => ({
-    title: getConfig().Title,
-    fixedHeader: getConfig().FixedHeader,
-    hiddenSideBar: getConfig().HiddenSideBar
+    title: getConfig().Title
   }),
   getters: {
     getTitle(state) {
       return state.title;
-    },
-    getFixedHeader(state) {
-      return state.fixedHeader;
-    },
-    getHiddenSideBar(state) {
-      return state.hiddenSideBar;
     }
   },
   actions: {

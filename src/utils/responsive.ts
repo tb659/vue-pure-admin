@@ -1,5 +1,6 @@
 // 响应式storage
 import { App } from "vue";
+import { getConfig } from "@/config";
 import Storage from "responsive-storage";
 import { routerArrays } from "@/layout/types";
 import { responsiveStorageNameSpace } from "@/config";
@@ -14,20 +15,24 @@ export const injectResponsiveStorage = (app: App, config: PlatformConfigs) => {
       },
       // layout模式以及主题
       layout: Storage.getData("layout", nameSpace) ?? {
-        layout: config.Layout ?? "vertical",
-        theme: config.Theme ?? "default",
-        darkMode: config.DarkMode ?? false,
-        sidebarStatus: config.SidebarStatus ?? true,
-        epThemeColor: config.EpThemeColor ?? "#409EFF"
+        layout: config.Layout ?? getConfig().Layout,
+        theme: config.Theme ?? getConfig().Theme,
+        darkMode: config.DarkMode ?? getConfig().DarkMode,
+        leftMixNavFixed: config.LeftMixNavFixed ?? getConfig().LeftMixNavFixed,
+        contentFullScreen: config.ContentFullScreen ?? getConfig().ContentFullScreen,
+        sidebarStatus: config.SidebarStatus ?? getConfig().SidebarStatus,
+        epThemeColor: config.EpThemeColor ?? getConfig().EpThemeColor
       },
       configure: Storage.getData("configure", nameSpace) ?? {
-        grey: config.Grey ?? false,
-        weak: config.Weak ?? false,
-        hideTabs: config.HideTabs ?? false,
-        hideFooter: config.HideFooter ?? false,
-        showLogo: config.ShowLogo ?? true,
-        showModel: config.ShowModel ?? "smart",
-        multiTagsCache: config.MultiTagsCache ?? false
+        grey: config.Grey ?? getConfig().Grey,
+        weak: config.Weak ?? getConfig().Weak,
+        hideTabs: config.HideTabs ?? getConfig().HideTabs,
+        showLogo: config.ShowLogo ?? getConfig().ShowLogo,
+        fixedHeader: config?.FixedHeader ?? getConfig().FixedHeader,
+        hiddenSideBar: config?.HiddenSideBar ?? getConfig().HiddenSideBar,
+        showModel: config.ShowModel ?? getConfig().ShowModel,
+        mixMenuTrigger: config.MixMenuTrigger ?? getConfig().MixMenuTrigger,
+        multiTagsCache: config.MultiTagsCache ?? getConfig().MultiTagsCache
       }
     },
     config.MultiTagsCache

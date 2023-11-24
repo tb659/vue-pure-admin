@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, unref, watch, reactive, computed, nextTick, onBeforeMount } from "vue";
+import { useDark, debounce, useGlobal, storageLocal, storageSession } from "@pureadmin/utils";
 import { getConfig } from "@/config";
 import { useRouter } from "vue-router";
 import panel from "../panel/index.vue";
@@ -8,11 +9,11 @@ import { resetRouter } from "@/router";
 import { removeToken } from "@/utils/auth";
 import { routerArrays } from "@/layout/types";
 import { useNav } from "@/layout/hooks/useNav";
+import { $t, transformI18n } from "@/plugins/i18n";
 import { useAppStoreHook } from "@/store/modules/app";
 import { toggleTheme } from "@pureadmin/theme/dist/browser-utils";
 import { useMultiTagsStoreHook } from "@/store/modules/multiTags";
 import { useDataThemeChange } from "@/layout/hooks/useDataThemeChange";
-import { useDark, debounce, useGlobal, storageLocal } from "@pureadmin/utils";
 
 import dayIcon from "@/assets/svg/day.svg?component";
 import darkIcon from "@/assets/svg/dark.svg?component";
@@ -24,7 +25,8 @@ const { isDark } = useDark();
 const { device, tooltipEffect } = useNav();
 const { $storage } = useGlobal<GlobalPropertiesApi>();
 
-const mixRef = ref();
+const topMixRef = ref();
+const leftMixRef = ref();
 const verticalRef = ref();
 const horizontalRef = ref();
 
@@ -41,9 +43,15 @@ if (unref(layoutTheme)) {
 }
 
 /** 默认灵动模式 */
-const markValue = ref($storage.configure?.showModel ?? "smart");
-
-const logoVal = ref($storage.configure?.showLogo ?? true);
+const markValue = ref($storage.configure?.showModel ?? getConfig().ShowModel);
+/** 默认点击模式 */
+const menuTriggerValue = ref($storage.configure?.mixMenuTrigger ?? getConfig().MixMenuTrigger);
+/** 默认logo模式 */
+const logoValue = ref($storage.configure?.showLogo ?? getConfig().ShowLogo);
+/** 默认不隐藏菜单 */
+const hiddenSideBarValue = ref($storage.configure?.hiddenSideBar ?? getConfig().HiddenSideBar);
+/** 默认固定头部 */
+const fixedHeaderValue = ref($storage.configure?.fixedHeader ?? getConfig().FixedHeader);
 
 const settings = reactive({
   greyVal: $storage.configure.grey,
@@ -52,8 +60,13 @@ const settings = reactive({
   showLogo: $storage.configure.showLogo,
   showModel: $storage.configure.showModel,
   hideFooter: $storage.configure.hideFooter,
+  fixedHeader: $storage.configure.fixedHeader,
+  hiddenSideBar: $storage.configure.hiddenSideBar,
+  mixMenuTrigger: $storage.configure.mixMenuTrigger,
   multiTagsCache: $storage.configure.multiTagsCache
 });
+
+const contentFullScreen = computed(() => useAppStoreHook().contentFullScreen);
 
 const getThemeColorStyle = computed(() => {
   return color => {
@@ -81,19 +94,25 @@ function toggleClass(flag: boolean, clsName: string, target?: HTMLElement) {
   targetEl.className = flag ? `${className} ${clsName} ` : className;
 }
 
-/** 灰色模式设置 */
-const greyChange = (value): void => {
-  toggleClass(settings.greyVal, "html-grey", document.querySelector("html"));
-  storageConfigureChange("grey", value);
-};
+/** 头部固定 */
+function onFixedHeaderChange(value) {
+  storageConfigureChange("fixedHeader", value);
+  emitter.emit("fixedHeader", value);
+}
 
-/** 色弱模式设置 */
-const weekChange = (value): void => {
-  toggleClass(settings.weakVal, "html-weakness", document.querySelector("html"));
-  storageConfigureChange("weak", value);
-};
+/** 侧边栏Logo */
+function logoChange() {
+  unref(logoValue) ? storageConfigureChange("showLogo", true) : storageConfigureChange("showLogo", false);
+  emitter.emit("logoChange", unref(logoValue));
+}
 
-/** 隐藏标签页设置 */
+/** 侧边栏隐藏 */
+function onSidebarHiddenChange(value) {
+  storageConfigureChange("hiddenSideBar", value);
+  emitter.emit("hiddenSideBar", value);
+}
+
+/** 标签隐藏设置 */
 const tagsChange = () => {
   const showVal = settings.tabsVal;
   storageConfigureChange("hideTabs", showVal);
@@ -113,10 +132,35 @@ const multiTagsCacheChange = () => {
   useMultiTagsStoreHook().multiTagsCacheChange(multiTagsCache);
 };
 
+/** 灰色模式设置 */
+const greyChange = (value): void => {
+  toggleClass(settings.greyVal, "html-grey", document.querySelector("html"));
+  storageConfigureChange("grey", value);
+};
+
+/** 色弱模式设置 */
+const weekChange = (value): void => {
+  toggleClass(settings.weakVal, "html-weakness", document.querySelector("html"));
+  storageConfigureChange("weak", value);
+};
+
+/** 标签风格 */
+function onChange(value) {
+  storageConfigureChange("showModel", value);
+  emitter.emit("tagViewsShowModel", value);
+}
+
+/** 混合菜单触发方式 */
+function onMenuTriggerChange(value) {
+  storageConfigureChange("mixMenuTrigger", value);
+  emitter.emit("mixMenuTrigger", value);
+}
+
 /** 清空缓存并返回登录页 */
 function onReset() {
   removeToken();
   storageLocal().clear();
+  storageSession().clear();
   const { Grey, Weak, MultiTagsCache, EpThemeColor, Layout } = getConfig();
   useAppStoreHook().setLayout(Layout);
   setEpThemeColor(EpThemeColor);
@@ -126,17 +170,6 @@ function onReset() {
   router.push("/login");
   useMultiTagsStoreHook().handleTags("equal", [...routerArrays]);
   resetRouter();
-}
-
-function onChange(label) {
-  storageConfigureChange("showModel", label);
-  emitter.emit("tagViewsShowModel", label);
-}
-
-/** 侧边栏Logo */
-function logoChange() {
-  unref(logoVal) ? storageConfigureChange("showLogo", true) : storageConfigureChange("showLogo", false);
-  emitter.emit("logoChange", unref(logoVal));
 }
 
 function setFalse(Doms): any {
@@ -166,6 +199,8 @@ function setLayoutModel(layout: string) {
     layout,
     theme: layoutTheme.value.theme,
     darkMode: $storage.layout?.darkMode,
+    leftMixNavFixed: $storage.layout?.leftMixNavFixed,
+    contentFullScreen: $storage.layout?.contentFullScreen,
     sidebarStatus: $storage.layout?.sidebarStatus,
     epThemeColor: $storage.layout?.epThemeColor
   };
@@ -177,22 +212,32 @@ watch($storage, ({ layout }) => {
     case "vertical":
       toggleClass(true, "is-select", unref(verticalRef));
       debounce(setFalse([horizontalRef]), 50);
-      debounce(setFalse([mixRef]), 50);
+      debounce(setFalse([leftMixRef]), 50);
+      debounce(setFalse([topMixRef]), 50);
+      break;
+    case "leftMix":
+      toggleClass(true, "is-select", unref(leftMixRef));
+      debounce(setFalse([verticalRef]), 50);
+      debounce(setFalse([horizontalRef]), 50);
+      debounce(setFalse([topMixRef]), 50);
       break;
     case "horizontal":
       toggleClass(true, "is-select", unref(horizontalRef));
       debounce(setFalse([verticalRef]), 50);
-      debounce(setFalse([mixRef]), 50);
+      debounce(setFalse([leftMixRef]), 50);
+      debounce(setFalse([topMixRef]), 50);
       break;
-    case "mix":
-      toggleClass(true, "is-select", unref(mixRef));
+    case "topMix":
+      toggleClass(true, "is-select", unref(topMixRef));
       debounce(setFalse([verticalRef]), 50);
       debounce(setFalse([horizontalRef]), 50);
+      debounce(setFalse([leftMixRef]), 50);
       break;
   }
 });
 
 onBeforeMount(() => {
+  dataThemeChange();
   /* 初始化项目配置 */
   nextTick(() => {
     settings.greyVal && document.querySelector("html")?.setAttribute("class", "html-grey");
@@ -205,7 +250,7 @@ onBeforeMount(() => {
 
 <template>
   <panel>
-    <el-divider>主题</el-divider>
+    <el-divider>{{ transformI18n($t("apps.darkmode")) }}</el-divider>
     <el-switch
       v-model="dataTheme"
       inline-prompt
@@ -215,10 +260,16 @@ onBeforeMount(() => {
       @change="dataThemeChange"
     />
 
-    <el-divider>导航栏模式</el-divider>
+    <el-divider>{{ transformI18n($t("apps.navigationMode")) }}</el-divider>
     <ul class="pure-theme">
-      <el-tooltip :effect="tooltipEffect" class="item" content="左侧模式" placement="bottom" popper-class="pure-tooltip">
-        <li ref="verticalRef" :class="layoutTheme.layout === 'vertical' ? 'is-select' : ''" @click="setLayoutModel('vertical')">
+      <el-tooltip
+        :effect="tooltipEffect"
+        class="item"
+        :content="transformI18n($t('apps.leftMenuMode'))"
+        placement="bottom"
+        popper-class="pure-tooltip"
+      >
+        <li :class="layoutTheme.layout === 'vertical' ? 'is-select' : ''" ref="verticalRef" @click="setLayoutModel('vertical')">
           <div />
           <div />
         </li>
@@ -228,7 +279,22 @@ onBeforeMount(() => {
         v-if="device !== 'mobile'"
         :effect="tooltipEffect"
         class="item"
-        content="顶部模式"
+        :content="transformI18n($t('apps.leftMixMenuMode'))"
+        placement="bottom"
+        popper-class="pure-tooltip"
+      >
+        <li :class="layoutTheme.layout === 'leftMix' ? 'is-select' : ''" ref="leftMixRef" @click="setLayoutModel('leftMix')">
+          <div />
+          <div />
+          <div />
+        </li>
+      </el-tooltip>
+
+      <el-tooltip
+        v-if="device !== 'mobile'"
+        :effect="tooltipEffect"
+        class="item"
+        :content="transformI18n($t('apps.topMenuMode'))"
         placement="bottom"
         popper-class="pure-tooltip"
       >
@@ -246,18 +312,18 @@ onBeforeMount(() => {
         v-if="device !== 'mobile'"
         :effect="tooltipEffect"
         class="item"
-        content="混合模式"
+        :content="transformI18n($t('apps.topMixMenuMode'))"
         placement="bottom"
         popper-class="pure-tooltip"
       >
-        <li ref="mixRef" :class="layoutTheme.layout === 'mix' ? 'is-select' : ''" @click="setLayoutModel('mix')">
+        <li :class="layoutTheme.layout === 'topMix' ? 'is-select' : ''" ref="topMixRef" @click="setLayoutModel('topMix')">
           <div />
           <div />
         </li>
       </el-tooltip>
     </ul>
 
-    <el-divider>主题色</el-divider>
+    <el-divider>{{ transformI18n($t("apps.systemTheme")) }}</el-divider>
     <ul class="theme-color">
       <li
         v-for="(item, index) in themeColors"
@@ -272,56 +338,29 @@ onBeforeMount(() => {
       </li>
     </ul>
 
-    <el-divider>界面显示</el-divider>
+    <el-divider>{{ transformI18n($t("apps.interfaceDisplay")) }}</el-divider>
     <ul class="setting">
       <li>
-        <span class="dark:text-white">灰色模式</span>
+        <span class="dark:text-white">
+          {{ transformI18n($t("apps.fixedHeader")) }}
+        </span>
         <el-switch
-          v-model="settings.greyVal"
+          v-model="fixedHeaderValue"
           inline-prompt
+          :active-value="true"
+          :inactive-value="false"
           inactive-color="#a6a6a6"
-          active-text="开"
-          inactive-text="关"
-          @change="greyChange"
+          :active-text="transformI18n($t('apps.on'))"
+          :inactive-text="transformI18n($t('apps.off'))"
+          @change="onFixedHeaderChange"
         />
       </li>
       <li>
-        <span class="dark:text-white">色弱模式</span>
+        <span class="dark:text-white">
+          {{ transformI18n($t("apps.sidebarLogo")) }}
+        </span>
         <el-switch
-          v-model="settings.weakVal"
-          inline-prompt
-          inactive-color="#a6a6a6"
-          active-text="开"
-          inactive-text="关"
-          @change="weekChange"
-        />
-      </li>
-      <li>
-        <span class="dark:text-white">隐藏标签页</span>
-        <el-switch
-          v-model="settings.tabsVal"
-          inline-prompt
-          inactive-color="#a6a6a6"
-          active-text="开"
-          inactive-text="关"
-          @change="tagsChange"
-        />
-      </li>
-      <!-- <li>
-        <span class="dark:text-white">隐藏页脚</span>
-        <el-switch
-          v-model="settings.hideFooter"
-          inline-prompt
-          inactive-color="#a6a6a6"
-          active-text="开"
-          inactive-text="关"
-          @change="hideFooterChange"
-        />
-      </li> -->
-      <li>
-        <span class="dark:text-white">侧边栏Logo</span>
-        <el-switch
-          v-model="logoVal"
+          v-model="logoValue"
           inline-prompt
           :active-value="true"
           :inactive-value="false"
@@ -329,6 +368,46 @@ onBeforeMount(() => {
           active-text="开"
           inactive-text="关"
           @change="logoChange"
+          :disabled="layoutTheme.layout === 'leftMix' || layoutTheme.layout === 'horizontal' || contentFullScreen"
+        />
+      </li>
+      <li>
+        <span class="dark:text-white">
+          {{ transformI18n($t("apps.hiddenSideBar")) }}
+        </span>
+        <el-switch
+          v-model="hiddenSideBarValue"
+          inline-prompt
+          :active-value="true"
+          :inactive-value="false"
+          inactive-color="#a6a6a6"
+          :active-text="transformI18n($t('apps.on'))"
+          :inactive-text="transformI18n($t('apps.off'))"
+          @change="onSidebarHiddenChange"
+        />
+      </li>
+      <li>
+        <span class="dark:text-white">
+          {{ transformI18n($t("apps.hideTab")) }}
+        </span>
+        <el-switch
+          v-model="settings.tabsVal"
+          inline-prompt
+          inactive-color="#a6a6a6"
+          :active-text="transformI18n($t('apps.on'))"
+          :inactive-text="transformI18n($t('apps.off'))"
+          @change="tagsChange"
+        />
+      </li>
+      <li>
+        <span class="dark:text-white">{{ transformI18n($t("apps.hiddenFooter")) }}</span>
+        <el-switch
+          v-model="settings.hideFooter"
+          inline-prompt
+          inactive-color="#a6a6a6"
+          :active-text="transformI18n($t('apps.on'))"
+          :inactive-text="transformI18n($t('apps.off'))"
+          @change="hideFooterChange"
         />
       </li>
       <li>
@@ -342,12 +421,49 @@ onBeforeMount(() => {
           @change="multiTagsCacheChange"
         />
       </li>
-
       <li>
-        <span class="dark:text-white">标签风格</span>
+        <span class="dark:text-white"> {{ transformI18n($t("apps.grayMode")) }}</span>
+        <el-switch
+          v-model="settings.greyVal"
+          inline-prompt
+          inactive-color="#a6a6a6"
+          :active-text="transformI18n($t('apps.on'))"
+          :inactive-text="transformI18n($t('apps.off'))"
+          @change="greyChange"
+        />
+      </li>
+      <li>
+        <span class="dark:text-white"> {{ transformI18n($t("apps.colorWeakMode")) }}</span>
+        <el-switch
+          v-model="settings.weakVal"
+          inline-prompt
+          inactive-color="#a6a6a6"
+          :active-text="transformI18n($t('apps.on'))"
+          :inactive-text="transformI18n($t('apps.off'))"
+          @change="weekChange"
+        />
+      </li>
+      <li>
+        <span class="dark:text-white">{{ transformI18n($t("apps.tabStyle")) }}</span>
         <el-radio-group v-model="markValue" size="small" @change="onChange">
-          <el-radio label="card">卡片</el-radio>
-          <el-radio label="smart">灵动</el-radio>
+          <el-radio label="card">{{ transformI18n($t("apps.card")) }}</el-radio>
+          <el-radio label="smart">
+            {{ transformI18n($t("apps.smart")) }}
+          </el-radio>
+        </el-radio-group>
+      </li>
+      <li>
+        <span class="dark:text-white">{{ transformI18n($t("apps.menuTrigger")) }}</span>
+        <el-radio-group
+          v-model="menuTriggerValue"
+          size="small"
+          @change="onMenuTriggerChange"
+          :disabled="layoutTheme.layout !== 'leftMix'"
+        >
+          <el-radio label="click">{{ transformI18n($t("apps.click")) }}</el-radio>
+          <el-radio label="hover">
+            {{ transformI18n($t("apps.hover")) }}
+          </el-radio>
         </el-radio-group>
       </li>
     </ul>
@@ -355,7 +471,7 @@ onBeforeMount(() => {
     <el-divider />
     <el-button type="danger" style="width: 90%; margin: 24px 15px" @click="onReset">
       <IconifyIconOffline :icon="Logout" width="15" height="15" style="margin-right: 4px" />
-      清空缓存并返回登录页
+      {{ transformI18n($t("apps.clearCacheAndToTheLoginPage")) }}
     </el-button>
   </panel>
 </template>
@@ -364,6 +480,7 @@ onBeforeMount(() => {
 :deep(.el-divider__text) {
   font-size: 16px;
   font-weight: 700;
+  text-align: center;
 }
 
 .is-select {
@@ -430,6 +547,36 @@ onBeforeMount(() => {
     &:nth-child(2) {
       div {
         &:nth-child(1) {
+          width: 30%;
+          height: 100%;
+          background: #1b2a47;
+        }
+
+        &:nth-child(2) {
+          position: absolute;
+          top: 0;
+          right: 0;
+          width: 70%;
+          height: 30%;
+          background: #fff;
+          box-shadow: 0 0 1px #888;
+        }
+
+        &:nth-child(3) {
+          position: absolute;
+          top: 0;
+          left: 16px;
+          width: 8px;
+          height: 45px;
+          background: #fff;
+          box-shadow: 0 0 1px #888;
+        }
+      }
+    }
+
+    &:nth-child(3) {
+      div {
+        &:nth-child(1) {
           width: 100%;
           height: 30%;
           background: #1b2a47;
@@ -438,7 +585,7 @@ onBeforeMount(() => {
       }
     }
 
-    &:nth-child(3) {
+    &:nth-child(4) {
       div {
         &:nth-child(1) {
           width: 100%;

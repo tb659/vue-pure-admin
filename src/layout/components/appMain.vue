@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import Footer from "./footer/index.vue";
-import { useGlobal } from "@pureadmin/utils";
+import { storageLocal, useGlobal } from "@pureadmin/utils";
 import backTop from "@/assets/svg/back_top.svg?component";
-import { h, computed, Transition, defineComponent } from "vue";
+import { h, computed, Transition, defineComponent, ref } from "vue";
 import { usePermissionStoreHook } from "@/store/modules/permission";
+import { getConfig, responsiveStorageNameSpace } from "@/config";
 
-const props = defineProps({
-  fixedHeader: Boolean
-});
+const fixedHeader = ref(
+  storageLocal().getItem<StorageConfigs>(`${responsiveStorageNameSpace()}configure`)?.fixedHeader ?? getConfig().FixedHeader
+);
 
 const { $storage, $config } = useGlobal<GlobalPropertiesApi>();
 
@@ -29,20 +30,8 @@ const hideFooter = computed(() => {
   return $storage?.configure.hideFooter;
 });
 
-const layout = computed(() => {
-  return $storage?.layout.layout === "vertical";
-});
-
 const getSectionStyle = computed(() => {
-  return [
-    hideTabs.value && layout ? "padding-top: 48px;" : "",
-    !hideTabs.value && layout ? "padding-top: 85px;" : "",
-    hideTabs.value && !layout.value ? "padding-top: 48px;" : "",
-    !hideTabs.value && !layout.value ? "padding-top: 85px;" : "",
-    props.fixedHeader
-      ? ""
-      : `padding-top: 0;${hideTabs.value ? "min-height: calc(100vh - 48px);" : "min-height: calc(100vh - 86px);"}`
-  ];
+  return [hideTabs.value ? "padding-top: 48px" : "padding-top: 85px", !fixedHeader.value ? "padding-top: 0;" : ""];
 });
 
 const transitionMain = defineComponent({
@@ -74,11 +63,11 @@ const transitionMain = defineComponent({
 </script>
 
 <template>
-  <section :class="[props.fixedHeader ? 'app-main' : 'app-main-nofixed-header']" :style="getSectionStyle">
+  <section :class="[fixedHeader ? 'app-main' : 'app-main-nofixed-header']" :style="getSectionStyle">
     <router-view>
       <template #default="{ Component, route }">
         <el-scrollbar
-          v-if="props.fixedHeader"
+          v-if="fixedHeader"
           :wrap-style="{
             display: 'flex'
           }"
@@ -114,7 +103,7 @@ const transitionMain = defineComponent({
     </router-view>
 
     <!-- 页脚 -->
-    <Footer v-if="!hideFooter && !props.fixedHeader" />
+    <Footer v-if="!hideFooter && !fixedHeader" />
   </section>
 </template>
 

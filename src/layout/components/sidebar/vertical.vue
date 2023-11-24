@@ -14,7 +14,7 @@ import { ref, computed, watch, onMounted, onBeforeUnmount } from "vue";
 const route = useRoute();
 const showLogo = ref(storageLocal().getItem<StorageConfigs>(`${responsiveStorageNameSpace()}configure`)?.showLogo ?? true);
 
-const { device, pureApp, isCollapse, menuSelect, toggleSideBar } = useNav();
+const { routers, device, pureApp, isCollapse, menuSelect, toggleSideBar } = useNav();
 
 const subMenuData = ref([]);
 
@@ -26,9 +26,7 @@ const loading = computed(() => (pureApp.layout === "mix" ? false : menuData.valu
 
 const defaultActive = computed(() => (!isAllEmpty(route.meta?.activePath) ? route.meta.activePath : route.path));
 
-function getSubMenuData() {
-  let path = "";
-  path = defaultActive.value;
+function getSubMenuData(path: string) {
   subMenuData.value = [];
   // path的上级路由组成的数组
   const parentPathArr = getParentPaths(path, usePermissionStoreHook().wholeMenus);
@@ -36,19 +34,20 @@ function getSubMenuData() {
   const parenetRoute = findRouteByPath(parentPathArr[0] || path, usePermissionStoreHook().wholeMenus);
   if (!parenetRoute?.children) return;
   subMenuData.value = parenetRoute?.children;
+  device.value === "mobile" && toggleSideBar();
 }
 
 watch(
   () => [route.path, usePermissionStoreHook().wholeMenus],
   () => {
     if (route.path.includes("/redirect")) return;
-    getSubMenuData();
-    menuSelect(route.path);
+    getSubMenuData(route.path);
+    menuSelect(route.path, routers);
   }
 );
 
 onMounted(() => {
-  getSubMenuData();
+  getSubMenuData(route.path);
 
   emitter.on("logoChange", key => {
     showLogo.value = key;
@@ -69,17 +68,18 @@ onBeforeUnmount(() => {
         router
         unique-opened
         mode="vertical"
-        class="outer-most select-none"
+        class="select-none outer-most"
         :collapse="isCollapse"
         :default-active="defaultActive"
         :collapse-transition="false"
+        @select="indexPath => menuSelect(indexPath, routers)"
       >
         <sidebar-item
           v-for="routes in menuData"
           :key="routes.path"
           :item="routes"
           :base-path="routes.path"
-          class="outer-most select-none"
+          class="select-none outer-most"
         />
       </el-menu>
     </el-scrollbar>
