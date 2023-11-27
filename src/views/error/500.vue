@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useRouter } from "vue-router";
+import { getTopMenu } from "@/router/utils";
 import noServer from "@/assets/status/500.svg?component";
 
 defineOptions({
@@ -15,7 +16,7 @@ const router = useRouter();
     <div class="ml-12">
       <p
         v-motion
-        class="font-medium text-4xl mb-4 dark:text-white"
+        class="mb-4 text-4xl font-medium dark:text-white"
         :initial="{
           opacity: 0,
           y: 100
@@ -61,7 +62,7 @@ const router = useRouter();
             delay: 500
           }
         }"
-        @click="router.push('/')"
+        @click="router.push(getTopMenu()?.path ?? '/')"
       >
         返回首页
       </el-button>

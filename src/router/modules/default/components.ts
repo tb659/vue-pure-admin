@@ -106,6 +106,15 @@ export default {
       }
     },
     {
+      path: "/components/animatecss",
+      name: "AnimateCss",
+      component: () => import("@/views/default/components/animatecss/index.vue"),
+      meta: {
+        title: $t("menus.hsanimatecss"),
+        extraIcon: "IF-pure-iconfont-new svg"
+      }
+    },
+    {
       path: "/components/countTo",
       name: "CountTo",
       component: () => import("@/views/default/components/count-to/index.vue"),
