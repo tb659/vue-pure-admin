@@ -1,13 +1,13 @@
-import { UserData } from "@/api/system/user/types";
-import { useTable } from "@/hooks/web/useTable";
-import { userApi } from "@/api/system/user";
+import type { UserData } from "@/api/system/user/types";
+import type { DictData } from "@/api/system/dict/types";
 import { ref, unref } from "vue";
-import { dictApi } from "@/api/system/dict";
-import { DictData } from "@/api/system/dict/types";
 import { msg } from "@/utils/message";
-import { ADMIN_DICT_EDIT_CODE, ADMIN_USER_ROOT } from "@/utils/common";
-import { useUserStoreHook } from "@/store/modules/user";
 import { isNumber } from "@pureadmin/utils";
+import { userApi } from "@/api/system/user";
+import { dictApi } from "@/api/system/dict";
+import { useTable } from "@/hooks/web/useTable";
+import { useUserStoreHook } from "@/store/modules/user";
+import { ADMIN_DICT_EDIT_CODE, ADMIN_USER_ROOT } from "@/utils/common";
 
 export function useHook() {
   const title = ref("用户");

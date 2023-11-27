@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { getConfig, responsiveStorageNameSpace } from "@/config";
+import type { MenuData } from "@/api/system/menu/types";
 import Logo from "./logo.vue";
 import { emitter } from "@/utils/mitt";
 import SidebarItem from "./sidebarItem.vue";
@@ -9,9 +9,9 @@ import { transformI18n } from "@/plugins/i18n";
 import { storageLocal } from "@pureadmin/utils";
 import { GROUP_MENU } from "@/utils/common";
 import { useRoute, useRouter } from "vue-router";
-import { MenuData } from "@/api/system/menu/types";
 import { useAppStoreHook } from "@/store/modules/app";
 import { useRenderIcon } from "@/components/ReIcon/src/hooks";
+import { getConfig, responsiveStorageNameSpace } from "@/config";
 import { findRouteByPath, getParentPaths } from "@/router/utils";
 import { ref, computed, watch, onBeforeMount, toRaw } from "vue";
 import { usePermissionStoreHook } from "@/store/modules/permission";

@@ -1,4 +1,5 @@
-import { BaseQuery } from "@/api/types";
+import type { BaseQuery } from "@/api/types";
+
 export interface MenuData {
   id?: number;
   menuId?: number;

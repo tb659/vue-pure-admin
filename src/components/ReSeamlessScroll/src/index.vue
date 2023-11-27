@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { computed, ref, unref, nextTick } from "vue";
 import type { CSSProperties, PropType } from "vue";
+import { computed, ref, unref, nextTick } from "vue";
 import { tryOnMounted, tryOnUnmounted, templateRef, useDebounceFn } from "@vueuse/core";
 import * as utilsMethods from "./utils";
 const { animationFrame, copyObj } = utilsMethods;

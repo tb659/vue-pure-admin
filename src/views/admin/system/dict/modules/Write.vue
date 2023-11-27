@@ -1,8 +1,8 @@
 <script setup lang="ts">
+import type { DictData } from "@/api/system/dict/types";
 import { reactive, watch } from "vue";
 import { required } from "@/utils/validator";
 import { useForm } from "@/hooks/web/useForm";
-import { DictData } from "@/api/system/dict/types";
 
 defineOptions({
   name: "WriteForm"

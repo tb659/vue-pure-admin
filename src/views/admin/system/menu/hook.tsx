@@ -1,3 +1,4 @@
+import type { MenuData } from "@/api/system/menu/types";
 import { ref, unref } from "vue";
 import { useData } from "./data";
 import { msg } from "@/utils/message";
@@ -5,7 +6,6 @@ import { listToTree } from "@/utils/tree";
 import { menuApi } from "@/api/system/menu";
 import { useTable } from "@/hooks/web/useTable";
 import { formatMenuData } from "@/router/utils";
-import { MenuData } from "@/api/system/menu/types";
 import { MENU_LINK_TYPE, MENU_TYPE } from "@/utils/common";
 
 const { searchSchema, formSchema, tableColumns } = useData();

@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import { ref, toRaw, reactive, watch, onMounted, onBeforeUnmount } from "vue";
+import type { FormInstance } from "element-plus";
 import Motion from "./utils/motion";
 import { msg } from "@/utils/message";
 import { useRouter } from "vue-router";
+import { loginApi } from "@/api/login";
 import { loginRules } from "./utils/rule";
 import TypeIt from "@/components/ReTypeit";
 import { config } from "@/utils/http/config";
 import { useNav } from "@/layout/hooks/useNav";
-import type { FormInstance } from "element-plus";
 import { $t, transformI18n } from "@/plugins/i18n";
 import { useLayout } from "@/layout/hooks/useLayout";
 import { useUserStoreHook } from "@/store/modules/user";
@@ -17,18 +17,18 @@ import { PROJECT_PREFIX, SHOW_I18N } from "@/utils/common";
 import { useRenderIcon } from "@/components/ReIcon/src/hooks";
 import { useTranslationLang } from "@/layout/hooks/useTranslationLang";
 import { useDataThemeChange } from "@/layout/hooks/useDataThemeChange";
-import { getCookie, setLoginInfoCookie, setSingleCaptcha } from "@/utils/auth";
 import { /* addPathMatch, */ initRouter, getTopMenu } from "@/router/utils";
+import { ref, toRaw, reactive, watch, onMounted, onBeforeUnmount } from "vue";
+import { getCookie, setLoginInfoCookie, setSingleCaptcha } from "@/utils/auth";
 // import { usePermissionStoreHook } from "@/store/modules/permission";
 
 import dayIcon from "@/assets/svg/day.svg?component";
 import darkIcon from "@/assets/svg/dark.svg?component";
 import globalization from "@/assets/svg/globalization.svg?component";
-import Lock from "@iconify-icons/ri/lock-fill";
 import Check from "@iconify-icons/fa/check";
+import Lock from "@iconify-icons/ri/lock-fill";
 import User from "@iconify-icons/ri/user-3-fill";
 import Code from "@iconify-icons/ri/shield-keyhole-line";
-import { loginApi } from "@/api/login";
 
 defineOptions({
   name: "Login"

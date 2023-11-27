@@ -1,15 +1,14 @@
-import { defineStore } from "pinia";
+import type { userType } from "./types";
+import type { UserData } from "@/api/system/user/types";
 import { store } from "@/store";
-import { userType } from "./types";
-import { LOGIN_EXPIRE_MINUTES, LOGIN_TIMES, USER_INFO } from "@/utils/common";
+import { defineStore } from "pinia";
+import { loginApi } from "@/api/login";
 import { routerArrays } from "@/layout/types";
 import { router, resetRouter } from "@/router";
 import { storageLocal } from "@pureadmin/utils";
-import { getCookie, removeToken, setCookie, setToken } from "@/utils/auth";
-import { loginApi } from "@/api/login";
-import type { UserData } from "@/api/system/user/types";
-
 import { useMultiTagsStoreHook } from "@/store/modules/multiTags";
+import { getCookie, removeToken, setCookie, setToken } from "@/utils/auth";
+import { LOGIN_EXPIRE_MINUTES, LOGIN_TIMES, USER_INFO } from "@/utils/common";
 
 // 获取user
 export const getUser = key => {

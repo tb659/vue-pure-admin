@@ -1,12 +1,12 @@
-import { RoleData } from "@/api/system/role/types";
-import { useTable } from "@/hooks/web/useTable";
-import { roleApi } from "@/api/system/role";
+import type { RoleData } from "@/api/system/role/types";
+import type { DictData } from "@/api/system/dict/types";
 import { ref, unref } from "vue";
-import { dictApi } from "@/api/system/dict";
-import { DictData } from "@/api/system/dict/types";
 import { msg } from "@/utils/message";
-import { ADMIN_DICT_EDIT_CODE, ADMIN_ROLE_EMBED, ADMIN_USER_ROOT } from "@/utils/common";
+import { dictApi } from "@/api/system/dict";
+import { roleApi } from "@/api/system/role";
+import { useTable } from "@/hooks/web/useTable";
 import { useUserStoreHook } from "@/store/modules/user";
+import { ADMIN_DICT_EDIT_CODE, ADMIN_ROLE_EMBED, ADMIN_USER_ROOT } from "@/utils/common";
 
 export function useHook() {
   const title = ref("角色");

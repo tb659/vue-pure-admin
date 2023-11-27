@@ -1,4 +1,5 @@
 import type { Component } from "vue";
+import type { ComponentName } from "../types";
 import {
   ElCascader,
   ElCheckboxGroup,
@@ -24,7 +25,6 @@ import { InputPassword } from "@/components/InputPassword";
 import { Editor } from "@/components/Editor";
 import { JsonEditor } from "@/components/JsonEditor";
 import { IconPicker } from "@/components/IconPicker";
-import { ComponentName } from "../types";
 
 const componentMap: Recordable<Component, ComponentName> = {
   RadioGroup: ElRadioGroup,

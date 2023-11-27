@@ -1,7 +1,7 @@
 <script setup lang="ts">
+import type { menuType } from "@/layout/types";
 import path from "path";
 import { getConfig } from "@/config";
-import { menuType } from "../../types";
 import extraIcon from "./extraIcon.vue";
 import { useNav } from "@/layout/hooks/useNav";
 import { transformI18n } from "@/plugins/i18n";

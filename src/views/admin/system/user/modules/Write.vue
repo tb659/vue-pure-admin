@@ -1,10 +1,10 @@
 <script setup lang="ts">
+import type { UserData } from "@/api/system/user/types";
+import type { RoleData } from "@/api/system/role/types";
 import { reactive, watch } from "vue";
+import { roleApi } from "@/api/system/role";
 import { required } from "@/utils/validator";
 import { useForm } from "@/hooks/web/useForm";
-import { UserData } from "@/api/system/user/types";
-import { roleApi } from "@/api/system/role";
-import { RoleData } from "@/api/system/role/types";
 
 defineOptions({
   name: "WriteForm"

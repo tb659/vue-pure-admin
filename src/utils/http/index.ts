@@ -1,7 +1,7 @@
+import type { PureHttpResponse, RequestMethods, PureHttpRequestConfig } from "@/utils/http/types";
 import { hideLoading, showLoading } from "@/utils/loading";
 import { downloadFileBlob } from "@/utils/file";
 import { http } from "./api-base";
-import { PureHttpResponse, RequestMethods, PureHttpRequestConfig } from "@/utils/http/types";
 
 export default abstract class BaseRequest {
   abstract getBaseUrl(): string;

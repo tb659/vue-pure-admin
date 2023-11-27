@@ -1,19 +1,19 @@
-import { UserData } from "@/api/system/user/types";
-import { useTable } from "@/hooks/web/useTable";
-import { userApi } from "@/api/system/user";
-import { ref, unref, reactive, nextTick } from "vue";
-import { dictApi } from "@/api/system/dict";
-import { DictData } from "@/api/system/dict/types";
+import type { UserData } from "@/api/system/user/types";
+import type { DictData } from "@/api/system/dict/types";
+import type { DeptData } from "@/api/system/dept/types";
+import type { CorpsData } from "@/api/system/corps/types";
 import { msg } from "@/utils/message";
-import { ADMIN_DICT_EDIT_CODE, ADMIN_USER_ROOT } from "@/utils/common";
-import { useUserStoreHook } from "@/store/modules/user";
-import { isNumber } from "@pureadmin/utils";
 import { listToTree } from "@/utils/tree";
+import { userApi } from "@/api/system/user";
+import { dictApi } from "@/api/system/dict";
+import { isNumber } from "@pureadmin/utils";
 import { deptApi } from "@/api/system/dept";
-import { DeptData } from "@/api/system/dept/types";
 import { corpsApi } from "@/api/system/corps";
 import { getUser } from "@/store/modules/user";
-import { CorpsData } from "@/api/system/corps/types";
+import { useTable } from "@/hooks/web/useTable";
+import { ref, unref, reactive, nextTick } from "vue";
+import { useUserStoreHook } from "@/store/modules/user";
+import { ADMIN_DICT_EDIT_CODE, ADMIN_USER_ROOT } from "@/utils/common";
 
 export function useHook() {
   const title = ref("用户");

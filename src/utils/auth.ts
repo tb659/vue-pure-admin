@@ -1,7 +1,7 @@
-import { loginType } from "@/api/system/user/types";
+import type { loginType } from "@/api/system/user/types";
 import Cookies from "js-cookie";
-import { PROJECT_PREFIX } from "@/utils/common";
 import { config } from "@/utils/http/config";
+import { PROJECT_PREFIX } from "@/utils/common";
 
 const TokenKey = config.COOKIE_TOKEN_KEY;
 const SingleCaptcha = config.COOKIE_SINGLE_CAPTCHA;

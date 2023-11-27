@@ -1,7 +1,7 @@
+import type { CSSProperties } from "vue";
 import "./circled.css";
 import Cropper from "cropperjs";
 import { ElUpload } from "element-plus";
-import type { CSSProperties } from "vue";
 import { useResizeObserver } from "@vueuse/core";
 import { longpress } from "@/directives/longpress";
 import { useTippy, directive as tippy } from "vue-tippy";

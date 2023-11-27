@@ -1,8 +1,8 @@
 <script setup lang="ts">
+import type { MenuData } from "@/api/system/menu/types";
 import { reactive, watch } from "vue";
 import { required } from "@/utils/validator";
 import { useForm } from "@/hooks/web/useForm";
-import { MenuData } from "@/api/system/menu/types";
 
 defineOptions({
   name: "WriteForm"

@@ -1,4 +1,4 @@
-import { BaseQuery } from "@/api/types";
+import type { BaseQuery } from "@/api/types";
 
 export type DictData = {
   id?: number;

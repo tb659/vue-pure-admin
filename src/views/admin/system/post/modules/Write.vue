@@ -1,8 +1,8 @@
 <script setup lang="ts">
+import type { PositionData } from "@/api/system/postition/types";
 import { reactive, watch } from "vue";
 import { required } from "@/utils/validator";
 import { useForm } from "@/hooks/web/useForm";
-import { PositionData } from "@/api/system/postition/types";
 
 defineOptions({
   name: "WriteForm"

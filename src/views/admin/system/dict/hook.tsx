@@ -1,8 +1,8 @@
-import { DictData } from "@/api/system/dict/types";
-import { useTable } from "@/hooks/web/useTable";
-import { dictApi } from "@/api/system/dict";
+import type { DictData } from "@/api/system/dict/types";
 import { ref, unref } from "vue";
 import { msg } from "@/utils/message";
+import { dictApi } from "@/api/system/dict";
+import { useTable } from "@/hooks/web/useTable";
 import { ADMIN_ROLE_EMBED } from "@/utils/common";
 
 export function useHook() {

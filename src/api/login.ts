@@ -1,6 +1,6 @@
+import type { loginType } from "./system/user/types";
 import { http } from "@/utils/http/api-base";
 import QueryString from "qs";
-import type { loginType } from "./system/user/types";
 enum API {
   login = "/login", // 登录
   getCaptcha = "/captcha", // 验证码

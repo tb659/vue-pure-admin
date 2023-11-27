@@ -1,16 +1,16 @@
-import { RouterHistory, RouteRecordRaw, RouteComponent, createWebHistory, createWebHashHistory } from "vue-router";
+import type { menuType } from "@/layout/types";
+import type { MenuData } from "@/api/system/menu/types";
 import { router } from "./index";
 import { isProxy, toRaw } from "vue";
 import { getConfig } from "@/config";
 import { msg } from "@/utils/message";
 import { useTimeoutFn } from "@vueuse/core";
-import { menuType } from "@/layout/types";
 import { menuApi } from "@/api/system/menu";
-import { MenuData } from "@/api/system/menu/types";
 import { useUserStoreHook } from "@/store/modules/user";
 import { buildHierarchyTree, listToTree } from "@/utils/tree";
-import { usePermissionStoreHook } from "@/store/modules/permission";
 import { useMultiTagsStoreHook } from "@/store/modules/multiTags";
+import { usePermissionStoreHook } from "@/store/modules/permission";
+import { RouterHistory, RouteRecordRaw, RouteComponent, createWebHistory, createWebHashHistory } from "vue-router";
 import { isString, cloneDeep, isAllEmpty, storageLocal, isIncludeAllChildren, intersection } from "@pureadmin/utils";
 import { MENU_TYPE, PAGE_BUTTON_PERMISSION_KEY, PROJECT_PREFIX, USER_INFO, USER_MENU_LIST_KEY } from "@/utils/common";
 

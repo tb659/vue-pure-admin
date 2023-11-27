@@ -1,6 +1,5 @@
-import { ref, unref, watch, computed, reactive, onMounted, onBeforeMount, CSSProperties, getCurrentInstance } from "vue";
+import type { tagsViewsType } from "../types";
 import { emitter } from "@/utils/mitt";
-import { tagsViewsType } from "../types";
 import { useEventListener } from "@vueuse/core";
 import { useRoute, useRouter } from "vue-router";
 import { transformI18n, $t } from "@/plugins/i18n";
@@ -9,6 +8,7 @@ import { getConfig, responsiveStorageNameSpace } from "@/config";
 import { useSettingStoreHook } from "@/store/modules/settings";
 import { useMultiTagsStoreHook } from "@/store/modules/multiTags";
 import { isEqual, isBoolean, storageLocal, toggleClass, hasClass } from "@pureadmin/utils";
+import { ref, unref, watch, computed, reactive, onMounted, onBeforeMount, CSSProperties, getCurrentInstance } from "vue";
 
 import Fullscreen from "@iconify-icons/ri/fullscreen-fill";
 import CloseAllTags from "@iconify-icons/ri/subtract-line";

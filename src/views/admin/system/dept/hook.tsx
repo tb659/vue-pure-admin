@@ -1,8 +1,8 @@
+import type { DeptData } from "@/api/system/dept/types";
 import { ref, unref } from "vue";
 import { listToTree } from "@/utils/tree";
 import { deptApi } from "@/api/system/dept";
 import { useTable } from "@/hooks/web/useTable";
-import { DeptData } from "@/api/system/dept/types";
 
 export function useHook() {
   const title = ref("部门");

@@ -1,10 +1,10 @@
 <script setup lang="ts">
+import type { DictData } from "@/api/system/dict/types";
+import type { MenuData } from "@/api/system/menu/types";
 import { reactive, ref, watch } from "vue";
+import { menuApi } from "@/api/system/menu";
 import { required } from "@/utils/validator";
 import { useForm } from "@/hooks/web/useForm";
-import { DictData } from "@/api/system/dict/types";
-import { menuApi } from "@/api/system/menu";
-import { MenuData } from "@/api/system/menu/types";
 import { eachTree, listToTree } from "@/utils/tree";
 
 defineOptions({

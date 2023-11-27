@@ -1,6 +1,6 @@
-import { defineStore } from "pinia";
+import type { cacheType } from "./types";
 import { store } from "@/store";
-import { cacheType } from "./types";
+import { defineStore } from "pinia";
 import { constantMenus } from "@/router";
 import { useMultiTagsStoreHook } from "./multiTags";
 import { debounce, getKeyList } from "@pureadmin/utils";

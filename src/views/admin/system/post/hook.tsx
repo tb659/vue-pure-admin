@@ -1,10 +1,10 @@
-import { useTable } from "@/hooks/web/useTable";
-import { ref, unref, reactive, nextTick, toRefs } from "vue";
+import type { UserData } from "@/api/system/user/types";
+import type { PositionData } from "@/api/system/postition/types";
 import { msg } from "@/utils/message";
-import { positionApi } from "@/api/system/postition";
-import { PositionData } from "@/api/system/postition/types";
 import { userApi } from "@/api/system/user";
-import { UserData } from "@/api/system/user/types";
+import { useTable } from "@/hooks/web/useTable";
+import { positionApi } from "@/api/system/postition";
+import { ref, unref, reactive, nextTick, toRefs } from "vue";
 
 export function useHook() {
   const title = ref("岗位");

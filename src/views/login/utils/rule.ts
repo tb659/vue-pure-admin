@@ -1,5 +1,5 @@
-import { reactive } from "vue";
 import type { FormRules } from "element-plus";
+import { reactive } from "vue";
 import { $t, transformI18n } from "@/plugins/i18n";
 // import { useUserStoreHook } from "@/store/modules/user";
 

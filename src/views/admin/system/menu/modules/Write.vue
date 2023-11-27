@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { reactive, watch, ref, unref } from "vue";
+import type { MenuData } from "@/api/system/menu/types";
 import { required } from "@/utils/validator";
-import { useForm } from "@/hooks/web/useForm";
-import { MenuData } from "@/api/system/menu/types";
-import { HOME_DERECTORY, MENU_TYPE_MAP, MENU_TYPE } from "@/utils/common";
 import { cloneDeep } from "@pureadmin/utils";
+import { useForm } from "@/hooks/web/useForm";
+import { reactive, watch, ref, unref } from "vue";
+import { HOME_DERECTORY, MENU_TYPE_MAP, MENU_TYPE } from "@/utils/common";
 
 defineOptions({
   name: "WriteForm"

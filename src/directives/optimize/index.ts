@@ -1,6 +1,6 @@
+import type { Directive, DirectiveBinding } from "vue";
 import { isFunction, isObject, isArray, debounce, throttle } from "@pureadmin/utils";
 import { useEventListener } from "@vueuse/core";
-import type { Directive, DirectiveBinding } from "vue";
 
 /** 防抖（v-optimize或v-optimize:debounce）、节流（v-optimize:throttle）指令 */
 export const optimize: Directive = {

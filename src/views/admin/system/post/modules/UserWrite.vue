@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { ref, reactive, watch, unref } from "vue";
+import type { UserData } from "@/api/system/user/types";
+import type { PositionData } from "@/api/system/postition/types";
 import { required } from "@/utils/validator";
 import { useForm } from "@/hooks/web/useForm";
-import { UserData } from "@/api/system/user/types";
-import { PositionData } from "@/api/system/postition/types";
+import { ref, reactive, watch, unref } from "vue";
 import { DIALOG_WIDTH_TYPE } from "@/utils/common";
 import SelectMember from "@/views/components/SelectMember/index.vue";
 

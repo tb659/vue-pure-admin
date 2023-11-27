@@ -1,12 +1,12 @@
 <script setup lang="ts">
+import type { setType } from "./types";
 import "animate.css";
 // 引入 src/components/ReIcon/src/offlineIcon.ts 文件中所有使用addIcon添加过的本地图标
-import "@/components/ReIcon/src/offlineIcon";
-import { setType } from "./types";
 import { useNav } from "./hooks/useNav";
+import "@/components/ReIcon/src/offlineIcon";
 import { useLayout } from "./hooks/useLayout";
-import { $t, transformI18n } from "@/plugins/i18n";
 import { useResizeObserver } from "@vueuse/core";
+import { $t, transformI18n } from "@/plugins/i18n";
 import { useAppStoreHook } from "@/store/modules/app";
 import { deviceDetection, useDark, useGlobal } from "@pureadmin/utils";
 import { useDataThemeChange } from "@/layout/hooks/useDataThemeChange";

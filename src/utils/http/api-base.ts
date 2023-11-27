@@ -1,5 +1,5 @@
+import type { PureHttpError, RequestMethods, PureHttpResponse, PureHttpRequestConfig } from "./types.d";
 import Axios, { AxiosInstance, AxiosRequestConfig, CustomParamsSerializer } from "axios";
-import { PureHttpError, RequestMethods, PureHttpResponse, PureHttpRequestConfig } from "./types.d";
 import { stringify } from "qs";
 import { config } from "./config";
 import NProgress from "../progress";

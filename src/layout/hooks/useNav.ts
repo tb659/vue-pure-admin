@@ -1,9 +1,9 @@
+import type { routeMetaType } from "../types";
 import { storeToRefs } from "pinia";
 import { getConfig } from "@/config";
 import { msg } from "@/utils/message";
 import { useRouter } from "vue-router";
 import { emitter } from "@/utils/mitt";
-import { routeMetaType } from "../types";
 import userAvatar from "@/assets/user.jpg";
 import { getTopMenu } from "@/router/utils";
 import { userApi } from "@/api/system/user";
