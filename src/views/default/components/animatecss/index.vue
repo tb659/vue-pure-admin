@@ -5,7 +5,9 @@ defineOptions({
   name: "AnimateCss"
 });
 const icon = ref("");
-watch(icon, () => console.log("icon", icon.value));
+watch(icon, () => {
+  console.log("icon", icon.value);
+});
 </script>
 
 <template>

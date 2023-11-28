@@ -6,7 +6,7 @@ const props = defineProps({
   collapse: Boolean
 });
 
-const { title, layout } = useNav();
+const { title, layout, getLogo } = useNav();
 </script>
 
 <template>
@@ -19,11 +19,11 @@ const { title, layout } = useNav();
         class="sidebar-logo-link"
         :to="getTopMenu()?.path ?? '/'"
       >
-        <img src="/logo.svg" alt="logo" />
+        <img :src="getLogo()" alt="logo" />
         <span v-if="layout !== 'leftMix'" class="sidebar-title">{{ title }}</span>
       </router-link>
       <router-link v-else key="expand" :title="title" class="sidebar-logo-link" :to="getTopMenu()?.path ?? '/'">
-        <img src="/logo.svg" alt="logo" />
+        <img :src="getLogo()" alt="logo" />
         <span v-if="layout !== 'leftMix'" class="sidebar-title">{{ title }}</span>
       </router-link>
     </transition>

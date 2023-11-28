@@ -25,6 +25,7 @@ const {
   logout,
   backTopMenu,
   onPanel,
+  getLogo,
   menuSelect,
   username,
   userAvatar,
@@ -52,7 +53,7 @@ watch(
 <template>
   <div v-loading="usePermissionStoreHook().wholeMenus.length === 0" class="horizontal-header">
     <div class="horizontal-header-left" @click="backTopMenu">
-      <img src="/logo.svg" alt="logo" />
+      <img :src="getLogo()" alt="logo" />
       <span>{{ title }}</span>
     </div>
     <el-menu

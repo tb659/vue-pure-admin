@@ -163,6 +163,11 @@ export function useNav() {
     menuRef?.handleResize();
   }
 
+  /** 获取`logo` */
+  function getLogo() {
+    return new URL("/logo.svg", import.meta.url).href;
+  }
+
   function resolvePath(route) {
     if (!route.children) return console.error(errorInfo);
     const httpReg = /^http(s?):\/\//;
@@ -275,6 +280,7 @@ export function useNav() {
     toggleSideBar,
     menuSelect,
     handleResize,
+    getLogo,
     resolvePath,
     isCollapse,
     pureApp,
