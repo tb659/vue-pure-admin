@@ -54,37 +54,13 @@ module.exports = {
       { value: "feat: 新增", name: "新增:   🚀  新增功能", emoji: "🚀" },
       { value: "fix: 修复", name: "修复:   🧩  修复缺陷", emoji: "🧩" },
       { value: "docs: 文档", name: "文档:   📚  文档变更", emoji: "📚" },
-      {
-        value: "style: 格式",
-        name: "格式:   🎨  代码格式（不影响功能，例如空格、分号等格式或样式修正）",
-        emoji: "🎨"
-      },
-      {
-        value: "refactor: 重构",
-        name: "重构:   ♻️   代码重构（不包括 bug 修复、功能新增）",
-        emoji: "♻️"
-      },
+      { value: "style: 格式", name: "格式:   🎨  代码格式（不影响功能，例如空格、分号等格式或样式修正）", emoji: "🎨" },
+      { value: "refactor: 重构", name: "重构:   ♻️   代码重构（不包括 bug 修复、功能新增）", emoji: "♻️" },
       { value: "perf: 性能", name: "性能:   ⚡️  性能优化", emoji: "⚡️" },
-      {
-        value: "test: 测试",
-        name: "测试:   ✅  添加疏漏测试或已有测试改动",
-        emoji: "✅"
-      },
-      {
-        value: "build: 打包",
-        name: "打包:   🔨  项目打包部署上线",
-        emoji: "🔨"
-      },
-      {
-        value: "ci: 集成",
-        name: "集成:   🎡  修改 CI 配置、脚本",
-        emoji: "🎡"
-      },
-      {
-        value: "chore: 构建",
-        name: "构建:   📦️  构建流程、外部依赖变更（如升级 npm 包、修改 webpack 配置等）",
-        emoji: "📦️"
-      },
+      { value: "test: 测试", name: "测试:   ✅  添加疏漏测试或已有测试改动", emoji: "✅" },
+      { value: "build: 打包", name: "打包:   🔨  项目打包部署上线", emoji: "🔨" },
+      { value: "ci: 集成", name: "集成:   🎡  修改 CI 配置、脚本", emoji: "🎡" },
+      { value: "chore: 构建", name: "构建:   📦️  构建流程、外部依赖变更（如升级 npm 包、修改 webpack 配置等）", emoji: "📦️" },
       { value: "revert: 回退", name: "回退:   ⏪️  回滚 commit", emoji: "⏪️" }
     ],
     useEmoji: true,
@@ -100,9 +76,7 @@ module.exports = {
     breaklineNumber: 100,
     breaklineChar: "|",
     skipQuestions: [],
-    issuePrefixs: [
-      { value: "closed", name: "closed:   ISSUES has been processed" }
-    ],
+    issuePrefixs: [{ value: "closed", name: "closed:   ISSUES has been processed" }],
     customIssuePrefixsAlign: "top",
     emptyIssuePrefixsAlias: "skip",
     customIssuePrefixsAlias: "custom",
