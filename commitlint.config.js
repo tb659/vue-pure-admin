@@ -56,7 +56,7 @@ module.exports = {
       { value: "docs: 文档", name: "文档:   📚  文档变更", emoji: "📚" },
       { value: "style: 格式", name: "格式:   🎨  代码格式（不影响功能，例如空格、分号等格式或样式修正）", emoji: "🎨" },
       { value: "refactor: 重构", name: "重构:   ♻️   代码重构（不包括 bug 修复、功能新增）", emoji: "♻️" },
-      { value: "perf: 性能", name: "性能:   ⚡️  性能优化", emoji: "⚡️" },
+      { value: "perf: 优化", name: "优化:   ⚡️  性能优化，页面优化", emoji: "⚡️" },
       { value: "test: 测试", name: "测试:   ✅  添加疏漏测试或已有测试改动", emoji: "✅" },
       { value: "build: 打包", name: "打包:   🔨  项目打包部署上线", emoji: "🔨" },
       { value: "ci: 集成", name: "集成:   🎡  修改 CI 配置、脚本", emoji: "🎡" },
