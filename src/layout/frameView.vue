@@ -54,7 +54,6 @@ onMounted(() => {
 .frame {
   position: absolute;
   inset: 0;
-  z-index: 998;
 
   .frame-iframe {
     box-sizing: border-box;
