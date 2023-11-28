@@ -69,7 +69,8 @@ const transitionMain = defineComponent({
         <el-scrollbar
           v-if="fixedHeader"
           :wrap-style="{
-            display: 'flex'
+            display: 'flex',
+            'flex-wrap': 'wrap'
           }"
           :view-style="{
             display: 'flex',
