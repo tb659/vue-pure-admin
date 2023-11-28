@@ -1,6 +1,6 @@
-import { MockMethod } from "vite-plugin-mock";
+import { defineFakeRoute } from "vite-plugin-fake-server/client";
 
-export default [
+export default defineFakeRoute([
   // 用户管理
   {
     url: "/user",
@@ -277,4 +277,4 @@ export default [
       };
     }
   }
-] as MockMethod[];
+]);

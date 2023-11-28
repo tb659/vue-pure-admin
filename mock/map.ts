@@ -1,4 +1,4 @@
-import { MockMethod } from "vite-plugin-mock";
+import { defineFakeRoute } from "vite-plugin-fake-server/client";
 
 type mapType = {
   plateNumber: string;
@@ -23,7 +23,7 @@ const mapList = (): Array<mapType> => {
   return result;
 };
 
-export default [
+export default defineFakeRoute([
   {
     url: "/get-map-info",
     method: "get",
@@ -34,4 +34,4 @@ export default [
       };
     }
   }
-] as MockMethod[];
+]);
