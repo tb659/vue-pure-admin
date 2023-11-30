@@ -38,8 +38,8 @@ const {
 
     <mt-table-bar title="菜单列表" :table-ref="elTableRef" :columns="tableColumns" @refresh="setSearchParams">
       <template #buttons>
-        <el-button type="primary" v-auth="'添加目录'" :icon="useRenderIcon(AddFill)" @click="handleAdd"> 添加目录 </el-button>
-        <el-button type="primary" v-auth="'删除'" :icon="useRenderIcon(Trash)" @click="handleDel"> 批量删除 </el-button>
+        <el-button v-auth="'添加目录'" type="primary" :icon="useRenderIcon(AddFill)" @click="handleAdd"> 添加目录 </el-button>
+        <el-button v-auth="'删除'" type="primary" :icon="useRenderIcon(Trash)" @click="handleDel"> 批量删除 </el-button>
       </template>
       <template #default="{ size, dynamicColumns }">
         <mt-table

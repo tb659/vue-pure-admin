@@ -27,11 +27,13 @@ const { title, visible, loading, tableObject, operationList, register, handleAdd
 
     <mt-table-bar title="字典列表" :columns="tableColumns" @refresh="setSearchParams">
       <template #buttons>
-        <el-button type="primary" v-auth="'添加字典'" :icon="useRenderIcon(AddFill)" @click="handleAdd"> 添加字典 </el-button>
-        <el-button type="primary" v-auth="'删除'" :icon="useRenderIcon(Trash)" @click="handleDel"> 批量删除 </el-button>
+        <el-button v-auth="'添加字典'" type="primary" :icon="useRenderIcon(AddFill)" @click="handleAdd"> 添加字典 </el-button>
+        <el-button v-auth="'删除'" type="primary" :icon="useRenderIcon(Trash)" @click="handleDel"> 批量删除 </el-button>
       </template>
       <template #default="{ size, dynamicColumns }">
         <mt-table
+          v-model:pageSize="tableObject.pageSize"
+          v-model:currentPage="tableObject.currentPage"
           sels-tag
           row-key="id"
           :size="size"
@@ -40,8 +42,6 @@ const { title, visible, loading, tableObject, operationList, register, handleAdd
           :data="tableObject.tableList"
           :loading="tableObject.loading"
           :pagination="{ total: tableObject.total }"
-          v-model:pageSize="tableObject.pageSize"
-          v-model:currentPage="tableObject.currentPage"
           @register="register"
         />
       </template>

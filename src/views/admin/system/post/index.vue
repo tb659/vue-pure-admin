@@ -48,7 +48,7 @@ const {
       <el-card shadow="never" :body-style="{ height: 'calc(100vh - 120px)' }">
         <div class="mb-6 flex-bc x-2">
           <span v-auth="'添加岗位'" class="font-bold">岗位</span>
-          <IconifyIconOffline :icon="AddFill" @click="onAddPost" class="pointer" />
+          <IconifyIconOffline :icon="AddFill" class="pointer" @click="onAddPost" />
         </div>
         <div v-if="postList.length">
           <div
@@ -60,8 +60,8 @@ const {
           >
             {{ item.name }}
             <div class="flex">
-              <IconifyIconOffline v-auth="'修改'" :icon="Edit" @click.stop="onEditPost(item)" class="pointer mr-[4px]" />
-              <IconifyIconOffline v-auth="'删除'" :icon="Remove" @click.stop="onDeletePost(item)" class="pointer" />
+              <IconifyIconOffline v-auth="'修改'" :icon="Edit" class="pointer mr-[4px]" @click.stop="onEditPost(item)" />
+              <IconifyIconOffline v-auth="'删除'" :icon="Remove" class="pointer" @click.stop="onDeletePost(item)" />
             </div>
           </div>
         </div>
@@ -78,14 +78,14 @@ const {
         </template>
         <template #default="{ size, dynamicColumns }">
           <mt-table
+            v-model:pageSize="tableObject.pageSize"
+            v-model:currentPage="tableObject.currentPage"
             row-key="id"
             :size="size"
             :columns="dynamicColumns"
             :data="tableObject.tableList"
             :loading="tableObject.loading"
             :pagination="{ total: tableObject.total }"
-            v-model:pageSize="tableObject.pageSize"
-            v-model:currentPage="tableObject.currentPage"
             @register="register"
           />
         </template>

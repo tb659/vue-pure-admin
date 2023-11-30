@@ -38,17 +38,17 @@ defineExpose({
         <mt-table-bar title="用户列表" :columns="tableColumns" @refresh="setSearchParams">
           <template #default="{ size, dynamicColumns }">
             <mt-table
+              v-bind="$attrs"
+              v-model:pageSize="tableObject.pageSize"
+              v-model:currentPage="tableObject.currentPage"
               sels-tag
               row-key="id"
               label-key="realName"
-              v-bind="$attrs"
               :size="size"
               :columns="dynamicColumns"
               :data="tableObject.tableList"
               :loading="tableObject.loading"
               :pagination="{ total: tableObject.total }"
-              v-model:pageSize="tableObject.pageSize"
-              v-model:currentPage="tableObject.currentPage"
               @register="register"
             />
           </template>

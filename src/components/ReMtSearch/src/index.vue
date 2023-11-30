@@ -84,8 +84,8 @@ async function reset() {
     :label-width="labelWidth"
     :form-width="formWidth"
     hide-required-asterisk
-    @register="register"
     class="pt-4 pl-8"
+    @register="register"
   >
     <template #action>
       <div v-if="layout === 'inline'">

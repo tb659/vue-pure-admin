@@ -26,7 +26,7 @@ const { title, visible, loading, elTableRef, tableObject, operationList, registe
 
     <mt-table-bar title="部门列表" :table-ref="elTableRef" :columns="tableColumns" @refresh="setSearchParams">
       <template #buttons>
-        <el-button type="primary" v-auth="'添加部门'" :icon="useRenderIcon(AddFill)" @click="handleAdd"> 添加部门 </el-button>
+        <el-button v-auth="'添加部门'" type="primary" :icon="useRenderIcon(AddFill)" @click="handleAdd"> 添加部门 </el-button>
       </template>
       <template #default="{ size, dynamicColumns }">
         <mt-table

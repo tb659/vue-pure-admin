@@ -69,9 +69,9 @@ function onMouseleave() {
     :model-value="inputValue"
     placeholder="请选择动画"
     clearable
+    :filter-method="filterMethod"
     filterable
     @clear="onClear"
-    :filter-method="filterMethod"
   >
     <template #empty>
       <div class="w-[280px]">

@@ -99,7 +99,7 @@ watch(
       <!-- 通知 -->
       <Notice v-if="false" id="header-notice" />
       <!-- 国际化 -->
-      <el-dropdown :class="SHOW_I18N ? '' : '!hidden'" id="header-translation" trigger="click">
+      <el-dropdown id="header-translation" :class="SHOW_I18N ? '' : '!hidden'" trigger="click">
         <globalization class="navbar-bg-hover w-[40px] h-[48px] p-[11px] cursor-pointer outline-none" />
         <template #dropdown>
           <el-dropdown-menu class="translation">

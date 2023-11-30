@@ -96,7 +96,7 @@ module.exports = defineConfig({
     "@typescript-eslint/explicit-module-boundary-types": "off", // setup()
 
     "vue/no-v-html": "off",
-    "vue/attributes-order": "off",
+    "vue/attributes-order": 1,
     "vue/require-prop-types": "off",
     "vue/no-template-shadow": "off",
     "vue/require-default-prop": "off",

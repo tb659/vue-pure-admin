@@ -269,7 +269,7 @@ onBeforeMount(() => {
         placement="bottom"
         popper-class="pure-tooltip"
       >
-        <li :class="layoutTheme.layout === 'vertical' ? 'is-select' : ''" ref="verticalRef" @click="setLayoutModel('vertical')">
+        <li ref="verticalRef" :class="layoutTheme.layout === 'vertical' ? 'is-select' : ''" @click="setLayoutModel('vertical')">
           <div />
           <div />
         </li>
@@ -283,7 +283,7 @@ onBeforeMount(() => {
         placement="bottom"
         popper-class="pure-tooltip"
       >
-        <li :class="layoutTheme.layout === 'leftMix' ? 'is-select' : ''" ref="leftMixRef" @click="setLayoutModel('leftMix')">
+        <li ref="leftMixRef" :class="layoutTheme.layout === 'leftMix' ? 'is-select' : ''" @click="setLayoutModel('leftMix')">
           <div />
           <div />
           <div />
@@ -316,7 +316,7 @@ onBeforeMount(() => {
         placement="bottom"
         popper-class="pure-tooltip"
       >
-        <li :class="layoutTheme.layout === 'topMix' ? 'is-select' : ''" ref="topMixRef" @click="setLayoutModel('topMix')">
+        <li ref="topMixRef" :class="layoutTheme.layout === 'topMix' ? 'is-select' : ''" @click="setLayoutModel('topMix')">
           <div />
           <div />
         </li>
@@ -367,8 +367,8 @@ onBeforeMount(() => {
           inactive-color="#a6a6a6"
           active-text="开"
           inactive-text="关"
-          @change="logoChange"
           :disabled="layoutTheme.layout === 'leftMix' || layoutTheme.layout === 'horizontal' || contentFullScreen"
+          @change="logoChange"
         />
       </li>
       <li>
@@ -457,8 +457,8 @@ onBeforeMount(() => {
         <el-radio-group
           v-model="menuTriggerValue"
           size="small"
-          @change="onMenuTriggerChange"
           :disabled="layoutTheme.layout !== 'leftMix'"
+          @change="onMenuTriggerChange"
         >
           <el-radio label="click">{{ transformI18n($t("apps.click")) }}</el-radio>
           <el-radio label="hover">
