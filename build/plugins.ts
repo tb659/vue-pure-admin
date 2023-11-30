@@ -1,3 +1,4 @@
+import type { PluginOption } from "vite";
 import { cdn } from "./cdn";
 import { resolve } from "path";
 import vue from "@vitejs/plugin-vue";
@@ -12,7 +13,7 @@ import VueI18nPlugin from "@intlify/unplugin-vue-i18n/vite";
 import { genScssMultipleScopeVars } from "../src/layout/theme";
 import { vitePluginFakeServer } from "vite-plugin-fake-server";
 
-export function getPluginsList(command: string, VITE_CDN: boolean, VITE_COMPRESSION: ViteCompression) {
+export function getPluginsList(VITE_CDN: boolean, VITE_COMPRESSION: ViteCompression): PluginOption[] {
   const lifecycle = process.env.npm_lifecycle_event;
   return [
     vue(),
@@ -45,6 +46,6 @@ export function getPluginsList(command: string, VITE_CDN: boolean, VITE_COMPRESS
       enableProd: true
     }),
     // 打包分析
-    lifecycle === "report" ? visualizer({ open: true, brotliSize: true, filename: "report.html" }) : null
+    lifecycle === "report" ? visualizer({ open: true, brotliSize: true, filename: "report.html" }) : (null as any)
   ];
 }
