@@ -6,7 +6,7 @@ package.json
 .eslintrc.cjs
 .prettierrc.cjs
 commitlint.config.cjs
-postcss.config.cjs
+postcss.config.js
 stylelint.config.cjs
 tailwind.config.cjs
 src/components/ReSplitPane/iconfont
