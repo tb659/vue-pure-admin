@@ -1,10 +1,9 @@
+// @ts-check
+
+/** @type {import("stylelint").Config} */
 module.exports = {
   root: true,
-  extends: [
-    "stylelint-config-standard",
-    "stylelint-config-html/vue",
-    "stylelint-config-recess-order"
-  ],
+  extends: ["stylelint-config-standard", "stylelint-config-html/vue", "stylelint-config-recess-order"],
   plugins: ["stylelint-order", "stylelint-prettier", "stylelint-scss"],
   overrides: [
     {
@@ -14,10 +13,7 @@ module.exports = {
     {
       files: ["*.scss", "**/*.scss"],
       customSyntax: "postcss-scss",
-      extends: [
-        "stylelint-config-standard-scss",
-        "stylelint-config-recommended-vue/scss"
-      ]
+      extends: ["stylelint-config-standard-scss", "stylelint-config-recommended-vue/scss"]
     }
   ],
   rules: {
@@ -81,4 +77,4 @@ module.exports = {
     ]
   },
   ignoreFiles: ["**/*.js", "**/*.ts", "**/*.jsx", "**/*.tsx"]
-}
+};

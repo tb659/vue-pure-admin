@@ -1,3 +1,6 @@
+// @ts-check
+
+/** @type {import("prettier").Config} */
 module.exports = {
   // 每次修改prettier配置项需要重新打开vscode才会生效
   bracketSpacing: true,
