@@ -193,7 +193,14 @@ function resolvePath(routePath) {
         <span v-if="layout === 'horizontal'">
           {{ transformI18n(onlyOneChild.meta.title) }}
         </span>
-        <el-tooltip v-else placement="top" :effect="tooltipEffect" :offset="-10" :disabled="!onlyOneChild.showTooltip">
+        <el-tooltip
+          v-else
+          placement="top"
+          popper-style="pointer-events: none"
+          :effect="tooltipEffect"
+          :offset="-10"
+          :disabled="!onlyOneChild.showTooltip"
+        >
           <template #content>
             {{ transformI18n(onlyOneChild.meta.title) }}
           </template>
@@ -221,6 +228,7 @@ function resolvePath(routePath) {
         <el-tooltip
           v-if="layout !== 'horizontal'"
           placement="top"
+          popper-style="pointer-events: none"
           :effect="tooltipEffect"
           :offset="-10"
           :disabled="!props.item.showTooltip"

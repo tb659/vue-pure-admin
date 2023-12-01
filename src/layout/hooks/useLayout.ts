@@ -1,5 +1,6 @@
 import { computed } from "vue";
 import { useI18n } from "vue-i18n";
+import { getConfig } from "@/config";
 import { routerArrays } from "../types";
 import { useGlobal } from "@pureadmin/utils";
 import { useMultiTagsStore } from "@/store/modules/multiTags";
@@ -20,23 +21,27 @@ export function useLayout() {
     /** 导航 */
     if (!$storage.layout) {
       $storage.layout = {
-        layout: $config?.Layout ?? "vertical",
-        theme: $config?.Theme ?? "default",
-        darkMode: $config?.DarkMode ?? false,
-        sidebarStatus: $config?.SidebarStatus ?? true,
-        epThemeColor: $config?.EpThemeColor ?? "#409EFF"
+        layout: $config?.Layout ?? getConfig().Layout,
+        theme: $config?.Theme ?? getConfig().Theme,
+        darkMode: $config?.DarkMode ?? getConfig().DarkMode,
+        leftMixNavFixed: $config?.LeftMixNavFixed ?? getConfig().LeftMixNavFixed,
+        contentFullScreen: $config?.ContentFullScreen ?? getConfig().ContentFullScreen,
+        sidebarStatus: $config?.SidebarStatus ?? getConfig().SidebarStatus,
+        epThemeColor: $config?.EpThemeColor ?? getConfig().EpThemeColor
       };
     }
     /** 灰色模式、色弱模式、隐藏标签页 */
     if (!$storage.configure) {
       $storage.configure = {
-        grey: $config?.Grey ?? false,
-        weak: $config?.Weak ?? false,
-        hideTabs: $config?.HideTabs ?? false,
-        hideFooter: $config.HideFooter ?? true,
-        showLogo: $config?.ShowLogo ?? true,
-        showModel: $config?.ShowModel ?? "smart",
-        multiTagsCache: $config?.MultiTagsCache ?? false
+        grey: $config?.Grey ?? getConfig().Grey,
+        weak: $config?.Weak ?? getConfig().Weak,
+        hideTabs: $config?.HideTabs ?? getConfig().HideTabs,
+        showLogo: $config?.ShowLogo ?? getConfig().ShowLogo,
+        showModel: $config?.ShowModel ?? getConfig().ShowModel,
+        fixedHeader: $config?.FixedHeader ?? getConfig().FixedHeader,
+        hiddenSideBar: $config?.HiddenSideBar ?? getConfig().HiddenSideBar,
+        mixMenuTrigger: $config?.MixMenuTrigger ?? getConfig().MixMenuTrigger,
+        multiTagsCache: $config?.MultiTagsCache ?? getConfig().MultiTagsCache
       };
     }
   };

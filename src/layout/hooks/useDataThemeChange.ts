@@ -44,6 +44,8 @@ export function useDataThemeChange() {
       theme,
       darkMode: dataTheme.value,
       sidebarStatus: $storage.layout?.sidebarStatus,
+      leftMixNavFixed: $storage.layout?.leftMixNavFixed,
+      contentFullScreen: $storage.layout?.contentFullScreen,
       epThemeColor: $storage.layout?.epThemeColor
     };
 

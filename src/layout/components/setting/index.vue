@@ -100,6 +100,12 @@ function onFixedHeaderChange(value) {
   emitter.emit("fixedHeader", value);
 }
 
+/** 隐藏页脚设置 */
+const hideFooterChange = () => {
+  const hideFooter = settings.hideFooter;
+  storageConfigureChange("hideFooter", hideFooter);
+};
+
 /** 侧边栏Logo */
 function logoChange() {
   unref(logoValue) ? storageConfigureChange("showLogo", true) : storageConfigureChange("showLogo", false);
@@ -117,12 +123,6 @@ const tagsChange = () => {
   const showVal = settings.tabsVal;
   storageConfigureChange("hideTabs", showVal);
   emitter.emit("tagViewsChange", showVal as unknown as string);
-};
-
-/** 隐藏页脚设置 */
-const hideFooterChange = () => {
-  const hideFooter = settings.hideFooter;
-  storageConfigureChange("hideFooter", hideFooter);
 };
 
 /** 标签页持久化设置 */
@@ -356,6 +356,17 @@ onBeforeMount(() => {
         />
       </li>
       <li>
+        <span class="dark:text-white">{{ transformI18n($t("apps.hiddenFooter")) }}</span>
+        <el-switch
+          v-model="settings.hideFooter"
+          inline-prompt
+          inactive-color="#a6a6a6"
+          :active-text="transformI18n($t('apps.on'))"
+          :inactive-text="transformI18n($t('apps.off'))"
+          @change="hideFooterChange"
+        />
+      </li>
+      <li>
         <span class="dark:text-white">
           {{ transformI18n($t("apps.sidebarLogo")) }}
         </span>
@@ -397,17 +408,6 @@ onBeforeMount(() => {
           :active-text="transformI18n($t('apps.on'))"
           :inactive-text="transformI18n($t('apps.off'))"
           @change="tagsChange"
-        />
-      </li>
-      <li>
-        <span class="dark:text-white">{{ transformI18n($t("apps.hiddenFooter")) }}</span>
-        <el-switch
-          v-model="settings.hideFooter"
-          inline-prompt
-          inactive-color="#a6a6a6"
-          :active-text="transformI18n($t('apps.on'))"
-          :inactive-text="transformI18n($t('apps.off'))"
-          @change="hideFooterChange"
         />
       </li>
       <li>

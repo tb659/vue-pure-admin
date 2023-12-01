@@ -20,11 +20,11 @@ export const useAppStore = defineStore({
     // 作用于 src/views/components/draggable/index.vue 页面，当离开页面并不会销毁 new Swap()，sortablejs 官网也没有提供任何销毁的 api
     sortSwap: false,
     contentFullScreen:
-      storageLocal().getItem<StorageConfigs>(`${responsiveStorageNameSpace}layout`)?.contentFullScreen ??
+      storageLocal().getItem<StorageConfigs>(`${responsiveStorageNameSpace()}layout`)?.contentFullScreen ??
       getConfig().ContentFullScreen,
     // 左侧混合模式固定子菜单
     leftMixNavFixed:
-      storageLocal().getItem<StorageConfigs>(`${responsiveStorageNameSpace}layout`)?.leftMixNavFixed ??
+      storageLocal().getItem<StorageConfigs>(`${responsiveStorageNameSpace()}layout`)?.leftMixNavFixed ??
       getConfig().LeftMixNavFixed
   }),
   getters: {

@@ -86,13 +86,13 @@ const { t, locale, translationCh, translationEn } = useTranslationLang();
         </span>
         <template #dropdown>
           <el-dropdown-menu class="logout">
-            <el-dropdown-item @click="logout">
-              <IconifyIconOffline :icon="LogoutCircleRLine" style="margin: 5px" />
-              {{ t("buttons.hsLoginOut") }}
-            </el-dropdown-item>
             <el-dropdown-item @click="passwordVisible = true">
               <IconifyIconOffline :icon="Lock" style="margin: 5px" />
               {{ t("login.passwordUpdate") }}
+            </el-dropdown-item>
+            <el-dropdown-item @click="logout">
+              <IconifyIconOffline :icon="LogoutCircleRLine" style="margin: 5px" />
+              {{ t("buttons.hsLoginOut") }}
             </el-dropdown-item>
           </el-dropdown-menu>
         </template>

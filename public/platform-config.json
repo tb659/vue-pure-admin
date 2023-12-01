@@ -5,7 +5,7 @@
   "HiddenSideBar": false,
   "MultiTagsCache": false,
   "ContentFullScreen": false,
-  "LeftMixNavFixed": true,
+  "LeftMixNavFixed": false,
   "MixMenuTrigger": "hover",
   "KeepAlive": true,
   "Locale": "zh",

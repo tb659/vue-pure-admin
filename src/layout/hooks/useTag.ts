@@ -37,14 +37,17 @@ export function useTags() {
   const contentFullScreen = computed(() => useAppStoreHook().contentFullScreen);
 
   /** 显示模式，默认灵动模式 */
-  const showModel = ref(storageLocal().getItem<StorageConfigs>(`${responsiveStorageNameSpace()}configure`)?.showModel || "smart");
+  const showModel = ref(
+    storageLocal().getItem<StorageConfigs>(`${responsiveStorageNameSpace()}configure`)?.showModel || getConfig().ShowModel
+  );
   /** 隐藏菜单 */
   const hiddenSideBar = ref(
     storageLocal().getItem<StorageConfigs>(`${responsiveStorageNameSpace()}configure`)?.hiddenSideBar || getConfig().HiddenSideBar
   );
   /** 是否隐藏标签页，默认显示 */
-  const showTags =
-    ref(storageLocal().getItem<StorageConfigs>(`${responsiveStorageNameSpace()}configure`).hideTabs) ?? ref("false");
+  const showTags = ref(
+    storageLocal().getItem<StorageConfigs>(`${responsiveStorageNameSpace()}configure`).hideTabs ?? getConfig().HideTabs
+  );
 
   const tagsViews = reactive<Array<tagsViewsType>>([
     {
@@ -153,7 +156,7 @@ export function useTags() {
   /** 鼠标移入添加激活样式 */
   function onMouseenter(index) {
     if (index) activeIndex.value = index;
-    if (unref(showModel) === "smart") {
+    if (unref(showModel) === getConfig().ShowModel) {
       if (hasClass(instance.refs["schedule" + index][0], "schedule-active")) return;
       toggleClass(true, "schedule-in", instance.refs["schedule" + index][0]);
       toggleClass(false, "schedule-out", instance.refs["schedule" + index][0]);
@@ -167,7 +170,7 @@ export function useTags() {
   /** 鼠标移出恢复默认样式 */
   function onMouseleave(index) {
     activeIndex.value = -1;
-    if (unref(showModel) === "smart") {
+    if (unref(showModel) === getConfig().ShowModel) {
       if (hasClass(instance.refs["schedule" + index][0], "schedule-active")) return;
       toggleClass(false, "schedule-in", instance.refs["schedule" + index][0]);
       toggleClass(true, "schedule-out", instance.refs["schedule" + index][0]);

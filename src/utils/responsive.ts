@@ -15,22 +15,23 @@ export const injectResponsiveStorage = (app: App, config: PlatformConfigs) => {
       },
       // layout模式以及主题
       layout: Storage.getData("layout", nameSpace) ?? {
-        layout: config.Layout ?? getConfig().Layout,
         theme: config.Theme ?? getConfig().Theme,
+        layout: config.Layout ?? getConfig().Layout,
         darkMode: config.DarkMode ?? getConfig().DarkMode,
-        leftMixNavFixed: config.LeftMixNavFixed ?? getConfig().LeftMixNavFixed,
-        contentFullScreen: config.ContentFullScreen ?? getConfig().ContentFullScreen,
+        epThemeColor: config.EpThemeColor ?? getConfig().EpThemeColor,
         sidebarStatus: config.SidebarStatus ?? getConfig().SidebarStatus,
-        epThemeColor: config.EpThemeColor ?? getConfig().EpThemeColor
+        leftMixNavFixed: config.LeftMixNavFixed ?? getConfig().LeftMixNavFixed,
+        contentFullScreen: config.ContentFullScreen ?? getConfig().ContentFullScreen
       },
       configure: Storage.getData("configure", nameSpace) ?? {
         grey: config.Grey ?? getConfig().Grey,
         weak: config.Weak ?? getConfig().Weak,
         hideTabs: config.HideTabs ?? getConfig().HideTabs,
         showLogo: config.ShowLogo ?? getConfig().ShowLogo,
+        showModel: config.ShowModel ?? getConfig().ShowModel,
+        hideFooter: config.HideFooter ?? getConfig().HideFooter,
         fixedHeader: config?.FixedHeader ?? getConfig().FixedHeader,
         hiddenSideBar: config?.HiddenSideBar ?? getConfig().HiddenSideBar,
-        showModel: config.ShowModel ?? getConfig().ShowModel,
         mixMenuTrigger: config.MixMenuTrigger ?? getConfig().MixMenuTrigger,
         multiTagsCache: config.MultiTagsCache ?? getConfig().MultiTagsCache
       }

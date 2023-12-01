@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import Logo from "./logo.vue";
+import { getConfig } from "@/config";
 import { useRoute } from "vue-router";
 import { emitter } from "@/utils/mitt";
 import SidebarItem from "./sidebarItem.vue";
@@ -12,7 +13,9 @@ import { usePermissionStoreHook } from "@/store/modules/permission";
 import { ref, computed, watch, onMounted, onBeforeUnmount } from "vue";
 
 const route = useRoute();
-const showLogo = ref(storageLocal().getItem<StorageConfigs>(`${responsiveStorageNameSpace()}configure`)?.showLogo ?? true);
+const showLogo = ref(
+  storageLocal().getItem<StorageConfigs>(`${responsiveStorageNameSpace()}configure`)?.showLogo ?? getConfig().ShowLogo
+);
 
 const { routers, device, pureApp, isCollapse, menuSelect, toggleSideBar } = useNav();
 
