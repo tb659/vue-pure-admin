@@ -1,31 +1,6 @@
 {
   "name": "vue-pure-admin",
   "version": "5.0.0",
-  "private": true,
-  "keywords": [
-    "vue-pure-admin",
-    "element-plus",
-    "tailwindcss",
-    "pure-admin",
-    "typescript",
-    "pinia",
-    "vue3",
-    "vite"
-  ],
-  "homepage": "https://github.com/pure-admin/vue-pure-admin",
-  "bugs": {
-    "url": "https://github.com/pure-admin/vue-pure-admin/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/pure-admin/vue-pure-admin.git"
-  },
-  "license": "MIT",
-  "author": {
-    "name": "xiaoxian521",
-    "email": "pureadmin@163.com",
-    "url": "https://github.com/xiaoxian521"
-  },
   "scripts": {
     "i": "pnpm install",
     "dev": "NODE_OPTIONS=--max-old-space-size=4096 vite",
@@ -174,6 +149,31 @@
     "vite-svg-loader": "^4.0.0",
     "vue-eslint-parser": "^9.3.2",
     "vue-tsc": "^1.8.22"
+  },
+  "private": true,
+  "keywords": [
+    "vue-pure-admin",
+    "element-plus",
+    "tailwindcss",
+    "pure-admin",
+    "typescript",
+    "pinia",
+    "vue3",
+    "vite"
+  ],
+  "homepage": "https://github.com/pure-admin/vue-pure-admin",
+  "bugs": {
+    "url": "https://github.com/pure-admin/vue-pure-admin/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pure-admin/vue-pure-admin.git"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "xiaoxian521",
+    "email": "pureadmin@163.com",
+    "url": "https://github.com/xiaoxian521"
   },
   "engines": {
     "node": "^18.0.0 || >=20.0.0",
