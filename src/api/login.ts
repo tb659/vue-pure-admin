@@ -1,5 +1,5 @@
-import type { loginType } from "./system/user/types";
 import { http } from "@/utils/http/api-base";
+import type { loginType } from "./system/user/types";
 import QueryString from "qs";
 enum API {
   login = "/login", // 登录
@@ -26,8 +26,8 @@ class LoginAPI {
     });
   }
 
-  changeToken<T>(data) {
-    return http.request<T>("post", API.changeToken, { data });
+  changeToken(data) {
+    return http.request("post", API.changeToken, { data });
   }
 }
 export const loginApi = new LoginAPI();

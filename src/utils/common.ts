@@ -7,7 +7,8 @@ export const LOGIN_EXPIRE_MINUTES = PROJECT_PREFIX + "loginExpireMinutes";
 /** 登录过期时间 */
 export const LOGIN_TIMES = PROJECT_PREFIX + "loginTime";
 /** 系统全局页面是否显示国际化 */
-export const SHOW_I18N = false;
+export const SHOW_I18N = true;
+// export const SHOW_I18N = false;
 /** 系统全局页面过渡动画时间 毫秒 */
 export const TRANSTION_DURATION = 200;
 /** 密码过期时间,单位：天 */

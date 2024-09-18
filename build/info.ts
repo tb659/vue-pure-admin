@@ -1,8 +1,8 @@
 import type { Plugin } from "vite";
-import picocolors from "picocolors";
-import dayjs, { type Dayjs } from "dayjs";
-import { getPackageSize } from "./utils";
+import dayjs, { Dayjs } from "dayjs";
 import duration from "dayjs/plugin/duration";
+import { green, blue, bold } from "picocolors";
+import utils from "@pureadmin/utils";
 dayjs.extend(duration);
 
 export function viteBuildInfo(): Plugin {
@@ -10,7 +10,6 @@ export function viteBuildInfo(): Plugin {
   let startTime: Dayjs;
   let endTime: Dayjs;
   let outDir: string;
-  const { green, blue, bold } = picocolors;
   return {
     name: "vite:buildInfo",
     configResolved(resolvedConfig) {
@@ -18,15 +17,7 @@ export function viteBuildInfo(): Plugin {
       outDir = resolvedConfig.build?.outDir ?? "dist";
     },
     buildStart() {
-      console.log(
-        bold(
-          green(
-            `👏欢迎使用${blue(
-              "[vue-pure-admin]"
-            )}，如果您感觉不错，记得点击后面链接给个star哦💖 https://github.com/pure-admin/vue-pure-admin`
-          )
-        )
-      );
+      console.log(bold(green(`👏欢迎使用${blue("[vue-pure-admin]")}，enjoy your coding ~ ~ ~`)));
       if (config.command === "build") {
         startTime = dayjs(new Date());
       }
@@ -34,7 +25,7 @@ export function viteBuildInfo(): Plugin {
     closeBundle() {
       if (config.command === "build") {
         endTime = dayjs(new Date());
-        getPackageSize({
+        utils.getPackageSize({
           folder: outDir,
           callback: (size: string) => {
             console.log(

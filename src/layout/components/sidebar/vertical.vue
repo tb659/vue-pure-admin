@@ -22,10 +22,10 @@ const { routers, device, pureApp, isCollapse, menuSelect, toggleSideBar } = useN
 const subMenuData = ref([]);
 
 const menuData = computed(() => {
-  return pureApp.layout === "mix" && device.value !== "mobile" ? subMenuData.value : usePermissionStoreHook().wholeMenus;
+  return pureApp.layout === "topMix" && device.value !== "mobile" ? subMenuData.value : usePermissionStoreHook().wholeMenus;
 });
 
-const loading = computed(() => (pureApp.layout === "mix" ? false : menuData.value.length === 0 ? true : false));
+const loading = computed(() => (pureApp.layout === "topMix" ? false : menuData.value.length === 0 ? true : false));
 
 const defaultActive = computed(() => (!isAllEmpty(route.meta?.activePath) ? route.meta.activePath : route.path));
 

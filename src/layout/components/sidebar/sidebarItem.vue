@@ -87,7 +87,8 @@ const getSubMenuDivStyle = computed((): any => {
         }
       : {
           width: "100%",
-          textAlign: item?.parentId === null ? "center" : layout.value === "mix" && item?.pathList?.length === 2 ? "center" : ""
+          textAlign:
+            item?.parentId === null ? "center" : layout.value === "topMix" && item?.pathList?.length === 2 ? "center" : ""
         };
   };
 });
@@ -129,7 +130,7 @@ function hoverMenu(key) {
 function overflowSlice(text, item?: any) {
   const newText = (text?.length > 1 ? text.toString().slice(0, 1) : text) + "...";
   if (item && !(isCollapse.value && item?.parentId === null)) {
-    return layout.value === "mix" && item?.pathList?.length === 2 && isCollapse.value ? newText : text;
+    return layout.value === "topMix" && item?.pathList?.length === 2 && isCollapse.value ? newText : text;
   }
   return newText;
 }
@@ -183,7 +184,7 @@ function resolvePath(routePath) {
       {{ overflowSlice(transformI18n(onlyOneChild.meta.title)) }}
     </span>
     <span
-      v-if="!onlyOneChild.meta.icon && isCollapse && layout === 'mix' && props.item?.pathList?.length === 2"
+      v-if="!onlyOneChild.meta.icon && isCollapse && layout === 'topMix' && props.item?.pathList?.length === 2"
       :style="getSpanStyle"
     >
       {{ overflowSlice(transformI18n(onlyOneChild.meta.title)) }}

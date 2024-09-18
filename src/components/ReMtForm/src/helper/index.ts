@@ -1,4 +1,4 @@
-import { useI18n } from "@/hooks/web/useI18n";
+import { useI18n } from "vue-i18n";
 import { PlaceholderModel, FormSchema, ComponentNameEnum, ColProps } from "../types";
 import { isFunction } from "@/utils/is";
 import { firstUpperCase, humpToDash } from "@/utils";
@@ -28,7 +28,7 @@ export const setTextPlaceholder = (schema: FormSchema): PlaceholderModel => {
   ];
   if (textMap.includes(schema?.component as ComponentNameEnum)) {
     return {
-      placeholder: t("common.inputText")
+      placeholder: t("form.inputText")
     };
   }
   if (selectMap.includes(schema?.component as ComponentNameEnum)) {
@@ -36,13 +36,13 @@ export const setTextPlaceholder = (schema: FormSchema): PlaceholderModel => {
     const twoTextMap = ["datetimerange", "daterange", "monthrange", "datetimerange", "daterange"];
     if (twoTextMap.includes(((schema?.componentProps as any)?.type || (schema?.componentProps as any)?.isRange) as string)) {
       return {
-        startPlaceholder: t("common.startTimeText"),
-        endPlaceholder: t("common.endTimeText"),
+        startPlaceholder: t("form.startTimeText"),
+        endPlaceholder: t("form.endTimeText"),
         rangeSeparator: "-"
       };
     } else {
       return {
-        placeholder: t("common.selectText")
+        placeholder: t("form.selectText")
       };
     }
   }

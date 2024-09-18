@@ -31,7 +31,7 @@ export const configCompressPlugin = (compress: ViteCompression): Plugin | Plugin
 
   const plugins: Plugin[] = [];
 
-  codeList.forEach(item => {
+  codeList.forEach((item: Recordable) => {
     if (compress.includes(item.k)) {
       if (compress.includes("clear")) {
         if (isArray(item.v)) {
