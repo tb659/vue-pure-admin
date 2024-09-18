@@ -24,9 +24,9 @@ const config: {
   COOKIE_SINGLE_CAPTCHA: any;
 } = {
   base_url: {
-    // dev: "/dev-api",
+    dev: "/dev-api",
     // dev: "http://localhost:4000/frame_base",
-    dev: "http://47.96.19.146:4000/frame_base",
+    // dev: "http://47.96.19.146:4000/frame_base",
 
     // pro: "/pro-api",
     pro: "http://47.96.19.146:4000/frame_base",

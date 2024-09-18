@@ -43,10 +43,9 @@ export default ({ mode }: ConfigEnv): UserConfigExport => {
       proxy: {
         // 第一个代理后端地址
         "^/dev-api/.*": {
-          // target: "http://filtrate.ameeting.com.cn/frame_base",
-          target: "http://localhost:4000/frame_base",
+          target: "http://47.96.19.146:4000/frame_base",
           changeOrigin: true,
-          rewrite: path => path.replace(/^\/base-api/, "")
+          rewrite: path => path.replace(/^\/dev-api/, "")
         },
         // 第二个代理后端地址
         "^/otherApi/.*": {
