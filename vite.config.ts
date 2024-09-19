@@ -43,6 +43,7 @@ export default ({ mode }: ConfigEnv): UserConfigExport => {
       proxy: {
         // 第一个代理后端地址
         "^/dev-api/.*": {
+          // target: "http://localhost:8081/fanya_maoyi",
           target: "http://47.96.19.146:4000/frame_base",
           changeOrigin: true,
           rewrite: path => path.replace(/^\/dev-api/, "")

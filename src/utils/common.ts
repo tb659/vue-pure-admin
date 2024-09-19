@@ -1,11 +1,16 @@
+import { responsiveStorageNameSpace } from "@/config";
+
 /** 系统全局前缀 */
-export const PROJECT_PREFIX = "mt_gtrb_";
+export const PROJECT_PREFIX = responsiveStorageNameSpace();
 /** 系统全局是否mock数据 */
 export const MOCK_REQUEST = false;
 /** 登录过期时间 */
 export const LOGIN_EXPIRE_MINUTES = PROJECT_PREFIX + "loginExpireMinutes";
 /** 登录过期时间 */
 export const LOGIN_TIMES = PROJECT_PREFIX + "loginTime";
+/** 系统全局页面是否显示主题昼夜设置 */
+// export const SHOW_DATA_THEME = true;
+export const SHOW_DATA_THEME = false;
 /** 系统全局页面是否显示国际化 */
 export const SHOW_I18N = true;
 // export const SHOW_I18N = false;

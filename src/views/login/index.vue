@@ -13,10 +13,10 @@ import { useLayout } from "@/layout/hooks/useLayout";
 import { useUserStoreHook } from "@/store/modules/user";
 import { bg, avatar, illustration } from "./utils/static";
 import { ReImageVerify } from "@/components/ReImageVerify";
-import { PROJECT_PREFIX, SHOW_I18N } from "@/utils/common";
 import { useRenderIcon } from "@/components/ReIcon/src/hooks";
 import { useTranslationLang } from "@/layout/hooks/useTranslationLang";
 import { useDataThemeChange } from "@/layout/hooks/useDataThemeChange";
+import { PROJECT_PREFIX, SHOW_I18N, SHOW_DATA_THEME } from "@/utils/common";
 import { /* addPathMatch, */ initRouter, getTopMenu } from "@/router/utils";
 import { ref, toRaw, reactive, watch, onMounted, onBeforeUnmount } from "vue";
 import { getCookie, setLoginInfoCookie, setSingleCaptcha } from "@/utils/auth";
@@ -138,7 +138,14 @@ watch(imgCode, value => {
     <img :src="bg" class="wave" />
     <div class="absolute flex-c right-5 top-3">
       <!-- 主题 -->
-      <el-switch v-model="dataTheme" inline-prompt :active-icon="dayIcon" :inactive-icon="darkIcon" @change="dataThemeChange" />
+      <el-switch
+        v-model="dataTheme"
+        :class="SHOW_DATA_THEME ? '' : '!hidden'"
+        inline-prompt
+        :active-icon="dayIcon"
+        :inactive-icon="darkIcon"
+        @change="dataThemeChange"
+      />
       <!-- 国际化 -->
       <el-dropdown :class="SHOW_I18N ? '' : '!hidden'" trigger="click">
         <globalization
