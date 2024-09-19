@@ -4,6 +4,8 @@ import { ADMIN_ROLE_EMBED, BUILT_IN_MAP, STATUS_MAP, STATUS_OPTIONS, STATUS_TYPE
 import { hasAuth } from "@/router/utils";
 import { handleStatusChange } from "@/utils/tableStatusChange";
 import { dictApi } from "@/api/system/dict";
+import { useHook } from "./hook";
+const { remoteLoading, remoteOptions, remoteMethod } = useHook();
 
 export function useData() {
   const switchLoadMap = ref({});
@@ -31,7 +33,11 @@ export function useData() {
       component: "Select",
       componentProps: {
         placeholder: "请选择字典状态",
-        options: STATUS_OPTIONS
+        options: remoteOptions.value,
+        filterable: true,
+        remote: true,
+        loading: remoteLoading,
+        remoteMethod: remoteMethod
       }
     }
   ]);
