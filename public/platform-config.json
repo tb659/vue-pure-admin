@@ -4,7 +4,7 @@
   "Grey": false,
   "Weak": false,
   "Locale": "zh",
-  "Theme": "light",
+  "Theme": "default",
   "Layout": "topMix",
   "DarkMode": false,
   "HideTabs": true,
@@ -29,7 +29,6 @@
   "CachingAsyncRoutes": false,
   "ShowSystemSettings": true,
   "MenuArrowIconNoTransition": true,
-  "PLATFORM_PREFIX": "mt_gtrb_",
   "MapConfigure": {
     "amapKey": "4d554e1aeff34a3830b281408da6aaa6",
     "options": {

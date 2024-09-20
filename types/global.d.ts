@@ -90,7 +90,6 @@ declare global {
     CachingAsyncRoutes?: boolean;
     ShowSystemSettings?: boolean;
     MenuArrowIconNoTransition?: boolean;
-    PLATFORM_PREFIX?: string;
     MapConfigure?: {
       amapKey?: string;
       options: {
