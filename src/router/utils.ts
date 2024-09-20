@@ -77,7 +77,7 @@ function formatMenuData(menus: MenuData[], filterUser = true) {
         visible: meta.visible,
         showLink: meta.visible,
         frameSrc: meta.frameSrc || "",
-        keepAlive: meta.keepalive,
+        keepAlive: meta.keepAlive,
         showParent: meta.showParent,
         rank: Number(menu.code)
       };
