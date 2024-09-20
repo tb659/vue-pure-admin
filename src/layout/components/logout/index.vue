@@ -42,7 +42,7 @@ const { username, passwordVisible, logout, userAvatar, avatarsStyle } = useNav()
 
 <style lang="scss" scoped>
 .logout {
-  max-width: 120px;
+  width: 114px;
 
   ::v-deep(.el-dropdown-menu__item) {
     display: inline-flex;
