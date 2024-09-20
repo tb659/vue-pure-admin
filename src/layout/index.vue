@@ -2,16 +2,19 @@
 import type { setType } from "./types";
 import "animate.css";
 // 引入 src/components/ReIcon/src/offlineIcon.ts 文件中所有使用addIcon添加过的本地图标
+import { useRoute } from "vue-router";
 import { useNav } from "./hooks/useNav";
-import "@/components/ReIcon/src/offlineIcon";
 import { useLayout } from "./hooks/useLayout";
 import { useResizeObserver } from "@vueuse/core";
 import { $t, transformI18n } from "@/plugins/i18n";
 import { useAppStoreHook } from "@/store/modules/app";
+import { findRouteByPath, getParentPaths } from "@/router/utils";
+import { usePermissionStoreHook } from "@/store/modules/permission";
 import { deviceDetection, useDark, useGlobal } from "@pureadmin/utils";
 import { useDataThemeChange } from "@/layout/hooks/useDataThemeChange";
-import { h, ref, reactive, computed, onMounted, onBeforeMount, defineComponent } from "vue";
+import { h, ref, watch, reactive, computed, onMounted, onBeforeMount, defineComponent } from "vue";
 
+import "@/components/ReIcon/src/offlineIcon";
 import navbar from "./components/navbar.vue";
 import tag from "./components/tag/index.vue";
 import appMain from "./components/appMain.vue";
@@ -23,6 +26,7 @@ import backTop from "@/assets/svg/back_top.svg?component";
 
 import SettingIcon from "@iconify-icons/ri/settings-3-line";
 
+const route = useRoute();
 const appWrapperRef = ref();
 const { onPanel } = useNav();
 
@@ -31,7 +35,7 @@ const { layout } = useLayout();
 const isMobile = deviceDetection();
 const { $storage } = useGlobal<GlobalPropertiesApi>();
 
-const set: setType = reactive({
+const settings: setType = reactive({
   sidebar: computed(() => {
     return useAppStoreHook().sidebar;
   }),
@@ -58,11 +62,11 @@ const set: setType = reactive({
 
   classes: computed(() => {
     return {
-      hideSidebar: !set.sidebar.opened,
-      openSidebar: set.sidebar.opened,
-      withoutAnimation: set.sidebar.withoutAnimation,
-      mobile: set.device === "mobile",
-      tabsHidden: set.hideTabs
+      hideSidebar: !settings.sidebar.opened,
+      openSidebar: settings.sidebar.opened,
+      withoutAnimation: settings.sidebar.withoutAnimation,
+      mobile: settings.device === "mobile",
+      tabsHidden: settings.hideTabs
     };
   })
 });
@@ -106,7 +110,7 @@ useResizeObserver(appWrapperRef, entries => {
       toggle("desktop", false);
       isAutoCloseSidebar = false;
     }
-  } else if (width > 990 && !set.sidebar.isClickCollapse) {
+  } else if (width > 990 && !settings.sidebar.isClickCollapse) {
     toggle("desktop", true);
     isAutoCloseSidebar = true;
   } else {
@@ -120,9 +124,9 @@ const layoutHeader = defineComponent({
     return h(
       "div",
       {
-        class: { "fixed-header": set.fixedHeader },
+        class: { "fixed-header": settings.fixedHeader },
         style: [
-          set.hideTabs && layout.value.includes("horizontal")
+          settings.hideTabs && layout.value.includes("horizontal")
             ? isDark.value
               ? "box-shadow: 0 1px 4px #0d0d0d"
               : "box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08)"
@@ -131,11 +135,11 @@ const layoutHeader = defineComponent({
       },
       {
         default: () => [
-          !set.contentFullScreen &&
+          !settings.contentFullScreen &&
           (layout.value.includes("vertical") || layout.value.includes("leftMix") || layout.value.includes("topMix"))
             ? h(navbar)
             : null,
-          !set.hiddenSideBar && layout.value.includes("horizontal") ? h(Horizontal) : null,
+          !settings.hiddenSideBar && layout.value.includes("horizontal") ? h(Horizontal) : null,
           h(tag)
         ]
       }
@@ -143,37 +147,55 @@ const layoutHeader = defineComponent({
   }
 });
 
+function setSideBarHidden() {
+  if (route.path.includes("/redirect")) return;
+  // path的上级路由组成的数组
+  const parentPathArr = getParentPaths(route.path, usePermissionStoreHook().wholeMenus);
+  // 当前路由的父级路由信息
+  const parenetRoute = findRouteByPath(parentPathArr[0] || route.path, usePermissionStoreHook().wholeMenus);
+  const hiddenSideBar = parenetRoute.children?.length === 1;
+  const storageConfigure = $storage.configure;
+  storageConfigure["hiddenSideBar"] = hiddenSideBar;
+  $storage.configure = storageConfigure;
+}
+
 onMounted(() => {
-  if (isMobile) {
-    toggle("mobile", false);
-  }
+  isMobile && toggle("mobile", false);
+  setSideBarHidden();
 });
 
 onBeforeMount(() => {
   useDataThemeChange().dataThemeChange();
 });
+
+watch(
+  () => [route.path, usePermissionStoreHook().wholeMenus],
+  () => setSideBarHidden()
+);
 </script>
 
 <template>
-  <div :class="set.contentFullScreen ? 'fullscreen' : ''">
-    <div :class="['app-wrapper', set.classes]">
+  <div :class="settings.contentFullScreen ? 'fullscreen' : ''">
+    <div :class="['app-wrapper', settings.classes]">
       <div
-        v-show="set.device === 'mobile' && set.sidebar.opened && layout.includes('vertical')"
+        v-show="settings.device === 'mobile' && settings.sidebar.opened && layout.includes('vertical')"
         class="app-mask"
         @click="useAppStoreHook().toggleSideBar()"
       />
       <Vertical
-        v-if="(layout.includes('vertical') || layout.includes('topMix')) && !set.hiddenSideBar && !set.contentFullScreen"
+        v-if="
+          (layout.includes('vertical') || layout.includes('topMix')) && !settings.hiddenSideBar && !settings.contentFullScreen
+        "
       />
-      <leftMixNav v-if="layout.includes('leftMix') && !set.hiddenSideBar && !set.contentFullScreen" />
+      <leftMixNav v-if="layout.includes('leftMix') && !settings.hiddenSideBar && !settings.contentFullScreen" />
       <div
         :class="[
           'main-container',
-          set.hiddenSideBar || set.contentFullScreen ? 'main-hidden' : '',
-          set.hiddenSideBar ? 'sidebar-hidden' : ''
+          settings.hiddenSideBar || settings.contentFullScreen ? 'main-hidden' : '',
+          settings.hiddenSideBar ? 'sidebar-hidden' : ''
         ]"
       >
-        <div v-if="set.fixedHeader">
+        <div v-if="settings.fixedHeader">
           <layout-header />
           <!-- 主体内容 -->
           <app-main />
@@ -190,8 +212,11 @@ onBeforeMount(() => {
       <!-- 系统设置 -->
       <setting />
       <span
-        v-if="(set.contentFullScreen && !layout.includes('horizontal')) || (layout.includes('horizontal') && set.hiddenSideBar)"
-        class="fullscreen-set-icon navbar-bg-hover"
+        v-if="
+          (settings.contentFullScreen && !layout.includes('horizontal')) ||
+          (layout.includes('horizontal') && settings.hiddenSideBar)
+        "
+        class="fullscreen-settings-icon navbar-bg-hover"
         :title="transformI18n($t('buttons.hssystemSet'))"
         @click="onPanel"
       >
@@ -237,7 +262,7 @@ onBeforeMount(() => {
   margin-top: 12px;
 }
 
-.fullscreen-set-icon {
+.fullscreen-settings-icon {
   position: fixed;
   top: 50%;
   right: 0;

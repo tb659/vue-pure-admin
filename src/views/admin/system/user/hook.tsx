@@ -13,7 +13,7 @@ import { getUser } from "@/store/modules/user";
 import { useTable } from "@/hooks/web/useTable";
 import { ref, unref, reactive, nextTick } from "vue";
 import { useUserStoreHook } from "@/store/modules/user";
-import { ADMIN_DICT_EDIT_CODE, ADMIN_USER_ROOT } from "@/utils/common";
+import { ADMIN_DICT_EDIT_CODE, ADMIN_USER_ROOT } from "@/config";
 
 export function useHook() {
   const title = ref("用户");

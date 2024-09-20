@@ -7,8 +7,8 @@ import { routerArrays } from "@/layout/types";
 import { router, resetRouter } from "@/router";
 import { storageLocal } from "@pureadmin/utils";
 import { useMultiTagsStoreHook } from "@/store/modules/multiTags";
+import { LOGIN_EXPIRE_MINUTES, LOGIN_TIMES, USER_INFO } from "@/config";
 import { getCookie, removeToken, setCookie, setToken } from "@/utils/auth";
-import { LOGIN_EXPIRE_MINUTES, LOGIN_TIMES, USER_INFO } from "@/utils/common";
 
 // 获取user
 export const getUser = key => {

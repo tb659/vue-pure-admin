@@ -11,7 +11,7 @@ import { GROUP_MENU } from "@/utils/common";
 import { useRoute, useRouter } from "vue-router";
 import { useAppStoreHook } from "@/store/modules/app";
 import { useRenderIcon } from "@/components/ReIcon/src/hooks";
-import { getConfig, responsiveStorageNameSpace } from "@/config";
+import { getConfig, PLATFORM_PREFIX } from "@/config";
 import { findRouteByPath, getParentPaths } from "@/router/utils";
 import { ref, computed, watch, onBeforeMount, toRaw } from "vue";
 import { usePermissionStoreHook } from "@/store/modules/permission";
@@ -21,11 +21,9 @@ import PushpinFill from "@iconify-icons/ri/pushpin-fill";
 
 const route = useRoute();
 const router = useRouter();
-const showLogo = ref(
-  storageLocal().getItem<StorageConfigs>(`${responsiveStorageNameSpace()}configure`)?.showLogo ?? getConfig().ShowLogo
-);
+const showLogo = ref(storageLocal().getItem<StorageConfigs>(`${PLATFORM_PREFIX}configure`)?.showLogo ?? getConfig().ShowLogo);
 const mixMenuTrigger = ref(
-  storageLocal().getItem<StorageConfigs>(`${responsiveStorageNameSpace()}configure`)?.mixMenuTrigger ?? getConfig().MixMenuTrigger
+  storageLocal().getItem<StorageConfigs>(`${PLATFORM_PREFIX}configure`)?.mixMenuTrigger ?? getConfig().MixMenuTrigger
 );
 const leftMixNavFixed = computed(() => useAppStoreHook().leftMixNavFixed);
 
@@ -37,10 +35,6 @@ const parentRoute = ref<MenuData>(null);
 const visible = ref(false);
 const isOpenSubMenu = ref(leftMixNavFixed.value ? true : false);
 const groupMenu = ref(GROUP_MENU);
-
-const iconClass = computed(() => {
-  return ["w-[20px]", "h-[20px]", "!mr-[10px]", "text-primary", "cursor-pointer", "duration-[100ms]", "dark:hover:!text-white"];
-});
 
 const {
   title,
@@ -61,7 +55,9 @@ const {
 
 const getElMenuItemClass = computed(() => {
   return (routeItem): string[] => {
-    return routeItem?.children?.some(item => item.path === route.path) ? ["!h-full", "is-active-menu"] : ["!h-full"];
+    return routeItem?.children?.some(item => item.path === route.path)
+      ? ["menu-item-class", "is-active-menu"]
+      : ["menu-item-class"];
   };
 });
 
@@ -214,7 +210,7 @@ watch(
         >
           <IconifyIconOffline
             :icon="leftMixNavFixed ? PushpinFill : PushpinLine"
-            :class="iconClass"
+            class="icon-class"
             @click="toggleFixed"
             @mouseenter="visible = true"
             @mouseleave="visible = false"
@@ -251,7 +247,11 @@ watch(
 </template>
 
 <style scoped>
-:deep(.el-loading-mask) {
-  opacity: 0.45;
+.menu-item-class {
+  @apply !h-full flex flex-col justify-center;
+}
+
+.icon-class {
+  @apply w-[20px] h-[20px] !mr-[10px] text-primary cursor-pointer duration-[100ms] dark:hover:!text-white;
 }
 </style>

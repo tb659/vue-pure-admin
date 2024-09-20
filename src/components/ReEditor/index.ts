@@ -1,6 +1,6 @@
 import Editor from "./src/Editor.vue";
 import { IDomEditor } from "@wangeditor/editor";
-import { withInstall } from "@/utils";
+import { withInstall } from "@pureadmin/utils";
 
 export interface EditorExpose {
   getEditorRef: () => Promise<IDomEditor>;

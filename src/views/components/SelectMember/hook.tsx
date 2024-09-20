@@ -10,7 +10,7 @@ import { corpsApi } from "@/api/system/corps";
 import { ref, reactive, nextTick } from "vue";
 import { getUser } from "@/store/modules/user";
 import { useTable } from "@/hooks/web/useTable";
-import { ADMIN_DICT_EDIT_CODE, ADMIN_USER_ROOT } from "@/utils/common";
+import { ADMIN_DICT_EDIT_CODE, ADMIN_USER_ROOT } from "@/config";
 
 export function useHook() {
   const adminEditFlag = ref(false);

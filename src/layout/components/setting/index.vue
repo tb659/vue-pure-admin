@@ -49,7 +49,7 @@ const menuTriggerValue = ref($storage.configure?.mixMenuTrigger ?? getConfig().M
 /** 默认logo模式 */
 const logoValue = ref($storage.configure?.showLogo ?? getConfig().ShowLogo);
 /** 默认不隐藏菜单 */
-const hiddenSideBarValue = ref($storage.configure?.hiddenSideBar ?? getConfig().HiddenSideBar);
+const hiddenSideBarValue = computed(() => $storage.configure?.hiddenSideBar ?? getConfig().HiddenSideBar);
 /** 默认固定头部 */
 const fixedHeaderValue = ref($storage.configure?.fixedHeader ?? getConfig().FixedHeader);
 

@@ -6,16 +6,14 @@ import { emitter } from "@/utils/mitt";
 import SidebarItem from "./sidebarItem.vue";
 import leftCollapse from "./leftCollapse.vue";
 import { useNav } from "@/layout/hooks/useNav";
-import { responsiveStorageNameSpace } from "@/config";
+import { PLATFORM_PREFIX } from "@/config";
 import { storageLocal, isAllEmpty } from "@pureadmin/utils";
 import { findRouteByPath, getParentPaths } from "@/router/utils";
 import { usePermissionStoreHook } from "@/store/modules/permission";
 import { ref, computed, watch, onMounted, onBeforeUnmount } from "vue";
 
 const route = useRoute();
-const showLogo = ref(
-  storageLocal().getItem<StorageConfigs>(`${responsiveStorageNameSpace()}configure`)?.showLogo ?? getConfig().ShowLogo
-);
+const showLogo = ref(storageLocal().getItem<StorageConfigs>(`${PLATFORM_PREFIX}configure`)?.showLogo ?? getConfig().ShowLogo);
 
 const { routers, device, pureApp, isCollapse, menuSelect, toggleSideBar } = useNav();
 
@@ -89,9 +87,3 @@ onBeforeUnmount(() => {
     <leftCollapse v-if="device !== 'mobile'" :is-active="pureApp.sidebar.opened" @toggleClick="toggleSideBar" />
   </div>
 </template>
-
-<style scoped>
-:deep(.el-loading-mask) {
-  opacity: 0.45;
-}
-</style>

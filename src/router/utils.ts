@@ -2,8 +2,8 @@ import type { menuType } from "@/layout/types";
 import type { MenuData } from "@/api/system/menu/types";
 import { router } from "./index";
 import { isProxy, toRaw } from "vue";
-import { getConfig } from "@/config";
 import { msg } from "@/utils/message";
+import { MENU_TYPE } from "@/utils/common";
 import { useTimeoutFn } from "@vueuse/core";
 import { menuApi } from "@/api/system/menu";
 import { useUserStoreHook } from "@/store/modules/user";
@@ -12,7 +12,7 @@ import { useMultiTagsStoreHook } from "@/store/modules/multiTags";
 import { usePermissionStoreHook } from "@/store/modules/permission";
 import { RouterHistory, RouteRecordRaw, RouteComponent, createWebHistory, createWebHashHistory } from "vue-router";
 import { isString, cloneDeep, isAllEmpty, storageLocal, isIncludeAllChildren, intersection } from "@pureadmin/utils";
-import { MENU_TYPE, PAGE_BUTTON_PERMISSION_KEY, PROJECT_PREFIX, USER_INFO, USER_MENU_LIST_KEY } from "@/utils/common";
+import { getConfig, USER_INFO, PLATFORM_PREFIX, USER_MENU_LIST_KEY, PAGE_BUTTON_PERMISSION_KEY } from "@/config";
 
 const Layout = () => import("@/layout/index.vue");
 const IFrame = () => import("@/layout/frameView.vue");
@@ -26,7 +26,7 @@ async function initRouter() {
   // !如果开启缓存 后台禁用某个菜单后，前端登录拿缓存 造成菜单显示和后台不一致
   if (getConfig()?.CachingAsyncRoutes) {
     // 开启动态路由缓存本地localStorage
-    const key = PROJECT_PREFIX + "async-routes";
+    const key = PLATFORM_PREFIX + "async-routes";
     let asyncRouteList = storageLocal().getItem(key) as any;
     if (asyncRouteList && asyncRouteList?.length > 0) {
       return new Promise(resolve => {
@@ -387,6 +387,10 @@ function getAuths(): Array<string> {
 
 /** 是否有按钮级别的权限 */
 function hasAuth(value: string | Array<string>): boolean {
+  /** 按钮级权限隐藏 */
+  const flag = true;
+  if (flag) return true;
+  /** ------------ */
   if (!value) return false;
   /** 从当前路由的`meta`字段里获取按钮级别的所有自定义`code`值 */
   const metaAuths = getAuths();

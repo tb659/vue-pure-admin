@@ -1,6 +1,7 @@
 import dayjs from "dayjs";
 import { reactive } from "vue";
-import { ADMIN_USER_ROOT, STATUS_MAP, STATUS_OPTIONS } from "@/utils/common";
+import { ADMIN_USER_ROOT } from "@/config";
+import { STATUS_MAP, STATUS_OPTIONS } from "@/utils/common";
 
 export function useData() {
   const searchSchema = reactive<FormSchema[]>([

@@ -3,10 +3,10 @@ import { App } from "vue";
 import { getConfig } from "@/config";
 import Storage from "responsive-storage";
 import { routerArrays } from "@/layout/types";
-import { responsiveStorageNameSpace } from "@/config";
+import { PLATFORM_PREFIX } from "@/config";
 
 export const injectResponsiveStorage = (app: App, config: PlatformConfigs) => {
-  const nameSpace = responsiveStorageNameSpace();
+  const nameSpace = PLATFORM_PREFIX;
   const configObj = Object.assign(
     {
       // 国际化 默认中文zh

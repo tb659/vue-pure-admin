@@ -1,6 +1,6 @@
 import Form from "./src/form";
 import { ElForm } from "element-plus";
-import { withInstall } from "@/utils";
+import { withInstall } from "@pureadmin/utils";
 
 export interface FormExpose {
   setValue: (data: Recordable) => void;

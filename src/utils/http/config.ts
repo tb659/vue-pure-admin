@@ -1,4 +1,4 @@
-import { PROJECT_PREFIX } from "@/utils/common";
+import { PLATFORM_PREFIX } from "@/config";
 
 const config: {
   /** api请求基础路径 */
@@ -42,9 +42,9 @@ const config: {
 
   SINGLE_CAPTCHA: "_single_captcha_",
 
-  COOKIE_TOKEN_KEY: PROJECT_PREFIX + "Authorization",
+  COOKIE_TOKEN_KEY: PLATFORM_PREFIX + "Authorization",
 
-  COOKIE_SINGLE_CAPTCHA: PROJECT_PREFIX + "_single_captcha_"
+  COOKIE_SINGLE_CAPTCHA: PLATFORM_PREFIX + "_single_captcha_"
 };
 
 export { config };

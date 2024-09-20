@@ -49,7 +49,27 @@ export const getPlatformConfig = async (app: App): Promise<undefined> => {
     });
 };
 
-/** 本地响应式存储的命名空间 */
-const responsiveStorageNameSpace = () => getConfig().ResponsiveStorageNameSpace;
+export { getConfig, setConfig };
 
-export { getConfig, setConfig, responsiveStorageNameSpace };
+/** 平台前缀 */
+export const PLATFORM_PREFIX = "mt_gtrb_";
+/** 用户信息 */
+export const USER_INFO = PLATFORM_PREFIX + "userInfo";
+/** 登录时间 */
+export const LOGIN_TIMES = PLATFORM_PREFIX + "loginTime";
+/** 登录过期时间 */
+export const LOGIN_EXPIRE_MINUTES = PLATFORM_PREFIX + "loginExpireMinutes";
+/** 管理员用户账号root值 */
+export const ADMIN_USER_ROOT = 1;
+/** 管理员用户角色root值 */
+export const ADMIN_ROLE_EMBED = 1;
+/** 密码过期时间,单位：天 */
+export const PASSWORD_EXPIRES = 30;
+/** 系统全局页面过渡动画时间 毫秒 */
+export const TRANSTION_DURATION = 200;
+/** 用户信息菜单权限列表 */
+export const USER_MENU_LIST_KEY = "resourceList";
+/** 页面按钮权限 */
+export const PAGE_BUTTON_PERMISSION_KEY = "auths";
+/** 管理员用户角色root值 */
+export const ADMIN_DICT_EDIT_CODE = "sys.admin.edit";

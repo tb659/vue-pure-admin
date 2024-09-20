@@ -2,43 +2,26 @@
 import extraIcon from "./extraIcon.vue";
 import Search from "../search/index.vue";
 import Notice from "../notice/index.vue";
-import { SHOW_I18N } from "@/utils/common";
+import I18n from "../i18n/index.vue";
+import Logout from "../logout/index.vue";
+
+import { getConfig } from "@/config";
 import { isAllEmpty } from "@pureadmin/utils";
 import { useNav } from "@/layout/hooks/useNav";
 import { transformI18n } from "@/plugins/i18n";
-import passwordUpdate from "./passwordUpdate.vue";
 import { ref, toRaw, watch, onMounted, nextTick } from "vue";
 import { useRenderIcon } from "@/components/ReIcon/src/hooks";
 import { getParentPaths, findRouteByPath } from "@/router/utils";
 import { useTranslationLang } from "../../hooks/useTranslationLang";
 import { usePermissionStoreHook } from "@/store/modules/permission";
-import globalization from "@/assets/svg/globalization.svg?component";
 
-import Check from "@iconify-icons/ep/check";
-import Lock from "@iconify-icons/ri/lock-fill";
 import Setting from "@iconify-icons/ri/settings-3-line";
-import LogoutCircleRLine from "@iconify-icons/ri/logout-circle-r-line";
 
 const menuRef = ref();
 const defaultActive = ref(null);
 
-const { t, route, locale, translationCh, translationEn } = useTranslationLang(menuRef);
-const {
-  device,
-  routers,
-  logout,
-  onPanel,
-  menuSelect,
-  resolvePath,
-  username,
-  userAvatar,
-  getDivStyle,
-  avatarsStyle,
-  getDropdownItemStyle,
-  getDropdownItemClass,
-
-  passwordVisible
-} = useNav();
+const { t, route } = useTranslationLang(menuRef);
+const { device, routers, onPanel, menuSelect, resolvePath, getDivStyle } = useNav();
 
 function getDefaultActive(routePath) {
   const wholeMenus = usePermissionStoreHook().wholeMenus;
@@ -95,94 +78,22 @@ watch(
     </el-menu>
     <div class="horizontal-header-right">
       <!-- 菜单搜索 -->
-      <Search v-if="false" />
+      <Search v-if="getConfig().ShowSearch" />
       <!-- 通知 -->
-      <Notice v-if="false" id="header-notice" />
+      <Notice v-if="getConfig().ShowNotice" id="header-notice" />
       <!-- 国际化 -->
-      <el-dropdown id="header-translation" :class="SHOW_I18N ? '' : '!hidden'" trigger="click">
-        <globalization class="navbar-bg-hover w-[40px] h-[48px] p-[11px] cursor-pointer outline-none" />
-        <template #dropdown>
-          <el-dropdown-menu class="translation">
-            <el-dropdown-item
-              :style="getDropdownItemStyle(locale, 'zh')"
-              :class="['dark:!text-white', getDropdownItemClass(locale, 'zh')]"
-              @click="translationCh"
-            >
-              <span v-show="locale === 'zh'" class="check-zh">
-                <IconifyIconOffline :icon="Check" />
-              </span>
-              简体中文
-            </el-dropdown-item>
-            <el-dropdown-item
-              :style="getDropdownItemStyle(locale, 'en')"
-              :class="['dark:!text-white', getDropdownItemClass(locale, 'en')]"
-              @click="translationEn"
-            >
-              <span v-show="locale === 'en'" class="check-en">
-                <IconifyIconOffline :icon="Check" />
-              </span>
-              English
-            </el-dropdown-item>
-          </el-dropdown-menu>
-        </template>
-      </el-dropdown>
+      <I18n v-if="getConfig().ShowI18N" />
       <!-- 退出登录 -->
-      <el-dropdown trigger="click">
-        <span class="select-none el-dropdown-link navbar-bg-hover">
-          <img :src="userAvatar" :style="avatarsStyle" />
-          <p v-if="username" class="dark:text-white">{{ username }}</p>
-        </span>
-        <template #dropdown>
-          <el-dropdown-menu class="logout">
-            <el-dropdown-item @click="passwordVisible = true">
-              <IconifyIconOffline :icon="Lock" style="margin: 5px" />
-              {{ t("login.passwordUpdate") }}
-            </el-dropdown-item>
-            <el-dropdown-item @click="logout">
-              <IconifyIconOffline :icon="LogoutCircleRLine" style="margin: 5px" />
-              {{ t("buttons.hsLoginOut") }}
-            </el-dropdown-item>
-          </el-dropdown-menu>
-        </template>
-      </el-dropdown>
-      <span class="set-icon navbar-bg-hover" :title="t('buttons.hssystemSet')" @click="onPanel">
+      <Logout />
+      <!-- 系统设置 -->
+      <span
+        v-if="getConfig().ShowSystemSettings"
+        class="set-icon navbar-bg-hover"
+        :title="t('buttons.hssystemSet')"
+        @click="onPanel"
+      >
         <IconifyIconOffline :icon="Setting" />
       </span>
     </div>
-
-    <!-- 修改密码弹窗 -->
-    <password-update :visible="passwordVisible" />
   </div>
 </template>
-
-<style lang="scss" scoped>
-:deep(.el-loading-mask) {
-  opacity: 0.45;
-}
-
-.translation {
-  ::v-deep(.el-dropdown-menu__item) {
-    padding: 5px 40px;
-  }
-
-  .check-zh {
-    position: absolute;
-    left: 20px;
-  }
-
-  .check-en {
-    position: absolute;
-    left: 20px;
-  }
-}
-
-.logout {
-  max-width: 120px;
-
-  ::v-deep(.el-dropdown-menu__item) {
-    display: inline-flex;
-    flex-wrap: wrap;
-    min-width: 100%;
-  }
-}
-</style>

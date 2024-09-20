@@ -1,10 +1,11 @@
 import type { DictData } from "@/api/system/dict/types";
 import { ref, unref } from "vue";
 import { msg } from "@/utils/message";
-import { dictApi } from "@/api/system/dict";
-import { useTable } from "@/hooks/web/useTable";
-import { ADMIN_ROLE_EMBED, STATUS_OPTIONS } from "@/utils/common";
 import { cloneDeep } from "lodash-es";
+import { dictApi } from "@/api/system/dict";
+import { ADMIN_ROLE_EMBED } from "@/config";
+import { useTable } from "@/hooks/web/useTable";
+import { STATUS_OPTIONS } from "@/utils/common";
 
 export function useHook() {
   const title = ref("字典");
@@ -85,6 +86,7 @@ export function useHook() {
       remoteOptions.value.push({ label: "远程数据" + Math.random(), value: 999 + Math.random(), type: "" });
     }, 300);
   }
+
   return {
     title,
     visible,

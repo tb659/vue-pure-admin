@@ -21,13 +21,13 @@ export function useLayout() {
     /** 导航 */
     if (!$storage.layout) {
       $storage.layout = {
-        layout: $config?.Layout ?? getConfig().Layout,
         theme: $config?.Theme ?? getConfig().Theme,
+        layout: $config?.Layout ?? getConfig().Layout,
         darkMode: $config?.DarkMode ?? getConfig().DarkMode,
-        leftMixNavFixed: $config?.LeftMixNavFixed ?? getConfig().LeftMixNavFixed,
-        contentFullScreen: $config?.ContentFullScreen ?? getConfig().ContentFullScreen,
+        epThemeColor: $config?.EpThemeColor ?? getConfig().EpThemeColor,
         sidebarStatus: $config?.SidebarStatus ?? getConfig().SidebarStatus,
-        epThemeColor: $config?.EpThemeColor ?? getConfig().EpThemeColor
+        leftMixNavFixed: $config?.LeftMixNavFixed ?? getConfig().LeftMixNavFixed,
+        contentFullScreen: $config?.ContentFullScreen ?? getConfig().ContentFullScreen
       };
     }
     /** 灰色模式、色弱模式、隐藏标签页 */

@@ -1,6 +1,6 @@
 import Table from "./src/index";
 import { ElTable } from "element-plus";
-import { withInstall } from "@/utils";
+import { withInstall } from "@pureadmin/utils";
 
 export interface TableExpose {
   setProps: (props: Recordable) => void;

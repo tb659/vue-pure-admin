@@ -1,9 +1,10 @@
 import dayjs from "dayjs";
 import { reactive, ref } from "vue";
-import { ADMIN_ROLE_EMBED, STATUS_MAP, STATUS_OPTIONS, STATUS_TYPE } from "@/utils/common";
 import { hasAuth } from "@/router/utils";
-import { handleStatusChange } from "@/utils/tableStatusChange";
 import { roleApi } from "@/api/system/role";
+import { ADMIN_ROLE_EMBED } from "@/config";
+import { handleStatusChange } from "@/utils/tableStatusChange";
+import { STATUS_MAP, STATUS_OPTIONS, STATUS_TYPE } from "@/utils/common";
 
 export function useData() {
   const switchLoadMap = ref({});

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { FormInstance } from "element-plus";
+
 import Motion from "./utils/motion";
 import { msg } from "@/utils/message";
 import { useRouter } from "vue-router";
@@ -14,18 +15,17 @@ import { useUserStoreHook } from "@/store/modules/user";
 import { bg, avatar, illustration } from "./utils/static";
 import { ReImageVerify } from "@/components/ReImageVerify";
 import { useRenderIcon } from "@/components/ReIcon/src/hooks";
-import { useTranslationLang } from "@/layout/hooks/useTranslationLang";
+import { getConfig, PLATFORM_PREFIX } from "@/config";
 import { useDataThemeChange } from "@/layout/hooks/useDataThemeChange";
-import { PROJECT_PREFIX, SHOW_I18N, SHOW_DATA_THEME } from "@/utils/common";
 import { /* addPathMatch, */ initRouter, getTopMenu } from "@/router/utils";
 import { ref, toRaw, reactive, watch, onMounted, onBeforeUnmount } from "vue";
 import { getCookie, setLoginInfoCookie, setSingleCaptcha } from "@/utils/auth";
 // import { usePermissionStoreHook } from "@/store/modules/permission";
 
+import I18n from "@/layout/components/i18n/index.vue";
+
 import dayIcon from "@/assets/svg/day.svg?component";
 import darkIcon from "@/assets/svg/dark.svg?component";
-import globalization from "@/assets/svg/globalization.svg?component";
-import Check from "@iconify-icons/fa/check";
 import Lock from "@iconify-icons/ri/lock-fill";
 import User from "@iconify-icons/ri/user-3-fill";
 import Code from "@iconify-icons/ri/shield-keyhole-line";
@@ -38,7 +38,7 @@ const { SINGLE_CAPTCHA } = config;
 const imgCode = ref("");
 const router = useRouter();
 const loading = ref(false);
-const remember = ref(!!getCookie(`${PROJECT_PREFIX}remember`));
+const remember = ref(!!getCookie(`${PLATFORM_PREFIX}remember`));
 const ruleFormRef = ref<FormInstance>();
 const { login } = useUserStoreHook();
 
@@ -46,12 +46,11 @@ const { initStorage } = useLayout();
 initStorage();
 const { dataTheme, dataThemeChange } = useDataThemeChange();
 dataThemeChange();
-const { title, getDropdownItemStyle, getDropdownItemClass } = useNav();
-const { locale, translationCh, translationEn } = useTranslationLang();
+const { title } = useNav();
 
 const ruleForm = reactive({
-  username: getCookie(`${PROJECT_PREFIX}username`) || "",
-  password: getCookie(`${PROJECT_PREFIX}password`) || "",
+  username: getCookie(`${PLATFORM_PREFIX}username`) || "",
+  password: getCookie(`${PLATFORM_PREFIX}password`) || "",
   code: ""
 });
 
@@ -140,40 +139,14 @@ watch(imgCode, value => {
       <!-- 主题 -->
       <el-switch
         v-model="dataTheme"
-        :class="SHOW_DATA_THEME ? '' : '!hidden'"
+        :class="getConfig().ShowDataTheme ? '' : '!hidden'"
         inline-prompt
         :active-icon="dayIcon"
         :inactive-icon="darkIcon"
         @change="dataThemeChange"
       />
       <!-- 国际化 -->
-      <el-dropdown :class="SHOW_I18N ? '' : '!hidden'" trigger="click">
-        <globalization
-          class="hover:text-primary hover:!bg-[transparent] w-[20px] h-[20px] ml-1.5 cursor-pointer outline-none duration-300"
-        />
-        <template #dropdown>
-          <el-dropdown-menu class="translation">
-            <el-dropdown-item
-              :style="getDropdownItemStyle(locale, 'zh')"
-              :class="['dark:!text-white', getDropdownItemClass(locale, 'zh')]"
-              @click="translationCh"
-            >
-              <IconifyIconOffline v-show="locale === 'zh'" class="check-zh" :icon="Check" />
-              简体中文
-            </el-dropdown-item>
-            <el-dropdown-item
-              :style="getDropdownItemStyle(locale, 'en')"
-              :class="['dark:!text-white', getDropdownItemClass(locale, 'en')]"
-              @click="translationEn"
-            >
-              <span v-show="locale === 'en'" class="check-en">
-                <IconifyIconOffline :icon="Check" />
-              </span>
-              English
-            </el-dropdown-item>
-          </el-dropdown-menu>
-        </template>
-      </el-dropdown>
+      <I18n v-if="getConfig().ShowI18N" />
     </div>
     <div class="login-container">
       <div class="img">
@@ -251,26 +224,4 @@ watch(imgCode, value => {
 
 <style scoped>
 @import url("@/style/login.css");
-</style>
-
-<style lang="scss" scoped>
-:deep(.el-input-group__append, .el-input-group__prepend) {
-  padding: 0;
-}
-
-.translation {
-  ::v-deep(.el-dropdown-menu__item) {
-    padding: 5px 40px;
-  }
-
-  .check-zh {
-    position: absolute;
-    left: 20px;
-  }
-
-  .check-en {
-    position: absolute;
-    left: 20px;
-  }
-}
 </style>

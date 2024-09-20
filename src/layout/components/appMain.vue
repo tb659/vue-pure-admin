@@ -4,10 +4,10 @@ import { storageLocal, useGlobal } from "@pureadmin/utils";
 import backTop from "@/assets/svg/back_top.svg?component";
 import { h, computed, Transition, defineComponent, ref } from "vue";
 import { usePermissionStoreHook } from "@/store/modules/permission";
-import { getConfig, responsiveStorageNameSpace } from "@/config";
+import { getConfig, PLATFORM_PREFIX } from "@/config";
 
 const fixedHeader = ref(
-  storageLocal().getItem<StorageConfigs>(`${responsiveStorageNameSpace()}configure`)?.fixedHeader ?? getConfig().FixedHeader
+  storageLocal().getItem<StorageConfigs>(`${PLATFORM_PREFIX}configure`)?.fixedHeader ?? getConfig().FixedHeader
 );
 
 const { $storage, $config } = useGlobal<GlobalPropertiesApi>();

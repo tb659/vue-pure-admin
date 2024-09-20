@@ -1,9 +1,8 @@
 import "@/utils/sso";
-import { getConfig } from "@/config";
 import NProgress from "@/utils/progress";
-import { USER_INFO } from "@/utils/common";
 import { removeToken } from "@/utils/auth";
 import { transformI18n } from "@/plugins/i18n";
+import { getConfig, USER_INFO } from "@/config";
 import { buildHierarchyTree } from "@/utils/tree";
 import remainingRouter from "./modules/remaining";
 import { useMultiTagsStoreHook } from "@/store/modules/multiTags";

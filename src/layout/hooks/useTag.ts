@@ -3,8 +3,8 @@ import { emitter } from "@/utils/mitt";
 import { useRoute, useRouter } from "vue-router";
 import { transformI18n, $t } from "@/plugins/i18n";
 import { useAppStoreHook } from "@/store/modules/app";
-import { getConfig, responsiveStorageNameSpace } from "@/config";
 import { useSettingStoreHook } from "@/store/modules/settings";
+import { getConfig, PLATFORM_PREFIX } from "@/config";
 import { useMultiTagsStoreHook } from "@/store/modules/multiTags";
 import { isEqual, isBoolean, storageLocal, toggleClass, hasClass } from "@pureadmin/utils";
 import { ref, unref, computed, reactive, onMounted, onBeforeMount, CSSProperties, getCurrentInstance } from "vue";
@@ -38,16 +38,14 @@ export function useTags() {
 
   /** 显示模式，默认灵动模式 */
   const showModel = ref(
-    storageLocal().getItem<StorageConfigs>(`${responsiveStorageNameSpace()}configure`)?.showModel || getConfig().ShowModel
+    storageLocal().getItem<StorageConfigs>(`${PLATFORM_PREFIX}configure`)?.showModel || getConfig().ShowModel
   );
   /** 隐藏菜单 */
   const hiddenSideBar = ref(
-    storageLocal().getItem<StorageConfigs>(`${responsiveStorageNameSpace()}configure`)?.hiddenSideBar || getConfig().HiddenSideBar
+    storageLocal().getItem<StorageConfigs>(`${PLATFORM_PREFIX}configure`)?.hiddenSideBar || getConfig().HiddenSideBar
   );
   /** 是否隐藏标签页，默认显示 */
-  const showTags = ref(
-    storageLocal().getItem<StorageConfigs>(`${responsiveStorageNameSpace()}configure`).hideTabs ?? getConfig().HideTabs
-  );
+  const showTags = ref(storageLocal().getItem<StorageConfigs>(`${PLATFORM_PREFIX}configure`).hideTabs ?? getConfig().HideTabs);
 
   const tagsViews = reactive<Array<tagsViewsType>>([
     {
@@ -187,9 +185,9 @@ export function useTags() {
 
   onMounted(() => {
     if (!showModel.value) {
-      const configure = storageLocal().getItem<StorageConfigs>(`${responsiveStorageNameSpace()}configure`);
+      const configure = storageLocal().getItem<StorageConfigs>(`${PLATFORM_PREFIX}configure`);
       configure.showModel = "card";
-      storageLocal().setItem(`${responsiveStorageNameSpace()}configure`, configure);
+      storageLocal().setItem(`${PLATFORM_PREFIX}configure`, configure);
     }
   });
 

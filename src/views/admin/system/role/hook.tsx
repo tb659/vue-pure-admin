@@ -6,7 +6,7 @@ import { dictApi } from "@/api/system/dict";
 import { roleApi } from "@/api/system/role";
 import { useTable } from "@/hooks/web/useTable";
 import { useUserStoreHook } from "@/store/modules/user";
-import { ADMIN_DICT_EDIT_CODE, ADMIN_ROLE_EMBED, ADMIN_USER_ROOT } from "@/utils/common";
+import { ADMIN_DICT_EDIT_CODE, ADMIN_ROLE_EMBED, ADMIN_USER_ROOT } from "@/config";
 
 export function useHook() {
   const title = ref("角色");

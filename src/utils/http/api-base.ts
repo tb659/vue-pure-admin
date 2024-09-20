@@ -6,7 +6,7 @@ import NProgress from "../progress";
 import { msg } from "@/utils/message";
 import { useUserStoreHook } from "@/store/modules/user";
 import { getToken, setToken, getCookie, getSingleCaptcha } from "@/utils/auth";
-import { LOGIN_TIMES, MOCK_REQUEST, PROJECT_PREFIX, LOGIN_EXPIRE_MINUTES } from "@/utils/common";
+import { getConfig, PLATFORM_PREFIX, LOGIN_TIMES, LOGIN_EXPIRE_MINUTES } from "@/config";
 
 const { result_code, base_url, timeout, SINGLE_CAPTCHA, TOKEN_KEY } = config;
 export const PATH_URL = base_url[import.meta.env.VITE_API_BASEPATH];
@@ -14,7 +14,7 @@ export const PATH_URL = base_url[import.meta.env.VITE_API_BASEPATH];
 // 相关配置请参考：www.axios-js.com/zh-cn/docs/#axios-request-config-1
 const defaultConfig: AxiosRequestConfig = {
   // api 的 base_url
-  baseURL: MOCK_REQUEST ? "" : PATH_URL,
+  baseURL: getConfig().MockRequest ? "" : PATH_URL,
   // 请求超时时间
   timeout,
   headers: {
@@ -52,7 +52,7 @@ class PureHttp {
   private static retryOriginalRequest(config: PureHttpRequestConfig) {
     return new Promise(resolve => {
       PureHttp.requests.push(() => {
-        config.headers[SINGLE_CAPTCHA] = getCookie(PROJECT_PREFIX + SINGLE_CAPTCHA);
+        config.headers[SINGLE_CAPTCHA] = getCookie(PLATFORM_PREFIX + SINGLE_CAPTCHA);
         resolve(config);
       });
     });
@@ -75,7 +75,7 @@ class PureHttp {
             return;
           }
         }
-        if (MOCK_REQUEST) {
+        if (getConfig().MockRequest) {
           config.url.includes("login")
             ? (config.url = config.url.replace("/login", "/mock-api/login"))
             : (config.url = config.url.replace("/api", "/mock-api"));

@@ -1,9 +1,9 @@
 import type { CorpsData } from "@/api/system/corps/types";
 import { ref, unref } from "vue";
 import { msg } from "@/utils/message";
+import { ADMIN_ROLE_EMBED } from "@/config";
 import { corpsApi } from "@/api/system/corps";
 import { useTable } from "@/hooks/web/useTable";
-import { ADMIN_ROLE_EMBED } from "@/utils/common";
 
 export function useHook() {
   const title = ref("机构");

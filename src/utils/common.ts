@@ -1,41 +1,9 @@
-import { responsiveStorageNameSpace } from "@/config";
-
-/** 系统全局前缀 */
-export const PROJECT_PREFIX = responsiveStorageNameSpace();
-/** 系统全局是否mock数据 */
-export const MOCK_REQUEST = false;
-/** 登录过期时间 */
-export const LOGIN_EXPIRE_MINUTES = PROJECT_PREFIX + "loginExpireMinutes";
-/** 登录过期时间 */
-export const LOGIN_TIMES = PROJECT_PREFIX + "loginTime";
-/** 系统全局页面是否显示主题昼夜设置 */
-// export const SHOW_DATA_THEME = true;
-export const SHOW_DATA_THEME = false;
-/** 系统全局页面是否显示国际化 */
-export const SHOW_I18N = true;
-// export const SHOW_I18N = false;
-/** 系统全局页面过渡动画时间 毫秒 */
-export const TRANSTION_DURATION = 200;
-/** 密码过期时间,单位：天 */
-export const PASSWORD_EXPIRES = 30;
-/** 用户信息菜单权限列表 */
-export const USER_MENU_LIST_KEY = "resourceList";
-/** 页面按钮权限 */
-export const PAGE_BUTTON_PERMISSION_KEY = "auths";
-/** 用户信息 */
-export const USER_INFO = PROJECT_PREFIX + "user-info";
-/** 管理员用户账号root值 */
-export const ADMIN_USER_ROOT = 1;
-/** 管理员用户角色root值 */
-export const ADMIN_ROLE_EMBED = 1;
-/** 管理员用户角色root值 */
-export const ADMIN_DICT_EDIT_CODE = "sys.admin.edit";
+/** 分组菜单 */
+export const GROUP_MENU = [];
 /** 禁用启用 */
 export const COMMON_STATUS = { enabled: 1, disabled: 0 };
 /** 菜单上级菜单 */
 export const HOME_DERECTORY = [{ name: "主目录", id: 0, children: [] }];
-/** 分组菜单 */
-export const GROUP_MENU = [];
 /** 状态信息 */
 export const STATUS_TYPE = {
   ENABLED_L: "启用",

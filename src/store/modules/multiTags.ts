@@ -2,17 +2,17 @@ import type { multiType, positionType } from "./types";
 import { store } from "@/store";
 import { defineStore } from "pinia";
 import { routerArrays } from "@/layout/types";
-import { responsiveStorageNameSpace } from "@/config";
+import { PLATFORM_PREFIX } from "@/config";
 import { isEqual, isBoolean, isUrl, storageLocal } from "@pureadmin/utils";
 
 export const useMultiTagsStore = defineStore({
   id: "pure-multiTags",
   state: () => ({
     // 存储标签页信息（路由信息）
-    multiTags: storageLocal().getItem<StorageConfigs>(`${responsiveStorageNameSpace()}configure`)?.multiTagsCache
-      ? storageLocal().getItem<StorageConfigs>(`${responsiveStorageNameSpace()}tags`)
+    multiTags: storageLocal().getItem<StorageConfigs>(`${PLATFORM_PREFIX}configure`)?.multiTagsCache
+      ? storageLocal().getItem<StorageConfigs>(`${PLATFORM_PREFIX}tags`)
       : [...routerArrays],
-    multiTagsCache: storageLocal().getItem<StorageConfigs>(`${responsiveStorageNameSpace()}configure`)?.multiTagsCache
+    multiTagsCache: storageLocal().getItem<StorageConfigs>(`${PLATFORM_PREFIX}configure`)?.multiTagsCache
   }),
   getters: {
     getMultiTagsCache(state) {
@@ -23,13 +23,13 @@ export const useMultiTagsStore = defineStore({
     multiTagsCacheChange(multiTagsCache: boolean) {
       this.multiTagsCache = multiTagsCache;
       if (multiTagsCache) {
-        storageLocal().setItem(`${responsiveStorageNameSpace()}tags`, this.multiTags);
+        storageLocal().setItem(`${PLATFORM_PREFIX}tags`, this.multiTags);
       } else {
-        storageLocal().removeItem(`${responsiveStorageNameSpace()}tags`);
+        storageLocal().removeItem(`${PLATFORM_PREFIX}tags`);
       }
     },
     tagsCache(multiTags) {
-      this.getMultiTagsCache && storageLocal().setItem(`${responsiveStorageNameSpace()}tags`, multiTags);
+      this.getMultiTagsCache && storageLocal().setItem(`${PLATFORM_PREFIX}tags`, multiTags);
     },
     handleTags<T>(mode: string, value?: T | multiType, position?: positionType): T {
       switch (mode) {
