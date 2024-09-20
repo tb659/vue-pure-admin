@@ -26,6 +26,7 @@ export interface MenuData {
   meta?: {
     title?: string;
     icon?: string;
+    url?: string;
     auths?: string[];
     visible?: boolean;
     showLink?: boolean;

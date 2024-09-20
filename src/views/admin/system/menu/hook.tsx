@@ -2,6 +2,7 @@ import type { MenuData } from "@/api/system/menu/types";
 import { ref, unref } from "vue";
 import { useData } from "./data";
 import { msg } from "@/utils/message";
+import { cloneDeep } from "lodash-es";
 import { listToTree } from "@/utils/tree";
 import { menuApi } from "@/api/system/menu";
 import { useTable } from "@/hooks/web/useTable";
@@ -53,7 +54,17 @@ export function useHook() {
   getList();
 
   function afterRequest(list) {
-    return listToTree(formatMenuData(list, false).map(v => ({ ...v, ...v.meta, name: v.meta?.title })));
+    return listToTree(
+      formatMenuData(list, false).map(v => {
+        const item = {
+          ...v,
+          ...v.meta,
+          name: v.meta?.title,
+          path: v.frameType === MENU_LINK_TYPE.OUT_V ? v.meta.url : v.frameType === MENU_LINK_TYPE.IN_V ? v.meta.frameSrc : v.path
+        };
+        return item;
+      })
+    );
   }
 
   function handleAdd() {
@@ -91,7 +102,7 @@ export function useHook() {
     await write?.elFormRef?.validate(async isValid => {
       if (isValid) {
         loading.value = true;
-        const data = (await write?.getFormData()) as MenuData;
+        const data = cloneDeep((await write?.getFormData()) as MenuData);
         const meta = {
           title: data.name || "",
           icon: data.icon || "",
@@ -103,8 +114,10 @@ export function useHook() {
         };
         if (data.frameType === MENU_LINK_TYPE.OUT_V) {
           data.name = data.path;
+          data.path = `/${data.cname}`;
         } else if (data.frameType === MENU_LINK_TYPE.IN_V) {
           meta.frameSrc = data.path;
+          data.path = `/${data.cname}`;
         }
         const reqData = {
           ...data,

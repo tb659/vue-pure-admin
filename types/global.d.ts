@@ -65,7 +65,7 @@ declare global {
     Grey?: boolean;
     Weak?: boolean;
     Theme?: string;
-    Layout?: string;
+    Layout?: Layout;
     Locale?: string;
     DarkMode?: boolean;
     HideTabs?: boolean;
@@ -115,7 +115,7 @@ declare global {
     mixMenuTrigger?: string;
     keepAlive?: boolean;
     locale?: string;
-    layout?: string;
+    layout?: Layout;
     theme?: string;
     darkMode?: boolean;
     grey?: boolean;
@@ -146,7 +146,7 @@ declare global {
     };
     layout: {
       theme?: string;
-      layout?: string;
+      layout?: Layout;
       darkMode?: boolean;
       epThemeColor?: string;
       sidebarStatus?: boolean;

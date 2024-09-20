@@ -17,7 +17,7 @@ export type appType = {
     // 判断是否手动点击Collapse
     isClickCollapse: boolean;
   };
-  layout: string;
+  layout: Layout;
   device: string;
   sortSwap: boolean;
   contentFullScreen: boolean;

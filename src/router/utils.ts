@@ -65,20 +65,16 @@ function formatMenuData(menus: MenuData[], filterUser = true) {
       const data = JSON.parse(menu.note);
       const { meta } = data;
       menuItem.note = data.note;
-      menuItem.note = data.note;
       menuItem.path = data.path;
       menuItem.cname = data.cname;
       menuItem.redirect = data.redirect;
       menuItem.component = data.component || "";
       menuItem.frameType = data.frameType;
       menuItem.meta = {
+        ...meta,
         icon: meta.icon || "",
-        title: meta.title,
-        visible: meta.visible,
-        showLink: meta.visible,
         frameSrc: meta.frameSrc || "",
-        keepAlive: meta.keepAlive,
-        showParent: meta.showParent,
+        showLink: meta.visible,
         rank: Number(menu.code)
       };
       result.push(menuItem);

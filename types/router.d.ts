@@ -27,6 +27,8 @@ declare global {
     auths?: Array<string>;
     /** 路由组件缓存（开启 `true`、关闭 `false`）`可选` */
     keepAlive?: boolean;
+    /** 外链接 `可选` */
+    url?: string;
     /** 内嵌的`iframe`链接 `可选` */
     frameSrc?: string;
     /** `iframe`页是否开启首次加载动画（默认`true`）`可选` */

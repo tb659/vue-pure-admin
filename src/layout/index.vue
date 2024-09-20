@@ -71,7 +71,7 @@ const settings: setType = reactive({
   })
 });
 
-function setTheme(layoutModel: string) {
+function setTheme(layoutModel: Layout) {
   window.document.body.setAttribute("layout", layoutModel);
   $storage.layout = {
     layout: `${layoutModel}`,
@@ -153,7 +153,7 @@ function setSideBarHidden() {
   const parentPathArr = getParentPaths(route.path, usePermissionStoreHook().wholeMenus);
   // 当前路由的父级路由信息
   const parenetRoute = findRouteByPath(parentPathArr[0] || route.path, usePermissionStoreHook().wholeMenus);
-  const hiddenSideBar = parenetRoute.children?.length === 1;
+  const hiddenSideBar = parenetRoute?.children?.length === 1 && $storage.layout.layout === "topMix";
   const storageConfigure = $storage.configure;
   storageConfigure["hiddenSideBar"] = hiddenSideBar;
   $storage.configure = storageConfigure;

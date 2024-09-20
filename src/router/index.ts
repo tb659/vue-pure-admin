@@ -96,7 +96,7 @@ router.beforeEach((to: ToRouteType, _from, next) => {
   }
   const userInfo = storageLocal().getItem(USER_INFO);
   NProgress.start();
-  const externalLink = isUrl(to?.name as string);
+  const externalLink = isUrl(to?.meta?.url as string);
   if (!externalLink) {
     to.matched.some(item => {
       if (!item.meta.title) return "";
@@ -117,7 +117,7 @@ router.beforeEach((to: ToRouteType, _from, next) => {
     if (_from?.name) {
       // name为超链接
       if (externalLink) {
-        openLink(to?.name as string);
+        openLink(to?.meta?.url as string);
         NProgress.done();
       } else {
         toCorrectRoute();

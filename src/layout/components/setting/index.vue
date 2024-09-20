@@ -2,6 +2,7 @@
 import { ref, unref, watch, reactive, computed, nextTick, onBeforeMount } from "vue";
 import { useDark, debounce, useGlobal, storageLocal, storageSession } from "@pureadmin/utils";
 import { getConfig } from "@/config";
+import { useRoute } from "vue-router";
 import { useRouter } from "vue-router";
 import panel from "../panel/index.vue";
 import { emitter } from "@/utils/mitt";
@@ -11,8 +12,10 @@ import { routerArrays } from "@/layout/types";
 import { useNav } from "@/layout/hooks/useNav";
 import { $t, transformI18n } from "@/plugins/i18n";
 import { useAppStoreHook } from "@/store/modules/app";
+import { findRouteByPath, getParentPaths } from "@/router/utils";
 import { toggleTheme } from "@pureadmin/theme/dist/browser-utils";
 import { useMultiTagsStoreHook } from "@/store/modules/multiTags";
+import { usePermissionStoreHook } from "@/store/modules/permission";
 import { useDataThemeChange } from "@/layout/hooks/useDataThemeChange";
 
 import dayIcon from "@/assets/svg/day.svg?component";
@@ -20,6 +23,7 @@ import darkIcon from "@/assets/svg/dark.svg?component";
 import Check from "@iconify-icons/ep/check";
 import Logout from "@iconify-icons/ri/logout-circle-r-line";
 
+const route = useRoute();
 const router = useRouter();
 const { isDark } = useDark();
 const { device, tooltipEffect } = useNav();
@@ -192,7 +196,7 @@ const getThemeColor = computed(() => {
 });
 
 /** 设置导航模式 */
-function setLayoutModel(layout: string) {
+function setLayoutModel(layout: Layout) {
   layoutTheme.value.layout = layout;
   window.document.body.setAttribute("layout", layout);
   $storage.layout = {
@@ -205,6 +209,19 @@ function setLayoutModel(layout: string) {
     epThemeColor: $storage.layout?.epThemeColor
   };
   useAppStoreHook().setLayout(layout);
+  setSideBarHidden(layout);
+}
+
+function setSideBarHidden(layout) {
+  if (route.path.includes("/redirect")) return;
+  // path的上级路由组成的数组
+  const parentPathArr = getParentPaths(route.path, usePermissionStoreHook().wholeMenus);
+  // 当前路由的父级路由信息
+  const parenetRoute = findRouteByPath(parentPathArr[0] || route.path, usePermissionStoreHook().wholeMenus);
+  const hiddenSideBar = parenetRoute?.children?.length === 1 && layout === "topMix";
+  const storageConfigure = $storage.configure;
+  storageConfigure["hiddenSideBar"] = hiddenSideBar;
+  $storage.configure = storageConfigure;
 }
 
 watch($storage, ({ layout }) => {

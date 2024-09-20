@@ -13,7 +13,7 @@ export const useAppStore = defineStore({
       isClickCollapse: false
     },
     // 这里的layout用于监听容器拖拉后恢复对应的导航模式
-    layout: storageLocal().getItem<StorageConfigs>(`${PLATFORM_PREFIX}layout`)?.layout ?? getConfig().Layout,
+    layout: (storageLocal().getItem<StorageConfigs>(`${PLATFORM_PREFIX}layout`)?.layout ?? getConfig().Layout) as Layout,
     device: deviceDetection() ? "mobile" : "desktop",
     // 作用于 src/views/components/draggable/index.vue 页面，当离开页面并不会销毁 new Swap()，sortablejs 官网也没有提供任何销毁的 api
     sortSwap: false,
