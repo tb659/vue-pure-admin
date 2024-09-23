@@ -1,6 +1,7 @@
 import dayjs from "dayjs";
 import { reactive, ref } from "vue";
-import { ADMIN_ROLE_EMBED, BUILT_IN_MAP, STATUS_MAP, STATUS_OPTIONS, STATUS_TYPE } from "@/utils/common";
+import { BUILT_IN_MAP, STATUS_MAP, STATUS_OPTIONS, STATUS_TYPE } from "@/utils/common";
+import { ADMIN_ROLE_EMBED } from "@/config";
 import { hasAuth } from "@/router/utils";
 import { handleStatusChange } from "@/utils/tableStatusChange";
 import { dictApi } from "@/api/system/dict";
