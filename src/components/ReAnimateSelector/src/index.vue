@@ -1,20 +1,25 @@
 <script setup lang="ts">
+import { ref, computed } from "vue";
 import { animates } from "./animate";
-import { ref, computed, toRef } from "vue";
 import { cloneDeep } from "@pureadmin/utils";
+
 defineOptions({
   name: "ReAnimateSelector"
 });
-const props = defineProps({
-  modelValue: {
-    require: false,
-    type: String
+
+defineProps({
+  placeholder: {
+    type: String,
+    default: "请选择动画"
   }
 });
-const emit = defineEmits<{ (e: "update:modelValue", v: string) }>();
-const inputValue = toRef(props, "modelValue");
+
+const inputValue = defineModel({ type: String });
+
+const searchVal = ref();
 const animatesList = ref(animates);
 const copyAnimatesList = cloneDeep(animatesList);
+
 const animateClass = computed(() => {
   return [
     "mt-1",
@@ -31,6 +36,7 @@ const animateClass = computed(() => {
     "hover:duration-[700ms]"
   ];
 });
+
 const animateStyle = computed(
   () => (i: string) =>
     inputValue.value === i
@@ -40,15 +46,22 @@ const animateStyle = computed(
         }
       : ""
 );
+
 function onChangeIcon(animate: string) {
-  emit("update:modelValue", animate);
+  inputValue.value = animate;
 }
+
 function onClear() {
-  emit("update:modelValue", "");
+  inputValue.value = "";
 }
+
 function filterMethod(value: any) {
-  animatesList.value = copyAnimatesList.value.filter((i: string | any[]) => i.includes(value));
+  searchVal.value = value;
+  animatesList.value = copyAnimatesList.value.filter((i: string | any[]) =>
+    i.includes(value)
+  );
 }
+
 const animateMap = ref({});
 function onMouseEnter(index: string | number) {
   animateMap.value[index] = animateMap.value[index]?.loading
@@ -66,17 +79,23 @@ function onMouseleave() {
 
 <template>
   <el-select
-    :model-value="inputValue"
-    placeholder="请选择动画"
     clearable
-    :filter-method="filterMethod"
     filterable
+    :placeholder="placeholder"
+    popper-class="pure-animate-popper"
+    :model-value="inputValue"
+    :filter-method="filterMethod"
     @clear="onClear"
   >
     <template #empty>
       <div class="w-[280px]">
-        <el-scrollbar noresize height="212px" :view-style="{ overflow: 'hidden' }" class="border-t border-[#e5e7eb]">
-          <ul class="flex flex-wrap justify-around mb-1">
+        <el-scrollbar
+          noresize
+          height="212px"
+          :view-style="{ overflow: 'hidden' }"
+          class="border-t border-[#e5e7eb]"
+        >
+          <ul class="flex flex-wrap justify-around mb-1!">
             <li
               v-for="(animate, index) in animatesList"
               :key="index"
@@ -86,14 +105,32 @@ function onMouseleave() {
               @mouseleave.prevent="onMouseleave"
               @click="onChangeIcon(animate)"
             >
-              <h4 :class="[`animate__animated animate__${animateMap[index]?.loading ? animate + ' animate__infinite' : ''} `]">
+              <h4
+                :class="[
+                  `animate__animated animate__${
+                    animateMap[index]?.loading
+                      ? animate + ' animate__infinite'
+                      : ''
+                  } `
+                ]"
+              >
                 {{ animate }}
               </h4>
             </li>
           </ul>
-          <el-empty v-show="animatesList.length === 0" description="暂无动画" :image-size="60" />
+          <el-empty
+            v-show="animatesList.length === 0"
+            :description="`${searchVal} 动画不存在`"
+            :image-size="60"
+          />
         </el-scrollbar>
       </div>
     </template>
   </el-select>
 </template>
+
+<style>
+.pure-animate-popper {
+  min-width: 0 !important;
+}
+</style>

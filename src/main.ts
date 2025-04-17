@@ -3,19 +3,15 @@ import router from "./router";
 import { setupStore } from "@/store";
 import { useI18n } from "@/plugins/i18n";
 import { getPlatformConfig } from "./config";
-import { createApp, Directive } from "vue";
 import { MotionPlugin } from "@vueuse/motion";
 import { useEcharts } from "@/plugins/echarts";
-import { useElementPlus } from "@/plugins/element-plus";
+import { createApp, type Directive } from "vue";
+import { useVxeTable } from "@/plugins/vxeTable";
+import { useElementPlus } from "@/plugins/elementPlus";
 import { injectResponsiveStorage } from "@/utils/responsive";
 
-import PureTable from "@pureadmin/table";
+import Table from "@pureadmin/table";
 import PureDescriptions from "@pureadmin/descriptions";
-
-import MtForm from "@/components/ReMtForm";
-import MtTable from "@/components/ReMtTable";
-import MtSearch from "@/components/ReMtSearch";
-import MtTableBar from "@/components/ReMtTableBar";
 
 // 引入重置样式
 import "./style/reset.scss";
@@ -36,15 +32,27 @@ Object.keys(directives).forEach(key => {
   app.directive(key, (directives as { [key: string]: Directive })[key]);
 });
 
-// 全局注册`@iconify/vue`图标库
-import { IconifyIconOffline, IconifyIconOnline, FontIcon } from "./components/ReIcon";
+// 全局注册@iconify/vue图标库
+import {
+  IconifyIconOffline,
+  IconifyIconOnline,
+  FontIcon
+} from "./components/ReIcon";
 app.component("IconifyIconOffline", IconifyIconOffline);
 app.component("IconifyIconOnline", IconifyIconOnline);
 app.component("FontIcon", FontIcon);
 
 // 全局注册按钮级别权限组件
 import { Auth } from "@/components/ReAuth";
+import { Perms } from "@/components/RePerms";
 app.component("Auth", Auth);
+app.component("Perms", Perms);
+
+// 全局注册vue-tippy
+import "tippy.js/dist/tippy.css";
+import "tippy.js/themes/light.css";
+import VueTippy from "vue-tippy";
+app.use(VueTippy);
 
 getPlatformConfig(app).then(async config => {
   setupStore(app);
@@ -54,13 +62,10 @@ getPlatformConfig(app).then(async config => {
   app
     .use(MotionPlugin)
     .use(useI18n)
-    .use(useEcharts)
     .use(useElementPlus)
-    .use(PureTable)
+    .use(Table)
+    .use(useVxeTable)
     .use(PureDescriptions)
-    .use(MtForm)
-    .use(MtTable)
-    .use(MtSearch)
-    .use(MtTableBar);
+    .use(useEcharts);
   app.mount("#app");
 });

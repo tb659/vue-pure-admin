@@ -1,5 +1,5 @@
-import { App } from "vue";
 import axios from "axios";
+import type { App } from "vue";
 
 let config: object = {};
 const { VITE_PUBLIC_PATH } = import.meta.env;
@@ -35,7 +35,7 @@ export const getPlatformConfig = async (app: App): Promise<undefined> => {
   })
     .then(({ data: config }) => {
       let $config = app.config.globalProperties.$config;
-      // 自动注入项目配置
+      // 自动注入系统配置
       if (app && $config && typeof config === "object") {
         $config = Object.assign($config, config);
         app.config.globalProperties.$config = $config;
@@ -49,27 +49,7 @@ export const getPlatformConfig = async (app: App): Promise<undefined> => {
     });
 };
 
-export { getConfig, setConfig };
+/** 本地响应式存储的命名空间 */
+const responsiveStorageNameSpace = () => getConfig().ResponsiveStorageNameSpace;
 
-/** 平台前缀 */
-export const PLATFORM_PREFIX = "mt_gtrb_";
-/** 用户信息 */
-export const USER_INFO = PLATFORM_PREFIX + "userInfo";
-/** 登录时间 */
-export const LOGIN_TIMES = PLATFORM_PREFIX + "loginTime";
-/** 登录过期时间 */
-export const LOGIN_EXPIRE_MINUTES = PLATFORM_PREFIX + "loginExpireMinutes";
-/** 管理员用户账号root值 */
-export const ADMIN_USER_ROOT = 1;
-/** 管理员用户角色root值 */
-export const ADMIN_ROLE_EMBED = 1;
-/** 密码过期时间,单位：天 */
-export const PASSWORD_EXPIRES = 30;
-/** 系统全局页面过渡动画时间 毫秒 */
-export const TRANSTION_DURATION = 200;
-/** 用户信息菜单权限列表 */
-export const USER_MENU_LIST_KEY = "resourceList";
-/** 页面按钮权限 */
-export const PAGE_BUTTON_PERMISSION_KEY = "auths";
-/** 管理员用户角色root值 */
-export const ADMIN_DICT_EDIT_CODE = "sys.admin.edit";
+export { getConfig, setConfig, responsiveStorageNameSpace };

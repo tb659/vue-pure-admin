@@ -4,16 +4,11 @@ import mitt from "mitt";
 /** 全局公共事件需要在此处添加类型 */
 type Events = {
   openPanel: string;
-  tagViewsChange: string;
-  mixMenuTrigger: string;
-  tagViewsShowModel: string;
+  tagOnClick: string;
   logoChange: boolean;
-  fixedHeader: boolean;
-  hiddenSideBar: boolean;
-  changLayoutRoute: {
-    indexPath: string;
-    parentPath: string;
-  };
+  tagViewsChange: string;
+  changLayoutRoute: string;
+  tagViewsShowModel: string;
   imageInfo: {
     img: HTMLImageElement;
     height: number;

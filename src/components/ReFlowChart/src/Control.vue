@@ -3,7 +3,7 @@ import { ref, unref, onMounted } from "vue";
 import { LogicFlow } from "@logicflow/core";
 
 interface Props {
-  lf: LogicFlow;
+  lf?: LogicFlow;
   catTurboData?: boolean;
 }
 
@@ -65,18 +65,20 @@ const titleLists = ref([
 ]);
 
 const onControl = (item, key) => {
-  ["zoom", "zoom", "resetZoom", "undo", "redo", "getSnapshot"].forEach((v, i) => {
-    const domControl = props.lf;
-    if (key === 1) {
-      domControl.zoom(true);
+  ["zoom", "zoom", "resetZoom", "undo", "redo", "getSnapshot"].forEach(
+    (v, i) => {
+      const domControl = props.lf;
+      if (key === 1) {
+        domControl.zoom(true);
+      }
+      if (key === 6) {
+        emit("catData");
+      }
+      if (key === i) {
+        domControl[v]();
+      }
     }
-    if (key === 6) {
-      emit("catData");
-    }
-    if (key === i) {
-      domControl[v]();
-    }
-  });
+  );
 };
 
 const onEnter = key => {
@@ -103,20 +105,25 @@ onMounted(() => {
         @mouseenter.prevent="onEnter(key)"
         @mouseleave.prevent="focusIndex = -1"
       >
-        <el-tooltip :content="item.text" :visible="focusIndex === key" placement="right">
-          <button
-            :ref="'controlButton' + key"
-            :disabled="item.disabled"
-            :style="{
-              cursor: item.disabled === false ? 'pointer' : 'not-allowed',
-              color: item.disabled === false ? '' : '#00000040',
-              background: 'transparent'
-            }"
-            @click="onControl(item, key)"
-          >
-            <span :class="'iconfont ' + item.icon" :style="{ fontSize: `${item.size}px` }" />
-          </button>
-        </el-tooltip>
+        <button
+          :ref="'controlButton' + key"
+          v-tippy="{
+            content: item.text
+          }"
+          :disabled="item.disabled"
+          :style="{
+            cursor: item.disabled === false ? 'pointer' : 'not-allowed',
+            color: item.disabled === false ? '' : '#00000040',
+            background: 'transparent',
+            border: 'none'
+          }"
+          @click="onControl(item, key)"
+        >
+          <span
+            :class="'iconfont ' + item.icon"
+            :style="{ fontSize: `${item.size}px` }"
+          />
+        </button>
       </li>
     </ul>
   </div>

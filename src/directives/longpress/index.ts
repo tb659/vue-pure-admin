@@ -1,9 +1,9 @@
-import type { Directive, DirectiveBinding } from "vue";
 import { useEventListener } from "@vueuse/core";
+import type { Directive, DirectiveBinding } from "vue";
 import { subBefore, subAfter, isFunction } from "@pureadmin/utils";
 
 export const longpress: Directive = {
-  mounted(el: HTMLElement, binding: DirectiveBinding) {
+  mounted(el: HTMLElement, binding: DirectiveBinding<Function>) {
     const cb = binding.value;
     if (cb && isFunction(cb)) {
       let timer = null;
@@ -55,7 +55,9 @@ export const longpress: Directive = {
       useEventListener(el, "pointerup", clear);
       useEventListener(el, "pointerleave", clear);
     } else {
-      throw new Error('[Directive: longpress]: need callback and callback must be a function! Like v-longpress="callback"');
+      throw new Error(
+        '[Directive: longpress]: need callback and callback must be a function! Like v-longpress="callback"'
+      );
     }
   }
 };

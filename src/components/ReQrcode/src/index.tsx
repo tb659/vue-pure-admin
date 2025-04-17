@@ -1,9 +1,17 @@
-import { ref, unref, watch, nextTick, computed, PropType, defineComponent } from "vue";
+import {
+  type PropType,
+  ref,
+  unref,
+  watch,
+  nextTick,
+  computed,
+  defineComponent
+} from "vue";
 import "./index.scss";
 import propTypes from "@/utils/propTypes";
 import { isString, cloneDeep } from "@pureadmin/utils";
-import QRCode, { QRCodeRenderersOptions } from "qrcode";
-import RefreshRight from "@iconify-icons/ep/refresh-right";
+import QRCode, { type QRCodeRenderersOptions } from "qrcode";
+import RefreshRight from "~icons/ep/refresh-right";
 
 interface QrcodeLogo {
   src?: string;
@@ -17,7 +25,9 @@ interface QrcodeLogo {
 
 const props = {
   // img 或者 canvas,img不支持logo嵌套
-  tag: propTypes.string.validate((v: string) => ["canvas", "img"].includes(v)).def("canvas"),
+  tag: propTypes.string
+    .validate((v: string) => ["canvas", "img"].includes(v))
+    .def("canvas"),
   // 二维码内容
   text: {
     type: [String, Array] as PropType<string | Recordable[]>,
@@ -61,10 +71,17 @@ export default defineComponent({
       const options = cloneDeep(props.options || {});
       if (props.tag === "canvas") {
         // 容错率，默认对内容少的二维码采用高容错率，内容多的二维码采用低容错率
-        options.errorCorrectionLevel = options.errorCorrectionLevel || getErrorCorrectionLevel(unref(renderText));
+        options.errorCorrectionLevel =
+          options.errorCorrectionLevel ||
+          getErrorCorrectionLevel(unref(renderText));
         const _width: number = await getOriginWidth(unref(renderText), options);
-        options.scale = props.width === 0 ? undefined : (props.width / _width) * 4;
-        const canvasRef: any = await toCanvas(unref(wrapRef) as HTMLCanvasElement, unref(renderText), options);
+        options.scale =
+          props.width === 0 ? undefined : (props.width / _width) * 4;
+        const canvasRef: any = await toCanvas(
+          unref(wrapRef) as HTMLCanvasElement,
+          unref(renderText),
+          options
+        );
         if (props.logo) {
           const url = await createLogoCode(canvasRef);
           emit("done", url);
@@ -124,7 +141,13 @@ export default defineComponent({
       const ctx = canvasRef.getContext("2d");
       if (!ctx) return;
       // logo 底色
-      canvasRoundRect(ctx)(logoBgXY, logoBgXY, logoBgWidth, logoBgWidth, borderRadius);
+      canvasRoundRect(ctx)(
+        logoBgXY,
+        logoBgXY,
+        logoBgWidth,
+        logoBgWidth,
+        borderRadius
+      );
       ctx.fillStyle = bgColor;
       ctx.fill();
       // logo
@@ -162,7 +185,10 @@ export default defineComponent({
       });
     };
     // 得到原QrCode的大小，以便缩放得到正确的QrCode大小
-    const getOriginWidth = async (content: string, options: QRCodeRenderersOptions) => {
+    const getOriginWidth = async (
+      content: string,
+      options: QRCodeRenderersOptions
+    ) => {
       const _canvas = document.createElement("canvas");
       await toCanvas(_canvas, content, options);
       return _canvas.width;
@@ -202,7 +228,11 @@ export default defineComponent({
     };
     return () => (
       <>
-        <div v-loading={unref(loading)} class="qrcode relative inline-block" style={unref(wrapStyle)}>
+        <div
+          v-loading={unref(loading)}
+          class="qrcode relative inline-block"
+          style={unref(wrapStyle)}
+        >
           {props.tag === "canvas" ? (
             <canvas ref={wrapRef} onClick={clickCode}></canvas>
           ) : (
@@ -214,7 +244,12 @@ export default defineComponent({
               onClick={disabledClick}
             >
               <div class="absolute top-[50%] left-[50%] font-bold">
-                <iconify-icon-offline class="cursor-pointer" icon={RefreshRight} width="30" color="var(--el-color-primary)" />
+                <iconify-icon-offline
+                  class="cursor-pointer"
+                  icon={RefreshRight}
+                  width="30"
+                  color="var(--el-color-primary)"
+                />
                 <div>{props.disabledText}</div>
               </div>
             </div>

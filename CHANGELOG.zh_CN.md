@@ -1,6 +1,322 @@
+# 6.0.0 (2025-04-10)
+
+### ✔️ Refactor
+
+- 重构图标模块，使用`@iconify/json`替换不再维护更新的`@iconify-icons/*`依赖，优化使用体验，确保图标库可持续更新并支持`Tree-shaking`
+- 升级`tailwindcss`至`v4`版本，带来更快的构建速度、更简化的安装和配置、提供专属`vite`插件
+
+### 🎫 Feat
+
+- 添加`Ai`聊天组件示例
+- 添加`tagOnClick`标签切换全局公共事件
+- 添加代码编辑器示例
+- 添加`Markdown`示例
+- 添加滑块示例
+
+### 🐞 Bug fixes
+
+- 修复`aria-hidden`报错
+- 修复使用`this`语法时无法显示代码提示的问题并更新`pinia`相关语法
+
+### 🍏 Perf
+
+- 修复组件-瀑布流无限滚动示例中失效的链接
+- 更新`vue-flow`，相关兼容处理
+- 删除已弃用的依赖包`eslint-define-config`，升级`eslint`至最新版本，相关兼容处理
+- 优化`src/style/dark.scss`语法
+- 优化登录传参
+- 使用`keydown`替换`keypress`，`keypress`事件已弃用
+
+# 5.9.0 (2024-12-10)
+
+### ✔️ Refactor
+
+- 升级`vite`至`v6`版本，升级`sass`至最新版，重构主题写法，弃用 [@pureadmin/theme](https://www.npmjs.com/package/@pureadmin/theme)，点击查看 [相关优化点细节](https://github.com/pure-admin/vue-pure-admin/pull/1188#issue-2630095115)。对于拥有 [Max版本](https://pure-admin.cn/pages/max/) 的用户平台强烈建议升级，后续`Max版本用户`会享有一套更现代、美观且自定义程度高的主题色
+- 使用 [code-inspector-plugin](https://www.npmjs.com/package/code-inspector-plugin) 替换 [vite-plugin-vue-inspector](https://www.npmjs.com/package/vite-plugin-vue-inspector)
+
+### 🎫 Feat
+
+- 新增函数式抽屉组件
+- `pure-table`添加动态表头示例
+
+### 🐞 Bug fixes
+
+- 修复在菜单、部门管理中，表格展开后启用或关闭全屏功能时，表格高度未自动适应的问题
+
+### 🍏 Perf
+
+- 优化用户管理左侧部门树的布局
+
+# 5.8.0 (2024-08-19)
+
+### 🎫 Feat
+
+- 新增第二种按钮权限指令（根据登录接口返回的`permissions`字段进行判断）
+- 函数式弹框`ReDialog`添加点击确认按钮后是否开启`loading`加载动画功能
+- `PureTableBar`组件添加全屏和退出全屏功能
+- `VxeTableBar`组件添加全屏和退出全屏功能
+- `ReDialog`组件的确定按钮提供关闭按钮动画`closeLoading`功能
+- 添加开发环境代码调试`vite-plugin-vue-inspector`插件，提升开发体验
+- 添加`vite-plugin-checker`插件，更严格的类型和`eslint`校验
+
+### 🐞 Bug fixes
+
+- 修复配置路由属性`fixedTag`为`false`后当前标签页不可关闭的问题
+- 修复顶部菜单模式下`logo`不可隐藏的问题
+
+### 🍏 Perf
+
+- 优化自定义指令的类型提示
+- 优化登录页回车登录功能
+- 优化移动端左侧菜单遮罩层级
+- 优化系统管理-角色管理的权限功能样式
+- 升级依赖，`element-plus`最新版兼容处理
+
+# 5.7.0 (2024-06-04)
+
+### 🎫 Feat
+
+- 添加谷歌风格的页签
+
+### 🐞 Bug fixes
+
+- 修复在火狐浏览器中菜单折叠后，文字超出未隐藏的问题
+
+# 5.6.0 (2024-05-14)
+
+### ✔️ Refactor
+
+- 升级`pnpm`至`v9`版本，规定`pnpm`版本`>=9`
+
+### 🐞 Bug fixes
+
+- 修复点击外链会跳转两次的问题
+
+### 🍏 Perf
+
+- 优化`ReSegmented`组件
+
+# 5.5.0 (2024-05-07)
+
+### 📄 Docs
+
+文档站和完整版预览站地址更换！
+
+- 最新文档站地址：https://pure-admin.cn
+- 最新完整版预览站地址：https://pure-admin.github.io/vue-pure-admin
+
+### ✔️ Refactor
+
+- 重构`layout`文件命名规范，更易读
+
+### 🎫 Feat
+
+- 添加新组件`ReVxeTableBar`搭配`vxe-table`使用
+
+### 🐞 Bug fixes
+
+- 修复深色模式下设置`FixedHeader`为`false`时，背景色为白色的问题
+- 修复函数式弹窗`ReDialog`点击取消按钮，延时关闭无效问题
+
+### 🍏 Perf
+
+- 优化账号设置-头像上传功能
+
+# 5.4.0 (2024-04-18)
+
+### 🎫 Feat
+
+- 分段控制器组件添加全局禁用属性`disabled`
+- 添加思维导图示例
+- 函数式弹框`ReDialog`添加`Popconfirm`气泡确认框
+- `pure-table`添加`headerSlot`自定义表头插槽用法示例
+- 路由添加可配置的`fixedTag`属性，作用为当前菜单名称是否固定显示在标签页且不可关闭
+- 添加账户设置功能页面且兼容移动端
+- 升级`eslint9`，相关兼容处理
+- 添加全局配置`MaxTagsLevel`属性，可设置打开标签页最大数
+- 框架核心代码国际化全量覆盖（仅需处理业务代码国际化即可）
+
+### 🐞 Bug fixes
+
+- 修复当一个页面存在多个`RePureTableBar`组件，列无法正常拖动问题
+- 修复三级菜单向左折叠后图标显示样式问题
+- 修复账户设置页面，刷新后字体颜色未生效的问题
+- 修复调用刷新`token`接口时，`refreshToken`参数为空的问题
+
+### 🍏 Perf
+
+- 优化登录接口
+- 优化获取顶级菜单逻辑
+- 优化请求白名单逻辑，兼容更多场景
+- 简化`store`文件中导出和导入用法
+- 移除非必要的`cloc`工具依赖包，它使用`GPL`开源许可证具有争议性
+- 优化`src/utils/http`文件中`post`和`get`工具函数的类型
+
+# 5.3.0 (2024-03-28)
+
+### ✔️ Refactor
+
+- 重构国际化文件命名规范以及演示页加上代码位置提示
+
+### 🎫 Feat
+
+- 添加`MQTT`示例
+- 添加`docx`、`excel`文件预览示例
+- `ReSegmented`分段控制器新增`size`属性，可设置三种尺寸
+- `RePureTableBar`组件搭配`pure-admin-table`支持表头国际化切换
+
+# 5.2.0 (2024-03-22)
+
+### ✔️ Refactor
+
+- 将全屏按钮置于顶部，使其显眼且易于操作
+
+### 🎫 Feat
+
+- 新增`v-ripple`指令(水波纹效果)
+- 内容区添加全局`Stretch`配置，可自定义紧凑页面，轻松找到所需信息
+- 添加基于`ElTour`实现的漫游式引导
+- 完善角色管理-菜单权限功能，新颖的交互体验
+- 添加系统监控-在线用户
+- 添加系统监控-登录日志
+- 添加系统监控-操作日志
+- 添加系统监控-系统日志
+- 添加更多更方便的`pure-admin-table`可编辑表格示例（整体编辑、单行编辑、单元格编辑）
+- `ReSegmented`组件新增`block`属性，可使其适合父元素宽度
+- 添加 [vue-flow](https://vueflow.dev/) 流程图示例
+- 添加虚拟表格示例
+- 添加甘特图示例
+- 添加图形验证码示例
+- 添加表单示例，可通过`JSON`格式配置生成（基础表单、弹框表单、抽屉表单、分步表单、搜索表单）
+- 在左侧菜单右中侧再加一个折叠展开菜单的功能
+
+### 🐞 Bug fixes
+
+- 修复`windwos`下点击注册页面会出现滚动条问题
+- 修复`windows`下页面切换，内容区会出现滚动条问题
+- 修复`pure-table`带状态表格在深色整体风格下状态样式消失的问题
+- 修复系统配置中开启灰色模式和深色整体风格，刷新页面整体风格异常
+
+### 🍏 Perf
+
+- 系统管理、系统监控的所有页面兼容移动端
+
+# 5.1.0 (2024-03-02)
+
+### ✔️ Refactor
+
+- 重构标签页`UI`，点击关闭按钮更方便
+
+### 🎫 Feat
+
+- 添加多选卡片示例
+- 菜单支持`a`标签右键的所有浏览器行为（在新标签页中、新窗口中打开链接，拖拽到新标签页打开等）
+- 菜单搜索新增搜索历史和收藏功能
+
+### 🐞 Bug fixes
+
+- 修复`windows`系统下登录页出现滚动条的问题
+
+### 🍏 Perf
+
+- 规范注册本地图标时的命名规则，使其更好地配合图标选择器
+
+# 5.0.0 (2024-02-26)
+
+全面`ESM`版本
+
+### ✔️ Refactor
+
+- 升级`vite`至`v5`版本，规定`node`版本`>18.18.0`，`pnpm`版本`>=8.6.10`
+- 使用 [vite-plugin-fake-server](https://www.npmjs.com/package/vite-plugin-fake-server) 替换 [vite-plugin-mock](https://www.npmjs.com/package/vite-plugin-mock)，使用 [@faker-js/faker](https://www.npmjs.com/package/@faker-js/faker) 替换 [mockjs](https://www.npmjs.com/package/mockjs)
+- 重命名`tailwind.config.js`为`tailwind.config.ts`并更新其文件为`esm`语法
+- 更新`.prettierrc.js`文件为`esm`语法
+- 更新`postcss.config.js`文件为`esm`语法
+- 更新`commitlint.config.js`文件为`esm`语法
+- 使用`eslint.config.js`替换`.eslintrc.js`并遵循`esm`语法
+- 升级`stylelint`至`16`版本并遵循`esm`语法
+- 所有`search`搜索图标统一替换为`@iconify-icons/ri/search-line`它比较常用将其放入全局离线图标中
+- 移除`iframe`在暗模式下的滤镜效果
+- 带来更美观精致的首页
+- 更干净整洁的系统配置右侧弹出面板
+- 重构关于页面，整体更紧致，关键信息更突出
+
+### 🎫 Feat
+
+- 添加系统管理-菜单管理
+- 完善系统管理-用户管理
+- 内嵌`iframe`页支持设置`keepAlive`，保持页面状态
+- 优化导航，弹出的菜单超出内容区自适应且可滚动
+- 添加文件上传示例
+- 添加整体风格自适应操作系统浅色、深色、自动主题功能
+- 添加页脚
+- 支持多标签页打开已经登录的系统后无需再登录并添加内免登录功能（用户可选择免登录的天数）
+- 带来高级感的终端命令行
+- 添加音频可视化功能示例
+- 添加视频帧截取-`WebAssembly`版，支持`MP4`、`MOV`、`AVI`、`WebM`、`MKV`等主流格式
+- 添加阻止键盘`F12`、浏览器默认右键菜单、页面元素选中、图片默认可拖动方法
+- 二次封装`localforage`支持设置过期时间，提供完整的类型提示
+- 添加`AnimateCss`选择器组件`ReAnimateSelector`
+- 添加`ReText`组件，支持自动省略显示`Tooltip`功能, 支持多行省略, 高可复用性
+- 添加艺术画板功能，比如可以用来绘制一些设计思想架构图
+- 新增组件-可选按钮示例
+- 添加常用按钮示例
+- 添加颜色选择器组件示例
+- 添加日期选择器组件示例
+- 添加日期时间选择器示例
+- 添加时间选择(器)示例
+- 添加统计组件示例
+- 添加标签组件示例
+- 添加折叠面板组件示例
+- 添加进度条组件示例
+- 升级`Swiper 11`
+- 添加 [vite-plugin-router-warn](https://www.npmjs.com/package/vite-plugin-router-warn) 插件，根治非必要的`vue-router`动态路由警告`No match found for location with path`
+
+### 🐞 Bug fixes
+
+- 修复`query`路由传参模式下，点击标签页进行切换操作时会触发两次`router`跳转问题
+- 修复卡片标签页模式下，通过`query`路由传参时，离开激活的标签后仍存在`card-active`属性，导致鼠标`hover`时字体颜色未改变
+- 修复`src/layout/components/appMain.vue`文件中同名词读取解析错误
+- 修复内嵌页面`frameView`在隐藏标签页后高度没有自适应
+- 修复路由`meta.transition.name`配置无效的问题
+- 修复点击`iframe`页面无法关闭右键标签页面板以及在`iframe`页面时右键标签页面板被遮挡的问题
+- 修复在路由`query`、`params`模式下点击面包屑跳转页面少参问题
+
+### 🍏 Perf
+
+- 优化主题色
+- 标签页可按滑动力度进行左右滑动
+- 接口命名规则统一为`kebab-case`串式命名法
+- `el-form`的`label`和全局的`label`样式保持一致
+- `VITE_PUBLIC_PATH`默认还原为 `/` 对`VITE_ROUTER_HISTORY`为`h5`模式更友好
+- 优化`transformI18n`函数，国际化支持无限嵌套级别（当然平台还是推荐嵌套层级越少越好）
+- 页面初始化时先加载`pinia`再加载`router`，兼容更多使用场景
+- 优化请求白名单的判断逻辑
+- 左侧菜单导航样式调整，优化有无`logo`时`pc`端和移动端不同的展示方式
+- 升级代码规范风格相关库至最新
+- 优化登录页`loading`判断
+- 优化`IconSelect`图标选择器组件，提升用户体验
+- 优化分段控制器组件，添加`v-model`支持
+- 优化平台`logo`获取方式
+- 升级`@pureadmin/theme`，带来了更友好的`esm`支持
+- 优化`build/info.ts`文件中的一些函数，使其友好支持`esm`
+- 优化`PureTableBar`组件的列设置弹出框，设置最大高度，超出可滚动
+- 优化函数式弹框组件`ReDialog`保留关闭动画
+- 对中文路径做测试，删除`sass-loader`依赖
+- 打包后的代码改为默认原生支持 [ES2015](https://caniuse.com/es6) 的浏览器
+- 删除会自动安装的`stylelint`插件依赖
+- 增强`useRenderIcon`使用本地`svg`的方式
+- 优化左侧菜单最左下角的展开、折叠按钮在亮白主题配色下的样式
+- 优化所有`el-empty`的`description`内容。图标选择器内容为空时加上`el-empty`
+- 左侧菜单折叠后的`tooltip`主题与整体菜单保持统一
+- 更新`svgo`命令为`svgo -f . -r`（压缩当前目录下的所有`SVG`文件）
+- 优化项目构建相关函数
+- 增强`ReTypeit`组件，支持插槽以及所有`typeit`配置项
+- 优化国际化相关处理逻辑，初始化时添加缓存以避免不必要的性能消耗
+
 # 4.5.0 (2023-06-26)
 
-### ✔️ refactor
+### ✔️ Refactor
 
 - 重构图片裁剪 `ReCropper` 组件，添加更多实用功能
 
@@ -112,7 +428,7 @@
 
 [查看 4.0.0 版本优化细节](https://github.com/pure-admin/vue-pure-admin/issues/428#issuecomment-1422191158)
 
-### ✔️ refactor
+### ✔️ Refactor
 
 - 采用 `css` 伪类 `before` 写法重构菜单的激活背景，类似于 [ant.design-menu](https://ant.design/components/menu-cn#components-menu-demo-inline-collapsed)
 
@@ -183,10 +499,10 @@
 
 # 3.9.5 (2022-12-13)
 
-### ✔️ refactor
+### ✔️ Refactor
 
 - 完全移除了 `lodash` 和其相关库
-  [点击此处查看为什么移除？如何自行集成？](https://yiming_chang.gitee.io/pure-admin-doc/pages/FAQ/#%E5%B9%B3%E5%8F%B0%E5%9C%A8-v3-9-5-%E7%89%88%E6%9C%AC%E5%AE%8C%E5%85%A8%E7%A7%BB%E9%99%A4%E4%BA%86-lodash-%E5%92%8C%E5%85%B6%E7%9B%B8%E5%85%B3%E5%BA%93-%E4%B8%BA%E4%BB%80%E4%B9%88%E7%A7%BB%E9%99%A4-%E5%A6%82%E4%BD%95%E8%87%AA%E8%A1%8C%E9%9B%86%E6%88%90)
+  [点击此处查看为什么移除？如何自行集成？](https://pure-admin.cn/pages/FAQ/#%E5%B9%B3%E5%8F%B0%E5%9C%A8-v3-9-5-%E7%89%88%E6%9C%AC%E5%AE%8C%E5%85%A8%E7%A7%BB%E9%99%A4%E4%BA%86-lodash-%E5%92%8C%E5%85%B6%E7%9B%B8%E5%85%B3%E5%BA%93-%E4%B8%BA%E4%BB%80%E4%B9%88%E7%A7%BB%E9%99%A4-%E5%A6%82%E4%BD%95%E8%87%AA%E8%A1%8C%E9%9B%86%E6%88%90)
 
 ### 🎫 Feat
 
@@ -203,10 +519,10 @@
 
 # 3.9.4 (2022-12-05)
 
-### ✔️ refactor
+### ✔️ Refactor
 
 - 完全移除了 `vxe-table`，移除后，完整版整体打包大小减少 `1.82MB`，首启动时长基本和精简版持平 🐮
-  [点击此处查看为什么移除？如何自行集成？](https://yiming_chang.gitee.io/pure-admin-doc/pages/FAQ/#%E5%B9%B3%E5%8F%B0%E5%9C%A8-v3-9-4-%E7%89%88%E6%9C%AC%E5%AE%8C%E5%85%A8%E7%A7%BB%E9%99%A4%E4%BA%86-vxe-table-%E4%B8%BA%E4%BB%80%E4%B9%88%E7%A7%BB%E9%99%A4-%E5%A6%82%E4%BD%95%E8%87%AA%E8%A1%8C%E9%9B%86%E6%88%90)
+  [点击此处查看为什么移除？如何自行集成？](https://pure-admin.cn/pages/FAQ/#%E5%B9%B3%E5%8F%B0%E5%9C%A8-v3-9-4-%E7%89%88%E6%9C%AC%E5%AE%8C%E5%85%A8%E7%A7%BB%E9%99%A4%E4%BA%86-vxe-table-%E4%B8%BA%E4%BB%80%E4%B9%88%E7%A7%BB%E9%99%A4-%E5%A6%82%E4%BD%95%E8%87%AA%E8%A1%8C%E9%9B%86%E6%88%90)
 
 ### 🎫 Feat
 
@@ -292,7 +608,7 @@
 - 添加 `@pureadmin/table` 行、列拖拽示例
 - 添加 `@pureadmin/table` 右键菜单示例
 - 添加 `@pureadmin/table` 导出 `Excel` 示例
-- 添加 `@pureadmin/table` 编辑单元格示例
+- 添加 `@pureadmin/table` 修改单元格示例
 - 添加 `@pureadmin/table` 水印示例
 - 添加 `@pureadmin/table` 打印示例
 - 添加 `@pureadmin/table` 内嵌 `echarts` 图表示例
@@ -312,13 +628,13 @@
 
 # 3.7.0 (2022-11-21)
 
-### ✔️ refactor
+### ✔️ Refactor
 
 - 使用 `intro.js` 替换 `driver.js`
 
 ### 🎫 Feat
 
-- 添加前端单点登录，测试地址 https://yiming_chang.gitee.io/vue-pure-admin/#/pure-table/index?username=sso&roles=admin&accessToken=eyJhbGciOiJIUzUxMiJ9.admin
+- 添加前端单点登录，测试地址 https://pure-admin.github.io/vue-pure-admin/#/pure-table/index?username=sso&roles=admin&accessToken=eyJhbGciOiJIUzUxMiJ9.admin
 - 为 [@pureadmin/table](https://github.com/pure-admin/pure-admin-table) 添加更多的示例和 `element-plus` 的 [table](https://element-plus.org/zh-CN/component/table.html) 示例保持一致
 - 丰富水印功能页面（支持自定义各种颜色、阴影、文字、额外属性、设置不可删除水印以及给指定元素设置水印）
 - 优化菜单，添加 `MenuArrowIconNoTransition` 全局配置，在 `public/platform-config.json` 中配置即可，对于出现左侧菜单模式，菜单展开卡顿的可设置 `MenuArrowIconNoTransition: true` 即可解决
@@ -363,7 +679,7 @@
 
 # 3.6.2 (2022-10-27)
 
-### ✔️ refactor
+### ✔️ Refactor
 
 - 使用`@/`别名替换`/@/`别名
 
@@ -391,7 +707,7 @@
 - 添加打字机组件`demo`
 - 添加`json`编辑器`demo`
 
-### ✔️ refactor
+### ✔️ Refactor
 
 - 重构权限模块，采用目前最常用的`RBAC`（Role-Based Access List）: 基于角色的权限控制（ 用户 -> 角色 -> 权限 ），并更新页面权限和按钮权限`demo`示例，按钮权限支持三种操作模式（组件方式判断权限、函数方式判断权限、指令方式判断权限）
 
@@ -417,9 +733,9 @@
 - 添加 `element-plus` 无缝滚动 `Table` 页面 demo
 - 开启 `vscode` 括号对指南
 
-### ✔️ refactor
+### ✔️ Refactor
 
-- 使用 `tailwindcss` 替换 `unocss`，新增 `tailwindcss` [使用文档](https://yiming_chang.gitee.io/pure-admin-doc/pages/tailwindcss/)
+- 使用 `tailwindcss` 替换 `unocss`，新增 `tailwindcss` [使用文档](https://pure-admin.cn/pages/tailwindcss/)
 
 ### 🐞 Bug fixes
 
@@ -467,7 +783,7 @@
 - 添加导出 `excel` 页面 demo
 - 添加无 `Layout` 的空白页面 demo
 
-### ✔️ refactor
+### ✔️ Refactor
 
 - 重构主题色，适配 `element-plus` 暗黑模式（同时也解决了 `3.3.0` 及更低版本中同样的元素 `css` 被多次覆盖，导致样式不好调试的问题）
 - 重构路由重置功能
@@ -503,7 +819,7 @@
 - 添加预发布打包模式
 - 添加关闭某个标签的[hooks](https://github.com/pure-admin/vue-pure-admin/commit/5e8723a031923e79f507e5a17151d3bd88a51523)
 
-### ✔️ refactor
+### ✔️ Refactor
 
 - 重构登录页，更偏向实际业务场景
 - 使用`unocss`替换`windicss`，`unocss`开发环境下性能更好，没有内存泄露，而且`api`使用上兼容`windicss`
@@ -582,7 +898,7 @@
 - 添加 `WindiCSS` 支持
 - 添加线上环境删 console 插件`vite-plugin-remove-console`
 
-### ✔️ refactor
+### ✔️ Refactor
 
 - 使用`@iconify-icons/ep`替换`@element-plus/icons-vue`
 

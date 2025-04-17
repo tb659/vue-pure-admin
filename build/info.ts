@@ -1,9 +1,20 @@
 import type { Plugin } from "vite";
-import dayjs, { Dayjs } from "dayjs";
+import gradient from "gradient-string";
+import { getPackageSize } from "./utils";
+import dayjs, { type Dayjs } from "dayjs";
 import duration from "dayjs/plugin/duration";
-import { green, blue, bold } from "picocolors";
-import utils from "@pureadmin/utils";
+import boxen, { type Options as BoxenOptions } from "boxen";
 dayjs.extend(duration);
+
+const welcomeMessage = gradient(["cyan", "magenta"]).multiline(
+  `您好! 欢迎使用 pure-admin 开源项目\n我们为您精心准备了下面两个贴心的保姆级文档\nhttps://pure-admin.cn\nhttps://pure-admin-utils.netlify.app`
+);
+
+const boxenOptions: BoxenOptions = {
+  padding: 0.5,
+  borderColor: "cyan",
+  borderStyle: "round"
+};
 
 export function viteBuildInfo(): Plugin {
   let config: { command: string };
@@ -17,7 +28,7 @@ export function viteBuildInfo(): Plugin {
       outDir = resolvedConfig.build?.outDir ?? "dist";
     },
     buildStart() {
-      console.log(bold(green(`👏欢迎使用${blue("[vue-pure-admin]")}，enjoy your coding ~ ~ ~`)));
+      console.log(boxen(welcomeMessage, boxenOptions));
       if (config.command === "build") {
         startTime = dayjs(new Date());
       }
@@ -25,14 +36,17 @@ export function viteBuildInfo(): Plugin {
     closeBundle() {
       if (config.command === "build") {
         endTime = dayjs(new Date());
-        utils.getPackageSize({
+        getPackageSize({
           folder: outDir,
           callback: (size: string) => {
             console.log(
-              bold(
-                green(
-                  `🎉恭喜打包完成（总用时${dayjs.duration(endTime.diff(startTime)).format("mm分ss秒")}，打包后的大小为${size}）`
-                )
+              boxen(
+                gradient(["cyan", "magenta"]).multiline(
+                  `🎉 恭喜打包完成（总用时${dayjs
+                    .duration(endTime.diff(startTime))
+                    .format("mm分ss秒")}，打包后的大小为${size}）`
+                ),
+                boxenOptions
               )
             );
           }

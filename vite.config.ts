@@ -1,33 +1,17 @@
-import dayjs from "dayjs";
-import { resolve } from "path";
-import pkg from "./package.json";
-import { warpperEnv } from "./build";
 import { getPluginsList } from "./build/plugins";
 import { include, exclude } from "./build/optimize";
 import { type UserConfigExport, type ConfigEnv, loadEnv } from "vite";
-
-/** 当前执行node命令时文件夹的地址（工作目录） */
-const root: string = process.cwd();
-
-/** 路径查找 */
-const pathResolve = (dir: string): string => {
-  return resolve(__dirname, ".", dir);
-};
-
-/** 设置别名 */
-const alias: Record<string, string> = {
-  "@": pathResolve("src"),
-  "@build": pathResolve("build")
-};
-
-const { dependencies, devDependencies, name, version } = pkg;
-const __APP_INFO__ = {
-  pkg: { dependencies, devDependencies, name, version },
-  lastBuildTime: dayjs(new Date()).format("YYYY-MM-DD HH:mm:ss")
-};
+import {
+  root,
+  alias,
+  wrapperEnv,
+  pathResolve,
+  __APP_INFO__
+} from "./build/utils";
 
 export default ({ mode }: ConfigEnv): UserConfigExport => {
-  const { VITE_CDN, VITE_PORT, VITE_COMPRESSION, VITE_PUBLIC_PATH } = warpperEnv(loadEnv(mode, root));
+  const { VITE_CDN, VITE_PORT, VITE_COMPRESSION, VITE_PUBLIC_PATH } =
+    wrapperEnv(loadEnv(mode, root));
   return {
     base: VITE_PUBLIC_PATH,
     root,
@@ -40,21 +24,7 @@ export default ({ mode }: ConfigEnv): UserConfigExport => {
       port: VITE_PORT,
       host: "0.0.0.0",
       // 本地跨域代理 https://cn.vitejs.dev/config/server-options.html#server-proxy
-      proxy: {
-        // 第一个代理后端地址
-        "^/dev-api/.*": {
-          // target: "http://localhost:8081/fanya_maoyi",
-          target: "http://47.96.19.146:4000/frame_base",
-          changeOrigin: true,
-          rewrite: path => path.replace(/^\/dev-api/, "")
-        },
-        // 第二个代理后端地址
-        "^/otherApi/.*": {
-          target: "http://localhost:8080",
-          changeOrigin: true,
-          rewrite: path => path.replace(/^\/otherApi/, "")
-        }
-      },
+      proxy: {},
       // 预热文件以提前转换和缓存结果，降低启动期间的初始页面加载时长并防止转换瀑布
       warmup: {
         clientFiles: ["./index.html", "./src/{views,components}/*"]
@@ -74,7 +44,7 @@ export default ({ mode }: ConfigEnv): UserConfigExport => {
       chunkSizeWarningLimit: 4000,
       rollupOptions: {
         input: {
-          index: pathResolve("index.html")
+          index: pathResolve("./index.html", import.meta.url)
         },
         // 静态资源分类打包
         output: {

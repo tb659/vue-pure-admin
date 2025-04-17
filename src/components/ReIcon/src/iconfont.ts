@@ -20,12 +20,14 @@ export default defineComponent({
         },
         this.icon
       );
-    } else if (Object.keys(attrs).includes("svg") || attrs?.iconType === "svg") {
+    } else if (
+      Object.keys(attrs).includes("svg") ||
+      attrs?.iconType === "svg"
+    ) {
       return h(
         "svg",
         {
-          class: "icon-svg",
-          "aria-hidden": true
+          class: "icon-svg"
         },
         {
           default: () => [

@@ -1,7 +1,18 @@
 <script setup lang="ts">
-import type { CSSProperties, PropType } from "vue";
-import { computed, ref, unref, nextTick } from "vue";
-import { tryOnMounted, tryOnUnmounted, templateRef, useDebounceFn } from "@vueuse/core";
+import {
+  type PropType,
+  type CSSProperties,
+  ref,
+  unref,
+  nextTick,
+  computed
+} from "vue";
+import {
+  tryOnMounted,
+  tryOnUnmounted,
+  templateRef,
+  useDebounceFn
+} from "@vueuse/core";
 import * as utilsMethods from "./utils";
 const { animationFrame, copyObj } = utilsMethods;
 animationFrame();
@@ -51,9 +62,18 @@ if (props.classOption["key"] === undefined) {
   props.classOption["key"] = 0;
 }
 
-const wrap = templateRef<HTMLElement | null>(`wrap${props.classOption["key"]}`, null);
-const slotList = templateRef<HTMLElement | null>(`slotList${props.classOption["key"]}`, null);
-const realBox = templateRef<HTMLElement | null>(`realBox${props.classOption["key"]}`, null);
+const wrap = templateRef<HTMLElement | null>(
+  `wrap${props.classOption["key"]}`,
+  null
+);
+const slotList = templateRef<HTMLElement | null>(
+  `slotList${props.classOption["key"]}`,
+  null
+);
+const realBox = templateRef<HTMLElement | null>(
+  `realBox${props.classOption["key"]}`,
+  null
+);
 
 const leftSwitchState = computed(() => {
   return unref(xPos) < 0;
@@ -116,17 +136,23 @@ const leftSwitch = computed((): CSSProperties => {
 const rightSwitch = computed((): CSSProperties => {
   return {
     position: "absolute",
-    margin: `${unref(height) / 2}px 0 0 ${unref(width) + unref(options).switchOffset}px`,
+    margin: `${unref(height) / 2}px 0 0 ${
+      unref(width) + unref(options).switchOffset
+    }px`,
     transform: "translateY(-50%)"
   };
 });
 
 const isHorizontal = computed(() => {
-  return unref(options).direction !== "bottom" && unref(options).direction !== "top";
+  return (
+    unref(options).direction !== "bottom" && unref(options).direction !== "top"
+  );
 });
 
 const float = computed((): CSSProperties => {
-  return unref(isHorizontal) ? { float: "left", overflow: "hidden" } : { overflow: "hidden" };
+  return unref(isHorizontal)
+    ? { float: "left", overflow: "hidden" }
+    : { overflow: "hidden" };
 });
 
 const pos = computed(() => {
@@ -160,7 +186,9 @@ const canTouchScroll = computed(() => {
 });
 
 const baseFontSize = computed(() => {
-  return unref(options).isSingleRemUnit ? parseInt(window.getComputedStyle(document.documentElement, null).fontSize) : 1;
+  return unref(options).isSingleRemUnit
+    ? parseInt(window.getComputedStyle(document.documentElement, null).fontSize)
+    : 1;
 });
 
 const realSingleStopWidth = computed(() => {
@@ -205,7 +233,10 @@ function leftSwitchClick() {
 function rightSwitchClick() {
   if (!unref(rightSwitchState)) return;
   // 小于单步距离
-  if (unref(realBoxWidth) - unref(width) + unref(xPos) < unref(options).switchSingleStep) {
+  if (
+    unref(realBoxWidth) - unref(width) + unref(xPos) <
+    unref(options).switchSingleStep
+  ) {
     xPos.value = unref(width) - unref(realBoxWidth);
     return;
   }
@@ -243,7 +274,12 @@ function touchStart(e) {
 
 function touchMove(e) {
   //当屏幕有多个touch或者页面被缩放过，就不执行move操作
-  if (!unref(canTouchScroll) || e.targetTouches.length > 1 || (e.scale && e.scale !== 1)) return;
+  if (
+    !unref(canTouchScroll) ||
+    e.targetTouches.length > 1 ||
+    (e.scale && e.scale !== 1)
+  )
+    return;
   const touch = e.targetTouches[0];
   const { direction } = unref(options);
   const endPos = {
@@ -254,10 +290,16 @@ function touchMove(e) {
   e.preventDefault();
   //dir，1表示纵向滑动，0为横向滑动
   const dir = Math.abs(endPos.x) < Math.abs(endPos.y) ? 1 : 0;
-  if ((dir === 1 && direction === "bottom") || (dir === 1 && direction === "top")) {
+  if (
+    (dir === 1 && direction === "bottom") ||
+    (dir === 1 && direction === "top")
+  ) {
     // 表示纵向滑动 && 运动方向为上下
     yPos.value = startPosY + endPos.y;
-  } else if ((dir === 0 && direction === "left") || (dir === 0 && direction === "right")) {
+  } else if (
+    (dir === 0 && direction === "left") ||
+    (dir === 0 && direction === "right")
+  ) {
     // 为横向滑动 && 运动方向为左右
     xPos.value = startPosX + endPos.x;
   }
@@ -265,7 +307,7 @@ function touchMove(e) {
 
 function touchEnd() {
   if (!unref(canTouchScroll)) return;
-  // eslint-disable-next-line prefer-const
+
   let timer: any;
   const direction = unref(options).direction;
   delay.value = 50;
@@ -420,7 +462,11 @@ function scrollStopMove() {
 
 // 鼠标滚轮事件
 function wheel(e) {
-  if (unref(options).direction === "left" || unref(options).direction === "right") return;
+  if (
+    unref(options).direction === "left" ||
+    unref(options).direction === "right"
+  )
+    return;
   useDebounceFn(() => {
     e.deltaY > 0 ? (yPos.value -= step.value) : (yPos.value += step.value);
   }, 50)();
@@ -456,15 +502,25 @@ defineExpose({
 </script>
 
 <template>
-  <div :ref="'wrap' + props.classOption['key']">
-    <div v-if="navigation" :style="leftSwitch" :class="leftSwitchClass" @click="leftSwitchClick">
+  <div :ref="'wrap' + classOption['key']">
+    <div
+      v-if="navigation"
+      :style="leftSwitch"
+      :class="leftSwitchClass"
+      @click="leftSwitchClick"
+    >
       <slot name="left-switch" />
     </div>
-    <div v-if="navigation" :style="rightSwitch" :class="rightSwitchClass" @click="rightSwitchClick">
+    <div
+      v-if="navigation"
+      :style="rightSwitch"
+      :class="rightSwitchClass"
+      @click="rightSwitchClick"
+    >
       <slot name="right-switch" />
     </div>
     <div
-      :ref="'realBox' + props.classOption['key']"
+      :ref="'realBox' + classOption['key']"
       :style="pos"
       @mouseenter="enter"
       @mouseleave="leave"
@@ -473,7 +529,7 @@ defineExpose({
       @touchend="touchEnd"
       @mousewheel.passive="wheel"
     >
-      <div :ref="'slotList' + props.classOption['key']" :style="float">
+      <div :ref="'slotList' + classOption['key']" :style="float">
         <slot />
       </div>
       <div :style="float" v-html="copyHtml" />

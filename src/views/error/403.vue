@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { useRouter } from "vue-router";
-import { getTopMenu } from "@/router/utils";
 import noAccess from "@/assets/status/403.svg?component";
 
 defineOptions({
@@ -16,7 +15,7 @@ const router = useRouter();
     <div class="ml-12">
       <p
         v-motion
-        class="mb-4 text-4xl font-medium dark:text-white"
+        class="font-medium text-4xl mb-4! dark:text-white"
         :initial="{
           opacity: 0,
           y: 100
@@ -25,7 +24,7 @@ const router = useRouter();
           opacity: 1,
           y: 0,
           transition: {
-            delay: 100
+            delay: 80
           }
         }"
       >
@@ -33,7 +32,7 @@ const router = useRouter();
       </p>
       <p
         v-motion
-        class="mb-4 text-gray-500"
+        class="mb-4! text-gray-500"
         :initial="{
           opacity: 0,
           y: 100
@@ -42,7 +41,7 @@ const router = useRouter();
           opacity: 1,
           y: 0,
           transition: {
-            delay: 300
+            delay: 120
           }
         }"
       >
@@ -59,10 +58,10 @@ const router = useRouter();
           opacity: 1,
           y: 0,
           transition: {
-            delay: 500
+            delay: 160
           }
         }"
-        @click="router.push(getTopMenu()?.path ?? '/')"
+        @click="router.push('/')"
       >
         返回首页
       </el-button>

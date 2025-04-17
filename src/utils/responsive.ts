@@ -1,12 +1,11 @@
 // 响应式storage
-import { App } from "vue";
-import { getConfig } from "@/config";
+import type { App } from "vue";
 import Storage from "responsive-storage";
 import { routerArrays } from "@/layout/types";
-import { PLATFORM_PREFIX } from "@/config";
+import { responsiveStorageNameSpace } from "@/config";
 
 export const injectResponsiveStorage = (app: App, config: PlatformConfigs) => {
-  const nameSpace = PLATFORM_PREFIX;
+  const nameSpace = responsiveStorageNameSpace();
   const configObj = Object.assign(
     {
       // 国际化 默认中文zh
@@ -15,25 +14,24 @@ export const injectResponsiveStorage = (app: App, config: PlatformConfigs) => {
       },
       // layout模式以及主题
       layout: Storage.getData("layout", nameSpace) ?? {
-        theme: config.Theme ?? getConfig().Theme,
-        layout: config.Layout ?? getConfig().Layout,
-        darkMode: config.DarkMode ?? getConfig().DarkMode,
-        epThemeColor: config.EpThemeColor ?? getConfig().EpThemeColor,
-        sidebarStatus: config.SidebarStatus ?? getConfig().SidebarStatus,
-        leftMixNavFixed: config.LeftMixNavFixed ?? getConfig().LeftMixNavFixed,
-        contentFullScreen: config.ContentFullScreen ?? getConfig().ContentFullScreen
+        layout: config.Layout ?? "vertical",
+        theme: config.Theme ?? "light",
+        darkMode: config.DarkMode ?? false,
+        sidebarStatus: config.SidebarStatus ?? true,
+        epThemeColor: config.EpThemeColor ?? "#409EFF",
+        themeColor: config.Theme ?? "light", // 主题色（对应系统配置中的主题色，与theme不同的是它不会受到浅色、深色整体风格切换的影响，只会在手动点击主题色时改变）
+        overallStyle: config.OverallStyle ?? "light" // 整体风格（浅色：light、深色：dark、自动：system）
       },
+      // 系统配置-界面显示
       configure: Storage.getData("configure", nameSpace) ?? {
-        grey: config.Grey ?? getConfig().Grey,
-        weak: config.Weak ?? getConfig().Weak,
-        hideTabs: config.HideTabs ?? getConfig().HideTabs,
-        showLogo: config.ShowLogo ?? getConfig().ShowLogo,
-        showModel: config.ShowModel ?? getConfig().ShowModel,
-        hideFooter: config.HideFooter ?? getConfig().HideFooter,
-        fixedHeader: config?.FixedHeader ?? getConfig().FixedHeader,
-        hiddenSideBar: config?.HiddenSideBar ?? getConfig().HiddenSideBar,
-        mixMenuTrigger: config.MixMenuTrigger ?? getConfig().MixMenuTrigger,
-        multiTagsCache: config.MultiTagsCache ?? getConfig().MultiTagsCache
+        grey: config.Grey ?? false,
+        weak: config.Weak ?? false,
+        hideTabs: config.HideTabs ?? false,
+        hideFooter: config.HideFooter ?? true,
+        showLogo: config.ShowLogo ?? true,
+        showModel: config.ShowModel ?? "smart",
+        multiTagsCache: config.MultiTagsCache ?? false,
+        stretch: config.Stretch ?? false
       }
     },
     config.MultiTagsCache

@@ -46,7 +46,17 @@ function convertNodeToTurboElement(node) {
 }
 
 function convertEdgeToTurboElement(edge) {
-  const { id, type, sourceNodeId, targetNodeId, startPoint, endPoint, pointsList, text = "", properties } = edge;
+  const {
+    id,
+    type,
+    sourceNodeId,
+    targetNodeId,
+    startPoint,
+    endPoint,
+    pointsList,
+    text = "",
+    properties
+  } = edge;
   return {
     incoming: [sourceNodeId],
     outgoing: [targetNodeId],
@@ -100,7 +110,13 @@ function convertFlowElementToEdge(element) {
     pointsList,
     properties: {}
   };
-  const excludeProperties = ["startPoint", "endPoint", "pointsList", "text", "logicFlowType"];
+  const excludeProperties = [
+    "startPoint",
+    "endPoint",
+    "pointsList",
+    "text",
+    "logicFlowType"
+  ];
   Object.keys(element.properties).forEach(property => {
     if (excludeProperties.indexOf(property) === -1) {
       edge.properties[property] = element.properties[property];

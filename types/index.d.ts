@@ -6,13 +6,10 @@ type EmitType = (event: string, ...args: any[]) => void;
 
 type TargetContext = "_self" | "_blank";
 
-type ComponentRef<T> = InstanceType<T>;
+type ComponentRef<T extends HTMLElement = HTMLDivElement> =
+  ComponentElRef<T> | null;
 
 type ElRef<T extends HTMLElement = HTMLDivElement> = Nullable<T>;
-
-type ElementPlusInfoType = "success" | "info" | "warning" | "danger";
-
-type Layout = "vertical" | "leftMix" | "horizontal" | "topMix";
 
 type ForDataType<T> = {
   [P in T]?: ForDataType<T[P]>;

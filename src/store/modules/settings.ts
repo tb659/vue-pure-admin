@@ -1,16 +1,21 @@
-import type { setType } from "./types";
-import { store } from "@/store";
 import { defineStore } from "pinia";
-import { getConfig } from "@/config";
+import { type setType, store, getConfig } from "../utils";
 
-export const useSettingStore = defineStore({
-  id: "pure-setting",
+export const useSettingStore = defineStore("pure-setting", {
   state: (): setType => ({
-    title: getConfig().Title
+    title: getConfig().Title,
+    fixedHeader: getConfig().FixedHeader,
+    hiddenSideBar: getConfig().HiddenSideBar
   }),
   getters: {
     getTitle(state) {
       return state.title;
+    },
+    getFixedHeader(state) {
+      return state.fixedHeader;
+    },
+    getHiddenSideBar(state) {
+      return state.hiddenSideBar;
     }
   },
   actions: {

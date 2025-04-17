@@ -1,5 +1,6 @@
 declare module "*.vue" {
-  import { DefineComponent } from "vue";
+  import type { DefineComponent } from "vue";
+  // eslint-disable-next-line
   const component: DefineComponent<{}, {}, any>;
   export default component;
 }
@@ -9,7 +10,6 @@ declare module "*.scss" {
   export default scss;
 }
 
+declare module "vue3-puzzle-vcode";
 declare module "vue-virtual-scroller";
 declare module "vuedraggable/src/vuedraggable";
-declare module "element-plus/dist/locale/en.mjs";
-declare module "element-plus/dist/locale/zh-cn.mjs";

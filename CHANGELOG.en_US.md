@@ -1,6 +1,322 @@
+# 6.0.0 (2025-04-10)
+
+### ✔️ Refactor
+
+- Refactor the icon module, use `@iconify/json` to replace the `@iconify-icons/*` dependency that is no longer maintained and updated, optimize the user experience, ensure that the icon library can be continuously updated and support `Tree-shaking`
+- Upgrade `tailwindcss` to `v4` version, bringing faster build speed, simpler installation and configuration, and providing a dedicated `vite` plug-in
+
+### 🎫 Feat
+
+- Add `Ai` chat component example
+- Add `tagOnClick` tag to switch global public events
+- Add code editor example
+- Add `Markdown` example
+- Add slider example
+
+### 🐞 Bug fixes
+
+- Fix `aria-hidden` error
+- Fix the problem that code hints cannot be displayed when using `this` syntax and update `pinia` related syntax
+
+### 🍏 Perf
+
+- Fix broken links in the waterfall infinite scrolling example
+- Update `vue-flow`, related compatibility processing
+- Delete the deprecated dependency package `eslint-define-config`, upgrade `eslint` to the latest version, related compatibility processing
+- Optimize `src/style/dark.scss` syntax
+- Optimize login parameter transfer
+- Use `keydown` to replace `keypress`, the `keypress` event has been deprecated
+
+# 5.9.0 (2024-12-10)
+
+### ✔️Refactor
+
+- Upgrade `vite` to `v6` version, upgrade `sass` to the latest version, reconstruct the theme writing method, and deprecate [@pureadmin/theme](https://www.npmjs.com/package/@pureadmin/theme) , click to view [Related optimization point details](https://github.com/pure-admin/vue-pure-admin/pull/1188#issue-2630095115). For users who have the [Max version](https://pure-admin.cn/pages/max/), it is strongly recommended to upgrade. Subsequent Max version users will enjoy a more modern, beautiful and highly customized theme color
+- Use [code-inspector-plugin](https://www.npmjs.com/package/code-inspector-plugin) to replace [vite-plugin-vue-inspector](https://www.npmjs.com/package/vite-plugin-vue-inspector)
+
+### 🎫Feat
+
+- Added `ReDrawer` component
+- `pure-table` adds dynamic table header example
+
+### 🐞 Bug fixes
+
+- Fixed an issue where the height of the table does not automatically adapt when the full screen function is enabled or disabled after the table is expanded in the menu and department management
+
+### 🍏Perf
+
+- Optimize the layout of the department tree on the left side of user management
+
+# 5.8.0 (2024-08-19)
+
+### 🎫 Feat
+
+- Added a second button permission command (judged based on the `permissions` field returned by the login interface)
+- Functional pop-up box `ReDialog` adds whether to enable the `loading` loading animation function after clicking the confirmation button
+- `PureTableBar` component adds full screen and exit full screen functions
+- `VxeTableBar` component adds full screen and exit full screen functions
+- The OK button of the `ReDialog` component provides the close button animation `closeLoading` function
+- Add development environment code debugging `vite-plugin-vue-inspector` plug-in to improve development experience
+- Added `vite-plugin-checker` plugin for stricter type and `eslint` verification
+
+### 🐞 Bug fixes
+
+- Fixed the problem that the current tab cannot be closed after configuring the routing attribute `fixedTag` to `false`
+- Fixed the issue where `logo` cannot be hidden in top menu mode
+
+### 🍏 Perf
+
+- Optimize type hints for custom instructions
+- Optimize the press enter login function on the login page
+- Optimize the mask level of the left menu on the mobile side
+- Optimize system management-permission function style of role management
+- Upgraded dependencies, compatible with the latest version of `element-plus`
+
+# 5.7.0 (2024-06-04)
+
+### 🎫 Feat
+
+- Add Google style tabs
+
+### 🐞 Bug fixes
+
+- Fixed the issue where the text exceeds and is not hidden after the menu is folded in Firefox browser
+
+# 5.6.0 (2024-05-14)
+
+### ✔️ Refactor
+
+- Upgrade `pnpm` to `v9` version, requiring `pnpm` version `>=9`
+
+### 🐞 Bug fixes
+
+- Fixed the issue where clicking on an external link would jump twice
+
+### 🍏 Perf
+
+- Optimize `ReSegmented` component
+
+# 5.5.0 (2024-05-07)
+
+### 📄 Docs
+
+The addresses of the document site and full version preview site have been changed!
+
+- The latest document site address: https://pure-admin.cn
+- The latest full version preview site address: https://pure-admin.github.io/vue-pure-admin
+
+### ✔️ Refactor
+
+- Reconstruct the `layout` file naming convention to make it more readable
+
+### 🎫 Feat
+
+- Add new component `ReVxeTableBar` to be used with `vxe-table`
+
+### 🐞 Bug fixes
+
+- Fixed the issue where the background color is white when `FixedHeader` is set to `false` in dark mode
+- Fixed the problem of delayed closing of functional pop-up window `ReDialog` when clicking the cancel button
+
+### 🍏 Perf
+
+- Optimize account settings-avatar upload function
+
+# 5.4.0 (2024-04-18)
+
+### 🎫 Feat
+
+- Add global disabled attribute `disabled` to `ReSegmented` component
+- Added mind map examples
+- Functional pop-up box `ReDialog` adds `Popconfirm` bubble confirmation box
+- `pure-table` adds `headerSlot` custom header slot usage example
+- The route adds a configurable `fixedTag` attribute, which determines whether the current menu name is fixedly displayed on the tab and cannot be closed.
+- Added account setting function page and compatible with mobile terminals
+- Upgrade `eslint9` and related compatibility processing
+- Added global configuration `MaxTagsLevel` property to set the maximum number of open tabs
+- Full coverage of the internationalization of the core code of the framework (only the internationalization of the business code needs to be processed)
+
+### 🐞 Bug fixes
+
+- Fixed the issue where columns cannot be dragged normally when there are multiple `RePureTableBar` components on a page
+- Fixed the problem of icon display style after the third-level menu is folded to the left
+- Fixed the issue where the font color does not take effect after refreshing the account settings page
+- Fixed the issue where the `refreshToken` parameter is empty when calling the refresh `token` interface
+
+### 🍏 Perf
+
+- Optimize login interface
+- Optimize the logic of obtaining the top menu
+- Optimize request whitelist logic and be compatible with more scenarios
+- Simplified export and import usage in `store` files
+- Removed unnecessary `cloc` tool dependency package, which uses the `GPL` open source license and is controversial
+- Optimize the types of `post` and `get` utility functions in `src/utils/http` files
+
+# 5.3.0 (2024-03-28)
+
+### ✔️ Refactor
+
+- Reconstruct internationalized file naming conventions and demo pages with code location hints
+
+### 🎫 Feat
+
+- Add `MQTT` example
+- Added `docx` and `excel` file preview examples
+- The `ReSegmented` segmented controller has a new `size` attribute, which can set three sizes
+- The `RePureTableBar` component and `pure-admin-table` support international switching of table headers
+
+# 5.2.0 (2024-03-22)
+
+### ✔️ Refactor
+
+- Place the full screen button at the top to make it visible and easy to operate
+
+### 🎫 Feat
+
+- Added `v-ripple` command (water ripple effect)
+- Add global `Stretch` configuration to the content area to customize compact pages and easily find the required information
+- Added roaming guidance based on `ElTour`
+- Improve role management-menu permission function, novel interactive experience
+- Add system monitoring-online users
+- Add system monitoring-login log
+- Add system monitoring-operation log
+- Add system monitoring-system log
+- Add more more convenient `pure-admin-table` editable table examples (overall editing, single row editing, cell editing)
+- The `ReSegmented` component has a new `block` attribute to make it fit the width of the parent element
+- Add [vue-flow](https://vueflow.dev/) flow chart example
+- Add virtual table example
+- Added Gantt chart example
+- Add graphic verification code example
+- Add form examples, which can be generated through `JSON` format configuration (basic form, pop-up form, drawer form, step-by-step form, search form)
+- Add a folding and expanding menu function on the middle right side of the left menu
+
+### 🐞 Bug fixes
+
+- Fixed the scroll bar issue when clicking on the registration page under `windwos`
+- Fixed the problem of scroll bars appearing in the content area when switching pages under `windows`
+- Fixed the problem of status style disappearing in `pure-table` with status table under dark overall style
+- Fixed the problem of turning on the gray mode and dark overall style in the project configuration and refreshing the overall style of the page.
+
+### 🍏 Perf
+
+- All pages of system management and system monitoring are compatible with mobile terminals
+
+# 5.1.0 (2024-03-02)
+
+### ✔️ Refactor
+
+- Reconstruct the tab page `UI` to make it more convenient to click the close button
+
+### 🎫 Feat
+
+- Added multi-select card example
+- The menu supports all browser behaviors of right-clicking on the `a` tag (opening links in new tabs, new windows, dragging and dropping to open in new tabs, etc.)
+- Added search history and collection functions to menu search
+
+### 🐞 Bug fixes
+
+- Fixed the problem of scroll bars appearing on the login page under `windows` system
+
+### 🍏 Perf
+
+- Standardize the naming rules when registering local icons to better match the icon selector
+
+# 5.0.0 (2024-02-26)
+
+Totally `ESM` version
+
+### ✔️ Refactor
+
+- Upgrade `vite` to `v5` version, specify `node` version `>18.18.0`, `pnpm` version `>=8.6.10`
+- Use [vite-plugin-fake-server](https://www.npmjs.com/package/vite-plugin-fake-server) to replace [vite-plugin-mock](https://www.npmjs.com/package/vite-plugin-mock), use [@faker-js/faker](https://www.npmjs.com/package/@faker-js/faker) to replace [mockjs](https://www.npmjs.com/package/mockjs)
+- Rename `tailwind.config.js` to `tailwind.config.ts` and update its file to `esm` syntax
+- Updated `.prettierrc.js` file to `esm` syntax
+- Updated `postcss.config.js` file to `esm` syntax
+- Updated `commitlint.config.js` file to `esm` syntax
+- Use `eslint.config.js` to replace `.eslintrc.js` and follow `esm` syntax
+- Upgrade `stylelint` to `16` version and follow `esm` syntax
+- All `search` search icons are uniformly replaced with `@iconify-icons/ri/search-line` which is more commonly used and put into the global offline icon
+- Removed the filter effect of `iframe` in dark mode
+- Bring a more beautiful and refined homepage
+- Cleaner and neater pop-up panel on the right side of project configuration
+- Restructure the About page to make it more compact and key information more prominent
+
+### 🎫 Feat
+
+- Add system management-menu management
+- Improve system management-user management
+- Embedded `iframe` pages support setting `keepAlive` to maintain page status
+- Optimized navigation, the pop-up menu is adaptive and scrollable beyond the content area
+- Added file upload example
+- Added overall style adaptive operating system light, dark, and automatic theme functions
+- Add footer
+- Supports multi-tab pages to open systems that have already been logged in without logging in again and adds an internal login-free function (users can choose the number of days without login)
+- Terminal command line that brings a high-level feel
+- Add audio visualization function example
+- Added video frame interception - `WebAssembly` version, supports `MP4`, `MOV`, `AVI`, `WebM`, `MKV` and other mainstream formats
+- Added methods to block keyboard `F12`, browser default right-click menu, page element selection, and picture default draggability
+- The secondary package `localforage` supports setting expiration time and provides complete type prompts
+- Add `AnimateCss` selector component `ReAnimateSelector`
+- Added `ReText` component, supports automatic omission and display of `Tooltip` function, supports multi-line omission, high reusability
+- Add an art drawing board function, which can be used to draw some design idea architecture diagrams, for example
+- New component - optional button example
+- Add common button examples
+- Added color picker component example
+- Add date picker component example
+- Added datetime picker example
+- Added time selector example
+- Added statistics component example
+- Add label component example
+- Added accordion panel component example
+- Add progress bar component example
+- Upgrade `Swiper 11`
+- Add [vite-plugin-router-warn](https://www.npmjs.com/package/vite-plugin-router-warn) plug-in to eliminate unnecessary `vue-router` dynamic routing warning`No match found for location with path`
+
+### 🐞 Bug fixes
+
+- Fixed the problem that in `query` routing parameter passing mode, two `router` jumps will be triggered when clicking the tab page to switch operations.
+- Fixed an issue in card tab mode, when passing parameters through the `query` route, the `card-active` attribute still exists after leaving the active tab, resulting in the font color not changing when the mouse `hover`
+- Fixed the error in reading and parsing the same name in the `src/layout/components/appMain.vue` file
+- Fixed the issue where the height of the embedded page `frameView` does not adapt after hiding the tab page.
+- Fixed the problem of invalid routing `meta.transition.name` configuration
+- Fixed the problem that the right-click tab page panel cannot be closed when clicking on the `iframe` page and the right-click tab page panel is blocked when on the `iframe` page
+- Fixed the problem of missing parameters when clicking on breadcrumbs to jump to the page in routing `query` and `params` modes
+
+### 🍏 Perf
+
+- Optimize theme color
+- Tabs can be slid left or right according to the sliding force
+- The interface naming rules are unified into `kebab-case` string naming method
+- The `label` of `el-form` is consistent with the global `label` style
+- `VITE_PUBLIC_PATH` defaults to `/`, which is more friendly to `VITE_ROUTER_HISTORY` in `h5` mode
+- Optimize the `transformI18n` function and support unlimited nesting levels for internationalization (of course, the platform still recommends that the fewer nesting levels, the better)
+- When initializing the page, load `pinia` first and then `router`, which is compatible with more usage scenarios.
+- Optimize the judgment logic of request whitelist
+- The navigation style of the left menu has been adjusted to optimize the different display methods on PC and mobile when there is no logo.
+- Upgrade code specification style related libraries to the latest
+- Optimize login page `loading` judgment
+- Optimize the `IconSelect` icon selector component to improve user experience
+- Optimize the segmented controller component and add `v-model` support
+- Optimize the method of obtaining platform `logo`
+- Upgraded `@pureadmin/theme`, bringing more friendly `esm` support
+- Optimize some functions in the `build/info.ts` file to make it friendly and support `esm`
+- Optimize the column setting pop-up box of the `PureTableBar` component, set the maximum height, and scroll beyond it
+- Optimize the functional pop-up component `ReDialog` to retain the closing animation
+- Test the Chinese path and delete the `sass-loader` dependency
+- The packaged code is changed to the browser that natively supports [ES2015](https://caniuse.com/es6) by default
+- Remove the `stylelint` plug-in dependency that will be automatically installed
+- Enhance the way `useRenderIcon` uses local `svg`
+- Optimize the style of the expand and collapse buttons in the lower left corner of the left menu under the bright white theme color scheme
+- Optimize all `description` contents of `el-empty`. Add `el-empty` when the icon selector content is empty
+- The `tooltip` theme after the left menu is collapsed is consistent with the overall menu
+- Update `svgo` command to `svgo -f . -r` (compress all `SVG` files in the current directory)
+- Optimize project construction related functions
+- Enhanced `ReTypeit` component to support slots and all `typeit` configuration items
+- Optimize internationalization-related processing logic and add cache during initialization to avoid unnecessary performance consumption
+
 # 4.5.0 (2023-06-26)
 
-### ✔️ refactor
+### ✔️ Refactor
 
 - Refactor image crop `ReCropper` component, add more useful functions
 
@@ -113,7 +429,7 @@
 
 [View 4.0.0 version optimization details](https://github.com/pure-admin/vue-pure-admin/issues/428#issuecomment-1422191158)
 
-### ✔️ refactor
+### ✔️ Refactor
 
 - Use `css` pseudo-class `before` to refactor the activation background of the menu, similar to [ant.design-menu](https://ant.design/components/menu-cn#components-menu-demo-inline-collapsed)
 
@@ -184,10 +500,10 @@
 
 # 3.9.5 (2022-12-13)
 
-### ✔️ refactor
+### ✔️ Refactor
 
 - completely removed `lodash` and its related libraries
-  [Click here to see Why Removed? How to integrate it yourself? ](https://yiming_chang.gitee.io/pure-admin-doc/pages/FAQ/#%E5%B9%B3%E5%8F%B0%E5%9C%A8-v3-9-5-%E7 %89%88%E6%9C%AC%E5%AE%8C%E5%85%A8%E7%A7%BB%E9%99%A4%E4%BA%86-lodash-%E5%92%8C% E5%85%B6%E7%9B%B8%E5%85%B3%E5%BA%93-%E4%B8%BA%E4%BB%80%E4%B9%88%E7%A7%BB%E9 %99%A4-%E5%A6%82%E4%BD%95%E8%87%AA%E8%A1%8C%E9%9B%86%E6%88%90)
+  [Click here to see Why Removed? How to integrate it yourself? ](https://pure-admin.cn/pages/FAQ/#%E5%B9%B3%E5%8F%B0%E5%9C%A8-v3-9-5-%E7%89%88%E6%9C%AC%E5%AE%8C%E5%85%A8%E7%A7%BB%E9%99%A4%E4%BA%86-lodash-%E5%92%8C%E5%85%B6%E7%9B%B8%E5%85%B3%E5%BA%93-%E4%B8%BA%E4%BB%80%E4%B9%88%E7%A7%BB%E9%99%A4-%E5%A6%82%E4%BD%95%E8%87%AA%E8%A1%8C%E9%9B%86%E6%88%90)
 
 ### 🎫 Feat
 
@@ -204,10 +520,10 @@
 
 # 3.9.4 (2022-12-05)
 
-### ✔️ refactor
+### ✔️ Refactor
 
 - Completely removed `vxe-table`, after removal, the overall package size of the full version is reduced by `1.82MB`, and the initial startup time is basically the same as the lite version 🐮
-  [Click here to see Why Removed? How to integrate it yourself?](https://yiming_chang.gitee.io/pure-admin-doc/pages/FAQ/#%E5%B9%B3%E5%8F%B0%E5%9C%A8-v3-9-4-%E7%89%88%E6%9C%AC%E5%AE%8C%E5%85%A8%E7%A7%BB%E9%99%A4%E4%BA%86-vxe-table-%E4%B8%BA%E4%BB%80%E4%B9%88%E7%A7%BB%E9%99%A4-%E5%A6%82%E4%BD%95%E8%87%AA%E8%A1%8C%E9%9B%86%E6%88%90)
+  [Click here to see Why Removed? How to integrate it yourself?](https://pure-admin.cn/pages/FAQ/#%E5%B9%B3%E5%8F%B0%E5%9C%A8-v3-9-4-%E7%89%88%E6%9C%AC%E5%AE%8C%E5%85%A8%E7%A7%BB%E9%99%A4%E4%BA%86-vxe-table-%E4%B8%BA%E4%BB%80%E4%B9%88%E7%A7%BB%E9%99%A4-%E5%A6%82%E4%BD%95%E8%87%AA%E8%A1%8C%E9%9B%86%E6%88%90)
 
 ### 🎫 Feat
 
@@ -313,13 +629,13 @@
 
 # 3.7.0 (2022-11-21)
 
-### ✔️ refactor
+### ✔️ Refactor
 
 - Replace `driver.js` with `intro.js`
 
 ### 🎫 Feat
 
-- Add front-end single sign-on, test address https://yiming_chang.gitee.io/vue-pure-admin/#/pure-table/index?username=sso&roles=admin&accessToken=eyJhbGciOiJIUzUxMiJ9.admin
+- Add front-end single sign-on, test address https://pure-admin.github.io/vue-pure-admin/#/pure-table/index?username=sso&roles=admin&accessToken=eyJhbGciOiJIUzUxMiJ9.admin
 - Add more examples for [@pureadmin/table](https://github.com/pure-admin/pure-admin-table) and `element-plus` [table](https://element-plus.org /zh-CN/component/table.html) example remains the same
 - Rich watermark function page (supports customizing various colors, shadows, text, additional attributes, setting undeletable watermarks and setting watermarks for specified elements)
 - Optimize the menu, add `MenuArrowIconNoTransition` global configuration, configure it in `public/platform-config.json`, for the left menu mode, the menu expansion can be set `MenuArrowIconNoTransition: true` to solve
@@ -364,7 +680,7 @@
 
 # 3.6.2 (2022-10-27)
 
-### ✔️ refactor
+### ✔️ Refactor
 
 - Replace `/@/` alias with `@/` alias
 
@@ -392,7 +708,7 @@
 - Add typewriter component `demo`
 - Added `json` editor `demo`
 
-### ✔️ refactor
+### ✔️ Refactor
 
 - Refactor the permission module, adopt the most commonly used `RBAC` (Role-Based Access List): role-based permission control (User -> Role -> Permission), and update the page permission and button permission `demo` example, button Permissions support three operation modes (judging permissions in component mode, judging permissions in function mode, and judging permissions in instruction mode)
 
@@ -418,9 +734,9 @@
 - Add `element-plus` seamless scrolling `Table` page demo
 - Open `vscode` bracket pair guide
 
-### ✔️ refactor
+### ✔️ Refactor
 
-- Replace `unocss` with `tailwindcss`, add `tailwindcss` [documentation](https://yiming_chang.gitee.io/pure-admin-doc/pages/tailwindcss/)
+- Replace `unocss` with `tailwindcss`, add `tailwindcss` [documentation](https://pure-admin.cn/pages/tailwindcss/)
 
 ### 🐞 Bug fixes
 
@@ -468,7 +784,7 @@
 - Added export `excel` page demo
 - Added blank page demo without `Layout`
 
-### ✔️ refactor
+### ✔️ Refactor
 
 - Refactored the theme color to adapt to `element-plus` dark mode (also solved the problem that the same element `css` in `3.3.0` and earlier versions was overwritten many times, resulting in poor style debugging)
 - Refactored route reset function
@@ -504,7 +820,7 @@
 - Added pre-release packaging mode
 - Add [hooks] to close a tag (https://github.com/pure-admin/vue-pure-admin/commit/5e8723a031923e79f507e5a17151d3bd88a51523)
 
-### ✔️ refactor
+### ✔️ Refactor
 
 - Refactored the landing page to be more inclined to the actual business scenario
 - Use `unocss` instead of `windicss`, `unocss` has better performance in development environment, no memory leaks, and `api` is compatible with `windicss`
@@ -583,7 +899,7 @@
 - Added `WindiCSS` support
 - Add online environment remove console plugin `vite-plugin-remove-console`
 
-### ✔️ refactor
+### ✔️ Refactor
 
 - Replace `@element-plus/icons-vue` with `@iconify-icons/ep`
 

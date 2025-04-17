@@ -1,14 +1,21 @@
-import type { EventType, ArgsType, DialogProps, ButtonProps, DialogOptions } from "./type";
 import { ref } from "vue";
 import reDialog from "./index.vue";
 import { useTimeoutFn } from "@vueuse/core";
 import { withInstall } from "@pureadmin/utils";
+import type {
+  EventType,
+  ArgsType,
+  DialogProps,
+  ButtonProps,
+  DialogOptions
+} from "./type";
 
 const dialogStore = ref<Array<DialogOptions>>([]);
 
 /** 打开弹框 */
 const addDialog = (options: DialogOptions) => {
-  const open = () => dialogStore.value.push(Object.assign(options, { visible: true }));
+  const open = () =>
+    dialogStore.value.push(Object.assign(options, { visible: true }));
   if (options?.openDelay) {
     useTimeoutFn(() => {
       open();
@@ -20,8 +27,13 @@ const addDialog = (options: DialogOptions) => {
 
 /** 关闭弹框 */
 const closeDialog = (options: DialogOptions, index: number, args?: any) => {
-  dialogStore.value.splice(index, 1);
+  dialogStore.value[index].visible = false;
   options.closeCallBack && options.closeCallBack({ options, index, args });
+
+  const closeDelay = options?.closeDelay ?? 200;
+  useTimeoutFn(() => {
+    dialogStore.value.splice(index, 1);
+  }, closeDelay);
 };
 
 /**
@@ -41,10 +53,17 @@ const closeAllDialog = () => {
 
 /** 千万别忘了在下面这三处引入并注册下，放心注册，不使用`addDialog`调用就不会被挂载
  * https://github.com/pure-admin/vue-pure-admin/blob/main/src/App.vue#L4
- * https://github.com/pure-admin/vue-pure-admin/blob/main/src/App.vue#L13
- * https://github.com/pure-admin/vue-pure-admin/blob/main/src/App.vue#L20
+ * https://github.com/pure-admin/vue-pure-admin/blob/main/src/App.vue#L12
+ * https://github.com/pure-admin/vue-pure-admin/blob/main/src/App.vue#L22
  */
 const ReDialog = withInstall(reDialog);
 
 export type { EventType, ArgsType, DialogProps, ButtonProps, DialogOptions };
-export { ReDialog, dialogStore, addDialog, closeDialog, updateDialog, closeAllDialog };
+export {
+  ReDialog,
+  dialogStore,
+  addDialog,
+  closeDialog,
+  updateDialog,
+  closeAllDialog
+};
