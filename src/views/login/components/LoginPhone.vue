@@ -16,7 +16,7 @@ const { t } = useI18n();
 const loading = ref(false);
 const ruleForm = reactive({
   phone: "",
-  verifyCode: ""
+  verifyCode: "",
 });
 const ruleFormRef = ref<FormInstance>();
 const { isDisabled, text } = useVerifyCode();
@@ -29,7 +29,7 @@ const onLogin = async (formEl: FormInstance | undefined) => {
       // 模拟登录请求，需根据实际开发进行修改
       setTimeout(() => {
         message(transformI18n($t("login.pureLoginSuccess")), {
-          type: "success"
+          type: "success",
         });
         loading.value = false;
       }, 2000);
@@ -49,12 +49,7 @@ function onBack() {
   <el-form ref="ruleFormRef" :model="ruleForm" :rules="phoneRules" size="large">
     <Motion>
       <el-form-item prop="phone">
-        <el-input
-          v-model="ruleForm.phone"
-          clearable
-          :placeholder="t('login.purePhone')"
-          :prefix-icon="useRenderIcon(Iphone)"
-        />
+        <el-input v-model="ruleForm.phone" clearable :placeholder="t('login.purePhone')" :prefix-icon="useRenderIcon(Iphone)" />
       </el-form-item>
     </Motion>
 
@@ -67,16 +62,8 @@ function onBack() {
             :placeholder="t('login.pureSmsVerifyCode')"
             :prefix-icon="useRenderIcon(Keyhole)"
           />
-          <el-button
-            :disabled="isDisabled"
-            class="ml-2!"
-            @click="useVerifyCode().start(ruleFormRef, 'phone')"
-          >
-            {{
-              text.length > 0
-                ? text + t("login.pureInfo")
-                : t("login.pureGetVerifyCode")
-            }}
+          <el-button :disabled="isDisabled" class="ml-2!" @click="useVerifyCode().start(ruleFormRef, 'phone')">
+            {{ text.length > 0 ? text + t("login.pureInfo") : t("login.pureGetVerifyCode") }}
           </el-button>
         </div>
       </el-form-item>
@@ -84,13 +71,7 @@ function onBack() {
 
     <Motion :delay="150">
       <el-form-item>
-        <el-button
-          class="w-full"
-          size="default"
-          type="primary"
-          :loading="loading"
-          @click="onLogin(ruleFormRef)"
-        >
+        <el-button class="w-full" size="default" type="primary" :loading="loading" @click="onLogin(ruleFormRef)">
           {{ t("login.pureLogin") }}
         </el-button>
       </el-form-item>

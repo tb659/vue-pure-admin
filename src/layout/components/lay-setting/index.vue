@@ -1,14 +1,5 @@
 <script setup lang="ts">
-import {
-  ref,
-  unref,
-  watch,
-  reactive,
-  computed,
-  nextTick,
-  onUnmounted,
-  onBeforeMount
-} from "vue";
+import { ref, unref, watch, reactive, computed, nextTick, onUnmounted, onBeforeMount } from "vue";
 import { useI18n } from "vue-i18n";
 import { emitter } from "@/utils/mitt";
 import LayPanel from "../lay-panel/index.vue";
@@ -25,25 +16,99 @@ import RightArrow from "~icons/ri/arrow-right-s-line?width=20&height=20";
 import DayIcon from "@/assets/svg/day.svg?component";
 import DarkIcon from "@/assets/svg/dark.svg?component";
 import SystemIcon from "@/assets/svg/system.svg?component";
+import { useSettingStore } from "@/store/modules/settings";
 
 const { t } = useI18n();
 const { device } = useNav();
 const { isDark } = useDark();
-const { $storage } = useGlobal<GlobalPropertiesApi>();
 
 const mixRef = ref();
 const verticalRef = ref();
 const horizontalRef = ref();
 
-const {
-  dataTheme,
-  overallStyle,
-  layoutTheme,
-  themeColors,
-  toggleClass,
-  dataThemeChange,
-  setLayoutThemeColor
-} = useDataThemeChange();
+const { dataTheme, overallStyle, layoutTheme, themeColors, toggleClass, dataThemeChange, setLayoutThemeColor } =
+  useDataThemeChange();
+
+const pClass = computed(() => {
+  return ["mb-[12px]!", "font-bold", "text-sm", "dark:text-white"];
+});
+
+/** 主题选项 */
+const themeOptions = computed<Array<OptionsType>>(() => {
+  return [
+    {
+      label: t("panel.pureOverallStyleLight"),
+      icon: DayIcon,
+      theme: "light",
+      tip: t("panel.pureOverallStyleLightTip"),
+      iconAttrs: { fill: isDark.value ? "#fff" : "#000" },
+    },
+    {
+      label: t("panel.pureOverallStyleDark"),
+      icon: DarkIcon,
+      theme: "dark",
+      tip: t("panel.pureOverallStyleDarkTip"),
+      iconAttrs: { fill: isDark.value ? "#fff" : "#000" },
+    },
+    {
+      label: t("panel.pureOverallStyleSystem"),
+      icon: SystemIcon,
+      theme: "system",
+      tip: t("panel.pureOverallStyleSystemTip"),
+      iconAttrs: { fill: isDark.value ? "#fff" : "#000" },
+    },
+  ];
+});
+
+/** 主题色 激活选择项 */
+const getThemeColor = computed(() => {
+  return current => {
+    if (current === layoutTheme.value.theme && layoutTheme.value.theme !== "light") {
+      return "#fff";
+    } else if (current === layoutTheme.value.theme && layoutTheme.value.theme === "light") {
+      return "#1d2b45";
+    } else {
+      return "transparent";
+    }
+  };
+});
+
+/** 页宽 */
+const stretchTypeOptions = computed<Array<OptionsType>>(() => {
+  return [
+    {
+      label: t("panel.pureStretchFixed"),
+      tip: t("panel.pureStretchFixedTip"),
+      value: "fixed",
+    },
+    {
+      label: t("panel.pureStretchCustom"),
+      tip: t("panel.pureStretchCustomTip"),
+      value: "custom",
+    },
+  ];
+});
+
+/** 灵动模式选项 */
+const markOptions = computed<Array<OptionsType>>(() => {
+  return [
+    {
+      label: t("panel.pureTagsStyleSmart"),
+      tip: t("panel.pureTagsStyleSmartTip"),
+      value: "smart",
+    },
+    {
+      label: t("panel.pureTagsStyleCard"),
+      tip: t("panel.pureTagsStyleCardTip"),
+      value: "card",
+    },
+    {
+      label: t("panel.pureTagsStyleChrome"),
+      tip: t("panel.pureTagsStyleChromeTip"),
+      value: "chrome",
+    },
+  ];
+});
 
 /* body添加layout属性，作用于src/style/sidebar.scss */
 if (unref(layoutTheme)) {
@@ -54,21 +119,26 @@ if (unref(layoutTheme)) {
 }
 
 /** 默认灵动模式 */
-const markValue = ref($storage.configure?.showModel ?? "smart");
+const markValue = ref(useSettingStore().getConfigure?.showModel ?? "smart");
 
-const logoVal = ref($storage.configure?.showLogo ?? true);
+/** 默认侧边栏Logo */
+const logoVal = ref(useSettingStore().getConfigure?.showLogo ?? true);
 
+/** 默认设置 */
 const settings = reactive({
-  greyVal: $storage.configure.grey,
-  weakVal: $storage.configure.weak,
-  tabsVal: $storage.configure.hideTabs,
-  showLogo: $storage.configure.showLogo,
-  showModel: $storage.configure.showModel,
-  hideFooter: $storage.configure.hideFooter,
-  multiTagsCache: $storage.configure.multiTagsCache,
-  stretch: $storage.configure.stretch
+  stretch: useSettingStore().getConfigure.stretch,
+  showModel: useSettingStore().getConfigure.showModel,
+  showLogo: useSettingStore().getConfigure.showLogo,
+  fixedHeader: useSettingStore().getConfigure.fixedHeader,
+  hideSideBar: useSettingStore().getConfigure.hideSideBar,
+  multiTagsCache: useSettingStore().getConfigure.multiTagsCache,
+  tabsVal: useSettingStore().getConfigure.hideTabs,
+  hideFooter: useSettingStore().getConfigure.hideFooter,
+  greyVal: useSettingStore().getConfigure.grey,
+  weakVal: useSettingStore().getConfigure.weak,
 });
 
+/** 获取主题色样式 */
 const getThemeColorStyle = computed(() => {
   return color => {
     return { background: color };
@@ -82,24 +152,84 @@ const showThemeColors = computed(() => {
   };
 });
 
-function storageConfigureChange<T>(key: string, val: T): void {
-  const storageConfigure = $storage.configure;
-  storageConfigure[key] = val;
-  $storage.configure = storageConfigure;
+/** 设置导航模式 */
+function setLayoutModel(layout: Layout) {
+  layoutTheme.value.layout = layout;
+  window.document.body.setAttribute("layout", layout);
+  useSettingStore().setLayout({
+    key: "",
+    value: {
+      layout,
+      theme: layoutTheme.value.theme,
+      darkMode: useSettingStore().getLayout.darkMode,
+      sidebarStatus: useSettingStore().getLayout.sidebarStatus,
+      epThemeColor: useSettingStore().getLayout.epThemeColor,
+      themeColor: useSettingStore().getLayout.themeColor,
+      overallStyle: useSettingStore().getLayout.overallStyle,
+    },
+  });
+  useAppStoreHook().setLayout(layout);
 }
 
-/** 灰色模式设置 */
-const greyChange = (value): void => {
-  const htmlEl = document.querySelector("html");
-  toggleClass(settings.greyVal, "html-grey", htmlEl);
-  storageConfigureChange("grey", value);
+/** 设置页宽 */
+function setFalse(Doms): any {
+  Doms.forEach(v => {
+    toggleClass(false, "is-select", unref(v));
+  });
+}
+
+/** 设置页宽 */
+const setStretch = value => {
+  settings.stretch = value;
+  storageConfigureChange("stretch", value);
 };
 
-/** 色弱模式设置 */
-const weekChange = (value): void => {
-  const htmlEl = document.querySelector("html");
-  toggleClass(settings.weakVal, "html-weakness", htmlEl);
-  storageConfigureChange("weak", value);
+/** 设置页宽 */
+const stretchTypeChange = ({ option }) => {
+  const { value } = option;
+  value === "custom" ? setStretch(1440) : setStretch(false);
+};
+
+/** 灵动模式设置 */
+function onChange({ option }) {
+  const { value } = option;
+  markValue.value = value;
+  storageConfigureChange("showModel", value);
+  emitter.emit("tagViewsShowModel", value);
+}
+
+/** 存储配置 */
+function storageConfigureChange<T>(key: string, val: T): void {
+  useSettingStore().setConfigure({
+    key,
+    value: val,
+  });
+}
+
+/** 侧边栏Logo */
+function logoChange() {
+  unref(logoVal) ? storageConfigureChange("showLogo", true) : storageConfigureChange("showLogo", false);
+  emitter.emit("logoChange", unref(logoVal));
+}
+
+/** 固定头部设置 */
+const fixedHeaderChange = () => {
+  const fixedHeader = settings.fixedHeader;
+  storageConfigureChange("fixedHeader", fixedHeader);
+};
+
+/** 隐藏侧边栏设置 */
+const sidebarHideChange = () => {
+  const hideSideBar = settings.hideSideBar;
+  storageConfigureChange("hideSideBar", hideSideBar);
+  // emitter.emit("sidebarHideChange", hideSideBar);
+};
+
+/** 标签页持久化设置 */
+const multiTagsCacheChange = () => {
+  const multiTagsCache = settings.multiTagsCache;
+  storageConfigureChange("multiTagsCache", multiTagsCache);
+  useMultiTagsStoreHook().multiTagsCacheChange(multiTagsCache);
 };
 
 /** 隐藏标签页设置 */
@@ -115,146 +245,22 @@ const hideFooterChange = () => {
   storageConfigureChange("hideFooter", hideFooter);
 };
 
-/** 标签页持久化设置 */
-const multiTagsCacheChange = () => {
-  const multiTagsCache = settings.multiTagsCache;
-  storageConfigureChange("multiTagsCache", multiTagsCache);
-  useMultiTagsStoreHook().multiTagsCacheChange(multiTagsCache);
+/** 灰色模式设置 */
+const greyChange = (value): void => {
+  const htmlEl = document.querySelector("html");
+  toggleClass(settings.greyVal, "html-grey", htmlEl);
+  storageConfigureChange("grey", value);
 };
 
-function onChange({ option }) {
-  const { value } = option;
-  markValue.value = value;
-  storageConfigureChange("showModel", value);
-  emitter.emit("tagViewsShowModel", value);
-}
-
-/** 侧边栏Logo */
-function logoChange() {
-  unref(logoVal)
-    ? storageConfigureChange("showLogo", true)
-    : storageConfigureChange("showLogo", false);
-  emitter.emit("logoChange", unref(logoVal));
-}
-
-function setFalse(Doms): any {
-  Doms.forEach(v => {
-    toggleClass(false, "is-select", unref(v));
-  });
-}
-
-/** 页宽 */
-const stretchTypeOptions = computed<Array<OptionsType>>(() => {
-  return [
-    {
-      label: t("panel.pureStretchFixed"),
-      tip: t("panel.pureStretchFixedTip"),
-      value: "fixed"
-    },
-    {
-      label: t("panel.pureStretchCustom"),
-      tip: t("panel.pureStretchCustomTip"),
-      value: "custom"
-    }
-  ];
-});
-
-const setStretch = value => {
-  settings.stretch = value;
-  storageConfigureChange("stretch", value);
+/** 色弱模式设置 */
+const weekChange = (value): void => {
+  const htmlEl = document.querySelector("html");
+  toggleClass(settings.weakVal, "html-weakness", htmlEl);
+  storageConfigureChange("weak", value);
 };
 
-const stretchTypeChange = ({ option }) => {
-  const { value } = option;
-  value === "custom" ? setStretch(1440) : setStretch(false);
-};
-
-/** 主题色 激活选择项 */
-const getThemeColor = computed(() => {
-  return current => {
-    if (
-      current === layoutTheme.value.theme &&
-      layoutTheme.value.theme !== "light"
-    ) {
-      return "#fff";
-    } else if (
-      current === layoutTheme.value.theme &&
-      layoutTheme.value.theme === "light"
-    ) {
-      return "#1d2b45";
-    } else {
-      return "transparent";
-    }
-  };
-});
-
-const pClass = computed(() => {
-  return ["mb-[12px]!", "font-medium", "text-sm", "dark:text-white"];
-});
-
-const themeOptions = computed<Array<OptionsType>>(() => {
-  return [
-    {
-      label: t("panel.pureOverallStyleLight"),
-      icon: DayIcon,
-      theme: "light",
-      tip: t("panel.pureOverallStyleLightTip"),
-      iconAttrs: { fill: isDark.value ? "#fff" : "#000" }
-    },
-    {
-      label: t("panel.pureOverallStyleDark"),
-      icon: DarkIcon,
-      theme: "dark",
-      tip: t("panel.pureOverallStyleDarkTip"),
-      iconAttrs: { fill: isDark.value ? "#fff" : "#000" }
-    },
-    {
-      label: t("panel.pureOverallStyleSystem"),
-      icon: SystemIcon,
-      theme: "system",
-      tip: t("panel.pureOverallStyleSystemTip"),
-      iconAttrs: { fill: isDark.value ? "#fff" : "#000" }
-    }
-  ];
-});
-
-const markOptions = computed<Array<OptionsType>>(() => {
-  return [
-    {
-      label: t("panel.pureTagsStyleSmart"),
-      tip: t("panel.pureTagsStyleSmartTip"),
-      value: "smart"
-    },
-    {
-      label: t("panel.pureTagsStyleCard"),
-      tip: t("panel.pureTagsStyleCardTip"),
-      value: "card"
-    },
-    {
-      label: t("panel.pureTagsStyleChrome"),
-      tip: t("panel.pureTagsStyleChromeTip"),
-      value: "chrome"
-    }
-  ];
-});
-
-/** 设置导航模式 */
-function setLayoutModel(layout: string) {
-  layoutTheme.value.layout = layout;
-  window.document.body.setAttribute("layout", layout);
-  $storage.layout = {
-    layout,
-    theme: layoutTheme.value.theme,
-    darkMode: $storage.layout?.darkMode,
-    sidebarStatus: $storage.layout?.sidebarStatus,
-    epThemeColor: $storage.layout?.epThemeColor,
-    themeColor: $storage.layout?.themeColor,
-    overallStyle: $storage.layout?.overallStyle
-  };
-  useAppStoreHook().setLayout(layout);
-}
-
-watch($storage, ({ layout }) => {
+/** 监听布局变化 */
+watch(useSettingStore().getLayout, ({ layout }) => {
   switch (layout["layout"]) {
     case "vertical":
       toggleClass(true, "is-select", unref(verticalRef));
@@ -266,7 +272,7 @@ watch($storage, ({ layout }) => {
       debounce(setFalse([verticalRef]), 50);
       debounce(setFalse([mixRef]), 50);
       break;
-    case "mix":
+    case "topMix":
       toggleClass(true, "is-select", unref(mixRef));
       debounce(setFalse([verticalRef]), 50);
       debounce(setFalse([horizontalRef]), 50);
@@ -274,6 +280,7 @@ watch($storage, ({ layout }) => {
   }
 });
 
+/** 监听操作系统主题改变 */
 const mediaQueryList = window.matchMedia("(prefers-color-scheme: dark)");
 
 /** 根据操作系统主题设置平台整体风格 */
@@ -287,6 +294,7 @@ function updateTheme() {
   dataThemeChange(overallStyle.value);
 }
 
+/** 移除监听操作系统主题改变 */
 function removeMatchMedia() {
   mediaQueryList.removeEventListener("change", updateTheme);
 }
@@ -298,14 +306,12 @@ function watchSystemThemeChange() {
   mediaQueryList.addEventListener("change", updateTheme);
 }
 
+/** 初始化系统配置 */
 onBeforeMount(() => {
-  /* 初始化系统配置 */
   nextTick(() => {
     watchSystemThemeChange();
-    settings.greyVal &&
-      document.querySelector("html")?.classList.add("html-grey");
-    settings.weakVal &&
-      document.querySelector("html")?.classList.add("html-weakness");
+    settings.greyVal && document.querySelector("html")?.classList.add("html-grey");
+    settings.weakVal && document.querySelector("html")?.classList.add("html-weakness");
     settings.tabsVal && tagsChange();
     settings.hideFooter && hideFooterChange();
   });
@@ -325,9 +331,7 @@ onUnmounted(() => removeMatchMedia);
         :options="themeOptions"
         @change="
           theme => {
-            theme.index === 1 && theme.index !== 2
-              ? (dataTheme = true)
-              : (dataTheme = false);
+            theme.index === 1 && theme.index !== 2 ? (dataTheme = true) : (dataTheme = false);
             overallStyle = theme.option.theme;
             dataThemeChange(theme.option.theme);
             theme.index === 2 && watchSystemThemeChange();
@@ -344,11 +348,7 @@ onUnmounted(() => removeMatchMedia);
           :style="getThemeColorStyle(item.color)"
           @click="setLayoutThemeColor(item.themeColor)"
         >
-          <el-icon
-            style="margin: 0.1em 0.1em 0 0"
-            :size="17"
-            :color="getThemeColor(item.themeColor)"
-          >
+          <el-icon style="margin: 0.1em 0.1em 0 0" :size="17" :color="getThemeColor(item.themeColor)">
             <IconifyIconOffline :icon="Check" />
           </el-icon>
         </li>
@@ -360,7 +360,7 @@ onUnmounted(() => removeMatchMedia);
           ref="verticalRef"
           v-tippy="{
             content: t('panel.pureVerticalTip'),
-            zIndex: 41000
+            zIndex: 41000,
           }"
           :class="layoutTheme.layout === 'vertical' ? 'is-select' : ''"
           @click="setLayoutModel('vertical')"
@@ -373,7 +373,7 @@ onUnmounted(() => removeMatchMedia);
           ref="horizontalRef"
           v-tippy="{
             content: t('panel.pureHorizontalTip'),
-            zIndex: 41000
+            zIndex: 41000,
           }"
           :class="layoutTheme.layout === 'horizontal' ? 'is-select' : ''"
           @click="setLayoutModel('horizontal')"
@@ -386,10 +386,10 @@ onUnmounted(() => removeMatchMedia);
           ref="mixRef"
           v-tippy="{
             content: t('panel.pureMixTip'),
-            zIndex: 41000
+            zIndex: 41000,
           }"
-          :class="layoutTheme.layout === 'mix' ? 'is-select' : ''"
-          @click="setLayoutModel('mix')"
+          :class="layoutTheme.layout === 'topMix' ? 'is-select' : ''"
+          @click="setLayoutModel('topMix')"
         >
           <div />
           <div />
@@ -424,16 +424,9 @@ onUnmounted(() => removeMatchMedia);
             :class="[settings.stretch ? 'w-[24%]' : 'w-[50%]']"
             style="color: var(--el-color-primary)"
           >
-            <IconifyIconOffline
-              :icon="settings.stretch ? RightArrow : LeftArrow"
-            />
-            <div
-              class="grow border-0 border-b border-dashed"
-              style="border-color: var(--el-color-primary)"
-            />
-            <IconifyIconOffline
-              :icon="settings.stretch ? LeftArrow : RightArrow"
-            />
+            <IconifyIconOffline :icon="settings.stretch ? RightArrow : LeftArrow" />
+            <div class="grow border-0 border-b border-dashed" style="border-color: var(--el-color-primary)" />
+            <IconifyIconOffline :icon="settings.stretch ? LeftArrow : RightArrow" />
           </div>
         </button>
       </span>
@@ -447,28 +440,63 @@ onUnmounted(() => removeMatchMedia);
         @change="onChange"
       />
 
-      <p class="mt-5! font-medium text-sm dark:text-white">
+      <p class="mt-5! font-bold text-sm dark:text-white">
         {{ t("panel.pureInterfaceDisplay") }}
       </p>
       <ul class="setting">
         <li>
-          <span class="dark:text-white">{{ t("panel.pureGreyModel") }}</span>
+          <span class="dark:text-white">{{ t("panel.pureSidebarLogo") }}</span>
           <el-switch
-            v-model="settings.greyVal"
+            v-model="logoVal"
             inline-prompt
+            :active-value="true"
+            :inactive-value="false"
             :active-text="t('buttons.pureOpenText')"
             :inactive-text="t('buttons.pureCloseText')"
-            @change="greyChange"
+            @change="logoChange"
           />
         </li>
         <li>
-          <span class="dark:text-white">{{ t("panel.pureWeakModel") }}</span>
+          <span class="dark:text-white">
+            {{ t("panel.pureFixedHeader") }}
+          </span>
           <el-switch
-            v-model="settings.weakVal"
+            v-model="settings.fixedHeader"
+            inline-prompt
+            :active-value="true"
+            :inactive-value="false"
+            inactive-color="#a6a6a6"
+            :active-text="t('buttons.pureOpenText')"
+            :inactive-text="t('buttons.pureCloseText')"
+            @change="fixedHeaderChange"
+          />
+        </li>
+        <li>
+          <span class="dark:text-white">
+            {{ t("panel.pureHideSideBar") }}
+          </span>
+          <el-switch
+            v-model="settings.hideSideBar"
+            inline-prompt
+            :active-value="true"
+            :inactive-value="false"
+            inactive-color="#a6a6a6"
+            :active-text="t('buttons.pureOpenText')"
+            :inactive-text="t('buttons.pureCloseText')"
+            :disabled="layoutTheme.layout === 'horizontal' || layoutTheme.layout === 'topMix'"
+            @change="sidebarHideChange"
+          />
+        </li>
+        <li>
+          <span class="dark:text-white">
+            {{ t("panel.pureMultiTagsCache") }}
+          </span>
+          <el-switch
+            v-model="settings.multiTagsCache"
             inline-prompt
             :active-text="t('buttons.pureOpenText')"
             :inactive-text="t('buttons.pureCloseText')"
-            @change="weekChange"
+            @change="multiTagsCacheChange"
           />
         </li>
         <li>
@@ -492,27 +520,23 @@ onUnmounted(() => removeMatchMedia);
           />
         </li>
         <li>
-          <span class="dark:text-white">Logo</span>
+          <span class="dark:text-white">{{ t("panel.pureGreyModel") }}</span>
           <el-switch
-            v-model="logoVal"
+            v-model="settings.greyVal"
             inline-prompt
-            :active-value="true"
-            :inactive-value="false"
             :active-text="t('buttons.pureOpenText')"
             :inactive-text="t('buttons.pureCloseText')"
-            @change="logoChange"
+            @change="greyChange"
           />
         </li>
         <li>
-          <span class="dark:text-white">
-            {{ t("panel.pureMultiTagsCache") }}
-          </span>
+          <span class="dark:text-white">{{ t("panel.pureWeakModel") }}</span>
           <el-switch
-            v-model="settings.multiTagsCache"
+            v-model="settings.weakVal"
             inline-prompt
             :active-text="t('buttons.pureOpenText')"
             :inactive-text="t('buttons.pureCloseText')"
-            @change="multiTagsCacheChange"
+            @change="weekChange"
           />
         </li>
       </ul>

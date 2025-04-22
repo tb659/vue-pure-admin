@@ -35,14 +35,11 @@ interface MessageParams {
 /**
  * `Message` 消息提示函数
  */
-const message = (
-  message: string | VNode | (() => VNode),
-  params?: MessageParams
-): MessageHandler => {
+const message = (message: string | VNode | (() => VNode), params?: MessageParams): MessageHandler => {
   if (!params) {
     return ElMessage({
       message,
-      customClass: "pure-message"
+      customClass: "pure-message",
     });
   } else {
     const {
@@ -56,7 +53,7 @@ const message = (
       offset = 20,
       appendTo = document.body,
       grouping = false,
-      onClose
+      onClose,
     } = params;
 
     return ElMessage({
@@ -72,7 +69,7 @@ const message = (
       grouping,
       // 全局搜 pure-message 即可知道该类的样式位置
       customClass: customClass === "antd" ? "pure-message" : "",
-      onClose: () => (isFunction(onClose) ? onClose() : null)
+      onClose: () => (isFunction(onClose) ? onClose() : null),
     });
   }
 };

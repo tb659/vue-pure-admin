@@ -4,10 +4,12 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "NODE_OPTIONS=--max-old-space-size=4096 vite",
+    "i": "pnpm install",
     "serve": "pnpm dev",
-    "build": "rimraf dist && NODE_OPTIONS=--max-old-space-size=8192 vite build && generate-version-file",
-    "build:staging": "rimraf dist && vite build --mode staging",
+    "dev": "NODE_OPTIONS=--max-old-space-size=4096 vite",
+    "build": "rimraf dist-pro && NODE_OPTIONS=--max-old-space-size=8192 vite build && generate-version-file",
+    "build:test": "rimraf dist-test && vite build --mode test",
+    "build:staging": "rimraf dist-dist && vite build --mode staging",
     "report": "rimraf dist && vite build",
     "preview": "vite preview",
     "preview:build": "pnpm build && vite preview",
@@ -18,6 +20,9 @@
     "lint:prettier": "prettier --write  \"src/**/*.{js,ts,json,tsx,css,scss,vue,html,md}\"",
     "lint:stylelint": "stylelint --cache --fix \"**/*.{html,vue,css,scss}\" --cache-location node_modules/.cache/stylelint/",
     "lint": "pnpm lint:eslint && pnpm lint:prettier && pnpm lint:stylelint",
+    "lint:lint-staged": "lint-staged -c ./.husky/lintstagedrc.js",
+    "commit": "pnpm lint && git pull && git add -A && git-cz && git push",
+    "commit:skip-lint": "git pull && git add -A && git-cz && git push",
     "prepare": "husky",
     "preinstall": "npx only-allow pnpm"
   },
@@ -32,20 +37,7 @@
     "vite",
     "esm"
   ],
-  "homepage": "https://github.com/pure-admin/vue-pure-admin",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/pure-admin/vue-pure-admin.git"
-  },
-  "bugs": {
-    "url": "https://github.com/pure-admin/vue-pure-admin/issues"
-  },
   "license": "MIT",
-  "author": {
-    "name": "xiaoxian521",
-    "email": "pureadmin@163.com",
-    "url": "https://github.com/xiaoxian521"
-  },
   "dependencies": {
     "@amap/amap-jsapi-loader": "^1.0.1",
     "@howdyjs/mouse-menu": "^2.1.6",
@@ -78,12 +70,14 @@
     "js-cookie": "^3.0.5",
     "jsbarcode": "^3.11.6",
     "localforage": "^1.10.0",
+    "lodash-es": "^4.17.21",
     "mint-filter": "^4.0.3",
     "mitt": "^3.0.1",
     "mqtt": "4.3.7",
     "nprogress": "^0.2.0",
     "path-browserify": "^1.0.1",
     "pinia": "^3.0.1",
+    "pinia-plugin-persistedstate": "^4.2.0",
     "pinyin-pro": "^3.26.0",
     "plus-pro-components": "^0.1.22",
     "qrcode": "^1.5.4",
@@ -138,6 +132,7 @@
     "boxen": "^8.0.1",
     "code-inspector-plugin": "^0.20.7",
     "cssnano": "^7.0.6",
+    "cz-git": "^1.11.0",
     "dagre": "^0.8.5",
     "eslint": "^9.24.0",
     "eslint-config-prettier": "^10.1.1",
@@ -201,5 +196,10 @@
       "typeit",
       "vue-demi"
     ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-git"
+    }
   }
 }

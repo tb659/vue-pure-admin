@@ -1,4 +1,4 @@
-import { hasPerms } from "@/utils/auth";
+import { hasPerms } from "@/router/utils";
 import type { Directive, DirectiveBinding } from "vue";
 
 export const perms: Directive = {
@@ -7,9 +7,7 @@ export const perms: Directive = {
     if (value) {
       !hasPerms(value) && el.parentNode?.removeChild(el);
     } else {
-      throw new Error(
-        "[Directive: perms]: need perms! Like v-perms=\"['btn.add','btn.edit']\""
-      );
+      throw new Error("[Directive: perms]: need perms! Like v-perms=\"['btn.add','btn.edit']\"");
     }
-  }
+  },
 };

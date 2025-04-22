@@ -1,4 +1,4 @@
-import { http } from "@/utils/http";
+import { http } from "@/utils/http/api-base";
 
 export type UserResult = {
   success: boolean;
@@ -36,17 +36,17 @@ export type RefreshTokenResult = {
 
 export type UserInfo = {
   /** 头像 */
-  avatar: string;
+  avatar?: string;
   /** 用户名 */
-  username: string;
+  username?: string;
   /** 昵称 */
-  nickname: string;
+  nickname?: string;
   /** 邮箱 */
-  email: string;
+  email?: string;
   /** 联系电话 */
-  phone: string;
+  phone?: string;
   /** 简介 */
-  description: string;
+  description?: string;
 };
 
 export type UserInfoResult = {

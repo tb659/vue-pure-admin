@@ -29,10 +29,7 @@ html.dark {
   --vxe-table-row-striped-background-color: #1e1e1e;
   --vxe-table-border-color: #303030;
   --vxe-table-row-hover-background-color: #1e1e1e;
-  --vxe-table-row-hover-striped-background-color: color.adjust(
-    #1e1e1e,
-    $lightness: -10%
-  );
+  --vxe-table-row-hover-striped-background-color: color.adjust(#1e1e1e, $lightness: -10%);
   --vxe-table-row-current-background-color: fade(#1e1e1e, 20%);
   --vxe-table-row-hover-current-background-color: fade(#1e1e1e, 20%);
   --vxe-table-column-hover-background-color: fade(#1e1e1e, 20%);
@@ -40,24 +37,15 @@ html.dark {
   --vxe-table-row-checkbox-checked-background-color: fade(#1e1e1e, 15%);
   --vxe-table-row-hover-checkbox-checked-background-color: fade(#1e1e1e, 20%);
   --vxe-table-menu-background-color: color.adjust(#303133, $lightness: 10%);
-  --vxe-table-filter-panel-background-color: color.adjust(
-    #151515,
-    $lightness: 5%
-  );
+  --vxe-table-filter-panel-background-color: color.adjust(#151515, $lightness: 5%);
   --vxe-grid-maximize-background-color: #151515;
   --vxe-pager-perfect-background-color: #151515;
-  --vxe-pager-perfect-button-background-color: color.adjust(
-    #151515,
-    $lightness: 15%
-  );
+  --vxe-pager-perfect-button-background-color: color.adjust(#151515, $lightness: 15%);
   --vxe-input-background-color: #151515;
   --vxe-input-border-color: #303030;
   --vxe-select-panel-background-color: #151515;
   --vxe-table-popup-border-color: #303030;
-  --vxe-select-option-hover-background-color: color.adjust(
-    #1e1e1e,
-    $lightness: 15%
-  );
+  --vxe-select-option-hover-background-color: color.adjust(#1e1e1e, $lightness: 15%);
   --vxe-pulldown-panel-background-color: #151515;
   --vxe-table-fixed-left-scrolling-box-shadow: 8px 0px 10px -5px #43464c;
   --vxe-table-fixed-right-scrolling-box-shadow: -8px 0px 10px -5px #43464c;
@@ -71,10 +59,7 @@ html.dark {
   --vxe-input-disabled-background-color: color.adjust(#1e1e1e, $lightness: 25%);
   --vxe-checkbox-icon-background-color: color.adjust(#1e1e1e, $lightness: 15%);
   --vxe-checkbox-checked-icon-border-color: #303030;
-  --vxe-checkbox-indeterminate-icon-background-color: color.adjust(
-    #1e1e1e,
-    $lightness: 15%
-  );
+  --vxe-checkbox-indeterminate-icon-background-color: color.adjust(#1e1e1e, $lightness: 15%);
 
   .navbar,
   .tags-view,

@@ -1,14 +1,15 @@
 import { ref } from "vue";
 import { getConfig } from "@/config";
 import { useLayout } from "./useLayout";
-import { removeToken } from "@/utils/auth";
+import { removeToken } from "@/utils/cookie";
 import { routerArrays } from "@/layout/types";
 import { router, resetRouter } from "@/router";
 import type { themeColorsType } from "../types";
 import { useAppStoreHook } from "@/store/modules/app";
+import { useSettingStore } from "@/store/modules/settings";
 import { useEpThemeStoreHook } from "@/store/modules/epTheme";
+import { darken, lighten, storageLocal } from "@pureadmin/utils";
 import { useMultiTagsStoreHook } from "@/store/modules/multiTags";
-import { darken, lighten, useGlobal, storageLocal } from "@pureadmin/utils";
 
 export function useDataThemeChange() {
   const { layoutTheme, layout } = useLayout();
@@ -28,12 +29,11 @@ export function useDataThemeChange() {
     /* 绿宝石 */
     { color: "#13c2c2", themeColor: "mingQing" },
     /* 酸橙绿 */
-    { color: "#52c41a", themeColor: "auroraGreen" }
+    { color: "#52c41a", themeColor: "auroraGreen" },
   ]);
 
-  const { $storage } = useGlobal<GlobalPropertiesApi>();
-  const dataTheme = ref<boolean>($storage?.layout?.darkMode);
-  const overallStyle = ref<string>($storage?.layout?.overallStyle);
+  const dataTheme = ref<boolean>(useSettingStore().getLayout.darkMode);
+  const overallStyle = ref<string>(useSettingStore().getLayout.overallStyle);
   const body = document.documentElement as HTMLElement;
 
   function toggleClass(flag: boolean, clsName: string, target?: HTMLElement) {
@@ -44,23 +44,23 @@ export function useDataThemeChange() {
   }
 
   /** 设置导航主题色 */
-  function setLayoutThemeColor(
-    theme = getConfig().Theme ?? "light",
-    isClick = true
-  ) {
+  function setLayoutThemeColor(theme = getConfig().Theme ?? "light", isClick = true) {
     layoutTheme.value.theme = theme;
     document.documentElement.setAttribute("data-theme", theme);
     // 如果非isClick，保留之前的themeColor
-    const storageThemeColor = $storage.layout.themeColor;
-    $storage.layout = {
-      layout: layout.value,
-      theme,
-      darkMode: dataTheme.value,
-      sidebarStatus: $storage.layout?.sidebarStatus,
-      epThemeColor: $storage.layout?.epThemeColor,
-      themeColor: isClick ? theme : storageThemeColor,
-      overallStyle: overallStyle.value
-    };
+    const storageThemeColor = useSettingStore().getLayout.themeColor;
+    useSettingStore().setLayout({
+      key: "",
+      value: {
+        layout: layout.value,
+        theme,
+        darkMode: dataTheme.value,
+        sidebarStatus: useSettingStore().getLayout.sidebarStatus,
+        epThemeColor: useSettingStore().getLayout.epThemeColor,
+        themeColor: isClick ? theme : storageThemeColor,
+        overallStyle: overallStyle.value,
+      },
+    });
 
     if (theme === "default" || theme === "light") {
       setEpThemeColor(getConfig().EpThemeColor);
@@ -73,7 +73,7 @@ export function useDataThemeChange() {
   function setPropertyPrimary(mode: string, i: number, color: string) {
     document.documentElement.style.setProperty(
       `--el-color-primary-${mode}-${i}`,
-      dataTheme.value ? darken(color, i / 10) : lighten(color, i / 10)
+      dataTheme.value ? darken(color, i / 10) : lighten(color, i / 10),
     );
   }
 
@@ -101,7 +101,7 @@ export function useDataThemeChange() {
     if (dataTheme.value) {
       document.documentElement.classList.add("dark");
     } else {
-      if ($storage.layout.themeColor === "light") {
+      if (useSettingStore().getLayout.themeColor === "light") {
         setLayoutThemeColor("light", false);
       }
       document.documentElement.classList.remove("dark");
@@ -133,6 +133,6 @@ export function useDataThemeChange() {
     toggleClass,
     dataThemeChange,
     setEpThemeColor,
-    setLayoutThemeColor
+    setLayoutThemeColor,
   };
 }

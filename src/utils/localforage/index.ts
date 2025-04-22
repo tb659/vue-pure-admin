@@ -8,7 +8,7 @@ class StorageProxy implements ProxyStorage {
     this.storage.config({
       // 首选IndexedDB作为第一驱动，不支持IndexedDB会自动降级到localStorage（WebSQL被弃用，详情看https://developer.chrome.com/blog/deprecating-web-sql）
       driver: [this.storage.INDEXEDDB, this.storage.LOCALSTORAGE],
-      name: "pure-admin"
+      name: "pure-admin",
     });
   }
 
@@ -23,7 +23,7 @@ class StorageProxy implements ProxyStorage {
       this.storage
         .setItem(k, {
           data: v,
-          expires: m ? new Date().getTime() + m * 60 * 1000 : 0
+          expires: m ? new Date().getTime() + m * 60 * 1000 : 0,
         })
         .then(value => {
           resolve(value.data);
@@ -43,9 +43,7 @@ class StorageProxy implements ProxyStorage {
       this.storage
         .getItem(k)
         .then((value: ExpiresData<T>) => {
-          value && (value.expires > new Date().getTime() || value.expires === 0)
-            ? resolve(value.data)
-            : resolve(null);
+          value && (value.expires > new Date().getTime() || value.expires === 0) ? resolve(value.data) : resolve(null);
         })
         .catch(err => {
           reject(err);

@@ -2,7 +2,7 @@
   "Version": "6.0.0",
   "Title": "PureAdmin",
   "FixedHeader": true,
-  "HiddenSideBar": false,
+  "HideSideBar": false,
   "MultiTagsCache": false,
   "KeepAlive": true,
   "Locale": "zh",
@@ -22,7 +22,7 @@
   "MenuArrowIconNoTransition": false,
   "CachingAsyncRoutes": false,
   "TooltipEffect": "light",
-  "ResponsiveStorageNameSpace": "responsive-",
+  "ResponsiveStorageNameSpace": "mt-gtrb-",
   "MenuSearchHistory": 6,
   "MapConfigure": {
     "amapKey": "adc139d56406f3844c8f1cf1c6b65c41",

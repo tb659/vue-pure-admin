@@ -1,0 +1,123 @@
+.mt-form-container {
+  &.el-form--label-left,
+  &.el-form--label-right {
+    // 和按钮保持距离
+    margin-bottom: 10px;
+
+    // 总的表单上面和左面
+    border-top: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+
+    // 清除边框
+    .el-input__wrapper,
+    .el-select__wrapper,
+    .el-textarea__inner {
+      box-shadow: none !important;
+    }
+
+    .el-row {
+      margin-right: 0 !important;
+      margin-left: 0 !important;
+
+      .el-col {
+        padding-right: 0 !important;
+        padding-left: 0 !important;
+
+        .el-form-item {
+          &.el-form-item--label-left,
+          &.el-form-item--label-right {
+            // label 和 value 高度保持一致
+            height: 100%;
+
+            // 取消默认下边距
+            margin-bottom: 0 !important;
+
+            // label 和 value 加边框
+            .el-form-item__content,
+            &.el-form-item--default .el-form-item__label {
+              border-right: 1px solid #ccc;
+              border-bottom: 1px solid #ccc;
+            }
+
+            // label 加了label-width宽度的
+            &.el-form-item--default .el-form-item__label,
+            // label
+            .el-form-item__label-wrap {
+              // 居中
+              align-items: center;
+              justify-content: center;
+
+              // 默认宽度
+              width: 130px;
+
+              // 高度撑满
+              height: 100%;
+              padding: 0 !important;
+
+              // 取消左边距
+              margin-left: 0 !important;
+
+              // 底色
+              background: #f6f6f6;
+
+              .el-form-item__label {
+                width: 100% !important;
+                padding: 0 !important;
+              }
+            }
+
+            // value
+            .el-form-item__content {
+              // height: 100%;
+
+              // 表单内容底色
+              background-color: #fff;
+
+              // 单选多选默认左边间距
+              .el-radio-group,
+              .el-checkbox-group {
+                padding-left: 10px;
+              }
+
+              // 数字输入
+              .el-input-number {
+                height: 100%;
+
+                .el-input-number__increase,
+                .el-input-number__decrease {
+                  height: 50%;
+
+                  .el-icon {
+                    font-size: 20px;
+                  }
+                }
+              }
+
+              .el-form-item__error {
+                position: static;
+                margin-left: 10px;
+              }
+            }
+
+            // 没有label的
+            &.no-label {
+              border: none;
+
+              .el-form-item__label-wrap {
+                width: 0;
+              }
+
+              .el-form-item__content {
+                border-right: none;
+              }
+
+              &.el-form-item--label-right {
+                border-right: 1px solid #ccc;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

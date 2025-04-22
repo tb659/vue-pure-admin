@@ -16,22 +16,23 @@ import en from "element-plus/es/locale/lang/en";
 import zhCn from "element-plus/es/locale/lang/zh-cn";
 import plusEn from "plus-pro-components/es/locale/lang/en";
 import plusZhCn from "plus-pro-components/es/locale/lang/zh-cn";
+import { useSettingStore } from "@/store/modules/settings";
+import { storageLocal } from "@pureadmin/utils";
 
 export default defineComponent({
   name: "app",
   components: {
     [ElConfigProvider.name]: ElConfigProvider,
     ReDialog,
-    ReDrawer
+    ReDrawer,
   },
   computed: {
     currentLocale() {
-      return this.$storage.locale?.locale === "zh"
-        ? { ...zhCn, ...plusZhCn }
-        : { ...en, ...plusEn };
-    }
+      return useSettingStore().getLocale.locale === "zh" ? { ...zhCn, ...plusZhCn } : { ...en, ...plusEn };
+    },
   },
   beforeCreate() {
+    console.log(storageLocal);
     const { version, name: title } = __APP_INFO__.pkg;
     const { VITE_PUBLIC_PATH, MODE } = import.meta.env;
     // https://github.com/guMcrey/version-rocket/blob/main/README.zh-CN.md#api
@@ -43,16 +44,16 @@ export default defineComponent({
           // 5分钟检测一次版本
           pollingTime: 300000,
           localPackageVersion: version,
-          originVersionFileUrl: `${location.origin}${VITE_PUBLIC_PATH}version.json`
+          originVersionFileUrl: `${location.origin}${VITE_PUBLIC_PATH}version.json`,
         },
         // options
         {
           title,
           description: "检测到新版本",
-          buttonText: "立即更新"
-        }
+          buttonText: "立即更新",
+        },
       );
     }
-  }
+  },
 });
 </script>

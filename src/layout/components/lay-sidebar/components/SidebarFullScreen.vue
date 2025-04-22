@@ -18,8 +18,8 @@ watch(
     screenIcon.value = full ? ExitFullscreen : Fullscreen;
   },
   {
-    immediate: true
-  }
+    immediate: true,
+  },
 );
 </script>
 

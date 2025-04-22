@@ -2,20 +2,13 @@ import { ref } from "vue";
 import reDrawer from "./index.vue";
 import { useTimeoutFn } from "@vueuse/core";
 import { withInstall } from "@pureadmin/utils";
-import type {
-  EventType,
-  ArgsType,
-  DrawerProps,
-  DrawerOptions,
-  ButtonProps
-} from "./type";
+import type { EventType, ArgsType, DrawerProps, DrawerOptions, ButtonProps } from "./type";
 
 const drawerStore = ref<Array<DrawerOptions>>([]);
 
 /** 打开抽屉 */
 const addDrawer = (options: DrawerOptions) => {
-  const open = () =>
-    drawerStore.value.push(Object.assign(options, { visible: true }));
+  const open = () => drawerStore.value.push(Object.assign(options, { visible: true }));
   if (options?.openDelay) {
     useTimeoutFn(() => {
       open();
@@ -54,11 +47,4 @@ const closeAllDrawer = () => {
 const ReDrawer = withInstall(reDrawer);
 
 export type { EventType, ArgsType, DrawerOptions, DrawerProps, ButtonProps };
-export {
-  ReDrawer,
-  drawerStore,
-  addDrawer,
-  closeDrawer,
-  updateDrawer,
-  closeAllDrawer
-};
+export { ReDrawer, drawerStore, addDrawer, closeDrawer, updateDrawer, closeAllDrawer };

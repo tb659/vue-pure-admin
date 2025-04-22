@@ -8,6 +8,11 @@ declare module "vue" {
     FontIcon: (typeof import("../src/components/ReIcon"))["FontIcon"];
     Auth: (typeof import("../src/components/ReAuth"))["Auth"];
     Perms: (typeof import("../src/components/RePerms"))["Perms"];
+    MtForm: (typeof import("../src/components/ReMtForm"))["MtForm"];
+    MtSearch: (typeof import("../src/components/ReMtSearch"))["MtSearch"];
+    MtTable: (typeof import("../src/components/ReMtTable"))["MtTable"];
+    MtTableBar: (typeof import("../src/components/ReMtTableBar"))["MtTableBar"];
+    MtUpload: (typeof import("../src/components/ReMtUpload"))["MtUpload"];
   }
 }
 

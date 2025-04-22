@@ -22,7 +22,7 @@ const ruleForm = reactive({
   phone: "",
   verifyCode: "",
   password: "",
-  repeatPassword: ""
+  repeatPassword: "",
 });
 const ruleFormRef = ref<FormInstance>();
 const { isDisabled, text } = useVerifyCode();
@@ -32,15 +32,13 @@ const repeatPasswordRule = [
       if (value === "") {
         callback(new Error(transformI18n($t("login.purePassWordSureReg"))));
       } else if (ruleForm.password !== value) {
-        callback(
-          new Error(transformI18n($t("login.purePassWordDifferentReg")))
-        );
+        callback(new Error(transformI18n($t("login.purePassWordDifferentReg"))));
       } else {
         callback();
       }
     },
-    trigger: "blur"
-  }
+    trigger: "blur",
+  },
 ];
 
 const onUpdate = async (formEl: FormInstance | undefined) => {
@@ -52,14 +50,14 @@ const onUpdate = async (formEl: FormInstance | undefined) => {
         // 模拟请求，需根据实际开发进行修改
         setTimeout(() => {
           message(transformI18n($t("login.pureRegisterSuccess")), {
-            type: "success"
+            type: "success",
           });
           loading.value = false;
         }, 2000);
       } else {
         loading.value = false;
         message(transformI18n($t("login.pureTickPrivacy")), {
-          type: "warning"
+          type: "warning",
         });
       }
     } else {
@@ -75,20 +73,15 @@ function onBack() {
 </script>
 
 <template>
-  <el-form
-    ref="ruleFormRef"
-    :model="ruleForm"
-    :rules="updateRules"
-    size="large"
-  >
+  <el-form ref="ruleFormRef" :model="ruleForm" :rules="updateRules" size="large">
     <Motion>
       <el-form-item
         :rules="[
           {
             required: true,
             message: transformI18n($t('login.pureUsernameReg')),
-            trigger: 'blur'
-          }
+            trigger: 'blur',
+          },
         ]"
         prop="username"
       >
@@ -103,12 +96,7 @@ function onBack() {
 
     <Motion :delay="100">
       <el-form-item prop="phone">
-        <el-input
-          v-model="ruleForm.phone"
-          clearable
-          :placeholder="t('login.purePhone')"
-          :prefix-icon="useRenderIcon(Iphone)"
-        />
+        <el-input v-model="ruleForm.phone" clearable :placeholder="t('login.purePhone')" :prefix-icon="useRenderIcon(Iphone)" />
       </el-form-item>
     </Motion>
 
@@ -121,16 +109,8 @@ function onBack() {
             :placeholder="t('login.pureSmsVerifyCode')"
             :prefix-icon="useRenderIcon(Keyhole)"
           />
-          <el-button
-            :disabled="isDisabled"
-            class="ml-2!"
-            @click="useVerifyCode().start(ruleFormRef, 'phone')"
-          >
-            {{
-              text.length > 0
-                ? text + t("login.pureInfo")
-                : t("login.pureGetVerifyCode")
-            }}
+          <el-button :disabled="isDisabled" class="ml-2!" @click="useVerifyCode().start(ruleFormRef, 'phone')">
+            {{ text.length > 0 ? text + t("login.pureInfo") : t("login.pureGetVerifyCode") }}
           </el-button>
         </div>
       </el-form-item>
@@ -173,13 +153,7 @@ function onBack() {
 
     <Motion :delay="350">
       <el-form-item>
-        <el-button
-          class="w-full"
-          size="default"
-          type="primary"
-          :loading="loading"
-          @click="onUpdate(ruleFormRef)"
-        >
+        <el-button class="w-full" size="default" type="primary" :loading="loading" @click="onUpdate(ruleFormRef)">
           {{ t("login.pureDefinite") }}
         </el-button>
       </el-form-item>

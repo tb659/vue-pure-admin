@@ -13,20 +13,17 @@ const getLinkProps = (item: menuType) => {
     return {
       href: item.name,
       target: "_blank",
-      rel: "noopener"
+      rel: "noopener",
     };
   }
   return {
-    to: item
+    to: item,
   };
 };
 </script>
 
 <template>
-  <component
-    :is="isExternalLink ? 'a' : 'router-link'"
-    v-bind="getLinkProps(to)"
-  >
+  <component :is="isExternalLink ? 'a' : 'router-link'" v-bind="getLinkProps(to)">
     <slot />
   </component>
 </template>

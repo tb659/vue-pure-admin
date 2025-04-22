@@ -3,7 +3,7 @@ import flippers from "./filpper";
 import { ref, unref, nextTick, onUnmounted } from "vue";
 
 defineOptions({
-  name: "ReFlop"
+  name: "ReFlop",
 });
 
 const timer = ref(null);
@@ -49,10 +49,7 @@ const formatDate = (date: Date, dateFormat: string) => {
             y => 9
      */
   if (/(y+)/.test(dateFormat)) {
-    dateFormat = dateFormat.replace(
-      RegExp.$1,
-      (date.getFullYear() + "").substr(4 - RegExp.$1.length)
-    );
+    dateFormat = dateFormat.replace(RegExp.$1, (date.getFullYear() + "").substr(4 - RegExp.$1.length));
   }
   // 格式化月、日、时、分、秒
   const o = {
@@ -60,7 +57,7 @@ const formatDate = (date: Date, dateFormat: string) => {
     "d+": date.getDate(),
     "h+": date.getHours(),
     "i+": date.getMinutes(),
-    "s+": date.getSeconds()
+    "s+": date.getSeconds(),
   };
   for (const k in o) {
     if (new RegExp(`(${k})`).test(dateFormat)) {
@@ -71,10 +68,7 @@ const formatDate = (date: Date, dateFormat: string) => {
        * 但是，当数字>=10时，无论格式为一位还是多位，不做截取，这是与年份格式化不一致的地方
        * 例如: 下午15时，hh => 15, h => 15
        */
-      dateFormat = dateFormat.replace(
-        RegExp.$1,
-        RegExp.$1.length === 1 ? str : padLeftZero(str)
-      );
+      dateFormat = dateFormat.replace(RegExp.$1, RegExp.$1.length === 1 ? str : padLeftZero(str));
     }
   }
   return dateFormat;
@@ -92,7 +86,7 @@ nextTick(() => {
     unref(flipperMinute1),
     unref(flipperMinute2),
     unref(flipperSecond1),
-    unref(flipperSecond2)
+    unref(flipperSecond2),
   ];
 
   init();

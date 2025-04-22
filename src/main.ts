@@ -8,10 +8,16 @@ import { useEcharts } from "@/plugins/echarts";
 import { createApp, type Directive } from "vue";
 import { useVxeTable } from "@/plugins/vxeTable";
 import { useElementPlus } from "@/plugins/elementPlus";
-import { injectResponsiveStorage } from "@/utils/responsive";
+// import { injectResponsiveStorage } from "@/utils/responsive";
 
 import Table from "@pureadmin/table";
 import PureDescriptions from "@pureadmin/descriptions";
+
+import MtForm from "@/components/ReMtForm";
+import MtSearch from "@/components/ReMtSearch";
+import MtTable from "@/components/ReMtTable";
+import MtTableBar from "@/components/ReMtTableBar";
+import MtUpload from "@/components/ReMtUpload";
 
 // 引入重置样式
 import "./style/reset.scss";
@@ -33,11 +39,7 @@ Object.keys(directives).forEach(key => {
 });
 
 // 全局注册@iconify/vue图标库
-import {
-  IconifyIconOffline,
-  IconifyIconOnline,
-  FontIcon
-} from "./components/ReIcon";
+import { IconifyIconOffline, IconifyIconOnline, FontIcon } from "./components/ReIcon";
 app.component("IconifyIconOffline", IconifyIconOffline);
 app.component("IconifyIconOnline", IconifyIconOnline);
 app.component("FontIcon", FontIcon);
@@ -54,18 +56,27 @@ import "tippy.js/themes/light.css";
 import VueTippy from "vue-tippy";
 app.use(VueTippy);
 
-getPlatformConfig(app).then(async config => {
-  setupStore(app);
-  app.use(router);
-  await router.isReady();
-  injectResponsiveStorage(app, config);
-  app
-    .use(MotionPlugin)
-    .use(useI18n)
-    .use(useElementPlus)
-    .use(Table)
-    .use(useVxeTable)
-    .use(PureDescriptions)
-    .use(useEcharts);
-  app.mount("#app");
-});
+const initPlatformConfig = async () => {
+  await getPlatformConfig(app).then(async () => {
+    app.use(router);
+    await router.isReady();
+    // injectResponsiveStorage(app, config);
+    setupStore(app);
+    app
+      .use(MotionPlugin)
+      .use(useI18n)
+      .use(useElementPlus)
+      .use(Table)
+      .use(useVxeTable)
+      .use(PureDescriptions)
+      .use(useEcharts)
+      .use(MtForm)
+      .use(MtSearch)
+      .use(MtTable)
+      .use(MtTableBar)
+      .use(MtUpload);
+    app.mount("#app");
+  });
+};
+
+initPlatformConfig();

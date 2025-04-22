@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { useI18n } from "vue-i18n";
-import { useGlobal } from "@pureadmin/utils";
 import { useNav } from "@/layout/hooks/useNav";
+import { useSettingStore } from "@/store/modules/settings";
 
 import ArrowLeft from "~icons/ri/arrow-left-double-fill";
 
@@ -11,7 +11,7 @@ interface Props {
 }
 
 withDefaults(defineProps<Props>(), {
-  isActive: false
+  isActive: false,
 });
 
 const { t } = useI18n();
@@ -21,8 +21,7 @@ const iconClass = computed(() => {
   return ["w-[16px]", "h-[16px]"];
 });
 
-const { $storage } = useGlobal<GlobalPropertiesApi>();
-const themeColor = computed(() => $storage.layout?.themeColor);
+const themeColor = computed(() => useSettingStore().getLayout.themeColor);
 
 const emit = defineEmits<{
   (e: "toggleClick"): void;
@@ -36,12 +35,10 @@ const toggleClick = () => {
 <template>
   <div
     v-tippy="{
-      content: isActive
-        ? t('buttons.pureClickCollapse')
-        : t('buttons.pureClickExpand'),
+      content: isActive ? t('buttons.pureClickCollapse') : t('buttons.pureClickExpand'),
       theme: tooltipEffect,
       hideOnClick: 'toggle',
-      placement: 'right'
+      placement: 'right',
     }"
     class="center-collapse"
     @click="toggleClick"

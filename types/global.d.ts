@@ -50,14 +50,7 @@ declare global {
   /**
    * 打包压缩格式的类型声明
    */
-  type ViteCompression =
-    | "none"
-    | "gzip"
-    | "brotli"
-    | "both"
-    | "gzip-clear"
-    | "brotli-clear"
-    | "both-clear";
+  type ViteCompression = "none" | "gzip" | "brotli" | "both" | "gzip-clear" | "brotli-clear" | "both-clear";
 
   /**
    * 全局自定义环境变量的类型声明
@@ -70,6 +63,8 @@ declare global {
     VITE_CDN: boolean;
     VITE_HIDE_HOME: string;
     VITE_COMPRESSION: ViteCompression;
+    VITE_OUT_DIR: string;
+    VITE_REMOVE_CONSOLE: boolean;
   }
 
   /**
@@ -85,12 +80,12 @@ declare global {
     Version?: string;
     Title?: string;
     FixedHeader?: boolean;
-    HiddenSideBar?: boolean;
+    HideSideBar?: boolean;
     MultiTagsCache?: boolean;
     MaxTagsLevel?: number;
     KeepAlive?: boolean;
     Locale?: string;
-    Layout?: string;
+    Layout?: Layout;
     Theme?: string;
     DarkMode?: boolean;
     OverallStyle?: string;
@@ -126,11 +121,11 @@ declare global {
     version?: string;
     title?: string;
     fixedHeader?: boolean;
-    hiddenSideBar?: boolean;
+    hideSideBar?: boolean;
     multiTagsCache?: boolean;
     keepAlive?: boolean;
     locale?: string;
-    layout?: string;
+    layout?: Layout;
     theme?: string;
     darkMode?: boolean;
     grey?: boolean;
@@ -163,7 +158,7 @@ declare global {
       locale?: string;
     };
     layout: {
-      layout?: string;
+      layout?: Layout;
       theme?: string;
       darkMode?: boolean;
       sidebarStatus?: boolean;
@@ -172,14 +167,16 @@ declare global {
       overallStyle?: string;
     };
     configure: {
-      grey?: boolean;
-      weak?: boolean;
+      stretch?: boolean | number;
+      showModel?: string;
+      showLogo?: boolean;
+      fixedHeader?: boolean;
+      hideSideBar?: boolean;
+      multiTagsCache?: boolean;
       hideTabs?: boolean;
       hideFooter?: boolean;
-      showLogo?: boolean;
-      showModel?: string;
-      multiTagsCache?: boolean;
-      stretch?: boolean | number;
+      grey?: boolean;
+      weak?: boolean;
     };
     tags?: Array<any>;
   }
@@ -205,5 +202,28 @@ declare global {
       circle?: boolean;
       touched?: boolean;
     };
+  }
+
+  /**
+   * 请求返回data
+   */
+  interface PureResponseData<T = any> {
+    page: number;
+    rows?: T[];
+    data?: T[];
+    size: number;
+    total: number;
+  }
+
+  /**
+   * 请求返回
+   */
+  interface PureResponse<T> {
+    code: string;
+    data: T;
+    message: string;
+    requestId: null;
+    sign: null;
+    success: boolean;
   }
 }

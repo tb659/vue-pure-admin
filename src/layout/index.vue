@@ -8,21 +8,8 @@ import { useLayout } from "./hooks/useLayout";
 import { useAppStoreHook } from "@/store/modules/app";
 import { useSettingStoreHook } from "@/store/modules/settings";
 import { useDataThemeChange } from "@/layout/hooks/useDataThemeChange";
-import {
-  h,
-  ref,
-  reactive,
-  computed,
-  onMounted,
-  onBeforeMount,
-  defineComponent
-} from "vue";
-import {
-  useDark,
-  useGlobal,
-  deviceDetection,
-  useResizeObserver
-} from "@pureadmin/utils";
+import { h, ref, reactive, computed, onMounted, onBeforeMount, defineComponent } from "vue";
+import { useDark, useGlobal, deviceDetection, useResizeObserver } from "@pureadmin/utils";
 
 import LayTag from "./components/lay-tag/index.vue";
 import LayNavbar from "./components/lay-navbar/index.vue";
@@ -38,7 +25,6 @@ const { isDark } = useDark();
 const { layout } = useLayout();
 const isMobile = deviceDetection();
 const pureSetting = useSettingStoreHook();
-const { $storage } = useGlobal<GlobalPropertiesApi>();
 
 const set: setType = reactive({
   sidebar: computed(() => {
@@ -50,7 +36,7 @@ const set: setType = reactive({
   }),
 
   fixedHeader: computed(() => {
-    return pureSetting.fixedHeader;
+    return pureSetting.getConfigure.fixedHeader;
   }),
 
   classes: computed(() => {
@@ -58,26 +44,29 @@ const set: setType = reactive({
       hideSidebar: !set.sidebar.opened,
       openSidebar: set.sidebar.opened,
       withoutAnimation: set.sidebar.withoutAnimation,
-      mobile: set.device === "mobile"
+      mobile: set.device === "mobile",
     };
   }),
 
   hideTabs: computed(() => {
-    return $storage?.configure.hideTabs;
-  })
+    return pureSetting.getConfigure.hideTabs;
+  }),
 });
 
-function setTheme(layoutModel: string) {
+function setTheme(layoutModel: Layout) {
   window.document.body.setAttribute("layout", layoutModel);
-  $storage.layout = {
-    layout: `${layoutModel}`,
-    theme: $storage.layout?.theme,
-    darkMode: $storage.layout?.darkMode,
-    sidebarStatus: $storage.layout?.sidebarStatus,
-    epThemeColor: $storage.layout?.epThemeColor,
-    themeColor: $storage.layout?.themeColor,
-    overallStyle: $storage.layout?.overallStyle
-  };
+  pureSetting.setLayout({
+    key: "",
+    value: {
+      layout: `${layoutModel}`,
+      theme: pureSetting.getLayout.theme,
+      darkMode: pureSetting.getLayout.darkMode,
+      sidebarStatus: pureSetting.getLayout.sidebarStatus,
+      epThemeColor: pureSetting.getLayout.epThemeColor,
+      themeColor: pureSetting.getLayout.themeColor,
+      overallStyle: pureSetting.getLayout.overallStyle,
+    },
+  });
 }
 
 function toggle(device: string, bool: boolean) {
@@ -123,7 +112,7 @@ onMounted(() => {
 });
 
 onBeforeMount(() => {
-  useDataThemeChange().dataThemeChange($storage.layout?.overallStyle);
+  useDataThemeChange().dataThemeChange(pureSetting.getLayout.overallStyle);
 });
 
 const LayHeader = defineComponent({
@@ -138,59 +127,39 @@ const LayHeader = defineComponent({
             ? isDark.value
               ? "box-shadow: 0 1px 4px #0d0d0d"
               : "box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08)"
-            : ""
-        ]
+            : "",
+        ],
       },
       {
         default: () => [
-          !pureSetting.hiddenSideBar &&
-          (layout.value.includes("vertical") || layout.value.includes("mix"))
+          !pureSetting.getConfigure.hideSideBar && (layout.value.includes("vertical") || layout.value.includes("topMix"))
             ? h(LayNavbar)
             : null,
-          !pureSetting.hiddenSideBar && layout.value.includes("horizontal")
-            ? h(NavHorizontal)
-            : null,
-          h(LayTag)
-        ]
-      }
+          !pureSetting.getConfigure.hideSideBar && layout.value.includes("horizontal") ? h(NavHorizontal) : null,
+          h(LayTag),
+        ],
+      },
     );
-  }
+  },
 });
 </script>
 
 <template>
   <div ref="appWrapperRef" :class="['app-wrapper', set.classes]">
     <div
-      v-show="
-        set.device === 'mobile' &&
-        set.sidebar.opened &&
-        layout.includes('vertical')
-      "
+      v-show="set.device === 'mobile' && set.sidebar.opened && layout.includes('vertical')"
       class="app-mask"
       @click="useAppStoreHook().toggleSideBar()"
     />
-    <NavVertical
-      v-show="
-        !pureSetting.hiddenSideBar &&
-        (layout.includes('vertical') || layout.includes('mix'))
-      "
-    />
-    <div
-      :class="[
-        'main-container',
-        pureSetting.hiddenSideBar ? 'main-hidden' : ''
-      ]"
-    >
+    <NavVertical v-show="!pureSetting.getConfigure.hideSideBar && (layout.includes('vertical') || layout.includes('topMix'))" />
+    <div :class="['main-container', pureSetting.getConfigure.hideSideBar ? 'main-hidden' : '']">
       <div v-if="set.fixedHeader">
         <LayHeader />
         <!-- 主体内容 -->
         <LayContent :fixed-header="set.fixedHeader" />
       </div>
       <el-scrollbar v-else>
-        <el-backtop
-          :title="t('buttons.pureBackTop')"
-          target=".main-container .el-scrollbar__wrap"
-        >
+        <el-backtop :title="t('buttons.pureBackTop')" target=".main-container .el-scrollbar__wrap">
           <BackTopIcon />
         </el-backtop>
         <LayHeader />

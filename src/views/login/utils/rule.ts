@@ -18,14 +18,14 @@ const loginRules = reactive<FormRules>({
       validator: (rule, value, callback) => {
         if (value === "") {
           callback(new Error(transformI18n($t("login.purePassWordReg"))));
-        } else if (!REGEXP_PWD.test(value)) {
-          callback(new Error(transformI18n($t("login.purePassWordRuleReg"))));
+          // } else if (!REGEXP_PWD.test(value)) {
+          //   callback(new Error(transformI18n($t("login.purePassWordRuleReg"))));
         } else {
           callback();
         }
       },
-      trigger: "blur"
-    }
+      trigger: "blur",
+    },
   ],
   verifyCode: [
     {
@@ -33,16 +33,14 @@ const loginRules = reactive<FormRules>({
         if (value === "") {
           callback(new Error(transformI18n($t("login.pureVerifyCodeReg"))));
         } else if (useUserStoreHook().verifyCode !== value) {
-          callback(
-            new Error(transformI18n($t("login.pureVerifyCodeCorrectReg")))
-          );
+          callback(new Error(transformI18n($t("login.pureVerifyCodeCorrectReg"))));
         } else {
           callback();
         }
       },
-      trigger: "blur"
-    }
-  ]
+      trigger: "blur",
+    },
+  ],
 });
 
 /** 手机登录校验 */
@@ -58,8 +56,8 @@ const phoneRules = reactive<FormRules>({
           callback();
         }
       },
-      trigger: "blur"
-    }
+      trigger: "blur",
+    },
   ],
   verifyCode: [
     {
@@ -72,9 +70,9 @@ const phoneRules = reactive<FormRules>({
           callback();
         }
       },
-      trigger: "blur"
-    }
-  ]
+      trigger: "blur",
+    },
+  ],
 });
 
 /** 忘记密码校验 */
@@ -90,8 +88,8 @@ const updateRules = reactive<FormRules>({
           callback();
         }
       },
-      trigger: "blur"
-    }
+      trigger: "blur",
+    },
   ],
   verifyCode: [
     {
@@ -104,8 +102,8 @@ const updateRules = reactive<FormRules>({
           callback();
         }
       },
-      trigger: "blur"
-    }
+      trigger: "blur",
+    },
   ],
   password: [
     {
@@ -118,9 +116,9 @@ const updateRules = reactive<FormRules>({
           callback();
         }
       },
-      trigger: "blur"
-    }
-  ]
+      trigger: "blur",
+    },
+  ],
 });
 
 export { loginRules, phoneRules, updateRules };

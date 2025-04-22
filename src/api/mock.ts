@@ -18,8 +18,8 @@ export const formUpload = data => {
     { data },
     {
       headers: {
-        "Content-Type": "multipart/form-data"
-      }
-    }
+        "Content-Type": "multipart/form-data",
+      },
+    },
   );
 };

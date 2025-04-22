@@ -1,6 +1,6 @@
 import Cookies from "js-cookie";
 import { useUserStoreHook } from "@/store/modules/user";
-import { storageLocal, isString, isIncludeAllChildren } from "@pureadmin/utils";
+import { storageLocal } from "@pureadmin/utils";
 
 export interface DataInfo<T> {
   /** token */
@@ -34,9 +34,7 @@ export const multipleTabsKey = "multiple-tabs";
 /** 获取`token` */
 export function getToken(): DataInfo<number> {
   // 此处与`TokenKey`相同，此写法解决初始化时`Cookies`中不存在`TokenKey`报错
-  return Cookies.get(TokenKey)
-    ? JSON.parse(Cookies.get(TokenKey))
-    : storageLocal().getItem(userKey);
+  return Cookies.get(TokenKey) ? JSON.parse(Cookies.get(TokenKey)) : storageLocal().getItem(userKey);
 }
 
 /**
@@ -54,7 +52,7 @@ export function setToken(data: DataInfo<Date>) {
 
   expires > 0
     ? Cookies.set(TokenKey, cookieString, {
-        expires: (expires - Date.now()) / 86400000
+        expires: (expires - Date.now()) / 86400000,
       })
     : Cookies.set(TokenKey, cookieString);
 
@@ -63,9 +61,9 @@ export function setToken(data: DataInfo<Date>) {
     "true",
     isRemembered
       ? {
-          expires: loginDay
+          expires: loginDay,
         }
-      : {}
+      : {},
   );
 
   function setUserKey({ avatar, username, nickname, roles, permissions }) {
@@ -81,7 +79,7 @@ export function setToken(data: DataInfo<Date>) {
       username,
       nickname,
       roles,
-      permissions
+      permissions,
     });
   }
 
@@ -92,25 +90,20 @@ export function setToken(data: DataInfo<Date>) {
       username,
       nickname: data?.nickname ?? "",
       roles,
-      permissions: data?.permissions ?? []
+      permissions: data?.permissions ?? [],
     });
   } else {
-    const avatar =
-      storageLocal().getItem<DataInfo<number>>(userKey)?.avatar ?? "";
-    const username =
-      storageLocal().getItem<DataInfo<number>>(userKey)?.username ?? "";
-    const nickname =
-      storageLocal().getItem<DataInfo<number>>(userKey)?.nickname ?? "";
-    const roles =
-      storageLocal().getItem<DataInfo<number>>(userKey)?.roles ?? [];
-    const permissions =
-      storageLocal().getItem<DataInfo<number>>(userKey)?.permissions ?? [];
+    const avatar = storageLocal().getItem<DataInfo<number>>(userKey)?.avatar ?? "";
+    const username = storageLocal().getItem<DataInfo<number>>(userKey)?.username ?? "";
+    const nickname = storageLocal().getItem<DataInfo<number>>(userKey)?.nickname ?? "";
+    const roles = storageLocal().getItem<DataInfo<number>>(userKey)?.roles ?? [];
+    const permissions = storageLocal().getItem<DataInfo<number>>(userKey)?.permissions ?? [];
     setUserKey({
       avatar,
       username,
       nickname,
       roles,
-      permissions
+      permissions,
     });
   }
 }
@@ -125,17 +118,4 @@ export function removeToken() {
 /** 格式化token（jwt格式） */
 export const formatToken = (token: string): string => {
   return "Bearer " + token;
-};
-
-/** 是否有按钮级别的权限（根据登录接口返回的`permissions`字段进行判断）*/
-export const hasPerms = (value: string | Array<string>): boolean => {
-  if (!value) return false;
-  const allPerms = "*:*:*";
-  const { permissions } = useUserStoreHook();
-  if (!permissions) return false;
-  if (permissions.length === 1 && permissions[0] === allPerms) return true;
-  const isAuths = isString(value)
-    ? permissions.includes(value)
-    : isIncludeAllChildren(value, permissions);
-  return isAuths ? true : false;
 };

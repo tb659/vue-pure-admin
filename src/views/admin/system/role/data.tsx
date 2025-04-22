@@ -1,0 +1,168 @@
+import dayjs from "dayjs";
+import { reactive, ref } from "vue";
+import { ADMIN_ROLE_EMBED, STATUS_MAP, STATUS_OPTIONS, STATUS_TYPE } from "@/utils/constants";
+import { hasAuth } from "@/router/utils";
+import { handleStatusChange } from "@/utils/tableStatusChange";
+import { roleApi } from "@/api/system/role";
+
+export function useData() {
+  const switchLoadMap = ref({});
+
+  const searchSchema = reactive<FormSchema[]>([
+    {
+      label: "角色名称",
+      field: "name",
+      component: "Input",
+      componentProps: {
+        placeholder: "请输入角色名称",
+      },
+    },
+    {
+      label: "角色编码",
+      field: "code",
+      component: "Input",
+      componentProps: {
+        placeholder: "角色编码",
+      },
+    },
+    {
+      label: "角色状态",
+      field: "status",
+      component: "Select",
+      componentProps: {
+        placeholder: "请选择角色状态",
+        options: STATUS_OPTIONS,
+      },
+    },
+  ]);
+
+  const formSchema = reactive<FormSchema[]>([
+    {
+      label: "角色名称",
+      field: "name",
+      component: "Input",
+      colProps: { span: 24 },
+      componentProps: {
+        placeholder: "请输入角色名称",
+      },
+      required: true,
+    },
+    {
+      label: "角色编码",
+      field: "code",
+      component: "Input",
+      colProps: { span: 24 },
+      componentProps: {
+        placeholder: "请输入角色编码",
+      },
+      required: true,
+    },
+    {
+      label: "角色状态",
+      field: "status",
+      value: STATUS_TYPE.ENABLED_V,
+      component: "RadioGroup",
+      colProps: { span: 24 },
+      componentProps: {
+        options: STATUS_OPTIONS,
+      },
+    },
+    {
+      label: "角色备注",
+      field: "note",
+      component: "Input",
+      colProps: { span: 24 },
+      componentProps: {
+        placeholder: "请输入角色备注",
+        type: "textarea",
+        rows: 2,
+      },
+    },
+    {
+      label: "角色权限",
+      field: "resourceList",
+      colProps: { span: 24 },
+    },
+  ]);
+
+  const tableColumns: TableColumn[] = [
+    {
+      label: "勾选",
+      type: "selection",
+      width: 55,
+      align: "left",
+      fixed: "left",
+    },
+    {
+      label: "序号",
+      type: "index",
+      width: 70,
+      initHidden: true,
+    },
+    {
+      label: "角色名称",
+      field: "name",
+      minWidth: 120,
+    },
+    {
+      label: "角色编码",
+      field: "code",
+      minWidth: 120,
+    },
+    {
+      label: "角色备注",
+      field: "note",
+      minWidth: 150,
+    },
+    {
+      label: "角色状态",
+      minWidth: 130,
+      cellRenderer: scope => (
+        <el-switch
+          size={scope.$props.size || "default"}
+          loading={switchLoadMap.value[scope.index]?.loading}
+          v-model={scope.row.status}
+          active-value={STATUS_TYPE.ENABLED_V}
+          inactive-value={STATUS_TYPE.DISABLED_V}
+          active-text="已启用"
+          inactive-text="已禁用"
+          inline-prompt
+          onChange={() => onStatusChange(scope as any)}
+          disabled={!hasAuth(STATUS_MAP[scope.row.status].label) || scope.row.embed === ADMIN_ROLE_EMBED}
+        />
+      ),
+    },
+    {
+      label: "创建时间",
+      minWidth: 180,
+      field: "crtDt",
+      formatter: row => dayjs.unix(row.crtDt).format("YYYY-MM-DD HH:mm:ss"),
+    },
+    {
+      label: "操作",
+      field: "operation",
+      fixed: "right",
+      width: 140,
+    },
+  ];
+
+  function onStatusChange({ row, index }) {
+    const ids = [row.id];
+    const data = {
+      row,
+      index,
+      name: row.name,
+      api: roleApi,
+      switchLoadMap: switchLoadMap.value,
+      ids: { idList: ids },
+    };
+    console.log(row, data);
+    handleStatusChange(data);
+  }
+
+  return {
+    formSchema,
+    searchSchema,
+    tableColumns,
+  };
+}

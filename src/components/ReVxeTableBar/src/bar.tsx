@@ -2,15 +2,7 @@ import Sortable from "sortablejs";
 import { transformI18n } from "@/plugins/i18n";
 import { useEpThemeStoreHook } from "@/store/modules/epTheme";
 import { delay, cloneDeep, getKeyList } from "@pureadmin/utils";
-import {
-  type PropType,
-  ref,
-  unref,
-  computed,
-  nextTick,
-  defineComponent,
-  getCurrentInstance
-} from "vue";
+import { type PropType, ref, unref, computed, nextTick, defineComponent, getCurrentInstance } from "vue";
 
 import Fullscreen from "~icons/ri/fullscreen-fill";
 import ExitFullscreen from "~icons/ri/fullscreen-exit-fill";
@@ -24,29 +16,29 @@ const props = {
   /** 头部最左边的标题 */
   title: {
     type: String,
-    default: "列表"
+    default: "列表",
   },
   vxeTableRef: {
-    type: Object as PropType<any>
+    type: Object as PropType<any>,
   },
   /** 需要展示的列 */
   columns: {
     type: Array as PropType<any>,
-    default: () => []
+    default: () => [],
   },
   /** 是否为树列表 */
   tree: {
     type: Boolean,
-    default: false
+    default: false,
   },
   isExpandAll: {
     type: Boolean,
-    default: true
+    default: true,
   },
   tableKey: {
     type: [String, Number] as PropType<string | number>,
-    default: "0"
-  }
+    default: "0",
+  },
 };
 
 export default defineComponent({
@@ -68,22 +60,14 @@ export default defineComponent({
     const getDropdownItemStyle = computed(() => {
       return s => {
         return {
-          background:
-            s === size.value ? useEpThemeStoreHook().epThemeColor : "",
-          color: s === size.value ? "#fff" : "var(--el-text-color-primary)"
+          background: s === size.value ? useEpThemeStoreHook().epThemeColor : "",
+          color: s === size.value ? "#fff" : "var(--el-text-color-primary)",
         };
       };
     });
 
     const iconClass = computed(() => {
-      return [
-        "text-black",
-        "dark:text-white",
-        "duration-100",
-        "hover:text-primary!",
-        "cursor-pointer",
-        "outline-hidden"
-      ];
+      return ["text-black", "dark:text-white", "duration-100", "hover:text-primary!", "cursor-pointer", "outline-hidden"];
     });
 
     const topClass = computed(() => {
@@ -95,7 +79,7 @@ export default defineComponent({
         "border-b-[1px]",
         "border-solid",
         "border-[#dcdfe6]",
-        "dark:border-[#303030]"
+        "dark:border-[#303030]",
       ];
     });
 
@@ -107,9 +91,7 @@ export default defineComponent({
 
     function onExpand() {
       isExpandAll.value = !isExpandAll.value;
-      isExpandAll.value
-        ? props.vxeTableRef.setAllTreeExpand(true)
-        : props.vxeTableRef.clearTreeExpand();
+      isExpandAll.value ? props.vxeTableRef.setAllTreeExpand(true) : props.vxeTableRef.clearTreeExpand();
       props.vxeTableRef.refreshColumn();
     }
 
@@ -119,9 +101,7 @@ export default defineComponent({
     }
 
     function reloadColumn() {
-      const curCheckedColumns = cloneDeep(dynamicColumns.value).filter(item =>
-        checkedColumns.value.includes(item.title)
-      );
+      const curCheckedColumns = cloneDeep(dynamicColumns.value).filter(item => checkedColumns.value.includes(item.title));
       props.vxeTableRef.reloadColumn(curCheckedColumns);
     }
 
@@ -135,8 +115,7 @@ export default defineComponent({
       checkedColumns.value = value;
       const checkedCount = value.length;
       checkAll.value = checkedCount === checkColumnList.length;
-      isIndeterminate.value =
-        checkedCount > 0 && checkedCount < checkColumnList.length;
+      isIndeterminate.value = checkedCount > 0 && checkedCount < checkColumnList.length;
     }
 
     async function onReset() {
@@ -157,35 +136,24 @@ export default defineComponent({
     const dropdown = {
       dropdown: () => (
         <el-dropdown-menu class="translation">
-          <el-dropdown-item
-            style={getDropdownItemStyle.value("medium")}
-            onClick={() => changeSize("medium")}
-          >
+          <el-dropdown-item style={getDropdownItemStyle.value("medium")} onClick={() => changeSize("medium")}>
             宽松
           </el-dropdown-item>
-          <el-dropdown-item
-            style={getDropdownItemStyle.value("small")}
-            onClick={() => changeSize("small")}
-          >
+          <el-dropdown-item style={getDropdownItemStyle.value("small")} onClick={() => changeSize("small")}>
             默认
           </el-dropdown-item>
-          <el-dropdown-item
-            style={getDropdownItemStyle.value("mini")}
-            onClick={() => changeSize("mini")}
-          >
+          <el-dropdown-item style={getDropdownItemStyle.value("mini")} onClick={() => changeSize("mini")}>
             紧凑
           </el-dropdown-item>
         </el-dropdown-menu>
-      )
+      ),
     };
 
     /** 列展示拖拽排序 */
     const rowDrop = (event: { preventDefault: () => void }) => {
       event.preventDefault();
       nextTick(() => {
-        const wrapper: HTMLElement = (
-          instance?.proxy?.$refs[`VxeGroupRef${unref(props.tableKey)}`] as any
-        ).$el.firstElementChild;
+        const wrapper: HTMLElement = (instance?.proxy?.$refs[`VxeGroupRef${unref(props.tableKey)}`] as any).$el.firstElementChild;
         Sortable.create(wrapper, {
           animation: 300,
           handle: ".drag-btn",
@@ -200,27 +168,20 @@ export default defineComponent({
               if (newIndex > oldIndex) {
                 wrapperElem.insertBefore(targetThElem, oldThElem);
               } else {
-                wrapperElem.insertBefore(
-                  targetThElem,
-                  oldThElem ? oldThElem.nextElementSibling : oldThElem
-                );
+                wrapperElem.insertBefore(targetThElem, oldThElem ? oldThElem.nextElementSibling : oldThElem);
               }
               return;
             }
             const currentRow = dynamicColumns.value.splice(oldIndex, 1)[0];
             dynamicColumns.value.splice(newIndex, 0, currentRow);
             reloadColumn();
-          }
+          },
         });
       });
     };
 
     const isFixedColumn = (title: string) => {
-      return dynamicColumns.value.filter(
-        item => transformI18n(item.title) === transformI18n(title)
-      )[0].fixed
-        ? true
-        : false;
+      return dynamicColumns.value.filter(item => transformI18n(item.title) === transformI18n(title))[0].fixed ? true : false;
     };
 
     const rendTippyProps = (content: string) => {
@@ -230,17 +191,12 @@ export default defineComponent({
         offset: [0, 18],
         duration: [300, 0],
         followCursor: true,
-        hideOnClick: "toggle"
+        hideOnClick: "toggle",
       };
     };
 
     const reference = {
-      reference: () => (
-        <SettingIcon
-          class={["w-[16px]", iconClass.value]}
-          v-tippy={rendTippyProps("列设置")}
-        />
-      )
+      reference: () => <SettingIcon class={["w-[16px]", iconClass.value]} v-tippy={rendTippyProps("列设置")} />,
     };
 
     return () => (
@@ -252,62 +208,38 @@ export default defineComponent({
             "px-2",
             "pb-2",
             "bg-bg_color",
-            isFullscreen.value
-              ? ["h-full!", "z-2002", "fixed", "inset-0"]
-              : "mt-2"
+            isFullscreen.value ? ["h-full!", "z-2002", "fixed", "inset-0"] : "mt-2",
           ]}
         >
           <div class="flex justify-between w-full h-[60px] p-4">
-            {slots?.title ? (
-              slots.title()
-            ) : (
-              <p class="font-bold truncate">{props.title}</p>
-            )}
+            {slots?.title ? slots.title() : <p class="font-bold truncate">{props.title}</p>}
             <div class="flex items-center justify-around">
-              {slots?.buttons ? (
-                <div class="flex mr-4">{slots.buttons()}</div>
-              ) : null}
+              {slots?.buttons ? <div class="flex mr-4">{slots.buttons()}</div> : null}
               {props.tree ? (
                 <>
                   <ExpandIcon
                     class={["w-[16px]", iconClass.value]}
                     style={{
-                      transform: isExpandAll.value ? "none" : "rotate(-90deg)"
+                      transform: isExpandAll.value ? "none" : "rotate(-90deg)",
                     }}
-                    v-tippy={rendTippyProps(
-                      isExpandAll.value ? "折叠" : "展开"
-                    )}
+                    v-tippy={rendTippyProps(isExpandAll.value ? "折叠" : "展开")}
                     onClick={() => onExpand()}
                   />
                   <el-divider direction="vertical" />
                 </>
               ) : null}
               <RefreshIcon
-                class={[
-                  "w-[16px]",
-                  iconClass.value,
-                  loading.value ? "animate-spin" : ""
-                ]}
+                class={["w-[16px]", iconClass.value, loading.value ? "animate-spin" : ""]}
                 v-tippy={rendTippyProps("刷新")}
                 onClick={() => onReFresh()}
               />
               <el-divider direction="vertical" />
-              <el-dropdown
-                v-slots={dropdown}
-                trigger="click"
-                v-tippy={rendTippyProps("密度")}
-              >
+              <el-dropdown v-slots={dropdown} trigger="click" v-tippy={rendTippyProps("密度")}>
                 <CollapseIcon class={["w-[16px]", iconClass.value]} />
               </el-dropdown>
               <el-divider direction="vertical" />
 
-              <el-popover
-                v-slots={reference}
-                placement="bottom-start"
-                popper-style={{ padding: 0 }}
-                width="200"
-                trigger="click"
-              >
+              <el-popover v-slots={reference} placement="bottom-start" popper-style={{ padding: 0 }} width="200" trigger="click">
                 <div class={[topClass.value]}>
                   <el-checkbox
                     class="-mr-1!"
@@ -328,31 +260,15 @@ export default defineComponent({
                       modelValue={checkedColumns.value}
                       onChange={value => handleCheckedColumnsChange(value)}
                     >
-                      <el-space
-                        direction="vertical"
-                        alignment="flex-start"
-                        size={0}
-                      >
+                      <el-space direction="vertical" alignment="flex-start" size={0}>
                         {checkColumnList.map((item, index) => {
                           return (
                             <div class="flex items-center">
                               <DragIcon
-                                class={[
-                                  "drag-btn w-[16px] mr-2",
-                                  isFixedColumn(item)
-                                    ? "cursor-no-drop!"
-                                    : "cursor-grab!"
-                                ]}
-                                onMouseenter={(event: {
-                                  preventDefault: () => void;
-                                }) => rowDrop(event)}
+                                class={["drag-btn w-[16px] mr-2", isFixedColumn(item) ? "cursor-no-drop!" : "cursor-grab!"]}
+                                onMouseenter={(event: { preventDefault: () => void }) => rowDrop(event)}
                               />
-                              <el-checkbox
-                                key={index}
-                                label={item}
-                                value={item}
-                                onChange={reloadColumn}
-                              >
+                              <el-checkbox key={index} label={item} value={item} onChange={reloadColumn}>
                                 <span
                                   title={transformI18n(item)}
                                   class="inline-block w-[120px] truncate hover:text-text_color_primary"
@@ -380,10 +296,10 @@ export default defineComponent({
           </div>
           {slots.default({
             size: size.value,
-            dynamicColumns: dynamicColumns.value
+            dynamicColumns: dynamicColumns.value,
           })}
         </div>
       </>
     );
-  }
+  },
 });

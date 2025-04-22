@@ -8,7 +8,7 @@ interface Props {
 }
 
 withDefaults(defineProps<Props>(), {
-  isActive: false
+  isActive: false,
 });
 
 const { t } = useI18n();
@@ -25,9 +25,7 @@ const toggleClick = () => {
 <template>
   <div
     class="px-3 mr-1 navbar-bg-hover"
-    :title="
-      isActive ? t('buttons.pureClickCollapse') : t('buttons.pureClickExpand')
-    "
+    :title="isActive ? t('buttons.pureClickCollapse') : t('buttons.pureClickExpand')"
     @click="toggleClick"
   >
     <IconifyIconOffline

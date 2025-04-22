@@ -23,12 +23,10 @@ $--element-tree-line-width: 1px !default;
   left: 0;
   display: block;
   height: 100%;
-  border-left: $--element-tree-line-width $--element-tree-line-style
-    $--element-tree-line-color;
+  border-left: $--element-tree-line-width $--element-tree-line-style $--element-tree-line-color;
 
   &.last-node-line {
-    border-left: $--element-tree-line-width $--element-tree-line-style
-      transparent;
+    border-left: $--element-tree-line-width $--element-tree-line-style transparent;
   }
 
   &.last-node-isLeaf-line {
@@ -42,14 +40,12 @@ $--element-tree-line-width: 1px !default;
   left: 0;
   display: block;
   height: 0;
-  border-bottom: $--element-tree-line-width $--element-tree-line-style
-    $--element-tree-line-color;
+  border-bottom: $--element-tree-line-width $--element-tree-line-style $--element-tree-line-color;
 }
 
 .element-tree-node-label-line {
   flex: 1;
   align-self: center;
   margin: 0 10px;
-  border-top: $--element-tree-line-width $--element-tree-line-style
-    $--element-tree-line-color;
+  border-top: $--element-tree-line-width $--element-tree-line-style $--element-tree-line-color;
 }

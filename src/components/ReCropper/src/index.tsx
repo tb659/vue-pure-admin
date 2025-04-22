@@ -5,22 +5,8 @@ import type { CSSProperties } from "vue";
 import { useEventListener } from "@vueuse/core";
 import { longpress } from "@/directives/longpress";
 import { useTippy, directive as tippy } from "vue-tippy";
-import {
-  type PropType,
-  ref,
-  unref,
-  computed,
-  onMounted,
-  onUnmounted,
-  defineComponent
-} from "vue";
-import {
-  delay,
-  debounce,
-  isArray,
-  downloadByBase64,
-  useResizeObserver
-} from "@pureadmin/utils";
+import { type PropType, ref, unref, computed, onMounted, onUnmounted, defineComponent } from "vue";
+import { delay, debounce, isArray, downloadByBase64, useResizeObserver } from "@pureadmin/utils";
 import {
   Reload,
   Upload,
@@ -35,7 +21,7 @@ import {
   SearchPlus,
   RotateRight,
   SearchMinus,
-  DownloadIcon
+  DownloadIcon,
 } from "./svg";
 
 type Options = Cropper.Options;
@@ -60,7 +46,7 @@ const defaultOptions: Options = {
   modal: true,
   guides: true,
   movable: true,
-  rotatable: true
+  rotatable: true,
 };
 
 const props = {
@@ -73,10 +59,10 @@ const props = {
   height: { type: [String, Number], default: "360px" },
   crossorigin: {
     type: String as PropType<"" | "anonymous" | "use-credentials" | undefined>,
-    default: undefined
+    default: undefined,
   },
   imageStyle: { type: Object as PropType<CSSProperties>, default: () => ({}) },
-  options: { type: Object as PropType<Options>, default: () => ({}) }
+  options: { type: Object as PropType<Options>, default: () => ({}) },
 };
 
 export default defineComponent({
@@ -101,7 +87,7 @@ export default defineComponent({
       return {
         height: props.height,
         maxWidth: "100%",
-        ...props.imageStyle
+        ...props.imageStyle,
       };
     });
 
@@ -109,8 +95,8 @@ export default defineComponent({
       return [
         attrs.class,
         {
-          ["re-circled"]: inCircled.value
-        }
+          ["re-circled"]: inCircled.value,
+        },
       ];
     });
 
@@ -122,7 +108,7 @@ export default defineComponent({
         "outline-hidden",
         "rounded-[4px]",
         "cursor-pointer",
-        "hover:bg-[rgba(0,0,0,0.06)]"
+        "hover:bg-[rgba(0,0,0,0.06)]",
       ];
     });
 
@@ -162,7 +148,7 @@ export default defineComponent({
         cropmove() {
           debounceRealTimeCroppered();
         },
-        ...props.options
+        ...props.options,
       });
     }
 
@@ -172,9 +158,7 @@ export default defineComponent({
 
     function croppered() {
       if (!cropper.value) return;
-      const canvas = inCircled.value
-        ? getRoundedCanvas()
-        : cropper.value.getCroppedCanvas();
+      const canvas = inCircled.value ? getRoundedCanvas() : cropper.value.getCroppedCanvas();
       // https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLCanvasElement/toBlob
       canvas.toBlob(blob => {
         if (!blob) return;
@@ -186,7 +170,7 @@ export default defineComponent({
           emit("cropper", {
             base64: e.target.result,
             blob,
-            info: { size: blob.size, ...cropper.value.getData() }
+            info: { size: blob.size, ...cropper.value.getData() },
           });
         };
         fileReader.onerror = () => {
@@ -207,14 +191,7 @@ export default defineComponent({
       context.drawImage(sourceCanvas, 0, 0, width, height);
       context.globalCompositeOperation = "destination-in";
       context.beginPath();
-      context.arc(
-        width / 2,
-        height / 2,
-        Math.min(width, height) / 2,
-        0,
-        2 * Math.PI,
-        true
-      );
+      context.arc(width / 2, height / 2, Math.min(width, height) / 2, 0, 2 * Math.PI, true);
       context.fill();
       return canvas;
     }
@@ -227,9 +204,7 @@ export default defineComponent({
       if (event === "scaleY") {
         scaleY = arg = scaleY === -1 ? 1 : -1;
       }
-      arg && isArray(arg)
-        ? cropper.value?.[event]?.(...arg)
-        : cropper.value?.[event]?.(arg);
+      arg && isArray(arg) ? cropper.value?.[event]?.(...arg) : cropper.value?.[event]?.(arg);
     }
 
     function beforeUpload(file) {
@@ -248,21 +223,17 @@ export default defineComponent({
     const menuContent = defineComponent({
       directives: {
         tippy,
-        longpress
+        longpress,
       },
       setup() {
         return () => (
           <div class="flex flex-wrap w-[60px] justify-between">
-            <ElUpload
-              accept="image/*"
-              show-file-list={false}
-              before-upload={beforeUpload}
-            >
+            <ElUpload accept="image/*" show-file-list={false} before-upload={beforeUpload}>
               <Upload
                 class={iconClass.value}
                 v-tippy={{
                   content: "上传",
-                  placement: "left-start"
+                  placement: "left-start",
                 }}
               />
             </ElUpload>
@@ -270,7 +241,7 @@ export default defineComponent({
               class={iconClass.value}
               v-tippy={{
                 content: "下载",
-                placement: "right-start"
+                placement: "right-start",
               }}
               onClick={() => downloadByBase64(imgBase64.value, "cropping.png")}
             />
@@ -278,7 +249,7 @@ export default defineComponent({
               class={iconClass.value}
               v-tippy={{
                 content: "圆形、矩形裁剪",
-                placement: "left-start"
+                placement: "left-start",
               }}
               onClick={() => {
                 inCircled.value = !inCircled.value;
@@ -289,7 +260,7 @@ export default defineComponent({
               class={iconClass.value}
               v-tippy={{
                 content: "重置",
-                placement: "right-start"
+                placement: "right-start",
               }}
               onClick={() => handCropper("reset")}
             />
@@ -297,7 +268,7 @@ export default defineComponent({
               class={iconClass.value}
               v-tippy={{
                 content: "上移（可长按）",
-                placement: "left-start"
+                placement: "left-start",
               }}
               v-longpress={[() => handCropper("move", [0, -10]), "0:100"]}
             />
@@ -305,7 +276,7 @@ export default defineComponent({
               class={iconClass.value}
               v-tippy={{
                 content: "下移（可长按）",
-                placement: "right-start"
+                placement: "right-start",
               }}
               v-longpress={[() => handCropper("move", [0, 10]), "0:100"]}
             />
@@ -313,7 +284,7 @@ export default defineComponent({
               class={iconClass.value}
               v-tippy={{
                 content: "左移（可长按）",
-                placement: "left-start"
+                placement: "left-start",
               }}
               v-longpress={[() => handCropper("move", [-10, 0]), "0:100"]}
             />
@@ -321,7 +292,7 @@ export default defineComponent({
               class={iconClass.value}
               v-tippy={{
                 content: "右移（可长按）",
-                placement: "right-start"
+                placement: "right-start",
               }}
               v-longpress={[() => handCropper("move", [10, 0]), "0:100"]}
             />
@@ -329,7 +300,7 @@ export default defineComponent({
               class={iconClass.value}
               v-tippy={{
                 content: "水平翻转",
-                placement: "left-start"
+                placement: "left-start",
               }}
               onClick={() => handCropper("scaleX", -1)}
             />
@@ -337,7 +308,7 @@ export default defineComponent({
               class={iconClass.value}
               v-tippy={{
                 content: "垂直翻转",
-                placement: "right-start"
+                placement: "right-start",
               }}
               onClick={() => handCropper("scaleY", -1)}
             />
@@ -345,7 +316,7 @@ export default defineComponent({
               class={iconClass.value}
               v-tippy={{
                 content: "逆时针旋转",
-                placement: "left-start"
+                placement: "left-start",
               }}
               onClick={() => handCropper("rotate", -45)}
             />
@@ -353,7 +324,7 @@ export default defineComponent({
               class={iconClass.value}
               v-tippy={{
                 content: "顺时针旋转",
-                placement: "right-start"
+                placement: "right-start",
               }}
               onClick={() => handCropper("rotate", 45)}
             />
@@ -361,7 +332,7 @@ export default defineComponent({
               class={iconClass.value}
               v-tippy={{
                 content: "放大（可长按）",
-                placement: "left-start"
+                placement: "left-start",
               }}
               v-longpress={[() => handCropper("zoom", 0.1), "0:100"]}
             />
@@ -369,13 +340,13 @@ export default defineComponent({
               class={iconClass.value}
               v-tippy={{
                 content: "缩小（可长按）",
-                placement: "right-start"
+                placement: "right-start",
               }}
               v-longpress={[() => handCropper("zoom", -0.1), "0:100"]}
             />
           </div>
         );
-      }
+      },
     });
 
     function onContextmenu(event) {
@@ -389,7 +360,7 @@ export default defineComponent({
         interactive: true,
         appendTo: "parent",
         // hideOnClick: false,
-        placement: "bottom-end"
+        placement: "bottom-end",
       });
 
       setProps({
@@ -399,8 +370,8 @@ export default defineComponent({
           top: event.clientY,
           bottom: event.clientY,
           left: event.clientX,
-          right: event.clientX
-        })
+          right: event.clientX,
+        }),
       });
 
       show();
@@ -421,37 +392,18 @@ export default defineComponent({
       getImageStyle,
       isReady,
       croppered,
-      onContextmenu
+      onContextmenu,
     };
   },
 
   render() {
-    const {
-      inSrc,
-      isReady,
-      getClass,
-      getImageStyle,
-      onContextmenu,
-      getWrapperStyle
-    } = this;
+    const { inSrc, isReady, getClass, getImageStyle, onContextmenu, getWrapperStyle } = this;
     const { alt, crossorigin } = this.props;
 
     return inSrc ? (
-      <div
-        ref="tippyElRef"
-        class={getClass}
-        style={getWrapperStyle}
-        onContextmenu={event => onContextmenu(event)}
-      >
-        <img
-          v-show={isReady}
-          ref="imgElRef"
-          style={getImageStyle}
-          src={inSrc}
-          alt={alt}
-          crossorigin={crossorigin}
-        />
+      <div ref="tippyElRef" class={getClass} style={getWrapperStyle} onContextmenu={event => onContextmenu(event)}>
+        <img v-show={isReady} ref="imgElRef" style={getImageStyle} src={inSrc} alt={alt} crossorigin={crossorigin} />
       </div>
     ) : null;
-  }
+  },
 });

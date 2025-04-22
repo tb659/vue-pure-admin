@@ -2,6 +2,7 @@
 import { useI18n } from "vue-i18n";
 import Motion from "./utils/motion";
 import { useRouter } from "vue-router";
+import { loginApi } from "@/api/login";
 import { message } from "@/utils/message";
 import { loginRules } from "./utils/rule";
 import TypeIt from "@/components/ReTypeit";
@@ -9,10 +10,12 @@ import { debounce } from "@pureadmin/utils";
 import { useNav } from "@/layout/hooks/useNav";
 import { useEventListener } from "@vueuse/core";
 import type { FormInstance } from "element-plus";
-import { $t, transformI18n } from "@/plugins/i18n";
+import { transformI18n, $t } from "@/plugins/i18n";
+import { SINGLE_CAPTCHA } from "@/utils/constants";
 import { operates, thirdParty } from "./utils/enums";
 import { useLayout } from "@/layout/hooks/useLayout";
 import LoginPhone from "./components/LoginPhone.vue";
+import { responsiveStorageNameSpace } from "@/config";
 import LoginRegist from "./components/LoginRegist.vue";
 import LoginUpdate from "./components/LoginUpdate.vue";
 import LoginQrCode from "./components/LoginQrCode.vue";
@@ -24,6 +27,7 @@ import { ref, toRaw, reactive, watch, computed } from "vue";
 import { useRenderIcon } from "@/components/ReIcon/src/hooks";
 import { useTranslationLang } from "@/layout/hooks/useTranslationLang";
 import { useDataThemeChange } from "@/layout/hooks/useDataThemeChange";
+import { getCookie, setLoginInfoCookie, setSingleCaptcha } from "@/utils/cookie";
 
 import dayIcon from "@/assets/svg/day.svg?component";
 import darkIcon from "@/assets/svg/dark.svg?component";
@@ -33,9 +37,8 @@ import Check from "~icons/ep/check";
 import User from "~icons/ri/user-3-fill";
 import Info from "~icons/ri/information-line";
 import Keyhole from "~icons/ri/shield-keyhole-line";
-
 defineOptions({
-  name: "Login"
+  name: "Login",
 });
 
 const imgCode = ref("");
@@ -45,9 +48,8 @@ const loading = ref(false);
 const checked = ref(false);
 const disabled = ref(false);
 const ruleFormRef = ref<FormInstance>();
-const currentPage = computed(() => {
-  return useUserStoreHook().currentPage;
-});
+const currentPage = computed(() => useUserStoreHook().currentPage);
+const remember = ref(!!getCookie(`${responsiveStorageNameSpace()}remember`));
 
 const { t } = useI18n();
 const { initStorage } = useLayout();
@@ -58,10 +60,23 @@ const { title, getDropdownItemStyle, getDropdownItemClass } = useNav();
 const { locale, translationCh, translationEn } = useTranslationLang();
 
 const ruleForm = reactive({
-  username: "admin",
-  password: "admin123",
-  verifyCode: ""
+  username: getCookie(`${responsiveStorageNameSpace()}username`) ?? "",
+  password: getCookie(`${responsiveStorageNameSpace()}password`) ?? "",
+  code: "",
 });
+
+const setCaptchaCookie = res => {
+  setSingleCaptcha(res.headers[SINGLE_CAPTCHA]);
+};
+
+const getCaptcha = () => {
+  loginApi.getCaptcha(setCaptchaCookie).then(res => {
+    console.log(res);
+    imgCode.value = window.URL.createObjectURL(new Blob([res as unknown as BlobPart], { type: "image/jpeg" }));
+  });
+};
+
+getCaptcha();
 
 const onLogin = async (formEl: FormInstance | undefined) => {
   if (!formEl) return;
@@ -69,12 +84,18 @@ const onLogin = async (formEl: FormInstance | undefined) => {
     if (valid) {
       loading.value = true;
       useUserStoreHook()
-        .loginByUsername({
-          username: ruleForm.username,
-          password: ruleForm.password
-        })
+        .login(
+          {
+            username: ruleForm.username,
+            password: ruleForm.password,
+            code: ruleForm.code,
+          },
+          beforeRequestCallback,
+        )
         .then(res => {
-          if (res.success) {
+          if (res) {
+            // 记住密码
+            setLoginInfoCookie(ruleForm, remember.value);
             // 获取后端路由
             return initRouter().then(() => {
               disabled.value = true;
@@ -94,18 +115,14 @@ const onLogin = async (formEl: FormInstance | undefined) => {
   });
 };
 
-const immediateDebounce: any = debounce(
-  formRef => onLogin(formRef),
-  1000,
-  true
-);
+const beforeRequestCallback = config => {
+  console.log(config);
+};
+
+const immediateDebounce: any = debounce(formRef => onLogin(formRef), 1000, true);
 
 useEventListener(document, "keydown", ({ code }) => {
-  if (
-    ["Enter", "NumpadEnter"].includes(code) &&
-    !disabled.value &&
-    !loading.value
-  )
+  if (["Enter", "NumpadEnter"].includes(code) && ruleForm.code.length === 4 && !disabled.value && !loading.value)
     immediateDebounce(ruleFormRef.value);
 });
 
@@ -125,13 +142,7 @@ watch(loginDay, value => {
     <img :src="bg" class="wave" />
     <div class="flex-c absolute right-5 top-3">
       <!-- 主题 -->
-      <el-switch
-        v-model="dataTheme"
-        inline-prompt
-        :active-icon="dayIcon"
-        :inactive-icon="darkIcon"
-        @change="dataThemeChange"
-      />
+      <el-switch v-model="dataTheme" inline-prompt :active-icon="dayIcon" :inactive-icon="darkIcon" @change="dataThemeChange" />
       <!-- 国际化 -->
       <el-dropdown trigger="click">
         <globalization
@@ -144,11 +155,7 @@ watch(loginDay, value => {
               :class="['dark:text-white!', getDropdownItemClass(locale, 'zh')]"
               @click="translationCh"
             >
-              <IconifyIconOffline
-                v-show="locale === 'zh'"
-                class="check-zh"
-                :icon="Check"
-              />
+              <IconifyIconOffline v-show="locale === 'zh'" class="check-zh" :icon="Check" />
               简体中文
             </el-dropdown-item>
             <el-dropdown-item
@@ -174,27 +181,19 @@ watch(loginDay, value => {
           <avatar class="avatar" />
           <Motion>
             <h2 class="outline-hidden">
-              <TypeIt
-                :options="{ strings: [title], cursor: false, speed: 100 }"
-              />
+              <TypeIt :options="{ strings: [title], cursor: false, speed: 100 }" />
             </h2>
           </Motion>
 
-          <el-form
-            v-if="currentPage === 0"
-            ref="ruleFormRef"
-            :model="ruleForm"
-            :rules="loginRules"
-            size="large"
-          >
+          <el-form v-if="currentPage === 0" ref="ruleFormRef" :model="ruleForm" :rules="loginRules" size="large">
             <Motion :delay="100">
               <el-form-item
                 :rules="[
                   {
                     required: true,
                     message: transformI18n($t('login.pureUsernameReg')),
-                    trigger: 'blur'
-                  }
+                    trigger: 'blur',
+                  },
                 ]"
                 prop="username"
               >
@@ -220,15 +219,18 @@ watch(loginDay, value => {
             </Motion>
 
             <Motion :delay="200">
-              <el-form-item prop="verifyCode">
+              <el-form-item prop="code">
                 <el-input
-                  v-model="ruleForm.verifyCode"
+                  v-model="ruleForm.code"
                   clearable
                   :placeholder="t('login.pureVerifyCode')"
                   :prefix-icon="useRenderIcon(Keyhole)"
                 >
                   <template v-slot:append>
-                    <ReImageVerify v-model:code="imgCode" />
+                    <!-- 前端验证码 -->
+                    <ReImageVerify v-if="false" v-model:code="imgCode" />
+                    <!-- 后端验证码 -->
+                    <img class="code opinter !h-[38px]" :src="imgCode" alt="验证码" @click="getCaptcha" />
                   </template>
                 </el-input>
               </el-form-item>
@@ -236,7 +238,7 @@ watch(loginDay, value => {
 
             <Motion :delay="250">
               <el-form-item>
-                <div class="w-full h-[20px] flex justify-between items-center">
+                <div v-show="false" class="w-full h-[20px] flex justify-between items-center">
                   <el-checkbox v-model="checked">
                     <span class="flex">
                       <select
@@ -246,7 +248,7 @@ watch(loginDay, value => {
                           outline: 'none',
                           background: 'none',
                           appearance: 'none',
-                          border: 'none'
+                          border: 'none',
                         }"
                       >
                         <option value="1">1</option>
@@ -257,20 +259,21 @@ watch(loginDay, value => {
                       <IconifyIconOffline
                         v-tippy="{
                           content: t('login.pureRememberInfo'),
-                          placement: 'top'
+                          placement: 'top',
                         }"
                         :icon="Info"
                         class="ml-1"
                       />
                     </span>
                   </el-checkbox>
-                  <el-button
-                    link
-                    type="primary"
-                    @click="useUserStoreHook().SET_CURRENTPAGE(4)"
-                  >
+                  <el-button link type="primary" @click="useUserStoreHook().SET_CURRENTPAGE(4)">
                     {{ t("login.pureForget") }}
                   </el-button>
+                </div>
+                <div class="w-full h-[20px] flex justify-between items-center">
+                  <el-checkbox v-model="remember">
+                    {{ transformI18n($t("login.remember")) }}
+                  </el-checkbox>
                 </div>
                 <el-button
                   class="w-full mt-4!"
@@ -285,7 +288,7 @@ watch(loginDay, value => {
               </el-form-item>
             </Motion>
 
-            <Motion :delay="300">
+            <Motion v-show="false" :delay="300">
               <el-form-item>
                 <div class="w-full h-[20px] flex justify-between items-center">
                   <el-button
@@ -302,7 +305,7 @@ watch(loginDay, value => {
             </Motion>
           </el-form>
 
-          <Motion v-if="currentPage === 0" :delay="350">
+          <Motion v-show="false" v-if="currentPage === 0" :delay="350">
             <el-form-item>
               <el-divider>
                 <p class="text-gray-500 text-xs">
@@ -310,11 +313,7 @@ watch(loginDay, value => {
                 </p>
               </el-divider>
               <div class="w-full flex justify-evenly">
-                <span
-                  v-for="(item, index) in thirdParty"
-                  :key="index"
-                  :title="t(item.title)"
-                >
+                <span v-for="(item, index) in thirdParty" :key="index" :title="t(item.title)">
                   <IconifyIconOnline
                     :icon="`ri:${item.icon}-fill`"
                     width="20"
@@ -335,17 +334,9 @@ watch(loginDay, value => {
         </div>
       </div>
     </div>
-    <div
-      class="w-full flex-c absolute bottom-3 text-sm text-[rgba(0,0,0,0.6)] dark:text-[rgba(220,220,242,0.8)]"
-    >
+    <div class="w-full flex-c absolute bottom-3 text-sm text-[rgba(0,0,0,0.6)] dark:text-[rgba(220,220,242,0.8)]">
       Copyright © 2020-present
-      <a
-        class="hover:text-primary"
-        href="https://github.com/pure-admin"
-        target="_blank"
-      >
-        &nbsp;{{ title }}
-      </a>
+      <a class="hover:text-primary!" href="https://github.com/pure-admin" target="_blank"> &nbsp;{{ title }} </a>
     </div>
   </div>
 </template>

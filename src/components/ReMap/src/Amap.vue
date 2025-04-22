@@ -16,7 +16,7 @@ export interface MapConfigureInter {
 }
 
 defineOptions({
-  name: "Amap"
+  name: "Amap",
 });
 
 let MarkerCluster;
@@ -25,7 +25,7 @@ let map: MapConfigureInter;
 const instance = getCurrentInstance();
 
 const mapSet = reactive({
-  loading: deviceDetection() ? false : true
+  loading: deviceDetection() ? false : true,
 });
 
 // 地图创建完成(动画关闭)
@@ -45,7 +45,7 @@ onBeforeMount(() => {
   AMapLoader.load({
     key: MapConfigure.amapKey,
     version: "2.0",
-    plugins: ["AMap.MarkerCluster"]
+    plugins: ["AMap.MarkerCluster"],
   })
     .then(AMap => {
       // 创建地图实例
@@ -57,8 +57,8 @@ onBeforeMount(() => {
         //地图类型切换
         map.addControl(
           new AMap.MapType({
-            defaultType: 0
-          })
+            defaultType: 0,
+          }),
         );
       });
 
@@ -70,16 +70,14 @@ onBeforeMount(() => {
           const { marker, data } = ctx;
           if (Array.isArray(data) && data[0]) {
             const { driver, plateNumber, orientation } = data[0];
-            const content = `<img style="transform: scale(1) rotate(${
-              360 - Number(orientation)
-            }deg);" src='${car}' />`;
+            const content = `<img style="transform: scale(1) rotate(${360 - Number(orientation)}deg);" src='${car}' />`;
             marker.setContent(content);
             marker.setLabel({
               direction: "bottom",
               //设置文本标注偏移量
               offset: new AMap.Pixel(-4, 0),
               //设置文本标注内容
-              content: `<div> ${plateNumber}(${driver})</div>`
+              content: `<div> ${plateNumber}(${driver})</div>`,
             });
             marker.setOffset(new AMap.Pixel(-18, -10));
             marker.on("click", ({ lnglat }) => {
@@ -87,7 +85,7 @@ onBeforeMount(() => {
               map.setCenter(lnglat);
             });
           }
-        }
+        },
       });
 
       // 获取模拟车辆信息
@@ -96,7 +94,7 @@ onBeforeMount(() => {
           const points: object = data.map(v => {
             return {
               lnglat: [v.lng, v.lat],
-              ...v
+              ...v,
             };
           });
           if (MarkerCluster) MarkerCluster.setData(points);

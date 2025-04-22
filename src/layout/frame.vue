@@ -4,7 +4,7 @@ import { useRoute } from "vue-router";
 import { ref, unref, watch, onMounted, nextTick } from "vue";
 
 defineOptions({
-  name: "LayFrame"
+  name: "LayFrame",
 });
 
 const props = defineProps<{
@@ -48,10 +48,7 @@ function init() {
 watch(
   () => currentRoute.fullPath,
   path => {
-    if (
-      currentRoute.name === "Redirect" &&
-      path.includes(props.frameInfo?.fullPath)
-    ) {
+    if (currentRoute.name === "Redirect" && path.includes(props.frameInfo?.fullPath)) {
       frameSrc.value = path; // redirect时，置换成任意值，待重定向后 重新赋值
       loading.value = true;
     }
@@ -59,7 +56,7 @@ watch(
     if (props.frameInfo?.fullPath === path) {
       frameSrc.value = props.frameInfo?.frameSrc;
     }
-  }
+  },
 );
 
 onMounted(() => {
@@ -68,11 +65,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div
-    v-loading="loading"
-    class="frame"
-    :element-loading-text="t('status.pureLoad')"
-  >
+  <div v-loading="loading" class="frame" :element-loading-text="t('status.pureLoad')">
     <iframe ref="frameRef" :src="frameSrc" class="frame-iframe" />
   </div>
 </template>

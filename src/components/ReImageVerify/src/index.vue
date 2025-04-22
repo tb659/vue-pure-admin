@@ -3,7 +3,7 @@ import { watch } from "vue";
 import { useImageVerify } from "./hooks";
 
 defineOptions({
-  name: "ReImageVerify"
+  name: "ReImageVerify",
 });
 
 interface Props {
@@ -15,7 +15,7 @@ interface Emits {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  code: ""
+  code: "",
 });
 
 const emit = defineEmits<Emits>();
@@ -26,7 +26,7 @@ watch(
   () => props.code,
   newValue => {
     setImgCode(newValue);
-  }
+  },
 );
 watch(imgCode, newValue => {
   emit("update:code", newValue);
@@ -36,11 +36,5 @@ defineExpose({ getImgCode });
 </script>
 
 <template>
-  <canvas
-    ref="domRef"
-    width="120"
-    height="40"
-    class="cursor-pointer"
-    @click="getImgCode"
-  />
+  <canvas ref="domRef" width="120" height="40" class="cursor-pointer" @click="getImgCode" />
 </template>

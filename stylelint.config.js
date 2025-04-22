@@ -2,25 +2,18 @@
 
 /** @type {import("stylelint").Config} */
 export default {
-  extends: [
-    "stylelint-config-standard",
-    "stylelint-config-html/vue",
-    "stylelint-config-recess-order"
-  ],
+  extends: ["stylelint-config-standard", "stylelint-config-html/vue", "stylelint-config-recess-order"],
   plugins: ["stylelint-scss", "stylelint-order", "stylelint-prettier"],
   overrides: [
     {
       files: ["**/*.(css|html|vue)"],
-      customSyntax: "postcss-html"
+      customSyntax: "postcss-html",
     },
     {
       files: ["*.scss", "**/*.scss"],
       customSyntax: "postcss-scss",
-      extends: [
-        "stylelint-config-standard-scss",
-        "stylelint-config-recommended-vue/scss"
-      ]
-    }
+      extends: ["stylelint-config-standard-scss", "stylelint-config-recommended-vue/scss"],
+    },
   ],
   rules: {
     "prettier/prettier": true,
@@ -30,14 +23,14 @@ export default {
     "selector-pseudo-class-no-unknown": [
       true,
       {
-        ignorePseudoClasses: ["deep", "global"]
-      }
+        ignorePseudoClasses: ["deep", "global"],
+      },
     ],
     "selector-pseudo-element-no-unknown": [
       true,
       {
-        ignorePseudoElements: ["v-deep", "v-global", "v-slotted"]
-      }
+        ignorePseudoElements: ["v-deep", "v-global", "v-slotted"],
+      },
     ],
     "at-rule-no-unknown": [
       true,
@@ -53,15 +46,15 @@ export default {
           "each",
           "include",
           "mixin",
-          "use"
-        ]
-      }
+          "use",
+        ],
+      },
     ],
     "rule-empty-line-before": [
       "always",
       {
-        ignore: ["after-comment", "first-nested"]
-      }
+        ignore: ["after-comment", "first-nested"],
+      },
     ],
     "unit-no-unknown": [true, { ignoreUnits: ["rpx"] }],
     "order/order": [
@@ -72,16 +65,16 @@ export default {
         "declarations",
         {
           type: "at-rule",
-          name: "supports"
+          name: "supports",
         },
         {
           type: "at-rule",
-          name: "media"
+          name: "media",
         },
-        "rules"
+        "rules",
       ],
-      { severity: "warning" }
-    ]
+      { severity: "warning" },
+    ],
   },
-  ignoreFiles: ["**/*.js", "**/*.ts", "**/*.jsx", "**/*.tsx", "report.html"]
+  ignoreFiles: ["**/*.js", "**/*.ts", "**/*.jsx", "**/*.tsx", "report.html"],
 };

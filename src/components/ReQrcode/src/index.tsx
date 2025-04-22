@@ -1,12 +1,4 @@
-import {
-  type PropType,
-  ref,
-  unref,
-  watch,
-  nextTick,
-  computed,
-  defineComponent
-} from "vue";
+import { type PropType, ref, unref, watch, nextTick, computed, defineComponent } from "vue";
 import "./index.scss";
 import propTypes from "@/utils/propTypes";
 import { isString, cloneDeep } from "@pureadmin/utils";
@@ -25,30 +17,28 @@ interface QrcodeLogo {
 
 const props = {
   // img 或者 canvas,img不支持logo嵌套
-  tag: propTypes.string
-    .validate((v: string) => ["canvas", "img"].includes(v))
-    .def("canvas"),
+  tag: propTypes.string.validate((v: string) => ["canvas", "img"].includes(v)).def("canvas"),
   // 二维码内容
   text: {
     type: [String, Array] as PropType<string | Recordable[]>,
-    default: null
+    default: null,
   },
   // qrcode.js配置项
   options: {
     type: Object as PropType<QRCodeRenderersOptions>,
-    default: (): QRCodeRenderersOptions => ({})
+    default: (): QRCodeRenderersOptions => ({}),
   },
   // 宽度
   width: propTypes.number.def(200),
   // logo
   logo: {
     type: [String, Object] as PropType<Partial<QrcodeLogo> | string>,
-    default: (): QrcodeLogo | string => ""
+    default: (): QrcodeLogo | string => "",
   },
   // 是否过期
   disabled: propTypes.bool.def(false),
   // 过期提示内容
-  disabledText: propTypes.string.def("")
+  disabledText: propTypes.string.def(""),
 };
 
 export default defineComponent({
@@ -63,7 +53,7 @@ export default defineComponent({
     const wrapStyle = computed(() => {
       return {
         width: props.width + "px",
-        height: props.width + "px"
+        height: props.width + "px",
       };
     });
     const initQrcode = async () => {
@@ -71,17 +61,10 @@ export default defineComponent({
       const options = cloneDeep(props.options || {});
       if (props.tag === "canvas") {
         // 容错率，默认对内容少的二维码采用高容错率，内容多的二维码采用低容错率
-        options.errorCorrectionLevel =
-          options.errorCorrectionLevel ||
-          getErrorCorrectionLevel(unref(renderText));
+        options.errorCorrectionLevel = options.errorCorrectionLevel || getErrorCorrectionLevel(unref(renderText));
         const _width: number = await getOriginWidth(unref(renderText), options);
-        options.scale =
-          props.width === 0 ? undefined : (props.width / _width) * 4;
-        const canvasRef: any = await toCanvas(
-          unref(wrapRef) as HTMLCanvasElement,
-          unref(renderText),
-          options
-        );
+        options.scale = props.width === 0 ? undefined : (props.width / _width) * 4;
+        const canvasRef: any = await toCanvas(unref(wrapRef) as HTMLCanvasElement, unref(renderText), options);
         if (props.logo) {
           const url = await createLogoCode(canvasRef);
           emit("done", url);
@@ -94,7 +77,7 @@ export default defineComponent({
         const url = await toDataURL(renderText.value, {
           errorCorrectionLevel: "H",
           width: props.width,
-          ...options
+          ...options,
         });
         (unref(wrapRef) as any).src = url;
         emit("done", url);
@@ -109,8 +92,8 @@ export default defineComponent({
       },
       {
         deep: true,
-        immediate: true
-      }
+        immediate: true,
+      },
     );
     const createLogoCode = (canvasRef: HTMLCanvasElement) => {
       const canvasWidth = canvasRef.width;
@@ -121,9 +104,9 @@ export default defineComponent({
           borderSize: 0.05,
           crossOrigin: "anonymous",
           borderRadius: 8,
-          logoRadius: 0
+          logoRadius: 0,
         },
-        isString(props.logo) ? {} : props.logo
+        isString(props.logo) ? {} : props.logo,
       );
       const {
         logoSize = 0.15,
@@ -131,7 +114,7 @@ export default defineComponent({
         borderSize = 0.05,
         crossOrigin = "anonymous",
         borderRadius = 8,
-        logoRadius = 0
+        logoRadius = 0,
       } = logoOptions;
       const logoSrc = isString(props.logo) ? props.logo : props.logo.src;
       const logoWidth = canvasWidth * logoSize;
@@ -141,13 +124,7 @@ export default defineComponent({
       const ctx = canvasRef.getContext("2d");
       if (!ctx) return;
       // logo 底色
-      canvasRoundRect(ctx)(
-        logoBgXY,
-        logoBgXY,
-        logoBgWidth,
-        logoBgWidth,
-        borderRadius
-      );
+      canvasRoundRect(ctx)(logoBgXY, logoBgXY, logoBgWidth, logoBgWidth, borderRadius);
       ctx.fillStyle = bgColor;
       ctx.fill();
       // logo
@@ -185,10 +162,7 @@ export default defineComponent({
       });
     };
     // 得到原QrCode的大小，以便缩放得到正确的QrCode大小
-    const getOriginWidth = async (
-      content: string,
-      options: QRCodeRenderersOptions
-    ) => {
+    const getOriginWidth = async (content: string, options: QRCodeRenderersOptions) => {
       const _canvas = document.createElement("canvas");
       await toCanvas(_canvas, content, options);
       return _canvas.width;
@@ -228,11 +202,7 @@ export default defineComponent({
     };
     return () => (
       <>
-        <div
-          v-loading={unref(loading)}
-          class="qrcode relative inline-block"
-          style={unref(wrapStyle)}
-        >
+        <div v-loading={unref(loading)} class="qrcode relative inline-block" style={unref(wrapStyle)}>
           {props.tag === "canvas" ? (
             <canvas ref={wrapRef} onClick={clickCode}></canvas>
           ) : (
@@ -244,12 +214,7 @@ export default defineComponent({
               onClick={disabledClick}
             >
               <div class="absolute top-[50%] left-[50%] font-bold">
-                <iconify-icon-offline
-                  class="cursor-pointer"
-                  icon={RefreshRight}
-                  width="30"
-                  color="var(--el-color-primary)"
-                />
+                <iconify-icon-offline class="cursor-pointer" icon={RefreshRight} width="30" color="var(--el-color-primary)" />
                 <div>{props.disabledText}</div>
               </div>
             </div>
@@ -257,5 +222,5 @@ export default defineComponent({
         </div>
       </>
     );
-  }
+  },
 });
