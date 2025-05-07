@@ -6,7 +6,7 @@ import { getUser } from "@/store/modules/user";
 import { buildHierarchyTree } from "@/utils/tree";
 import remainingRouter from "./modules/remaining";
 import { getToken, removeToken } from "@/utils/cookie";
-import { isUrl, openLink, isAllEmpty } from "@pureadmin/utils";
+import { isUrl, openLink, isAllEmpty, cloneDeep } from "@pureadmin/utils";
 import { useMultiTagsStoreHook } from "@/store/modules/multiTags";
 import { usePermissionStoreHook } from "@/store/modules/permission";
 import {
@@ -46,6 +46,9 @@ export const constantRoutes: Array<RouteRecordRaw> = formatTwoStageRoutes(
   formatFlatteningRoutes(buildHierarchyTree(ascending(routes.flat(Infinity)))),
 );
 
+/** 初始的静态路由，用于退出登录时重置路由 */
+const initConstantRoutes: Array<RouteRecordRaw> = cloneDeep(constantRoutes);
+
 /** 用于渲染菜单，保持原始层级 */
 export const constantMenus: Array<RouteComponent> = ascending(routes.flat(Infinity)).concat(...remainingRouter);
 
@@ -75,13 +78,11 @@ export const router: Router = createRouter({
 
 /** 重置路由 */
 export function resetRouter() {
-  router.getRoutes().forEach(route => {
-    const { name, meta } = route;
-    if (name && router.hasRoute(name) && meta?.backstage) {
-      router.removeRoute(name);
-      router.options.routes = formatTwoStageRoutes(formatFlatteningRoutes(buildHierarchyTree(ascending(routes.flat(Infinity)))));
-    }
-  });
+  router.clearRoutes();
+  for (const route of initConstantRoutes.concat(...(remainingRouter as any))) {
+    router.addRoute(route);
+  }
+  router.options.routes = formatTwoStageRoutes(formatFlatteningRoutes(buildHierarchyTree(ascending(routes.flat(Infinity)))));
   usePermissionStoreHook().clearAllCachePage();
 }
 

@@ -9,12 +9,16 @@ interface MessageParams extends ElMessageBoxOptions {
   // ! message 独有
   /** 显示时间，单位为毫秒。设为 `0` 则不会自动关闭，`element-plus` 默认是 `3000` ，平台改成默认 `2000` */
   duration?: number;
-  /** `Message` 距离窗口顶部的偏移量，默认 `20` */
+  /** `Message` 距离窗口顶部的偏移量，默认 `16` */
   offset?: number;
   /** 合并内容相同的消息，不支持 `VNode` 类型的消息，默认值 `false` */
   grouping?: boolean;
   /** 关闭时的回调函数, 参数为被关闭的 `message` 实例 */
   onClose?: Function | null;
+  /** 是否纯色，默认 `false` */
+  plain?: boolean;
+  /** 重复次数，类似于 `Badge` 。当和 `grouping` 属性一起使用时作为初始数量使用，默认值 `1` */
+  repeatNum?: number;
   // ! message messageBox 共有
   /** 设置组件的根元素，默认 `document.body` */
   appendTo?: string | HTMLElement;
@@ -54,6 +58,7 @@ class Message {
       const {
         icon,
         type = "info",
+        plain = false,
         dangerouslyUseHTMLString = false,
         customClass = "antd",
         duration = 3000,
@@ -62,12 +67,14 @@ class Message {
         offset = 20,
         appendTo = document.body,
         grouping = false,
+        repeatNum = 1,
         onClose,
       } = params;
 
       return ElMessage({
         message,
         type,
+        plain,
         icon,
         dangerouslyUseHTMLString,
         duration,
@@ -76,6 +83,7 @@ class Message {
         offset,
         appendTo,
         grouping,
+        repeatNum,
         // 全局搜 pure-message 即可知道该类的样式位置
         customClass: customClass === "antd" ? "pure-message" : "",
         onClose: () => (isFunction(onClose) ? onClose() : null),

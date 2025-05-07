@@ -253,6 +253,8 @@ function handleAsyncRoutes(routeList) {
         ascending(router.options.routes[0].children);
         if (!router.hasRoute(v?.name)) router.addRoute(v);
         const flattenRouters: any = router.getRoutes().find(n => n.path === "/");
+        // 保持router.options.routes[0].children与path为"/"的children一致，防止数据不一致导致异常
+        flattenRouters.children = router.options.routes[0].children;
         router.addRoute(flattenRouters);
       }
     });
