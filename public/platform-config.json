@@ -24,8 +24,15 @@
   "TooltipEffect": "light",
   "ResponsiveStorageNameSpace": "mt-gtrb-",
   "MenuSearchHistory": 6,
+  "ShowI18N": true,
+  "ShowSearch": true,
+  "ShowNotice": true,
+  "LeftMixNavFixed": false,
+  "MixMenuTrigger": "hover",
+  "ContentFullScreen": false,
+  "ShowSystemSettings": true,
   "MapConfigure": {
-    "amapKey": "adc139d56406f3844c8f1cf1c6b65c41",
+    "amapKey": "4d554e1aeff34a3830b281408da6aaa6",
     "options": {
       "resizeEnable": true,
       "center": [113.6401, 34.72468],

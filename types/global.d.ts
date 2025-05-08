@@ -103,6 +103,13 @@ declare global {
     TooltipEffect?: Effect;
     ResponsiveStorageNameSpace?: string;
     MenuSearchHistory?: number;
+    ShowI18N?: boolean;
+    ShowSearch?: boolean;
+    ShowNotice?: boolean;
+    LeftMixNavFixed?: boolean;
+    MixMenuTrigger?: string;
+    ContentFullScreen?: boolean;
+    ShowSystemSettings?: boolean;
     MapConfigure?: {
       amapKey?: string;
       options: {

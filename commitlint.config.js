@@ -1,16 +1,26 @@
 // @see: https://cz-git.qbenben.com/zh/guide
 /** @type {import('cz-git').UserConfig} */
 export default {
+  // 忽略特定的commit消息
   ignores: [commit => commit === "init"],
+  // 继承标准的commitlint配置
   extends: ["@commitlint/config-conventional"],
+  // commit消息的校验规则
   rules: {
     // @see: https://commitlint.js.org/#/reference-rules
+    // body部分必须以空行开始
     "body-leading-blank": [2, "always"],
+    // footer部分必须以空行开始
     "footer-leading-blank": [1, "always"],
+    // header部分最大长度限制
     "header-max-length": [2, "always", 108],
+    // subject不能为空
     "subject-empty": [2, "never"],
+    // type不能为空
     "type-empty": [2, "never"],
+    // subject的大小写不做限制
     "subject-case": [0],
+    // 定义允许的commit类型
     "type-enum": [
       2,
       "always",
@@ -33,7 +43,9 @@ export default {
       ],
     ],
   },
+  // 交互式提示的配置
   prompt: {
+    // 提示信息的中文翻译
     messages: {
       type: "选择你要提交的类型 :",
       scope: "选择一个提交范围（可选）:",
@@ -49,6 +61,7 @@ export default {
       generatedSelectByAI: "自动生成的主题中选择适合者",
       confirmCommit: "是否提交或修改commit ?",
     },
+    // 定义commit类型及其描述
     types: [
       { value: "feat: 新增", name: "新增:   🚀  新增功能", emoji: "🚀" },
       { value: "fix: 修复", name: "修复:   🧩  修复缺陷", emoji: "🧩" },
@@ -63,33 +76,61 @@ export default {
       { value: "revert: 回退", name: "回退:   ⏪️  回滚 commit", emoji: "⏪️" },
       { value: "types: 类型", name: "类型:   🔖  ts类型注解", emoji: "🔖" },
     ],
-    useEmoji: true,
+    // 使用emoji表情
+    useEmoji: false,
+    // 主题颜色代码
     themeColorCode: "",
+    // 提交范围
     scopes: [],
+    // 允许自定义范围
     allowCustomScopes: true,
+    // 允许空范围
     allowEmptyScopes: true,
+    // 自定义范围的对齐方式
     customScopesAlign: "bottom",
+    // 自定义范围的别名
     customScopesAlias: "custom",
+    // 空范围的别名
     emptyScopesAlias: "empty",
+    // subject是否大写
     upperCaseSubject: false,
+    // 允许重大变更的类型
     allowBreakingChanges: ["feat", "fix"],
+    // 换行字符数
     breaklineNumber: 100,
+    // 换行字符
     breaklineChar: "|",
+    // 跳过的问题
     skipQuestions: [],
+    // issue前缀
     issuePrefixs: [{ value: "closed", name: "closed:   ISSUES has been processed" }],
+    // 自定义issue前缀的对齐方式
     customIssuePrefixsAlign: "top",
+    // 空issue前缀的别名
     emptyIssuePrefixsAlias: "skip",
+    // 自定义issue前缀的别名
     customIssuePrefixsAlias: "custom",
+    // 允许自定义issue前缀
     allowCustomIssuePrefixs: true,
+    // 允许空issue前缀
     allowEmptyIssuePrefixs: true,
+    // 确认颜色
     confirmColorize: true,
+    // header最大长度
     maxHeaderLength: Infinity,
+    // subject最大长度
     maxSubjectLength: Infinity,
+    // subject最小长度
     minSubjectLength: 0,
+    // 范围覆盖
     scopeOverrides: undefined,
+    // 默认body
     defaultBody: "",
+    // 默认issues
     defaultIssues: "",
+    // 默认scope
     defaultScope: "",
+    // 默认subject
     defaultSubject: "",
   },
 };

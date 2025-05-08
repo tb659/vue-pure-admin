@@ -5,16 +5,17 @@ export { getConfig, responsiveStorageNameSpace } from "@/config";
 export { ascending, filterShowLinkTree, filterNoPermissionTree, formatFlatteningRoutes } from "@/router/utils";
 export { isUrl, isEqual, isNumber, debounce, isBoolean, getKeyList, storageLocal, deviceDetection } from "@pureadmin/utils";
 export type {
-  SetType,
   AppType,
-  UserType,
-  MultiType,
-  CacheType,
-  PositionType,
-  SettingStore,
-  PermissionStore,
   CommonStore,
   CommonType,
+  MultiType,
+  MultitagsStore,
+  PermissionStore,
+  SetType,
+  SettingStore,
+  UserType,
+  CacheType,
+  PositionType,
   GoLastPageType,
 } from "./types";
 export { setCookie } from "@/utils/cookie";

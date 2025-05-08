@@ -10,25 +10,11 @@ export type PositionType = {
   length?: number;
 };
 
-export type AppType = {
-  sidebar: {
-    opened: boolean;
-    withoutAnimation: boolean;
-    // 判断是否手动点击Collapse
-    isClickCollapse: boolean;
-  };
-  layout: Layout;
-  device: string;
-  viewportSize: { width: number; height: number };
-  sortSwap: boolean;
-};
-
-export type MultiType = {
-  path: string;
-  name: string;
-  meta: any;
-  query?: object;
-  params?: object;
+export type GoLastPageType = {
+  info?: string;
+  isConfirm?: boolean;
+  closeTab?: boolean;
+  reload?: boolean;
 };
 
 export type SettingLayoutType = {
@@ -54,6 +40,60 @@ export type SettingConfigureType = {
   weak: boolean;
 };
 
+export type AppType = {
+  sidebar: {
+    opened: boolean;
+    withoutAnimation: boolean;
+    // 判断是否手动点击Collapse
+    isClickCollapse: boolean;
+  };
+  layout: Layout;
+  device: string;
+  viewportSize: { width: number; height: number };
+  sortSwap: boolean;
+};
+
+export type CommonType = {
+  dictList: DictData[];
+  fileSizeLimit: string;
+};
+
+export type CommonStore = {
+  dictList: any[];
+  fileSizeLimit: string;
+  init: () => void;
+  getDict: () => Promise<void>;
+  getFileSizeLimit: () => void;
+  setFileSizeLimit: (size: string) => void;
+  goLastPage: (data?: GoLastPageType) => void;
+};
+
+export type MultiType = {
+  path: string;
+  name: string;
+  meta: any;
+  query?: object;
+  params?: object;
+};
+
+export type MultitagsStore = {
+  multiTags: any[];
+  multiTagsCache: boolean;
+  multiTagsCacheChange: (multiTagsCache: boolean) => void;
+  tagsCache: (multiTags: any[]) => void;
+  handleTags: (mode: string, value?: any, position?: PositionType) => void;
+};
+
+export type PermissionStore = {
+  constantMenus: any[];
+  wholeMenus: any[];
+  flatteningRoutes: any[];
+  cachePageList: any[];
+  handleWholeMenus: (routes: any[]) => void;
+  cacheOperate: (data: CacheType) => void;
+  clearAllCachePage: () => void;
+};
+
 export type SetType = {
   title: string;
   locale: {
@@ -63,6 +103,7 @@ export type SetType = {
   configure: SettingConfigureType;
   tags: any[];
 };
+
 export interface SettingStore extends SetType {
   getTitle: string;
   getLocale: {
@@ -76,38 +117,6 @@ export interface SettingStore extends SetType {
   setConfigure: ({ key, value }: { key: string; value: SettingConfigureType | any }) => void;
   setTags: ({ value }: { value: any[] }) => void;
 }
-
-export type PermissionStore = {
-  constantMenus: any[];
-  wholeMenus: any[];
-  flatteningRoutes: any[];
-  cachePageList: any[];
-  handleWholeMenus: (routes: any[]) => void;
-  cacheOperate: (data: CacheType) => void;
-  clearAllCachePage: () => void;
-};
-
-export type CommonStore = {
-  dictList: any[];
-  fileSizeLimit: string;
-  init: () => void;
-  getDict: () => Promise<void>;
-  getFileSizeLimit: () => void;
-  setFileSizeLimit: (size: string) => void;
-  goLastPage: (data?: GoLastPageType) => void;
-};
-
-export type CommonType = {
-  dictList: DictData[];
-  fileSizeLimit: string;
-};
-
-export type GoLastPageType = {
-  info?: string;
-  isConfirm?: boolean;
-  closeTab?: boolean;
-  reload?: boolean;
-};
 
 export type UserType = {
   avatar?: string;

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
 import Motion from "./utils/motion";
+import { getConfig } from "@/config";
 import { useRouter } from "vue-router";
 import { loginApi } from "@/api/login";
 import { message } from "@/utils/message";
@@ -24,16 +25,14 @@ import { initRouter, getTopMenu } from "@/router/utils";
 import { bg, avatar, illustration } from "./utils/static";
 import { ReImageVerify } from "@/components/ReImageVerify";
 import { ref, toRaw, reactive, watch, computed } from "vue";
+import LayI18n from "@/layout/components/lay-i18n/index.vue";
 import { useRenderIcon } from "@/components/ReIcon/src/hooks";
-import { useTranslationLang } from "@/layout/hooks/useTranslationLang";
 import { useDataThemeChange } from "@/layout/hooks/useDataThemeChange";
 import { getCookie, setLoginInfoCookie, setSingleCaptcha } from "@/utils/cookie";
 
 import dayIcon from "@/assets/svg/day.svg?component";
 import darkIcon from "@/assets/svg/dark.svg?component";
-import globalization from "@/assets/svg/globalization.svg?component";
 import Lock from "~icons/ri/lock-fill";
-import Check from "~icons/ep/check";
 import User from "~icons/ri/user-3-fill";
 import Info from "~icons/ri/information-line";
 import Keyhole from "~icons/ri/shield-keyhole-line";
@@ -56,8 +55,7 @@ const { initStorage } = useLayout();
 initStorage();
 const { dataTheme, overallStyle, dataThemeChange } = useDataThemeChange();
 dataThemeChange(overallStyle.value);
-const { title, getDropdownItemStyle, getDropdownItemClass } = useNav();
-const { locale, translationCh, translationEn } = useTranslationLang();
+const { title } = useNav();
 
 const ruleForm = reactive({
   username: getCookie(`${responsiveStorageNameSpace()}username`) ?? "",
@@ -144,33 +142,7 @@ watch(loginDay, value => {
       <!-- 主题 -->
       <el-switch v-model="dataTheme" inline-prompt :active-icon="dayIcon" :inactive-icon="darkIcon" @change="dataThemeChange" />
       <!-- 国际化 -->
-      <el-dropdown trigger="click">
-        <globalization
-          class="hover:text-primary hover:bg-[transparent]! w-[20px] h-[20px] ml-1.5 cursor-pointer outline-hidden duration-300"
-        />
-        <template #dropdown>
-          <el-dropdown-menu class="translation">
-            <el-dropdown-item
-              :style="getDropdownItemStyle(locale, 'zh')"
-              :class="['dark:text-white!', getDropdownItemClass(locale, 'zh')]"
-              @click="translationCh"
-            >
-              <IconifyIconOffline v-show="locale === 'zh'" class="check-zh" :icon="Check" />
-              简体中文
-            </el-dropdown-item>
-            <el-dropdown-item
-              :style="getDropdownItemStyle(locale, 'en')"
-              :class="['dark:text-white!', getDropdownItemClass(locale, 'en')]"
-              @click="translationEn"
-            >
-              <span v-show="locale === 'en'" class="check-en">
-                <IconifyIconOffline :icon="Check" />
-              </span>
-              English
-            </el-dropdown-item>
-          </el-dropdown-menu>
-        </template>
-      </el-dropdown>
+      <LayI18n v-if="getConfig().ShowI18N" />
     </div>
     <div class="login-container">
       <div class="img">
@@ -230,7 +202,7 @@ watch(loginDay, value => {
                     <!-- 前端验证码 -->
                     <ReImageVerify v-if="false" v-model:code="imgCode" />
                     <!-- 后端验证码 -->
-                    <img class="code opinter !h-[38px]" :src="imgCode" alt="验证码" @click="getCaptcha" />
+                    <img class="code pointer !h-[38px]" :src="imgCode" alt="验证码" @click="getCaptcha" />
                   </template>
                 </el-input>
               </el-form-item>

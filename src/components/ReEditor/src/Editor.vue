@@ -4,13 +4,14 @@ import { Editor, Toolbar } from "@wangeditor/editor-for-vue";
 import { type IDomEditor, type IEditorConfig, i18nChangeLanguage } from "@wangeditor/editor";
 import propTypes from "@/utils/propTypes";
 import { isNumber, storageLocal } from "@pureadmin/utils";
-import { ElMessage } from "element-plus";
+import { TOKEN_KEY } from "@/utils/constants";
 import { responsiveStorageNameSpace } from "@/config";
-import { useSettingStore } from "@/store/modules/settings";
+import { httpConfig } from "@/utils/http/config";
+import { getToken } from "@/utils/auth";
+import { msg } from "@/utils/msg";
+import { merge } from "lodash-es";
 
-const settingStore = useSettingStore();
-
-let locale = settingStore.getLocale.locale;
+let locale = storageLocal().getItem<StorageConfigs>(`${responsiveStorageNameSpace}locale`)?.locale;
 locale === "zh" && (locale = "zh-CN"); // 处理编辑器中文
 
 i18nChangeLanguage(locale);
@@ -57,35 +58,60 @@ const handleCreated = (editor: IDomEditor) => {
 
 // 编辑器配置
 const editorConfig = computed((): IEditorConfig => {
-  return Object.assign(
+  return merge(
     {
+      // 默认配置
       readOnly: false,
       customAlert: (s: string, t: string) => {
-        switch (t) {
-          case "success":
-            ElMessage.success(s);
-            break;
-          case "info":
-            ElMessage.info(s);
-            break;
-          case "warning":
-            ElMessage.warning(s);
-            break;
-          case "error":
-            ElMessage.error(s);
-            break;
-          default:
-            ElMessage.info(s);
-            break;
-        }
+        // ... existing code ...
       },
       autoFocus: false,
       scroll: true,
-      uploadImgShowBase64: true,
+      uploadImgShowBase64: false,
+      MENU_CONF: {
+        uploadImage: {
+          server: httpConfig.uploadUrl,
+          fieldName: "file",
+          maxFileSize: 1 * 1024 * 1024,
+          maxNumberOfFiles: 5,
+          allowedFileTypes: ["image/jpeg", "image/png", "image/gif"],
+          headers: {
+            [TOKEN_KEY]: getToken(),
+          },
+          onSuccess(file: File, res: any) {
+            console.log("上传成功", res);
+          },
+          onFailed(file: File, res: any) {
+            msg.error(res.message);
+          },
+          onError(file: File, err: any, res: any) {
+            msg.error(res.message);
+          },
+        },
+        uploadVideo: {
+          server: httpConfig.uploadUrl,
+          fieldName: "file",
+          maxFileSize: 1 * 1024 * 1024, // 1MB
+          allowedFileTypes: ["video/mp4", "video/quicktime", "video/x-msvideo"],
+          headers: {
+            [TOKEN_KEY]: getToken(),
+          },
+          onSuccess(file: File, res: any) {
+            console.log("视频上传成功", res);
+          },
+          onFailed(file: File, res: any) {
+            msg.error(res.message);
+          },
+          onError(file: File, err: any, res: any) {
+            msg.error(res.message);
+          },
+        },
+      },
     },
     props.editorConfig || {},
   );
 });
+console.log(editorConfig.value);
 
 const editorStyle = computed(() => {
   return {
@@ -120,9 +146,9 @@ defineExpose({
 <template>
   <div class="editor-wrap">
     <!-- 工具栏 -->
-    <Toolbar :editor="editorRef" :editorId="editorId" class="editor-toolbar" />
+    <toolbar :editor="editorRef" :editorId="editorId" class="editor-toolbar" />
     <!-- 编辑器 -->
-    <Editor
+    <editor
       v-model="valueHtml"
       :editorId="editorId"
       :defaultConfig="editorConfig"
