@@ -678,6 +678,207 @@ body[layout="horizontal"] {
   }
 }
 
+body[layout="leftMix"] {
+  $sideBarWidth: 80px;
+  $sideMenuCollapse: 54px;
+  $sideSubmenuWidth: 180px;
+
+  @include merge-style($sideBarWidth);
+
+  /* 页宽模式下，左侧二级菜单隐藏,内容区显示二级菜单 */
+  .sidebar-container {
+    top: 0 !important;
+    height: calc(100% - 2px) !important;
+
+    & ~ .fixed-header {
+      width: calc(100% - $sideBarWidth) !important;
+      margin-left: $sideBarWidth !important;
+
+      .tags-view {
+        width: 100% !important;
+        margin-left: 0 !important;
+      }
+    }
+
+    &.sub-menu-fixed ~ .fixed-header {
+      width: calc(100% - $sideBarWidth - $sideSubmenuWidth) !important;
+      margin-left: calc($sideBarWidth + $sideSubmenuWidth) !important;
+
+      .tags-view {
+        width: 100% !important;
+        margin-left: 0 !important;
+      }
+    }
+  }
+
+  .el-menu--collapse {
+    width: $sideMenuCollapse;
+  }
+
+  .sidebar-logo-container {
+    background: var(--pure-sidebar-logo);
+
+    a {
+      padding-left: 0;
+    }
+
+    .sidebar-logo-link {
+      justify-content: center;
+    }
+  }
+
+  .fixed-header {
+    width: calc(100% - $sideBarWidth);
+  }
+
+  .hideSidebar {
+    .sub-menu-fixed ~ .main-container {
+      margin-left: $sideMenuCollapse + $sideSubmenuWidth;
+
+      .fixed-header {
+        width: calc(100% - $sideMenuCollapse - $sideSubmenuWidth);
+      }
+    }
+
+    .fixed-header {
+      width: calc(100% - $sideMenuCollapse);
+    }
+
+    .left-mix-sub-item {
+      left: $sideMenuCollapse;
+    }
+
+    .left-mix-menu {
+      div,
+      span {
+        width: $sideMenuCollapse !important;
+      }
+    }
+
+    .sidebar-container {
+      width: $sideMenuCollapse !important;
+      transition: width var(--pure-transition-duration);
+
+      .is-active.submenu-title-noDropdown.outer-most {
+        background: transparent !important;
+      }
+    }
+
+    .main-container {
+      margin-left: $sideMenuCollapse;
+    }
+
+    /* 菜单折叠 */
+    .el-menu--collapse {
+      .el-sub-menu {
+        & > .el-sub-menu__title {
+          & > span {
+            visibility: visible;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+          }
+        }
+      }
+
+      .submenu-title-noDropdown {
+        background: transparent !important;
+      }
+
+      .el-sub-menu__title {
+        padding: 0;
+      }
+    }
+  }
+
+  .sub-menu-fixed ~ .main-container {
+    margin-left: $sideBarWidth + $sideSubmenuWidth;
+
+    .fixed-header {
+      width: calc(100% - $sideBarWidth - $sideSubmenuWidth);
+    }
+  }
+
+  .left-mix-menu {
+    .el-menu-item {
+      &:has(> .is-active-menu) {
+        &::before {
+          position: absolute;
+          left: 0;
+          width: 2px;
+          height: 100%;
+          content: "";
+          background: var(--el-color-primary) !important;
+        }
+      }
+
+      .is-active-menu {
+        color: var(--el-color-primary) !important;
+      }
+    }
+
+    .el-menu-item,
+    .el-sub-menu__title {
+      flex-direction: column;
+      padding: 0 !important;
+
+      .sub-menu-icon {
+        svg {
+          margin: 4px auto;
+        }
+      }
+
+      div,
+      span {
+        width: calc(100% - 6px) !important;
+        height: 22px;
+        margin: 0 3px;
+        line-height: 22px;
+        text-align: center;
+      }
+    }
+  }
+
+  .left-mix-sub-item {
+    position: fixed;
+    top: 0;
+    left: $sideBarWidth;
+    width: $sideSubmenuWidth;
+    height: 100%;
+    background: var(--pure-theme-menu-bg);
+    box-shadow: 0 0 1px #888;
+    transition: all var(--pure-transition-duration);
+
+    .sidebar-wrap {
+      position: relative;
+      background: var(--pure-sidebar-logo);
+
+      &::before {
+        position: absolute;
+        top: 0;
+        left: -1px;
+        width: 1px;
+        height: 100%;
+        content: "";
+        border-left: 1px solid var(--pure-sidebar-logo);
+      }
+
+      .sidebar-title {
+        display: inline-block;
+        width: 185px;
+        height: 48px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: 18px;
+        font-weight: 600;
+        line-height: 48px;
+        color: var(--pure-theme-sub-menu-active-text);
+        white-space: nowrap;
+      }
+    }
+  }
+}
+
 body[layout="topMix"] {
   $sideBarWidth: 210px;
 

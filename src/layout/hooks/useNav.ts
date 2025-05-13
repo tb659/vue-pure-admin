@@ -41,6 +41,21 @@ export function useNav() {
     };
   });
 
+  const getSubTextStyle = computed((): CSSProperties => {
+    if (!isCollapse.value) {
+      return {
+        width: "210px",
+        display: "inline-block",
+        overflow: "hidden",
+        textOverflow: "ellipsis",
+      };
+    } else {
+      return {
+        width: "",
+      };
+    }
+  });
+
   /** 头像（如果头像为空则使用 src/assets/user.jpg ） */
   const userAvatar = computed(() => {
     return isAllEmpty(useUserStoreHook()?.avatar) ? Avatar : useUserStoreHook()?.avatar;
@@ -159,6 +174,7 @@ export function useNav() {
     backTopMenu,
     onPanel,
     getDivStyle,
+    getSubTextStyle,
     changeTitle,
     toggleSideBar,
     menuSelect,

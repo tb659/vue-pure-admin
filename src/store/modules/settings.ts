@@ -8,7 +8,6 @@ export const useSettingStore = () => {
   if (!settingStore) {
     settingStore = defineStore(`${responsiveStorageNameSpace()}store_setting`, {
       state: (): SetType => ({
-        title: getConfig().Title,
         locale: { locale: getConfig().Locale ?? "zh" },
         layout: {
           layout: getConfig().Layout ?? "vertical",
@@ -18,6 +17,7 @@ export const useSettingStore = () => {
           epThemeColor: getConfig().EpThemeColor ?? "#409EFF",
           themeColor: getConfig().Theme ?? "light",
           overallStyle: getConfig().OverallStyle ?? "light",
+          contentFullScreen: getConfig().ContentFullScreen ?? false,
         },
         configure: {
           stretch: getConfig().Stretch ?? false,
@@ -30,13 +30,11 @@ export const useSettingStore = () => {
           hideFooter: getConfig().HideFooter ?? true,
           grey: getConfig().Grey ?? false,
           weak: getConfig().Weak ?? false,
+          mixMenuTrigger: getConfig().MixMenuTrigger ?? "hover",
         },
         tags: [],
       }),
       getters: {
-        getTitle(state) {
-          return state.title;
-        },
         getLocale(state) {
           return state.locale;
         },

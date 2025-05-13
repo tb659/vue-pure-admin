@@ -7,6 +7,7 @@ import { isEqual, isBoolean, toggleClass, hasClass } from "@pureadmin/utils";
 import { useSettingStore, useSettingStoreHook } from "@/store/modules/settings";
 
 import Fullscreen from "~icons/ri/fullscreen-fill";
+import ExitFullscreen from "~icons/ri/fullscreen-exit-fill";
 import CloseAllTags from "~icons/ri/subtract-line";
 import CloseOtherTags from "~icons/ri/text-spacing";
 import CloseRightTags from "~icons/ri/text-direction-l";
@@ -81,8 +82,10 @@ export function useTags() {
       show: true,
     },
     {
-      icon: Fullscreen,
-      text: $t("buttons.pureContentFullScreen"),
+      icon: !pureSetting.getLayout.contentFullScreen ? Fullscreen : ExitFullscreen,
+      text: !pureSetting.getLayout.contentFullScreen
+        ? $t("buttons.pureContentFullScreen")
+        : $t("buttons.pureContentExitFullScreen"),
       divided: true,
       disabled: false,
       show: true,
@@ -170,7 +173,7 @@ export function useTags() {
   }
 
   function onContentFullScreen() {
-    pureSetting.setConfigure({ key: "hideSideBar", value: !pureSetting.getConfigure.hideSideBar });
+    pureSetting.setLayout({ key: "contentFullScreen", value: !pureSetting.getLayout.contentFullScreen });
   }
 
   onMounted(() => {

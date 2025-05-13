@@ -55,6 +55,11 @@ panel:
   pureTagsStyleCardTip: Card tags for efficient browsing
   pureTagsStyleChrome: Chrome
   pureTagsStyleChromeTip: Chrome style is classic and elegant
+  pureMenuTrigger: MixMenuTrigger
+  pureMenuTriggerClick: Click
+  pureMenuTriggerClickTips: Click Once
+  pureMenuTriggerHover: Hover
+  pureMenuTriggerHoverTips: Hover Trigger
   pureInterfaceDisplay: Interface Display
   pureSidebarLogo: Sidebar Logo
   pureFixedHeader: Fixed Header

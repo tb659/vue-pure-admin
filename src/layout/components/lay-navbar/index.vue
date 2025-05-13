@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { getConfig } from "@/config";
-import { useNav } from "@/layout/hooks/useNav";
 import LayI18n from "../lay-i18n/index.vue";
+import { useNav } from "@/layout/hooks/useNav";
 import LaySearch from "../lay-search/index.vue";
 import LayNotice from "../lay-notice/index.vue";
 import LayLogout from "../lay-logout/index.vue";
-import LayNavMix from "../lay-sidebar/NavMix.vue";
+import LayNavTopMix from "../lay-sidebar/NavTopMix.vue";
 import { useTranslationLang } from "@/layout/hooks/useTranslationLang";
 import LaySidebarFullScreen from "../lay-sidebar/components/SidebarFullScreen.vue";
 import LaySidebarBreadCrumb from "../lay-sidebar/components/SidebarBreadCrumb.vue";
@@ -29,9 +29,9 @@ const { t } = useTranslationLang();
 
     <LaySidebarBreadCrumb v-if="layout !== 'topMix' && device !== 'mobile'" class="breadcrumb-container" />
 
-    <LayNavMix v-if="layout === 'topMix'" />
+    <LayNavTopMix v-if="layout === 'topMix'" />
 
-    <div v-if="layout === 'vertical'" class="vertical-header-right">
+    <div v-if="layout === 'vertical' || layout === 'leftMix'" class="vertical-header-right">
       <!-- 菜单搜索 -->
       <LaySearch id="header-search" />
       <!-- 国际化 -->

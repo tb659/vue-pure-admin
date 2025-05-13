@@ -47,7 +47,7 @@ export const useTable = <T = any>(config: UseTableConfig) => {
     // 总条数
     total: 10,
     // 页数
-    pageSize: 10,
+    pageSize: 1,
     // 当前页
     pageNumber: 1,
     // 查询参数

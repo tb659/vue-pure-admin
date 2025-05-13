@@ -106,8 +106,8 @@ declare global {
     ShowI18N?: boolean;
     ShowSearch?: boolean;
     ShowNotice?: boolean;
+    MixMenuTrigger?: "hover" | "click";
     LeftMixNavFixed?: boolean;
-    MixMenuTrigger?: string;
     ContentFullScreen?: boolean;
     ShowSystemSettings?: boolean;
     MapConfigure?: {

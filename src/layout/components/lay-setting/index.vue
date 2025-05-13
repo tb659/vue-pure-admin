@@ -110,6 +110,21 @@ const markOptions = computed<Array<OptionsType>>(() => {
   ];
 });
 
+const menuTriggerOptions = computed<Array<OptionsType>>(() => {
+  return [
+    {
+      label: t("panel.pureMenuTriggerHover"),
+      tip: t("panel.pureMenuTriggerHoverTips"),
+      value: "hover",
+    },
+    {
+      label: t("panel.pureMenuTriggerClick"),
+      tip: t("panel.pureMenuTriggerClickTips"),
+      value: "click",
+    },
+  ];
+});
+
 /* body添加layout属性，作用于src/style/sidebar.scss */
 if (unref(layoutTheme)) {
   const layout = unref(layoutTheme).layout;
@@ -120,6 +135,9 @@ if (unref(layoutTheme)) {
 
 /** 默认灵动模式 */
 const markValue = ref(useSettingStore().getConfigure?.showModel ?? "smart");
+
+/** 默认点击模式 */
+const mixMenuTrigger = ref(useSettingStore().getConfigure?.mixMenuTrigger ?? "hover");
 
 /** 默认侧边栏Logo */
 const logoVal = ref(useSettingStore().getConfigure?.showLogo ?? true);
@@ -196,6 +214,14 @@ function onChange({ option }) {
   markValue.value = value;
   storageConfigureChange("showModel", value);
   emitter.emit("tagViewsShowModel", value);
+}
+
+/** 混合菜单触发方式 */
+function onMenuTriggerChange({ option }) {
+  const { value } = option;
+  mixMenuTrigger.value = value;
+  storageConfigureChange("mixMenuTrigger", value);
+  emitter.emit("mixMenuTrigger", value);
 }
 
 /** 存储配置 */
@@ -370,6 +396,20 @@ onUnmounted(() => removeMatchMedia);
         </li>
         <li
           v-if="device !== 'mobile'"
+          ref="leftMixRef"
+          v-tippy="{
+            content: t('panel.pureMixTip'),
+            zIndex: 41000,
+          }"
+          :class="layoutTheme.layout === 'leftMix' ? 'is-select' : ''"
+          @click="setLayoutModel('leftMix')"
+        >
+          <div />
+          <div />
+          <div />
+        </li>
+        <li
+          v-if="device !== 'mobile'"
           ref="horizontalRef"
           v-tippy="{
             content: t('panel.pureHorizontalTip'),
@@ -438,6 +478,15 @@ onUnmounted(() => removeMatchMedia);
         :modelValue="markValue === 'smart' ? 0 : markValue === 'card' ? 1 : 2"
         :options="markOptions"
         @change="onChange"
+      />
+
+      <p :class="['mt-4!', pClass]">{{ t("panel.pureMenuTrigger") }}</p>
+      <Segmented
+        resize
+        class="select-none"
+        :modelValue="mixMenuTrigger === 'hover' ? 0 : mixMenuTrigger === 'click' ? 1 : 2"
+        :options="menuTriggerOptions"
+        @change="onMenuTriggerChange"
       />
 
       <p class="mt-5! font-bold text-sm dark:text-white">
@@ -614,6 +663,36 @@ onUnmounted(() => removeMatchMedia);
     &:nth-child(2) {
       div {
         &:nth-child(1) {
+          width: 30%;
+          height: 100%;
+          background: #1b2a47;
+        }
+
+        &:nth-child(2) {
+          position: absolute;
+          top: 0;
+          right: 0;
+          width: 70%;
+          height: 30%;
+          background: #fff;
+          box-shadow: 0 0 1px #888;
+        }
+
+        &:nth-child(3) {
+          position: absolute;
+          top: 0;
+          left: 12px;
+          width: 8px;
+          height: 45px;
+          background: #fff;
+          box-shadow: 0 0 1px #888;
+        }
+      }
+    }
+
+    &:nth-child(3) {
+      div {
+        &:nth-child(1) {
           width: 100%;
           height: 30%;
           background: #1b2a47;
@@ -622,7 +701,7 @@ onUnmounted(() => removeMatchMedia);
       }
     }
 
-    &:nth-child(3) {
+    &:nth-child(4) {
       div {
         &:nth-child(1) {
           width: 100%;

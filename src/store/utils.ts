@@ -6,6 +6,7 @@ export { ascending, filterShowLinkTree, filterNoPermissionTree, formatFlattening
 export { isUrl, isEqual, isNumber, debounce, isBoolean, getKeyList, storageLocal, deviceDetection } from "@pureadmin/utils";
 export type {
   AppType,
+  AppStore,
   CommonStore,
   CommonType,
   MultiType,

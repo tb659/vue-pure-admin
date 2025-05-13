@@ -6,6 +6,7 @@ type Events = {
   openPanel: string;
   tagOnClick: string;
   logoChange: boolean;
+  mixMenuTrigger: string;
   tagViewsChange: string;
   changLayoutRoute: string;
   tagViewsShowModel: string;

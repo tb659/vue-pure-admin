@@ -305,7 +305,7 @@ function onClickDrop(key, item, selectRoute?: RouteConfigs) {
       // 内容区全屏
       onContentFullScreen();
       setTimeout(() => {
-        if (pureSetting.getConfigure.hideSideBar) {
+        if (pureSetting.getLayout.contentFullScreen) {
           tagsViews[6].icon = ExitFullscreen;
           tagsViews[6].text = $t("buttons.pureContentExitFullScreen");
         } else {

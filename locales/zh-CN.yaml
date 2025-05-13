@@ -55,6 +55,11 @@ panel:
   pureTagsStyleCardTip: 卡片标签，高效浏览
   pureTagsStyleChrome: 谷歌
   pureTagsStyleChromeTip: 谷歌风格，经典美观
+  pureMenuTrigger: 混合菜单触发方式
+  pureMenuTriggerClick: 点击
+  pureMenuTriggerClickTips: 一键点击
+  pureMenuTriggerHover: 悬停
+  pureMenuTriggerHoverTips: 悬停触发
   pureInterfaceDisplay: 界面显示
   pureSidebarLogo: 侧边栏Logo
   pureFixedHeader: 固定Header

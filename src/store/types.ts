@@ -25,6 +25,7 @@ export type SettingLayoutType = {
   epThemeColor: string;
   themeColor: string;
   overallStyle: string;
+  contentFullScreen: boolean;
 };
 
 export type SettingConfigureType = {
@@ -38,9 +39,11 @@ export type SettingConfigureType = {
   hideFooter: boolean;
   grey: boolean;
   weak: boolean;
+  mixMenuTrigger: string;
 };
 
 export type AppType = {
+  title: string;
   sidebar: {
     opened: boolean;
     withoutAnimation: boolean;
@@ -51,22 +54,37 @@ export type AppType = {
   device: string;
   viewportSize: { width: number; height: number };
   sortSwap: boolean;
+  leftMixNavFixed: boolean;
 };
+
+export interface AppStore extends AppType {
+  getTitle: string;
+  getSidebarStatus: boolean;
+  getDevice: string;
+  getViewportWidth: number;
+  getViewportHeight: number;
+  getSortSwap: boolean;
+  getLeftMixNavFixed: boolean;
+  toggleSideBar: (opened?: boolean, resize?: string) => void;
+  toggleDevice: (device: string) => void;
+  setLayout: (layout: string) => void;
+  setViewportSize: (size: { width: number; height: number }) => void;
+  setSortSwap: (sortSwap: boolean) => void;
+  setLeftMixNavFixed: (leftMixNavFixed: boolean) => void;
+}
 
 export type CommonType = {
   dictList: DictData[];
   fileSizeLimit: string;
 };
 
-export type CommonStore = {
-  dictList: any[];
-  fileSizeLimit: string;
+export interface CommonStore extends CommonType {
   init: () => void;
   getDict: () => Promise<void>;
   getFileSizeLimit: () => void;
   setFileSizeLimit: (size: string) => void;
   goLastPage: (data?: GoLastPageType) => void;
-};
+}
 
 export type MultiType = {
   path: string;
@@ -95,7 +113,6 @@ export type PermissionStore = {
 };
 
 export type SetType = {
-  title: string;
   locale: {
     locale: string;
   };
@@ -105,7 +122,6 @@ export type SetType = {
 };
 
 export interface SettingStore extends SetType {
-  getTitle: string;
   getLocale: {
     locale: string;
   };

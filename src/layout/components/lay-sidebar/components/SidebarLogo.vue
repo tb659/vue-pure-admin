@@ -6,7 +6,7 @@ defineProps({
   collapse: Boolean,
 });
 
-const { title, getLogo } = useNav();
+const { title, layout, getLogo } = useNav();
 </script>
 
 <template>
@@ -14,11 +14,11 @@ const { title, getLogo } = useNav();
     <transition name="sidebarLogoFade">
       <router-link v-if="collapse" key="collapse" :title="title" class="sidebar-logo-link" :to="getTopMenu()?.path ?? '/'">
         <img :src="getLogo()" alt="logo" />
-        <span class="sidebar-title">{{ title }}</span>
+        <span v-if="layout !== 'leftMix'" class="sidebar-title">{{ title }}</span>
       </router-link>
       <router-link v-else key="expand" :title="title" class="sidebar-logo-link" :to="getTopMenu()?.path ?? '/'">
         <img :src="getLogo()" alt="logo" />
-        <span class="sidebar-title">{{ title }}</span>
+        <span v-if="layout !== 'leftMix'" class="sidebar-title">{{ title }}</span>
       </router-link>
     </transition>
   </div>
@@ -36,7 +36,6 @@ const { title, getLogo } = useNav();
     flex-wrap: nowrap;
     align-items: center;
     height: 100%;
-    padding-left: 10px;
 
     img {
       display: inline-block;

@@ -8,14 +8,15 @@ import { useLayout } from "./hooks/useLayout";
 import { useAppStoreHook } from "@/store/modules/app";
 import { useSettingStoreHook } from "@/store/modules/settings";
 import { useDataThemeChange } from "@/layout/hooks/useDataThemeChange";
+import { useDark, deviceDetection, useResizeObserver } from "@pureadmin/utils";
 import { h, ref, reactive, computed, onMounted, onBeforeMount, defineComponent } from "vue";
-import { useDark, useGlobal, deviceDetection, useResizeObserver } from "@pureadmin/utils";
 
 import LayTag from "./components/lay-tag/index.vue";
 import LayNavbar from "./components/lay-navbar/index.vue";
 import LayContent from "./components/lay-content/index.vue";
 import LaySetting from "./components/lay-setting/index.vue";
 import NavVertical from "./components/lay-sidebar/NavVertical.vue";
+import NavLeftMixNav from "./components/lay-sidebar/NavLeftMixNav.vue";
 import NavHorizontal from "./components/lay-sidebar/NavHorizontal.vue";
 import BackTopIcon from "@/assets/svg/back_top.svg?component";
 
@@ -132,10 +133,10 @@ const LayHeader = defineComponent({
       },
       {
         default: () => [
-          !pureSetting.getConfigure.hideSideBar && (layout.value.includes("vertical") || layout.value.includes("topMix"))
+          !pureSetting.getLayout.contentFullScreen && (layout.value.includes("vertical") || layout.value.includes("topMix"))
             ? h(LayNavbar)
             : null,
-          !pureSetting.getConfigure.hideSideBar && layout.value.includes("horizontal") ? h(NavHorizontal) : null,
+          !pureSetting.getLayout.contentFullScreen && layout.value.includes("horizontal") ? h(NavHorizontal) : null,
           h(LayTag),
         ],
       },
@@ -151,8 +152,24 @@ const LayHeader = defineComponent({
       class="app-mask"
       @click="useAppStoreHook().toggleSideBar()"
     />
-    <NavVertical v-show="!pureSetting.getConfigure.hideSideBar && (layout.includes('vertical') || layout.includes('topMix'))" />
-    <div :class="['main-container', pureSetting.getConfigure.hideSideBar ? 'main-hidden' : '']">
+    <!-- 正常模式菜单 -->
+    <NavVertical
+      v-show="
+        !(pureSetting.getConfigure.hideSideBar || pureSetting.getLayout.contentFullScreen) &&
+        (layout.includes('vertical') || layout.includes('topMix'))
+      "
+    />
+    <!-- 左侧混合模式菜单 -->
+    <NavLeftMixNav
+      v-show="!(pureSetting.getConfigure.hideSideBar || pureSetting.getLayout.contentFullScreen) && layout.includes('leftMix')"
+    />
+    <!-- 主体内容 -->
+    <div
+      :class="[
+        'main-container',
+        pureSetting.getConfigure.hideSideBar || pureSetting.getLayout.contentFullScreen ? 'main-hidden' : '',
+      ]"
+    >
       <div v-if="set.fixedHeader">
         <LayHeader />
         <!-- 主体内容 -->
