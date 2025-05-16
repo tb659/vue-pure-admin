@@ -246,7 +246,7 @@ export const useTable = <T = any>(config: UseTableConfig) => {
         const interFace = config.interFace || config.pageOrList || "page";
         if (!interFace) return msg.error("接口请求方法错误");
         // 请求开始前的回调
-        config.beforeRequest && config.beforeRequest(tableState.params);
+        config.beforeRequest && (await config.beforeRequest(tableState.params));
         if (!config.noLoading) {
           tableState.loading = true;
         }
