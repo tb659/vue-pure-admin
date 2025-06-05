@@ -23,7 +23,7 @@ interface TableState<T = any> {
 interface UseTableConfig {
   api: object;
   pageOrList?: "page" | "list";
-  interFace?: string;
+  url?: string;
   response?: {
     list?: string;
     total?: string;
@@ -237,21 +237,21 @@ export const useTable = <T = any>(config: UseTableConfig) => {
      * @description 请求数据
      */
     getList: async () => {
-      if (config.noPagination) {
-        delete paramsObj.value.page;
-        delete paramsObj.value.size;
-      }
       const api = config.api;
       if (api) {
-        const interFace = config.interFace || config.pageOrList || "page";
-        if (!interFace) return msg.error("接口请求方法错误");
+        const url = config.url || config.pageOrList || "page";
+        if (!url) return msg.error("接口请求方法错误");
         // 请求开始前的回调
         config.beforeRequest && (await config.beforeRequest(tableState.params));
         if (!config.noLoading) {
           tableState.loading = true;
         }
-        const res = await (api[interFace] &&
-          api[interFace](unref(paramsObj)).finally(() => {
+        if (config.noPagination) {
+          delete paramsObj.value.page;
+          delete paramsObj.value.size;
+        }
+        const res = await (api[url] &&
+          api[url](unref(paramsObj)).finally(() => {
             tableState.loading = false;
           }));
         if (res) {
