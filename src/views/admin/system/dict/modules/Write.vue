@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { reactive, watch } from "vue";
-import { required } from "@/utils/validator";
+import { customValidator, required } from "@/utils/validator";
 import { useData } from "../data";
 import { isFunction } from "@/utils/is";
 
@@ -23,8 +23,10 @@ const rules = reactive({});
 props.formSchema
   .filter(schema => schema.required)
   .map(schema => {
-    rules[schema.field] = [required(schema.componentProps?.placeholder)];
-    schema["requiredCopy"] = [required(schema.componentProps?.placeholder)];
+    const ruleItem: Rule = [required(schema.componentProps?.placeholder)];
+    schema.componentProps?.validator && ruleItem.push(customValidator(schema.componentProps.validator));
+    rules[schema.field] = ruleItem;
+    schema["requiredCopy"] = ruleItem;
   });
 
 const { formRegister, formMethods } = useData();

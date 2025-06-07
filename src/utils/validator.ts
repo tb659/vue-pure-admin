@@ -16,6 +16,12 @@ function required(message?: string) {
   };
 }
 
+function customValidator(validator: Function) {
+  return {
+    validator,
+  };
+}
+
 function lengthRange(val: any, callback: Callback, options: LengthRange) {
   const { min, max, message } = options;
   if (val.length < min || val.length > max) {
@@ -43,4 +49,4 @@ function isEqual(val1: string, val2: string, callback: Callback, message: string
   }
 }
 
-export { required, lengthRange, notSpace, isEqual };
+export { required, customValidator, lengthRange, notSpace, isEqual };

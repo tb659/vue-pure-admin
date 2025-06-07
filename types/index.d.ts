@@ -53,6 +53,8 @@ type DeepPartial<T> = {
   [P in keyof T]?: DeepPartial<T[P]>;
 };
 
+type Rule = { required?: boolean; message?: string; trigger?: string; validator?: Function }[];
+
 type Without<T, U> = { [P in Exclude<keyof T, keyof U>]?: never };
 
 type Exclusive<T, U> = (Without<T, U> & U) | (Without<U, T> & T);
