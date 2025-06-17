@@ -64,11 +64,18 @@ const getBindValue = computed(() => {
   // 特殊处理 list-type show-file-list
   bindValue["list-type"] && (bindValue.listType = bindValue["list-type"]);
   isBoolean(bindValue["show-file-list"]) && (bindValue.showFileList = bindValue["show-file-list"]);
-  // console.log("文件属性--------", bindValue);
+  console.log("文件属性--------", bindValue);
   // 空数据不回填
   bindValue.modelValue && bindValue.modelValue !== "[]" && initBackFile(bindValue);
+  (!bindValue.modelValue || bindValue.modelValue === "[]") && initFileList();
   return bindValue;
 });
+
+// 没有文件时，数组置空
+function initFileList() {
+  fileDataList.value = [];
+  originFileDataList.value = [];
+}
 
 // 文件回填
 function initBackFile(bindValue) {
