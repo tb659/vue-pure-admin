@@ -30,19 +30,7 @@ export const useForm = () => {
   };
 
   /** 一些内置的方法 */
-  const methods: {
-    setProps: (props: Recordable) => void;
-    setValues: (data: Recordable) => void;
-    getSchema: <T = FormSchema[]>() => Promise<T>;
-    setSchema: (schemaProps: FormSetProps[]) => void;
-    addSchema: (formSchema: FormSchema, index?: number) => void;
-    delSchema: (field: string) => void;
-    getFormData: <T = Recordable | undefined>() => Promise<T>;
-    getFormExpose: () => any;
-    getElFormExpose: () => any;
-    getFormItemExpose: (field: string) => any;
-    getComponentExpose: (field: string) => any;
-  } = {
+  const methods: FormExpose = {
     /**
      * @description 设置form组件的props
      * @param props form组件的props
@@ -101,6 +89,14 @@ export const useForm = () => {
     },
 
     /**
+     * @description 重置表单
+     */
+    resetFields: async () => {
+      const form = await getForm();
+      form?.resetFields();
+    },
+
+    /**
      * @description 获取表单数据
      * @returns form data
      */
@@ -128,16 +124,6 @@ export const useForm = () => {
     },
 
     /**
-     * @description 获取表单组件的实例
-     * @param field 表单项唯一标识
-     * @returns component instance
-     */
-    getComponentExpose: async (field: string) => {
-      const form = await getForm();
-      return form?.getComponentExpose(field);
-    },
-
-    /**
      * @description 获取formItem组件的实例
      * @param field 表单项唯一标识
      * @returns formItem instance
@@ -148,17 +134,27 @@ export const useForm = () => {
     },
 
     /**
+     * @description 获取表单组件的实例
+     * @param field 表单项唯一标识
+     * @returns component instance
+     */
+    getComponentExpose: async (field: string) => {
+      const form = await getForm();
+      return form?.getComponentExpose(field);
+    },
+
+    getFormExpose: async () => {
+      await getForm();
+      return unref(formRef);
+    },
+
+    /**
      * @description 获取ElForm组件的实例
      * @returns ElForm instance
      */
     getElFormExpose: async () => {
       await getForm();
       return unref(elFormRef);
-    },
-
-    getFormExpose: async () => {
-      await getForm();
-      return unref(formRef);
     },
   };
 

@@ -1,9 +1,7 @@
 import type { MtTable, TableExpose } from "@/components/ReMtTable";
 import { type ElTable, ElMessageBox } from "element-plus";
-
 import { cloneDeep, get } from "lodash-es";
 import { ref, reactive, watch, computed, unref, nextTick } from "vue";
-
 import { textCopy } from "@/utils";
 import { msg } from "@/utils/msg";
 import { transformI18n, $t } from "@/plugins/i18n";
@@ -30,7 +28,6 @@ interface UseTableConfig {
   };
   props?: MtTableProps;
   overRequest?: Function;
-  /** return list */
   afterRequest?: Function;
   beforeRequest?: Function;
   afterDeleteBatch?: Function;
@@ -47,7 +44,7 @@ export const useTable = <T = any>(config: UseTableConfig) => {
     // 总条数
     total: 10,
     // 页数
-    pageSize: 1,
+    pageSize: 10,
     // 当前页
     pageNumber: 1,
     // 查询参数
@@ -63,9 +60,17 @@ export const useTable = <T = any>(config: UseTableConfig) => {
   });
 
   const paramsObj = computed(() => {
-    return {
+    const baseParams = {
       ...tableState.params,
       ...tableState.initParams,
+    }; // 当pageOrList为list且noPagination为true时，不添加分页参数
+
+    if (config.pageOrList === "list" && config.noPagination) {
+      return baseParams;
+    }
+
+    return {
+      ...baseParams,
       size: tableState.pageSize,
       page: tableState.pageNumber,
     };
@@ -118,22 +123,43 @@ export const useTable = <T = any>(config: UseTableConfig) => {
   };
 
   /** 一些内置的方法 */
-  const methods: {
-    setProps: (props: TableProps) => void;
-    setColumn: (props: TableSetProps[]) => void;
-    addColumn: (tableColumn: TableColumn, index?: number) => void;
-    delColumn: (field: string) => void;
-    getElTableExpose: () => void;
-    setSearchParams: (data: Recordable) => void;
-    getSelections: () => Promise<T[]>;
-    setSelections: (selections: Recordable[]) => void;
-    refresh: () => void;
-    getList: () => void;
-    delItem: (data: Recordable) => void;
-    enableItem: (data: Recordable) => void;
-    disableItem: (data: Recordable) => void;
-    resetPasswordItem: (data: Recordable) => void;
-  } = {
+  const methods: TableExpose = {
+    /**
+     * @description 获取表格选中的数据
+     * @return selections 表格选中的数据
+     */
+    getSelections: async () => {
+      const table = await getTable();
+      return (table?.selections || []) as [];
+    },
+
+    /**
+     * @description 设置表格选中的数据
+     * @return selections 表格选中的数据
+     */
+    setSelections: async (selections, rowKey = "id") => {
+      const table = await getTable();
+      if (selections.length) {
+        table.selections = table?.elTableRef.data.filter(
+          item => selections.filter(select => item[rowKey] === select[rowKey]).length,
+        );
+        selections.forEach(select => {
+          table?.elTableRef?.toggleRowSelection(select);
+        });
+      } else {
+        table?.elTableRef?.clearSelection();
+      }
+    },
+
+    /**
+     * @description 获取ElTable组件的实例
+     * @returns ElTable instance
+     */
+    getElTableExpose: async () => {
+      await getTable();
+      return unref(elTableRef);
+    },
+
     /**
      * @description 设置table组件的props
      * @param props table组件的props
@@ -141,6 +167,15 @@ export const useTable = <T = any>(config: UseTableConfig) => {
     setProps: async (props: TableProps = {}) => {
       const table = await getTable();
       table?.setProps(props);
+    },
+
+    /**
+     * @description 删除column
+     * @param field 删除哪个数据
+     */
+    delColumn: async (field: string) => {
+      const table = await getTable();
+      table?.delColumn(field);
     },
 
     /**
@@ -160,70 +195,6 @@ export const useTable = <T = any>(config: UseTableConfig) => {
     addColumn: async (tableColumn: TableColumn, index?: number) => {
       const table = await getTable();
       table?.addColumn(tableColumn, index);
-    },
-
-    /**
-     * @description 删除column
-     * @param field 删除哪个数据
-     */
-    delColumn: async (field: string) => {
-      const table = await getTable();
-      table?.delColumn(field);
-    },
-
-    /**
-     * @description 获取ElTable组件的实例
-     * @returns ElTable instance
-     */
-    getElTableExpose: async () => {
-      await getTable();
-      return unref(elTableRef);
-    },
-
-    /**
-     * @description 与Search组件结合
-     * @param data 参数
-     */
-    setSearchParams: async (data: Recordable) => {
-      console.log(data, tableState.params);
-      tableState.pageNumber = 1;
-      tableState.params = Object.assign(
-        {},
-        {
-          ...tableState.initParams,
-          size: tableState.pageSize,
-          page: tableState.pageNumber,
-          ...data,
-        },
-      );
-      await methods.getList();
-    },
-
-    /**
-     * @description 获取表格选中的数据
-     * @return selections 表格选中的数据
-     */
-    getSelections: async () => {
-      const table = await getTable();
-      return (table?.selections || []) as T[];
-    },
-
-    /**
-     * @description 设置表格选中的数据
-     * @return selections 表格选中的数据
-     */
-    setSelections: async (selections, rowKey = "id") => {
-      const table = await getTable();
-      if (selections.length) {
-        table.selections = table?.elTableRef.data.filter(
-          item => selections.filter(select => item[rowKey] === select[rowKey]).length,
-        );
-        selections.forEach(select => {
-          table?.elTableRef?.toggleRowSelection(select);
-        });
-      } else {
-        table?.elTableRef?.clearSelection();
-      }
     },
 
     /**
@@ -375,6 +346,25 @@ export const useTable = <T = any>(config: UseTableConfig) => {
       } else {
         await (multiple ? disableDataList(ids, infoKey) : disableData(ids, infoKey));
       }
+    },
+
+    /**
+     * @description 与Search组件结合
+     * @param data 参数
+     */
+    setSearchParams: async (data: Recordable) => {
+      console.log(data, tableState.params);
+      tableState.pageNumber = 1;
+      tableState.params = Object.assign(
+        {},
+        {
+          ...tableState.initParams,
+          size: tableState.pageSize,
+          page: tableState.pageNumber,
+          ...data,
+        },
+      );
+      await methods.getList();
     },
 
     /**

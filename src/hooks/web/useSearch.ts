@@ -21,16 +21,7 @@ export const useSearch = () => {
   };
 
   // 一些内置的方法
-  const methods: {
-    setProps: (props: Recordable) => void;
-    setValues: (data: Recordable) => void;
-    getSchema: <T = FormSchema[]>() => Promise<T>;
-    setSchema: (schemaProps: FormSetProps[]) => void;
-    addSchema: (formSchema: FormSchema, index?: number) => void;
-    delSchema: (field: string) => void;
-    getSearchData: <T = Recordable | undefined>() => Promise<T>;
-    getElFormExpose: () => any;
-  } = {
+  const methods: SearchExpose = {
     /**
      * @description 设置search组件的props
      * @param field FormItem的field
