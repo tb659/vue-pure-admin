@@ -1,17 +1,16 @@
 import { ref, unref } from "vue";
 import { msg } from "@/utils/msg";
-import { isNumber } from "@pureadmin/utils";
 import { userApi } from "@/api/system/user";
 import { dictApi } from "@/api/system/dict";
 import { useTable } from "@/hooks/web/useTable";
-import { useUserStoreHook } from "@/store/modules/user";
 import { ADMIN_DICT_EDIT_CODE, ADMIN_USER_ROOT } from "@/utils/constants";
+import { getUser } from "@/store/modules/user";
 
 export function useHook() {
   const title = ref("用户");
   const visible = ref(false);
   const loading = ref(false);
-  const adminEditFlag = ref(false);
+  const adminEditDisabled = ref(true);
 
   const { tableRegister, tableState, tableMethods } = useTable<UserData>({
     api: userApi,
@@ -24,13 +23,13 @@ export function useHook() {
       label: "修改",
       type: "primary",
       action: handleEdit,
-      disabled: ({ root }) => handleBtnDisabled(root),
+      disabled: ({ root }) => (root === ADMIN_USER_ROOT ? adminEditDisabled.value : false),
     },
     {
       label: "删除",
       type: "danger",
       action: ({ id }) => tableMethods.delItem({ ids: id }),
-      disabled: ({ root }) => handleBtnDisabled(root),
+      disabled: ({ root }) => (root === ADMIN_USER_ROOT ? adminEditDisabled.value : false),
     },
   ];
 
@@ -43,16 +42,11 @@ export function useHook() {
     // 当前列表存在admin判断是否可以操作
     if (role) {
       const res = await dictApi.list<DictData[]>({ code: ADMIN_DICT_EDIT_CODE });
-      if (res?.data?.length) {
-        adminEditFlag.value = !res.data[0].status;
+      if (res.data[0]?.status) {
+        adminEditDisabled.value = getUser("root") !== ADMIN_USER_ROOT;
       }
     }
     return list;
-  }
-
-  function handleBtnDisabled(v) {
-    if (!isNumber(v)) return;
-    return v === ADMIN_USER_ROOT ? adminEditFlag.value || useUserStoreHook().userInfo?.root !== ADMIN_USER_ROOT : false;
   }
 
   function handleAdd() {

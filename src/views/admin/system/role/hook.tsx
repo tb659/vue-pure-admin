@@ -4,14 +4,14 @@ import { ElMessageBox } from "element-plus";
 import { dictApi } from "@/api/system/dict";
 import { roleApi } from "@/api/system/role";
 import { useTable } from "@/hooks/web/useTable";
-import { useUserStoreHook } from "@/store/modules/user";
 import { ADMIN_DICT_EDIT_CODE, ADMIN_ROLE_EMBED, ADMIN_USER_ROOT } from "@/utils/constants";
+import { getUser } from "@/store/modules/user";
 
 export function useHook() {
   const title = ref("角色");
   const visible = ref(false);
   const loading = ref(false);
-  const adminEditFlag = ref(false);
+  const adminEditDisabled = ref(true);
 
   const { tableRegister, tableState, tableMethods } = useTable<RoleData>({
     api: roleApi,
@@ -24,13 +24,13 @@ export function useHook() {
       label: "修改",
       type: "primary",
       action: handleEdit,
-      disabled: ({ embed }) => handleBtnDisabled(embed),
+      disabled: ({ embed }) => (embed === ADMIN_ROLE_EMBED ? adminEditDisabled.value : false),
     },
     {
       label: "删除",
       type: "danger",
       action: ({ id }) => tableMethods.delItem({ ids: id }),
-      disabled: ({ embed }) => handleBtnDisabled(embed),
+      disabled: ({ embed }) => (embed === ADMIN_ROLE_EMBED ? adminEditDisabled.value : false),
     },
   ];
 
@@ -44,14 +44,10 @@ export function useHook() {
     if (role) {
       const res = await dictApi.list<DictData[]>({ code: ADMIN_DICT_EDIT_CODE });
       if (res?.data?.length) {
-        adminEditFlag.value = !res.data[0].status;
+        adminEditDisabled.value = getUser("root") !== ADMIN_USER_ROOT;
       }
     }
     return list;
-  }
-
-  function handleBtnDisabled(v) {
-    return v === ADMIN_ROLE_EMBED ? adminEditFlag.value || useUserStoreHook().userInfo?.root !== ADMIN_USER_ROOT : false;
   }
 
   function handleAdd() {

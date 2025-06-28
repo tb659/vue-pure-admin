@@ -2,7 +2,6 @@ import { msg } from "@/utils/msg";
 import { listToTree } from "@/utils/tree";
 import { userApi } from "@/api/system/user";
 import { dictApi } from "@/api/system/dict";
-import { isNumber } from "@pureadmin/utils";
 import { deptApi } from "@/api/system/dept";
 import { setFileStrToObj } from "@/utils/file";
 import { useTable } from "@/hooks/web/useTable";
@@ -15,31 +14,12 @@ export function useHook() {
   const title = ref("用户");
   const visible = ref(false);
   const loading = ref(false);
-  const adminEditFlag = ref(false);
+  const adminEditDisabled = ref(true);
   const treeRef = ref(null);
   const deptList = ref<DeptData[]>([]);
   const deptId = ref();
   let activeDept = reactive<DeptData>({});
 
-  function beforeRequest(params) {
-    if (deptId.value) params.deptId = deptId.value;
-    if (!deptId.value) delete params.deptId;
-  }
-
-  async function afterRequest(list) {
-    const role = list.filter(v => v.root === ADMIN_USER_ROOT)[0];
-    // 当前列表存在admin判断是否可以操作
-    if (role) {
-      const res = await dictApi.list<DictData[]>({ code: ADMIN_DICT_EDIT_CODE });
-      if (res?.data?.length) {
-        adminEditFlag.value = !res.data[0].status;
-      }
-    }
-    list.forEach(item => {
-      item.status = item.status * 1;
-    });
-    return list;
-  }
   const { tableRegister, tableState, tableMethods } = useTable<UserData>({
     api: userApi,
     pageOrList: "page",
@@ -52,36 +32,53 @@ export function useHook() {
       label: "修改",
       type: "primary",
       action: handleEdit,
-      disabled: ({ root }) => handleBtnDisabled(root),
+      disabled: ({ root }) => (root === ADMIN_USER_ROOT ? adminEditDisabled.value : false),
     },
     {
       label: "启用",
       type: "primary",
       action: ({ id }) => tableMethods.enableItem({ ids: id }),
       hidden: ({ status }) => Boolean(status),
+      disabled: ({ root }) => (root === ADMIN_USER_ROOT ? adminEditDisabled.value : false),
     },
     {
       label: "停用",
       type: "danger",
       action: ({ id }) => tableMethods.disableItem({ ids: id }),
       hidden: ({ status }) => Boolean(!status),
+      disabled: ({ root }) => (root === ADMIN_USER_ROOT ? adminEditDisabled.value : false),
     },
     // {
     //   label: "删除",
     //   type: "danger",
     //   action: ({ id }) => tableMethods.delItem({ ids: id }),
-    //   disabled: ({ root }) => handleBtnDisabled(root)
+    // disabled: ({ root }) => root === ADMIN_USER_ROOT ? adminEditDisabled.value : false,
     // }
   ];
 
   const { getList, setSearchParams } = tableMethods;
 
-  initDept();
-
-  function handleBtnDisabled(v) {
-    if (!isNumber(v)) return;
-    return v === ADMIN_USER_ROOT ? adminEditFlag.value || getUser("root") !== ADMIN_USER_ROOT : false;
+  function beforeRequest(params) {
+    if (deptId.value) params.deptId = deptId.value;
+    if (!deptId.value) delete params.deptId;
   }
+
+  async function afterRequest(list) {
+    const role = list.filter(v => v.root === ADMIN_USER_ROOT)[0];
+    // 当前列表存在admin判断是否可以操作
+    if (role) {
+      const res = await dictApi.list<DictData[]>({ code: ADMIN_DICT_EDIT_CODE });
+      if (res?.data?.length) {
+        adminEditDisabled.value = getUser("root") !== ADMIN_USER_ROOT;
+      }
+    }
+    list.forEach(item => {
+      item.status = item.status * 1;
+    });
+    return list;
+  }
+
+  initDept();
 
   function handleAdd() {
     title.value = "添加用户";
