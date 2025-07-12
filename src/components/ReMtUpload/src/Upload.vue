@@ -6,7 +6,9 @@ import { Delete, Download, Plus, ZoomIn, Document, Close } from "@element-plus/i
 import { fileApi } from "@/api/file";
 
 import { msg } from "@/utils/msg";
-import { getToken } from "@/utils/cookie";
+import { getToken } from "@/utils/auth";
+import { isFunction } from "@/utils/is";
+import NProgress from "@/utils/progress";
 import propTypes from "@/utils/propTypes";
 import { TOKEN_KEY } from "@/utils/constants";
 import { httpConfig } from "@/utils/http/config";
@@ -22,18 +24,21 @@ const props = defineProps({
   // showFileList: propTypes.bool.def(true),
   /** 数量限制 */
   // limit: propTypes.number.def(8),
+  uploadType: propTypes.string.def(""),
   /** 外部传入的上传地址 */
   outUploadUrl: propTypes.string.def(""),
   /** 外部定制高度 */
   inputStyleHeight: propTypes.string.def(""),
   /** 组件样式 */
-  listType: propTypes.oneOf(["picture-card", "list", "text"]).def("picture-card"),
+  listType: propTypes.oneOf(["picture-card", "list", "text"]).def("text"),
   /** 是否禁用操作 */
   disabled: propTypes.bool.def(false),
   /** 多个上传 */
   multiple: propTypes.bool.def(false),
   /** 是否显示上传按钮 */
   showUploadButton: propTypes.bool.def(true),
+  /** 是否显示上传按钮 */
+  uploadSuccess: propTypes.func.def(null),
 });
 
 const emit = defineEmits(["get-res", "emitValue"]);
@@ -123,15 +128,24 @@ function beforeUpload(file) {
     );
     return false;
   }
+
+  // 开启进度条动画
+  NProgress.start();
   return true;
 }
 
 // 文件上传成功的钩子
 function handleSuccess(response, file, fileList, needEmit = true) {
+  // 关闭进度条动画
+  NProgress.done();
   // 上传出错
   if (response && response.code !== httpConfig.resultCode) return msg.error(response.message || response.msg);
   // 组件外部上传地址，外部处理上传事件
   if (props.outUploadUrl) return emit("get-res", response);
+  // 外部处理上传成功回调
+  if (isFunction(props.uploadSuccess)) {
+    return props.uploadSuccess(fileDataList.value);
+  }
 
   fileDataList.value = cloneDeep(fileList);
   // 处理是否展示上传图标
@@ -140,6 +154,11 @@ function handleSuccess(response, file, fileList, needEmit = true) {
   hiddenUploadIcon(fileList.length === getBindValue.value.limit);
   // 处理文件抛出
   handleFileDataEmit(needEmit);
+}
+// 文件上传失败的钩子
+function handleError() {
+  // 关闭进度条动画
+  NProgress.done();
 }
 
 // 文件移除文件时的钩子
@@ -194,8 +213,28 @@ function emitValue(val) {
 </script>
 <template>
   <div class="break-words upload-container">
+    <!-- 插槽 -->
+    <div v-if="getBindValue.uploadType === 'none'">
+      <el-upload
+        v-if="showUploadButton"
+        v-show="!fileName"
+        ref="uploadRef"
+        v-model:file-list="fileDataList"
+        class="upload text"
+        :action="uploadUrl"
+        :headers="headerObj"
+        :showFileList="false"
+        :on-exceed="exceed"
+        :on-success="handleSuccess"
+        :on-error="handleError"
+        :before-upload="beforeUpload"
+        v-bind="getBindValue"
+      >
+        <slot name="default" />
+      </el-upload>
+    </div>
     <!-- 卡片缩略图形式 -->
-    <div v-if="getBindValue.listType === 'picture-card'">
+    <div v-else-if="getBindValue.listType === 'picture-card'">
       <el-upload
         ref="uploadRef"
         v-model:file-list="fileDataList"
@@ -208,6 +247,7 @@ function emitValue(val) {
         :on-exceed="exceed"
         :on-remove="handleRemove"
         :on-success="handleSuccess"
+        :on-error="handleError"
         :before-upload="beforeUpload"
       >
         <div class="upload-icon-own">
@@ -243,6 +283,7 @@ function emitValue(val) {
         :showFileList="false"
         :on-exceed="exceed"
         :on-success="handleSuccess"
+        :on-error="handleError"
         :before-upload="beforeUpload"
         :style="{ height: fileDataList.length > 1 ? 'auto' : inputStyleHeight }"
         v-bind="getBindValue"
@@ -278,6 +319,7 @@ function emitValue(val) {
         :showFileList="false"
         :on-exceed="exceed"
         :on-success="handleSuccess"
+        :on-error="handleError"
         :before-upload="beforeUpload"
         v-bind="getBindValue"
       >
