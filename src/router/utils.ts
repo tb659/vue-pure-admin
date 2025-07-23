@@ -260,7 +260,7 @@ function handleAsyncRoutes(routeList) {
     });
     usePermissionStoreHook().handleWholeMenus(routeList);
   }
-  if (!useMultiTagsStoreHook().getMultiTagsCache) {
+  if (!useMultiTagsStoreHook().multiTagsCache) {
     useMultiTagsStoreHook().handleTags("equal", [
       ...routerArrays,
       ...usePermissionStoreHook().flatteningRoutes.filter(v => v?.meta?.fixedTag),
@@ -445,18 +445,6 @@ function hasAuth(value: string | Array<string>): boolean {
   return isAuths ? true : false;
 }
 
-function handleTopMenu(route) {
-  if (route?.children && route.children.length > 1) {
-    if (route.redirect) {
-      return route.children.filter(cur => cur.path === route.redirect)[0];
-    } else {
-      return route.children[0];
-    }
-  } else {
-    return route;
-  }
-}
-
 /** 是否有按钮级别的权限（根据登录接口返回的`permissions`字段进行判断）*/
 export const hasPerms = (value: string | Array<string>): boolean => {
   if (!value) return false;
@@ -468,10 +456,26 @@ export const hasPerms = (value: string | Array<string>): boolean => {
   return isAuths ? true : false;
 };
 
+/** 优化获取顶级菜单逻辑 */
+function handleTopMenu(menuList, index) {
+  const menu = menuList[index] || {};
+  const route = menu.children ? menu.children[0] : menu;
+  if (route?.children && route.children.length > 1) {
+    if (route.redirect) {
+      return route.children.filter(cur => cur.path === route.redirect)[0];
+    } else {
+      return route.children[0];
+    }
+  } else {
+    return route;
+  }
+}
 /** 获取所有菜单中的第一个菜单（顶级菜单）*/
-function getTopMenu(tag = false): menuType {
-  const topMenu = handleTopMenu(usePermissionStoreHook().wholeMenus[0]?.children[0]);
-  tag && useMultiTagsStoreHook().handleTags("push", topMenu);
+function getTopMenu(pushTag = false, index = 0): menuType {
+  const menuList = usePermissionStoreHook().wholeMenus;
+  const topMenu = handleTopMenu(menuList, index);
+  if (!topMenu) return null;
+  pushTag && useMultiTagsStoreHook().handleTags("push", topMenu);
   return topMenu;
 }
 

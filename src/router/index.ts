@@ -135,7 +135,7 @@ router.beforeEach((to: ToRouteType, _from, next) => {
       // 刷新
       if (usePermissionStoreHook().wholeMenus.length === 0 && to.path !== "/login") {
         initRouter().then((router: Router) => {
-          if (!useMultiTagsStoreHook().getMultiTagsCache) {
+          if (!useMultiTagsStoreHook().multiTagsCache) {
             const { path } = to;
             const route = findRouteByPath(path, router.options.routes[0].children);
             getTopMenu(true);
