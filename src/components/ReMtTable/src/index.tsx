@@ -257,30 +257,30 @@ export default defineComponent({
       ) : undefined;
     };
 
-    const renderTreeTableColumn = (columnsChildren: TableColumn[]) => {
-      const { align, headerAlign, showOverflowTooltip } = unref(getProps);
-      return columnsChildren.map(column => {
-        const props = { ...column };
-        if (props.children) delete props.children;
-        return (
-          <el-table-column
-            showOverflowTooltip={showOverflowTooltip}
-            align={align}
-            headerAlign={headerAlign}
-            {...props}
-            prop={column.field}
-          >
-            {{
-              default: (scope: TableColumnScope) =>
-                column.children && column.children.length
-                  ? renderTableColumns(column.children)
-                  : getSlot(slots, column.field, scope) || scope.row[column.field],
-              header: getSlot(slots, `${column.field}-header`),
-            }}
-          </el-table-column>
-        );
-      });
-    };
+    // const renderTreeTableColumn = (columnsChildren: TableColumn[]) => {
+    //   const { align, headerAlign, showOverflowTooltip } = unref(getProps);
+    //   return columnsChildren.map(column => {
+    //     const props = { ...column };
+    //     if (props.children) delete props.children;
+    //     return (
+    //       <el-table-column
+    //         showOverflowTooltip={showOverflowTooltip}
+    //         align={align}
+    //         headerAlign={headerAlign}
+    //         {...props}
+    //         prop={column.field}
+    //       >
+    //         {{
+    //           default: (scope: TableColumnScope) =>
+    //             column.children && column.children.length
+    //               ? renderTableColumns(column.children)
+    //               : getSlot(slots, column.field, scope) || scope.row[column.field],
+    //           header: getSlot(slots, `${column.field}-header`),
+    //         }}
+    //       </el-table-column>
+    //     );
+    //   });
+    // };
 
     const renderColumn = (column: TableColumn, scope: TableColumnScope) => {
       const { operations, size } = unref(getProps);
@@ -350,29 +350,38 @@ export default defineComponent({
           .map(column => {
             const props = { ...column };
             if (props.children) delete props.children;
-            if (isFunction(props.hide) && props.hide(attrs)) {
-              return props.hide(attrs);
-            }
+
             if (isBoolean(props.hide) && props.hide) {
               return props.hide;
             }
-            return column.type === "selection" ? (
-              <el-table-column type="selection" selectable={selectable} reserveSelection={reserveSelection} width="48" />
-            ) : column.type === "index" ? (
-              <el-table-column
-                type="index"
-                index={
-                  isNumber(column.index)
-                    ? column.index
-                    : index => setTableIndex.value(column.index, reserveIndex, index, pageSize, pageNumber)
-                }
-                align={column.align || align}
-                headerAlign={column.headerAlign || headerAlign}
-                label={column.label}
-                fixed={column.fixed}
-                width={column.width || "65px"}
-              />
-            ) : (
+
+            if (isFunction(props.hide) && props.hide(attrs)) {
+              return props.hide(attrs);
+            }
+
+            if (column.type === "selection") {
+              return <el-table-column type="selection" selectable={selectable} reserveSelection={reserveSelection} width="48" />;
+            }
+
+            if (column.type === "index") {
+              return (
+                <el-table-column
+                  type="index"
+                  index={
+                    isNumber(column.index)
+                      ? column.index
+                      : index => setTableIndex.value(column.index, reserveIndex, index, pageSize, pageNumber)
+                  }
+                  align={column.align || align}
+                  headerAlign={column.headerAlign || headerAlign}
+                  label={column.label}
+                  fixed={column.fixed}
+                  width={column.width || "65px"}
+                />
+              );
+            }
+
+            return (
               <el-table-column
                 showOverflowTooltip={showOverflowTooltip}
                 align={align}
@@ -383,9 +392,7 @@ export default defineComponent({
               >
                 {{
                   default: (scope: TableColumnScope) =>
-                    column.children && column.children.length
-                      ? renderTreeTableColumn(column.children)
-                      : renderColumn(column, scope),
+                    column.children && column.children.length ? renderTableColumns(column.children) : renderColumn(column, scope),
                   header: () => getSlot(slots, `${column.field}-header`) || column.label,
                 }}
               </el-table-column>
