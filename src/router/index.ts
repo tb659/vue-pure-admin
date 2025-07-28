@@ -143,7 +143,7 @@ router.beforeEach((to: ToRouteType, _from, next) => {
             if (route && route.meta?.title) {
               if (isAllEmpty(route.parentId) && route.meta?.backstage) {
                 // 此处为动态顶级路由（目录）
-                const { path, name, meta } = route.children[0];
+                const { path, name, meta } = route.children && route.children[0] ? route.children[0] : route;
                 useMultiTagsStoreHook().handleTags("push", {
                   path,
                   name,
