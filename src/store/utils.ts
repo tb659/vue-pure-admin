@@ -18,6 +18,7 @@ export type {
   CacheType,
   PositionType,
   GoLastPageType,
+  xmindType,
 } from "./types";
 export { setCookie } from "@/utils/cookie";
 export { STATUS_TYPE } from "@/utils/constants";

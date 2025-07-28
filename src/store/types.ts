@@ -144,4 +144,21 @@ export type UserType = {
   currentPage?: number;
   isRemembered?: boolean;
   loginDay?: number;
+  userInfo?: Record<string, any>;
+};
+
+export type xmindType = {
+  mindMapData: any; // 思维导图数据
+  isHandleLocalFile: boolean; // 是否操作的是本地文件
+  localConfig: {
+    // 本地配置
+    isZenMode: boolean; // 是否是禅模式
+    openNodeRichText: boolean; // 是否开启节点富文本
+    useLeftKeySelectionRightKeyDrag: boolean; // 鼠标行为
+    isShowScrollbar: boolean; // 是否显示滚动条
+  };
+  activeSidebar: string; // 当前显示的侧边栏
+  isDark: boolean; // 是否是暗黑模式
+  isOutlineEdit: boolean; // 是否是大纲编辑模式
+  isReadonly: boolean; // 是否只读
 };

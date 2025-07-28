@@ -2,7 +2,7 @@ import type { Emitter } from "mitt";
 import mitt from "mitt";
 
 /** 全局公共事件需要在此处添加类型 */
-type Events = {
+export type Events = {
   openPanel: string;
   tagOnClick: string;
   logoChange: boolean;
@@ -17,6 +17,34 @@ type Events = {
     x: number;
     y: number;
   };
+  // 思维导图
+  write_local_file: object;
+  setData: object;
+  lang_change: Function;
+  mode_change: Function;
+  node_active: Function;
+  back_forward: Function;
+  painter_start: Function;
+  painter_end: Function;
+  showImport: Function;
+  showExport: Function;
+  close_node_icon_toolbar: Function;
+  execCommand: Function;
+  paddingChange: Function;
+  exportData: Function;
+  startTextEdit: Function;
+  endTextEdit: Function;
+  createAssociativeLine: Function;
+  startPainter: Function;
+  node_tree_render_end: Function;
+  showLoading: Function;
+  data_change: Function;
+  view_data_change: Function;
+  showNoteContent: [string, number, number, object];
+  handle_file_url: any;
+  toggle_mini_map: any;
+  show_search: any;
+  closeSideBar: any;
 };
 
 export const emitter: Emitter<Events> = mitt<Events>();

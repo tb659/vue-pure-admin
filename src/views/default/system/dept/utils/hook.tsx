@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 import editForm from "../form.vue";
-import { handleTree } from "@/utils/tree";
+import { listToTree } from "@/utils/tree";
 import { message } from "@/utils/message";
 import { getDeptList } from "@/api/system";
 import { usePublicHooks } from "../../hooks";
@@ -83,7 +83,7 @@ export function useDept() {
       // 前端搜索状态
       newData = newData.filter(item => item.status === form.status);
     }
-    dataList.value = handleTree(newData); // 处理成树结构
+    dataList.value = listToTree(newData); // 处理成树结构
     setTimeout(() => {
       loading.value = false;
     }, 500);

@@ -3,7 +3,7 @@ import dayjs from "dayjs";
 import roleForm from "../form/role.vue";
 import editForm from "../form/index.vue";
 import { zxcvbn } from "@zxcvbn-ts/core";
-import { handleTree } from "@/utils/tree";
+import { listToTree } from "@/utils/tree";
 import { message } from "@/utils/message";
 import userAvatar from "@/assets/user.jpg";
 import { usePublicHooks } from "../../hooks";
@@ -436,8 +436,8 @@ export function useUser(tableRef: Ref, treeRef: Ref) {
 
     // 归属部门
     const { data } = await getDeptList();
-    higherDeptOptions.value = handleTree(data);
-    treeData.value = handleTree(data);
+    higherDeptOptions.value = listToTree(data);
+    treeData.value = listToTree(data);
     treeLoading.value = false;
 
     // 角色列表

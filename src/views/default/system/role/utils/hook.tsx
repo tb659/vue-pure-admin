@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 import editForm from "../form.vue";
-import { handleTree } from "@/utils/tree";
+import { listToTree } from "@/utils/tree";
 import { message } from "@/utils/message";
 import { ElMessageBox } from "element-plus";
 import { usePublicHooks } from "../../hooks";
@@ -259,7 +259,7 @@ export function useRole(treeRef: Ref) {
     onSearch();
     const { data } = await getRoleMenu();
     treeIds.value = getKeyList(data, "id");
-    treeData.value = handleTree(data);
+    treeData.value = listToTree(data);
   });
 
   watch(isExpandAll, val => {

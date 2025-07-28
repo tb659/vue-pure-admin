@@ -41,6 +41,8 @@ export const useUserStore = defineStore(`${responsiveStorageNameSpace()}store_us
     isRemembered: false,
     // 登录页的免登录存储几天，默认7天
     loginDay: 7,
+    // 用户信息
+    userInfo: getUser() ?? {},
   }),
   actions: {
     /** 存储头像 */

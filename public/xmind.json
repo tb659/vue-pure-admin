@@ -1,0 +1,2180 @@
+{
+  "root": {
+    "id": "0",
+    "text": "中心主题",
+    "children": [
+      {
+        "id": "1",
+        "text": "NJSK20250001",
+        "children": [
+          {
+            "id": "2",
+            "text": "WX01",
+            "children": [
+              {
+                "id": "3",
+                "text": "YB",
+                "children": [
+                  {
+                    "id": "4",
+                    "text": "YB01",
+                    "children": [
+                      {
+                        "id": "5",
+                        "text": "YBGD",
+                        "children": [
+                          {
+                            "id": "6",
+                            "text": "GD01",
+                            "children": [
+                              {
+                                "id": "7",
+                                "text": "GN01",
+                                "children": [
+                                  {
+                                    "id": "8",
+                                    "text": "GN实时功率",
+                                    "children": [
+                                      {
+                                        "id": "9",
+                                        "text": "xxKW",
+                                        "name": "NJSK20250001WX01YB01GD01GN01",
+                                        "key": "pwn",
+                                        "unit": "KW",
+                                        "color": "#F44E3B"
+                                      }
+                                    ]
+                                  },
+                                  { "id": "10", "text": "GN额定功率", "children": [{ "id": "11", "text": "50KW" }] },
+                                  {
+                                    "id": "12",
+                                    "text": "日发电量",
+                                    "children": [
+                                      {
+                                        "id": "13",
+                                        "text": "xxxKWH",
+                                        "name": "NJSK20250001WX01YB01GD01GN01",
+                                        "key": "dayEnergy",
+                                        "unit": "KWH",
+                                        "color": "#F44E3B"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "id": "14",
+                                    "text": "总发电量",
+                                    "children": [
+                                      {
+                                        "id": "15",
+                                        "text": "xxxxxKWH",
+                                        "name": "NJSK20250001WX01YB01GD01GN01",
+                                        "key": "allEnergy",
+                                        "unit": "KWH",
+                                        "color": "#F44E3B"
+                                      }
+                                    ]
+                                  },
+                                  { "id": "16", "text": "控制属性", "children": [{ "id": "17", "text": "只监不控" }] },
+                                  {
+                                    "id": "18",
+                                    "text": "安装地点",
+                                    "children": [{ "id": "19", "text": "配电房/车棚，北边第1台" }]
+                                  }
+                                ]
+                              },
+                              {
+                                "id": "20",
+                                "text": "GN02",
+                                "children": [
+                                  {
+                                    "id": "21",
+                                    "text": "GN实时功率",
+                                    "children": [
+                                      {
+                                        "id": "22",
+                                        "text": "xxKW",
+                                        "name": "NJSK20250001WX01YB01GD01GN02",
+                                        "key": "pwn",
+                                        "unit": "KW",
+                                        "color": "#F44E3B"
+                                      }
+                                    ]
+                                  },
+                                  { "id": "23", "text": "GN额定功率", "children": [{ "id": "24", "text": "50KW" }] },
+                                  {
+                                    "id": "25",
+                                    "text": "日发电量",
+                                    "children": [
+                                      {
+                                        "id": "26",
+                                        "text": "xxxKWH",
+                                        "name": "NJSK20250001WX01YB01GD01GN02",
+                                        "key": "dayEnergy",
+                                        "unit": "KWH",
+                                        "color": "#F44E3B"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "id": "27",
+                                    "text": "总发电量",
+                                    "children": [
+                                      {
+                                        "id": "28",
+                                        "text": "xxxxxKWH",
+                                        "name": "NJSK20250001WX01YB01GD01GN02",
+                                        "key": "allEnergy",
+                                        "unit": "KWH",
+                                        "color": "#F44E3B"
+                                      }
+                                    ]
+                                  },
+                                  { "id": "29", "text": "控制属性", "children": [{ "id": "30", "text": "只监不控" }] },
+                                  {
+                                    "id": "31",
+                                    "text": "安装地点",
+                                    "children": [{ "id": "32", "text": "配电房/车棚，北边第2台" }]
+                                  }
+                                ]
+                              },
+                              {
+                                "id": "33",
+                                "text": "GN03",
+                                "children": [
+                                  {
+                                    "id": "34",
+                                    "text": "GN实时功率",
+                                    "children": [
+                                      {
+                                        "id": "35",
+                                        "text": "xxKW",
+                                        "name": "NJSK20250001WX01YB01GD01GN03",
+                                        "key": "pwn",
+                                        "unit": "KW",
+                                        "color": "#F44E3B"
+                                      }
+                                    ]
+                                  },
+                                  { "id": "36", "text": "GN额定功率", "children": [{ "id": "37", "text": "50KW" }] },
+                                  {
+                                    "id": "38",
+                                    "text": "日发电量",
+                                    "children": [
+                                      {
+                                        "id": "39",
+                                        "text": "xxxKWH",
+                                        "name": "NJSK20250001WX01YB01GD01GN03",
+                                        "key": "dayEnergy",
+                                        "unit": "KWH",
+                                        "color": "#F44E3B"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "id": "40",
+                                    "text": "总发电量",
+                                    "children": [
+                                      {
+                                        "id": "41",
+                                        "text": "xxxxxKWH",
+                                        "name": "NJSK20250001WX01YB01GD01GN03",
+                                        "key": "allEnergy",
+                                        "unit": "KWH",
+                                        "color": "#F44E3B"
+                                      }
+                                    ]
+                                  },
+                                  { "id": "42", "text": "控制属性", "children": [{ "id": "43", "text": "只监不控" }] },
+                                  {
+                                    "id": "44",
+                                    "text": "安装地点",
+                                    "children": [{ "id": "45", "text": "配电房/车棚，北边第3台" }]
+                                  }
+                                ]
+                              },
+                              {
+                                "id": "46",
+                                "text": "GN04",
+                                "children": [
+                                  {
+                                    "id": "47",
+                                    "text": "GN实时功率",
+                                    "children": [
+                                      {
+                                        "id": "48",
+                                        "text": "xxKW",
+                                        "name": "NJSK20250001WX01YB01GD01GN04",
+                                        "key": "pwn",
+                                        "unit": "KW",
+                                        "color": "#F44E3B"
+                                      }
+                                    ]
+                                  },
+                                  { "id": "49", "text": "GN额定功率", "children": [{ "id": "50", "text": "50KW" }] },
+                                  {
+                                    "id": "51",
+                                    "text": "日发电量",
+                                    "children": [
+                                      {
+                                        "id": "52",
+                                        "text": "xxxKWH",
+                                        "name": "NJSK20250001WX01YB01GD01GN04",
+                                        "key": "dayEnergy",
+                                        "unit": "KWH",
+                                        "color": "#F44E3B"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "id": "53",
+                                    "text": "总发电量",
+                                    "children": [
+                                      {
+                                        "id": "54",
+                                        "text": "xxxxxKWH",
+                                        "name": "NJSK20250001WX01YB01GD01GN04",
+                                        "key": "allEnergy",
+                                        "unit": "KWH",
+                                        "color": "#F44E3B"
+                                      }
+                                    ]
+                                  },
+                                  { "id": "55", "text": "控制属性", "children": [{ "id": "56", "text": "只监不控" }] },
+                                  {
+                                    "id": "57",
+                                    "text": "安装地点",
+                                    "children": [{ "id": "58", "text": "配电房/车棚，北边第4台" }]
+                                  }
+                                ]
+                              },
+                              {
+                                "id": "59",
+                                "text": "GN05",
+                                "children": [
+                                  {
+                                    "id": "60",
+                                    "text": "GN实时功率",
+                                    "children": [
+                                      {
+                                        "id": "61",
+                                        "text": "xxKW",
+                                        "name": "NJSK20250001WX01YB01GD01GN05",
+                                        "key": "pwn",
+                                        "unit": "KW",
+                                        "color": "#F44E3B"
+                                      }
+                                    ]
+                                  },
+                                  { "id": "62", "text": "GN额定功率", "children": [{ "id": "63", "text": "50KW" }] },
+                                  {
+                                    "id": "64",
+                                    "text": "日发电量",
+                                    "children": [
+                                      {
+                                        "id": "65",
+                                        "text": "xxxKWH",
+                                        "name": "NJSK20250001WX01YB01GD01GN05",
+                                        "key": "dayEnergy",
+                                        "unit": "KWH",
+                                        "color": "#F44E3B"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "id": "66",
+                                    "text": "总发电量",
+                                    "children": [
+                                      {
+                                        "id": "67",
+                                        "text": "xxxxxKWH",
+                                        "name": "NJSK20250001WX01YB01GD01GN05",
+                                        "key": "allEnergy",
+                                        "unit": "KWH",
+                                        "color": "#F44E3B"
+                                      }
+                                    ]
+                                  },
+                                  { "id": "68", "text": "控制属性", "children": [{ "id": "69", "text": "只监不控" }] },
+                                  {
+                                    "id": "70",
+                                    "text": "安装地点",
+                                    "children": [{ "id": "71", "text": "配电房/车棚，北边第5台" }]
+                                  }
+                                ]
+                              },
+                              {
+                                "id": "72",
+                                "text": "GN06",
+                                "children": [
+                                  {
+                                    "id": "73",
+                                    "text": "GN实时功率",
+                                    "children": [
+                                      {
+                                        "id": "74",
+                                        "text": "xxKW",
+                                        "name": "NJSK20250001WX01YB01GD01GN06",
+                                        "key": "pwn",
+                                        "unit": "KW",
+                                        "color": "#F44E3B"
+                                      }
+                                    ]
+                                  },
+                                  { "id": "75", "text": "GN额定功率", "children": [{ "id": "76", "text": "50KW" }] },
+                                  {
+                                    "id": "77",
+                                    "text": "日发电量",
+                                    "children": [
+                                      {
+                                        "id": "78",
+                                        "text": "xxxKWH",
+                                        "name": "NJSK20250001WX01YB01GD01GN06",
+                                        "key": "dayEnergy",
+                                        "unit": "KWH",
+                                        "color": "#F44E3B"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "id": "79",
+                                    "text": "总发电量",
+                                    "children": [
+                                      {
+                                        "id": "80",
+                                        "text": "xxxxxKWH",
+                                        "name": "NJSK20250001WX01YB01GD01GN06",
+                                        "key": "allEnergy",
+                                        "unit": "KWH",
+                                        "color": "#F44E3B"
+                                      }
+                                    ]
+                                  },
+                                  { "id": "81", "text": "控制属性", "children": [{ "id": "82", "text": "只监不控" }] },
+                                  {
+                                    "id": "83",
+                                    "text": "安装地点",
+                                    "children": [{ "id": "84", "text": "配电房/车棚，北边第6台" }]
+                                  }
+                                ]
+                              },
+                              {
+                                "id": "85",
+                                "text": "GN07",
+                                "children": [
+                                  {
+                                    "id": "86",
+                                    "text": "GN实时功率",
+                                    "children": [
+                                      {
+                                        "id": "87",
+                                        "text": "xxKW",
+                                        "name": "NJSK20250001WX01YB01GD01GN07",
+                                        "key": "pwn",
+                                        "unit": "KW",
+                                        "color": "#F44E3B"
+                                      }
+                                    ]
+                                  },
+                                  { "id": "88", "text": "GN额定功率", "children": [{ "id": "89", "text": "50KW" }] },
+                                  {
+                                    "id": "90",
+                                    "text": "日发电量",
+                                    "children": [
+                                      {
+                                        "id": "91",
+                                        "text": "xxxKWH",
+                                        "name": "NJSK20250001WX01YB01GD01GN07",
+                                        "key": "dayEnergy",
+                                        "unit": "KWH",
+                                        "color": "#F44E3B"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "id": "92",
+                                    "text": "总发电量",
+                                    "children": [
+                                      {
+                                        "id": "93",
+                                        "text": "xxxxxKWH",
+                                        "name": "NJSK20250001WX01YB01GD01GN07",
+                                        "key": "allEnergy",
+                                        "unit": "KWH",
+                                        "color": "#F44E3B"
+                                      }
+                                    ]
+                                  },
+                                  { "id": "94", "text": "控制属性", "children": [{ "id": "95", "text": "只监不控" }] },
+                                  {
+                                    "id": "96",
+                                    "text": "安装地点",
+                                    "children": [{ "id": "97", "text": "配电房/车棚，北边第7台" }]
+                                  }
+                                ]
+                              },
+                              {
+                                "id": "98",
+                                "text": "GN08",
+                                "children": [
+                                  {
+                                    "id": "99",
+                                    "text": "GN实时功率",
+                                    "children": [
+                                      {
+                                        "id": "100",
+                                        "text": "xxKW",
+                                        "name": "NJSK20250001WX01YB01GD01GN08",
+                                        "key": "pwn",
+                                        "unit": "KW",
+                                        "color": "#F44E3B"
+                                      }
+                                    ]
+                                  },
+                                  { "id": "101", "text": "GN额定功率", "children": [{ "id": "102", "text": "50KW" }] },
+                                  {
+                                    "id": "103",
+                                    "text": "日发电量",
+                                    "children": [
+                                      {
+                                        "id": "104",
+                                        "text": "xxxKWH",
+                                        "name": "NJSK20250001WX01YB01GD01GN08",
+                                        "key": "dayEnergy",
+                                        "unit": "KWH",
+                                        "color": "#F44E3B"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "id": "105",
+                                    "text": "总发电量",
+                                    "children": [
+                                      {
+                                        "id": "106",
+                                        "text": "xxxxxKWH",
+                                        "name": "NJSK20250001WX01YB01GD01GN08",
+                                        "key": "allEnergy",
+                                        "unit": "KWH",
+                                        "color": "#F44E3B"
+                                      }
+                                    ]
+                                  },
+                                  { "id": "107", "text": "控制属性", "children": [{ "id": "108", "text": "只监不控" }] },
+                                  {
+                                    "id": "109",
+                                    "text": "安装地点",
+                                    "children": [{ "id": "110", "text": "配电房/车棚，北边第8台" }]
+                                  }
+                                ]
+                              },
+                              {
+                                "id": "111",
+                                "text": "GD01说明",
+                                "children": [
+                                  {
+                                    "id": "112",
+                                    "text": "并网柜",
+                                    "children": [
+                                      {
+                                        "id": "113",
+                                        "text": "实时功率",
+                                        "children": [
+                                          {
+                                            "id": "114",
+                                            "text": "xxxKW",
+                                            "name": "NJSK20250001WX01YB01GD01",
+                                            "key": "pwn",
+                                            "unit": "KW",
+                                            "color": "#F44E3B"
+                                          }
+                                        ]
+                                      },
+                                      { "id": "115", "text": "额定功率", "children": [{ "id": "116", "text": "400KW" }] },
+                                      {
+                                        "id": "117",
+                                        "text": "安装地点",
+                                        "children": [{ "id": "118", "text": "配电房内供电局指定位置" }]
+                                      }
+                                    ]
+                                  },
+                                  { "id": "119", "text": "供电局受控？", "children": [{ "id": "120", "text": "受控" }] },
+                                  { "id": "121", "text": "用户是否要监测数据？", "children": [{ "id": "122", "text": "是" }] },
+                                  { "id": "123", "text": "多功能表互感器变比", "children": [{ "id": "124", "text": "1200/5A" }] },
+                                  {
+                                    "id": "125",
+                                    "text": "信令箱",
+                                    "children": [
+                                      {
+                                        "id": "126",
+                                        "text": "安装地点",
+                                        "children": [{ "id": "127", "text": "配电房内光伏并网柜附近" }]
+                                      },
+                                      {
+                                        "id": "128",
+                                        "text": "信令箱型号",
+                                        "children": [{ "id": "129", "text": "光伏并网柜信令箱（型号R2/GD）" }]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "id": "130",
+                        "text": "YBCD",
+                        "children": [
+                          {
+                            "id": "131",
+                            "text": "CD01",
+                            "children": [
+                              {
+                                "id": "132",
+                                "text": "CN01",
+                                "children": [
+                                  {
+                                    "id": "133",
+                                    "text": "CN实时功率",
+                                    "children": [
+                                      {
+                                        "id": "134",
+                                        "text": "xxKW",
+                                        "name": "NJSK20250001WX01YB01CD01CN01",
+                                        "key": "pwn",
+                                        "unit": "KW",
+                                        "color": "#F44E3B"
+                                      }
+                                    ]
+                                  },
+                                  { "id": "135", "text": "CN额定功率", "children": [{ "id": "136", "text": "80KW" }] },
+                                  {
+                                    "id": "137",
+                                    "text": "CN实时电量",
+                                    "children": [
+                                      {
+                                        "id": "138",
+                                        "text": "xxxKWH",
+                                        "name": "NJSK20250001WX01YB01CD01CN01",
+                                        "key": "soc",
+                                        "unit": "KWH",
+                                        "color": "#F44E3B"
+                                      }
+                                    ]
+                                  },
+                                  { "id": "139", "text": "CN额定电量", "children": [{ "id": "140", "text": "200KWH" }] },
+                                  { "id": "141", "text": "控制属性", "children": [{ "id": "142", "text": "监控" }] },
+                                  {
+                                    "id": "143",
+                                    "text": "安装地点",
+                                    "children": [{ "id": "144", "text": "配电房南侧，靠大门附近" }]
+                                  }
+                                ]
+                              },
+                              {
+                                "id": "145",
+                                "text": "CD01说明",
+                                "children": [
+                                  {
+                                    "id": "146",
+                                    "text": "并网柜",
+                                    "children": [
+                                      {
+                                        "id": "147",
+                                        "text": "实时功率",
+                                        "children": [
+                                          {
+                                            "id": "148",
+                                            "text": "xxKW",
+                                            "name": "NJSK20250001WX01YB01CD01",
+                                            "key": "pwn",
+                                            "unit": "KW",
+                                            "color": "#F44E3B"
+                                          }
+                                        ]
+                                      },
+                                      { "id": "149", "text": "额定功率", "children": [{ "id": "150", "text": "85KW" }] },
+                                      {
+                                        "id": "151",
+                                        "text": "安装地点",
+                                        "children": [{ "id": "152", "text": "借用隔离变压器进线开关" }]
+                                      }
+                                    ]
+                                  },
+                                  { "id": "153", "text": "供电局受控？", "children": [{ "id": "154", "text": "不受控" }] },
+                                  { "id": "155", "text": "用户是否要监测数据？", "children": [{ "id": "156", "text": "是" }] },
+                                  { "id": "157", "text": "多功能表互感器变比", "children": [{ "id": "158", "text": "250/5A" }] },
+                                  {
+                                    "id": "159",
+                                    "text": "信令箱",
+                                    "children": [
+                                      {
+                                        "id": "160",
+                                        "text": "安装地点",
+                                        "children": [{ "id": "161", "text": "储能柜附属隔离变压器附近" }]
+                                      },
+                                      {
+                                        "id": "162",
+                                        "text": "信令箱型号",
+                                        "children": [{ "id": "163", "text": "储能并网柜信令箱（型号R3/CD）" }]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "id": "164",
+                        "text": "FH",
+                        "children": [
+                          {
+                            "id": "165",
+                            "text": "FH01",
+                            "children": [
+                              {
+                                "id": "166",
+                                "text": "FHGD",
+                                "children": [
+                                  {
+                                    "id": "167",
+                                    "text": "GD01",
+                                    "children": [
+                                      {
+                                        "id": "168",
+                                        "text": "GN01",
+                                        "children": [
+                                          {
+                                            "id": "169",
+                                            "text": "GN实时功率",
+                                            "children": [
+                                              {
+                                                "id": "170",
+                                                "text": "xxKW",
+                                                "name": "NJSK20250001WX01YB01FH01GD01GN01",
+                                                "key": "pwn",
+                                                "unit": "KW",
+                                                "color": "#F44E3B"
+                                              }
+                                            ]
+                                          },
+                                          { "id": "171", "text": "GN额定功率", "children": [{ "id": "172", "text": "33KW" }] },
+                                          {
+                                            "id": "173",
+                                            "text": "日发电量",
+                                            "children": [
+                                              {
+                                                "id": "174",
+                                                "text": "xxxKWH",
+                                                "name": "NJSK20250001WX01YB01FH01GD01GN01",
+                                                "key": "dayEnergy",
+                                                "unit": "KWH",
+                                                "color": "#F44E3B"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "id": "175",
+                                            "text": "总发电量",
+                                            "children": [
+                                              {
+                                                "id": "176",
+                                                "text": "xxxxxKWH",
+                                                "name": "NJSK20250001WX01YB01FH01GD01GN01",
+                                                "key": "allEnergy",
+                                                "unit": "KWH",
+                                                "color": "#F44E3B"
+                                              }
+                                            ]
+                                          },
+                                          { "id": "177", "text": "控制属性", "children": [{ "id": "178", "text": "监控" }] },
+                                          {
+                                            "id": "179",
+                                            "text": "安装地点",
+                                            "children": [{ "id": "180", "text": "四楼楼顶北侧第1台" }]
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "id": "181",
+                                        "text": "GN02",
+                                        "children": [
+                                          {
+                                            "id": "182",
+                                            "text": "GN实时功率",
+                                            "children": [
+                                              {
+                                                "id": "183",
+                                                "text": "xxKW",
+                                                "name": "NJSK20250001WX01YB01FH01GD01GN02",
+                                                "key": "pwn",
+                                                "unit": "KW",
+                                                "color": "#F44E3B"
+                                              }
+                                            ]
+                                          },
+                                          { "id": "184", "text": "GN额定功率", "children": [{ "id": "185", "text": "50KW" }] },
+                                          {
+                                            "id": "186",
+                                            "text": "日发电量",
+                                            "children": [
+                                              {
+                                                "id": "187",
+                                                "text": "xxxKWH",
+                                                "name": "NJSK20250001WX01YB01FH01GD01GN02",
+                                                "key": "dayEnergy",
+                                                "unit": "KWH",
+                                                "color": "#F44E3B"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "id": "188",
+                                            "text": "总发电量",
+                                            "children": [
+                                              {
+                                                "id": "189",
+                                                "text": "xxxxxKWH",
+                                                "name": "NJSK20250001WX01YB01FH01GD01GN02",
+                                                "key": "allEnergy",
+                                                "unit": "KWH",
+                                                "color": "#F44E3B"
+                                              }
+                                            ]
+                                          },
+                                          { "id": "190", "text": "控制属性", "children": [{ "id": "191", "text": "监控" }] },
+                                          {
+                                            "id": "192",
+                                            "text": "安装地点",
+                                            "children": [{ "id": "193", "text": "四楼楼顶北侧第2台" }]
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "id": "194",
+                                        "text": "GD01说明",
+                                        "children": [
+                                          {
+                                            "id": "195",
+                                            "text": "并网柜",
+                                            "children": [
+                                              {
+                                                "id": "196",
+                                                "text": "实时功率",
+                                                "children": [
+                                                  {
+                                                    "id": "197",
+                                                    "text": "xxxKW",
+                                                    "name": "NJSK20250001WX01YB01FH01GD01",
+                                                    "key": "pwn",
+                                                    "unit": "KW",
+                                                    "color": "#F44E3B"
+                                                  }
+                                                ]
+                                              },
+                                              { "id": "198", "text": "额定功率", "children": [{ "id": "199", "text": "118KW" }] },
+                                              {
+                                                "id": "200",
+                                                "text": "安装地点",
+                                                "children": [{ "id": "201", "text": "四楼楼顶靠近逆变器" }]
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "id": "202",
+                                            "text": "供电局受控？",
+                                            "children": [{ "id": "203", "text": "不受控" }]
+                                          },
+                                          {
+                                            "id": "204",
+                                            "text": "用户是否要监测数据？",
+                                            "children": [{ "id": "205", "text": "是" }]
+                                          },
+                                          {
+                                            "id": "206",
+                                            "text": "多功能表互感器变比",
+                                            "children": [{ "id": "207", "text": "200/5A" }]
+                                          },
+                                          {
+                                            "id": "208",
+                                            "text": "信令箱",
+                                            "children": [
+                                              {
+                                                "id": "209",
+                                                "text": "安装地点",
+                                                "children": [{ "id": "210", "text": "四楼楼顶靠近逆变器" }]
+                                              },
+                                              {
+                                                "id": "211",
+                                                "text": "信令箱型号",
+                                                "children": [{ "id": "212", "text": "光伏并网柜信令箱（型号R3/GD）" }]
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "id": "213",
+                                "text": "FH01说明",
+                                "children": [
+                                  {
+                                    "id": "214",
+                                    "text": "用户负荷柜",
+                                    "children": [
+                                      {
+                                        "id": "215",
+                                        "text": "实时功率",
+                                        "children": [
+                                          {
+                                            "id": "216",
+                                            "text": "xxxxKW",
+                                            "name": "NJSK20250001WX01YB01FH01",
+                                            "key": "pwn",
+                                            "unit": "KW",
+                                            "color": "#F44E3B"
+                                          }
+                                        ]
+                                      },
+                                      { "id": "217", "text": "额定功率", "children": [{ "id": "218", "text": "842KW" }] },
+                                      {
+                                        "id": "219",
+                                        "text": "安装地点",
+                                        "children": [{ "id": "220", "text": "办公楼一层配电房低压总柜" }]
+                                      }
+                                    ]
+                                  },
+                                  { "id": "221", "text": "多功能表互感器变比", "children": [{ "id": "222", "text": "3000/5A" }] },
+                                  {
+                                    "id": "223",
+                                    "text": "信令箱",
+                                    "children": [
+                                      {
+                                        "id": "224",
+                                        "text": "安装地点",
+                                        "children": [{ "id": "225", "text": "办公楼一层配电房内" }]
+                                      },
+                                      {
+                                        "id": "226",
+                                        "text": "信令箱型号",
+                                        "children": [{ "id": "227", "text": "用户负荷柜信令箱（型号R2/FH）" }]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "id": "228",
+                            "text": "FH02",
+                            "children": [
+                              {
+                                "id": "229",
+                                "text": "FHGD",
+                                "children": [
+                                  {
+                                    "id": "230",
+                                    "text": "GD01",
+                                    "children": [
+                                      {
+                                        "id": "231",
+                                        "text": "GN01",
+                                        "children": [
+                                          {
+                                            "id": "232",
+                                            "text": "GN实时功率",
+                                            "children": [
+                                              {
+                                                "id": "233",
+                                                "text": "xxKW",
+                                                "name": "NJSK20250001WX01YB01FH02GD01GN01",
+                                                "key": "pwn",
+                                                "unit": "KW",
+                                                "color": "#F44E3B"
+                                              }
+                                            ]
+                                          },
+                                          { "id": "234", "text": "GN额定功率", "children": [{ "id": "235", "text": "50KW" }] },
+                                          {
+                                            "id": "236",
+                                            "text": "日发电量",
+                                            "children": [
+                                              {
+                                                "id": "237",
+                                                "text": "xxxKWH",
+                                                "name": "NJSK20250001WX01YB01FH02GD01GN01",
+                                                "key": "dayEnergy",
+                                                "unit": "KWH",
+                                                "color": "#F44E3B"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "id": "238",
+                                            "text": "总发电量",
+                                            "children": [
+                                              {
+                                                "id": "239",
+                                                "text": "xxxxxKWH",
+                                                "name": "NJSK20250001WX01YB01FH02GD01GN01",
+                                                "key": "allEnergy",
+                                                "unit": "KWH",
+                                                "color": "#F44E3B"
+                                              }
+                                            ]
+                                          },
+                                          { "id": "240", "text": "控制属性", "children": [{ "id": "241", "text": "只监不控" }] },
+                                          {
+                                            "id": "242",
+                                            "text": "安装地点",
+                                            "children": [{ "id": "243", "text": "大车间东墙，北边第1台" }]
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "id": "244",
+                                        "text": "GN02",
+                                        "children": [
+                                          {
+                                            "id": "245",
+                                            "text": "GN实时功率",
+                                            "children": [
+                                              {
+                                                "id": "246",
+                                                "text": "xxKW",
+                                                "name": "NJSK20250001WX01YB01FH02GD01GN02",
+                                                "key": "pwn",
+                                                "unit": "KW",
+                                                "color": "#F44E3B"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "id": "247",
+                                            "text": "GN额定功率",
+                                            "children": [
+                                              {
+                                                "id": "248",
+                                                "text": "50KW"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "id": "249",
+                                            "text": "日发电量",
+                                            "children": [
+                                              {
+                                                "id": "250",
+                                                "text": "xxxKWH",
+                                                "name": "NJSK20250001WX01YB01FH02GD01GN02",
+                                                "key": "dayEnergy",
+                                                "unit": "KWH",
+                                                "color": "#F44E3B"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "id": "251",
+                                            "text": "总发电量",
+                                            "children": [
+                                              {
+                                                "id": "252",
+                                                "text": "xxxxxKWH",
+                                                "name": "NJSK20250001WX01YB01FH02GD01GN02",
+                                                "key": "allEnergy",
+                                                "unit": "KWH",
+                                                "color": "#F44E3B"
+                                              }
+                                            ]
+                                          },
+                                          { "id": "253", "text": "控制属性", "children": [{ "id": "254", "text": "只监不控" }] },
+                                          {
+                                            "id": "255",
+                                            "text": "安装地点",
+                                            "children": [{ "id": "256", "text": "大车间东墙，北边第2台" }]
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "id": "257",
+                                        "text": "GN03",
+                                        "children": [
+                                          {
+                                            "id": "258",
+                                            "text": "GN实时功率",
+                                            "children": [
+                                              {
+                                                "id": "259",
+                                                "text": "xxKW",
+                                                "name": "NJSK20250001WX01YB01FH02GD01GN03",
+                                                "key": "pwn",
+                                                "unit": "KW",
+                                                "color": "#F44E3B"
+                                              }
+                                            ]
+                                          },
+                                          { "id": "260", "text": "GN额定功率", "children": [{ "id": "261", "text": "50KW" }] },
+                                          {
+                                            "id": "262",
+                                            "text": "日发电量",
+                                            "children": [
+                                              {
+                                                "id": "263",
+                                                "text": "xxxKWH",
+                                                "name": "NJSK20250001WX01YB01FH02GD01GN03",
+                                                "key": "dayEnergy",
+                                                "unit": "KWH",
+                                                "color": "#F44E3B"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "id": "264",
+                                            "text": "总发电量",
+                                            "children": [
+                                              {
+                                                "id": "265",
+                                                "text": "xxxxxKWH",
+                                                "name": "NJSK20250001WX01YB01FH02GD01GN03",
+                                                "key": "allEnergy",
+                                                "unit": "KWH",
+                                                "color": "#F44E3B"
+                                              }
+                                            ]
+                                          },
+                                          { "id": "266", "text": "控制属性", "children": [{ "id": "267", "text": "只监不控" }] },
+                                          {
+                                            "id": "268",
+                                            "text": "安装地点",
+                                            "children": [{ "id": "269", "text": "大车间东墙，北边第3台" }]
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "id": "270",
+                                        "text": "GN04",
+                                        "children": [
+                                          {
+                                            "id": "271",
+                                            "text": "GN实时功率",
+                                            "children": [
+                                              {
+                                                "id": "272",
+                                                "text": "xxKW",
+                                                "name": "NJSK20250001WX01YB01FH02GD01GN04",
+                                                "key": "pwn",
+                                                "unit": "KW",
+                                                "color": "#F44E3B"
+                                              }
+                                            ]
+                                          },
+                                          { "id": "273", "text": "GN额定功率", "children": [{ "id": "274", "text": "50KW" }] },
+                                          {
+                                            "id": "275",
+                                            "text": "日发电量",
+                                            "children": [
+                                              {
+                                                "id": "276",
+                                                "text": "xxxKWH",
+                                                "name": "NJSK20250001WX01YB01FH02GD01GN04",
+                                                "key": "dayEnergy",
+                                                "unit": "KWH",
+                                                "color": "#F44E3B"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "id": "277",
+                                            "text": "总发电量",
+                                            "children": [
+                                              {
+                                                "id": "278",
+                                                "text": "xxxxxKWH",
+                                                "name": "NJSK20250001WX01YB01FH02GD01GN04",
+                                                "key": "allEnergy",
+                                                "unit": "KWH",
+                                                "color": "#F44E3B"
+                                              }
+                                            ]
+                                          },
+                                          { "id": "279", "text": "控制属性", "children": [{ "id": "280", "text": "只监不控" }] },
+                                          {
+                                            "id": "281",
+                                            "text": "安装地点",
+                                            "children": [{ "id": "282", "text": "大车间东墙，北边第4台" }]
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "id": "283",
+                                        "text": "GN05",
+                                        "children": [
+                                          {
+                                            "id": "284",
+                                            "text": "GN实时功率",
+                                            "children": [
+                                              {
+                                                "id": "285",
+                                                "text": "xxKW",
+                                                "name": "NJSK20250001WX01YB01FH02GD01GN05",
+                                                "key": "pwn",
+                                                "unit": "KW",
+                                                "color": "#F44E3B"
+                                              }
+                                            ]
+                                          },
+                                          { "id": "286", "text": "GN额定功率", "children": [{ "id": "287", "text": "50KW" }] },
+                                          {
+                                            "id": "288",
+                                            "text": "日发电量",
+                                            "children": [
+                                              {
+                                                "id": "289",
+                                                "text": "xxxKWH",
+                                                "name": "NJSK20250001WX01YB01FH02GD01GN05",
+                                                "key": "dayEnergy",
+                                                "unit": "KWH",
+                                                "color": "#F44E3B"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "id": "290",
+                                            "text": "总发电量",
+                                            "children": [
+                                              {
+                                                "id": "291",
+                                                "text": "xxxxxKWH",
+                                                "name": "NJSK20250001WX01YB01FH02GD01GN05",
+                                                "key": "allEnergy",
+                                                "unit": "KWH",
+                                                "color": "#F44E3B"
+                                              }
+                                            ]
+                                          },
+                                          { "id": "292", "text": "控制属性", "children": [{ "id": "293", "text": "只监不控" }] },
+                                          {
+                                            "id": "294",
+                                            "text": "安装地点",
+                                            "children": [{ "id": "295", "text": "大车间东墙，北边第5台" }]
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "id": "296",
+                                        "text": "GN06",
+                                        "children": [
+                                          {
+                                            "id": "297",
+                                            "text": "GN实时功率",
+                                            "children": [
+                                              {
+                                                "id": "298",
+                                                "text": "xxKW",
+                                                "name": "NJSK20250001WX01YB01FH02GD01GN06",
+                                                "key": "pwn",
+                                                "unit": "KW",
+                                                "color": "#F44E3B"
+                                              }
+                                            ]
+                                          },
+                                          { "id": "299", "text": "GN额定功率", "children": [{ "id": "300", "text": "50KW" }] },
+                                          {
+                                            "id": "301",
+                                            "text": "日发电量",
+                                            "children": [
+                                              {
+                                                "id": "302",
+                                                "text": "xxxKWH",
+                                                "name": "NJSK20250001WX01YB01FH02GD01GN06",
+                                                "key": "dayEnergy",
+                                                "unit": "KWH",
+                                                "color": "#F44E3B"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "id": "303",
+                                            "text": "总发电量",
+                                            "children": [
+                                              {
+                                                "id": "304",
+                                                "text": "xxxxxKWH",
+                                                "name": "NJSK20250001WX01YB01FH02GD01GN06",
+                                                "key": "allEnergy",
+                                                "unit": "KWH",
+                                                "color": "#F44E3B"
+                                              }
+                                            ]
+                                          },
+                                          { "id": "305", "text": "控制属性", "children": [{ "id": "306", "text": "只监不控" }] },
+                                          {
+                                            "id": "307",
+                                            "text": "安装地点",
+                                            "children": [{ "id": "308", "text": "大车间东墙，北边第6台" }]
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "id": "309",
+                                        "text": "GN07",
+                                        "children": [
+                                          {
+                                            "id": "310",
+                                            "text": "GN实时功率",
+                                            "children": [
+                                              {
+                                                "id": "311",
+                                                "text": "xxKW",
+                                                "name": "NJSK20250001WX01YB01FH02GD01GN07",
+                                                "key": "pwn",
+                                                "unit": "KW",
+                                                "color": "#F44E3B"
+                                              }
+                                            ]
+                                          },
+                                          { "id": "312", "text": "GN额定功率", "children": [{ "id": "313", "text": "50KW" }] },
+                                          {
+                                            "id": "314",
+                                            "text": "日发电量",
+                                            "children": [
+                                              {
+                                                "id": "315",
+                                                "text": "xxxKWH",
+                                                "name": "NJSK20250001WX01YB01FH02GD01GN07",
+                                                "key": "dayEnergy",
+                                                "unit": "KWH",
+                                                "color": "#F44E3B"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "id": "316",
+                                            "text": "总发电量",
+                                            "children": [
+                                              {
+                                                "id": "317",
+                                                "text": "xxxxxKWH",
+                                                "name": "NJSK20250001WX01YB01FH02GD01GN07",
+                                                "key": "allEnergy",
+                                                "unit": "KWH",
+                                                "color": "#F44E3B"
+                                              }
+                                            ]
+                                          },
+                                          { "id": "318", "text": "控制属性", "children": [{ "id": "319", "text": "只监不控" }] },
+                                          {
+                                            "id": "320",
+                                            "text": "安装地点",
+                                            "children": [{ "id": "321", "text": "大车间东墙，北边第7台" }]
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "id": "322",
+                                        "text": "GN08",
+                                        "children": [
+                                          {
+                                            "id": "323",
+                                            "text": "GN实时功率",
+                                            "children": [
+                                              {
+                                                "id": "324",
+                                                "text": "xxKW",
+                                                "name": "NJSK20250001WX01YB01FH02GD01GN08",
+                                                "key": "pwn",
+                                                "unit": "KW",
+                                                "color": "#F44E3B"
+                                              }
+                                            ]
+                                          },
+                                          { "id": "325", "text": "GN额定功率", "children": [{ "id": "326", "text": "50KW" }] },
+                                          {
+                                            "id": "327",
+                                            "text": "日发电量",
+                                            "children": [
+                                              {
+                                                "id": "328",
+                                                "text": "xxxKWH",
+                                                "name": "NJSK20250001WX01YB01FH02GD01GN08",
+                                                "key": "dayEnergy",
+                                                "unit": "KWH",
+                                                "color": "#F44E3B"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "id": "329",
+                                            "text": "总发电量",
+                                            "children": [
+                                              {
+                                                "id": "330",
+                                                "text": "xxxxxKWH",
+                                                "name": "NJSK20250001WX01YB01FH02GD01GN08",
+                                                "key": "allEnergy",
+                                                "unit": "KWH",
+                                                "color": "#F44E3B"
+                                              }
+                                            ]
+                                          },
+                                          { "id": "331", "text": "控制属性", "children": [{ "id": "332", "text": "只监不控" }] },
+                                          {
+                                            "id": "333",
+                                            "text": "安装地点",
+                                            "children": [{ "id": "334", "text": "大车间东墙，北边第8台" }]
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "id": "335",
+                                        "text": "GD01说明",
+                                        "children": [
+                                          {
+                                            "id": "336",
+                                            "text": "并网柜",
+                                            "children": [
+                                              {
+                                                "id": "337",
+                                                "text": "实时功率",
+                                                "children": [
+                                                  {
+                                                    "id": "338",
+                                                    "text": "xxxKW",
+                                                    "name": "NJSK20250001WX01YB01FH02GD01",
+                                                    "key": "pwn",
+                                                    "unit": "KW",
+                                                    "color": "#F44E3B"
+                                                  }
+                                                ]
+                                              },
+                                              { "id": "339", "text": "额定功率", "children": [{ "id": "340", "text": "415KW" }] },
+                                              {
+                                                "id": "341",
+                                                "text": "安装地点",
+                                                "children": [{ "id": "342", "text": "大车间一层总配电柜附近" }]
+                                              }
+                                            ]
+                                          },
+                                          { "id": "343", "text": "供电局受控？", "children": [{ "id": "344", "text": "受控" }] },
+                                          {
+                                            "id": "345",
+                                            "text": "用户是否要监测数据？",
+                                            "children": [{ "id": "346", "text": "是" }]
+                                          },
+                                          {
+                                            "id": "347",
+                                            "text": "多功能表互感器变比",
+                                            "children": [{ "id": "348", "text": "750/5A" }]
+                                          },
+                                          {
+                                            "id": "349",
+                                            "text": "信令箱",
+                                            "children": [
+                                              {
+                                                "id": "350",
+                                                "text": "安装地点",
+                                                "children": [{ "id": "351", "text": "大车间一层配电间内" }]
+                                              },
+                                              {
+                                                "id": "352",
+                                                "text": "信令箱型号",
+                                                "children": [{ "id": "353", "text": "光伏并网柜信令箱（型号R2/GD）" }]
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "id": "354",
+                                    "text": "GD02",
+                                    "children": [
+                                      {
+                                        "id": "355",
+                                        "text": "GN01",
+                                        "children": [
+                                          {
+                                            "id": "356",
+                                            "text": "GN实时功率",
+                                            "children": [
+                                              {
+                                                "id": "357",
+                                                "text": "xxKW",
+                                                "name": "NJSK20250001WX01YB01FH02GD02GN01",
+                                                "key": "pwn",
+                                                "unit": "KW",
+                                                "color": "#F44E3B"
+                                              }
+                                            ]
+                                          },
+                                          { "id": "358", "text": "GN额定功率", "children": [{ "id": "359", "text": "50KW" }] },
+                                          {
+                                            "id": "360",
+                                            "text": "日发电量",
+                                            "children": [
+                                              {
+                                                "id": "361",
+                                                "text": "xxxKWH",
+                                                "name": "NJSK20250001WX01YB01FH02GD02GN01",
+                                                "key": "dayEnergy",
+                                                "unit": "KWH",
+                                                "color": "#F44E3B"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "id": "362",
+                                            "text": "总发电量",
+                                            "children": [
+                                              {
+                                                "id": "363",
+                                                "text": "xxxxxKWH",
+                                                "name": "NJSK20250001WX01YB01FH02GD02GN01",
+                                                "key": "allEnergy",
+                                                "unit": "KWH",
+                                                "color": "#F44E3B"
+                                              }
+                                            ]
+                                          },
+                                          { "id": "364", "text": "控制属性", "children": [{ "id": "365", "text": "监控" }] },
+                                          {
+                                            "id": "366",
+                                            "text": "安装地点",
+                                            "children": [{ "id": "367", "text": "大车间西北墙，激光机北侧第1台" }]
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "id": "368",
+                                        "text": "GN02",
+                                        "children": [
+                                          {
+                                            "id": "369",
+                                            "text": "GN实时功率",
+                                            "children": [
+                                              {
+                                                "id": "370",
+                                                "text": "xxKW",
+                                                "name": "NJSK20250001WX01YB01FH02GD02GN02",
+                                                "key": "pwn",
+                                                "unit": "KW",
+                                                "color": "#F44E3B"
+                                              }
+                                            ]
+                                          },
+                                          { "id": "371", "text": "GN额定功率", "children": [{ "id": "372", "text": "50KW" }] },
+                                          {
+                                            "id": "373",
+                                            "text": "日发电量",
+                                            "children": [
+                                              {
+                                                "id": "374",
+                                                "text": "xxxKWH",
+                                                "name": "NJSK20250001WX01YB01FH02GD02GN02",
+                                                "key": "dayEnergy",
+                                                "unit": "KWH",
+                                                "color": "#F44E3B"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "id": "375",
+                                            "text": "总发电量",
+                                            "children": [
+                                              {
+                                                "id": "376",
+                                                "text": "xxxxxKWH",
+                                                "name": "NJSK20250001WX01YB01FH02GD02GN02",
+                                                "key": "allEnergy",
+                                                "unit": "KWH",
+                                                "color": "#F44E3B"
+                                              }
+                                            ]
+                                          },
+                                          { "id": "377", "text": "控制属性", "children": [{ "id": "378", "text": "监控" }] },
+                                          {
+                                            "id": "379",
+                                            "text": "安装地点",
+                                            "children": [{ "id": "380", "text": "大车间西北墙，激光机北侧第2台" }]
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "id": "381",
+                                        "text": "GD02说明",
+                                        "children": [
+                                          {
+                                            "id": "382",
+                                            "text": "并网柜",
+                                            "children": [
+                                              {
+                                                "id": "383",
+                                                "text": "实时功率",
+                                                "children": [
+                                                  {
+                                                    "id": "384",
+                                                    "text": "xxxKW",
+                                                    "name": "NJSK20250001WX01YB01FH02GD02",
+                                                    "key": "pwn",
+                                                    "unit": "KW",
+                                                    "color": "#F44E3B"
+                                                  }
+                                                ]
+                                              },
+                                              { "id": "385", "text": "额定功率", "children": [{ "id": "386", "text": "118KW" }] },
+                                              {
+                                                "id": "387",
+                                                "text": "安装地点",
+                                                "children": [{ "id": "388", "text": "大车间西北，激光机分支箱旁" }]
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "id": "389",
+                                            "text": "供电局受控？",
+                                            "children": [{ "id": "390", "text": "不受控" }]
+                                          },
+                                          {
+                                            "id": "391",
+                                            "text": "用户是否要监测数据？",
+                                            "children": [{ "id": "392", "text": "是" }]
+                                          },
+                                          {
+                                            "id": "393",
+                                            "text": "多功能表互感器变比",
+                                            "children": [{ "id": "394", "text": "200/5A" }]
+                                          },
+                                          {
+                                            "id": "395",
+                                            "text": "信令箱",
+                                            "children": [
+                                              {
+                                                "id": "396",
+                                                "text": "安装地点",
+                                                "children": [{ "id": "397", "text": "大车间西北侧， 激光机分支箱旁" }]
+                                              },
+                                              {
+                                                "id": "398",
+                                                "text": "信令箱型号",
+                                                "children": [{ "id": "399", "text": "光伏并网柜信令箱（型号R3/GD）" }]
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "id": "400",
+                                    "text": "GD03",
+                                    "children": [
+                                      {
+                                        "id": "401",
+                                        "text": "GN01",
+                                        "children": [
+                                          {
+                                            "id": "402",
+                                            "text": "GN实时功率",
+                                            "children": [
+                                              {
+                                                "id": "403",
+                                                "text": "xxKW",
+                                                "name": "NJSK20250001WX01YB01FH02GD03GN01",
+                                                "key": "pwn",
+                                                "unit": "KW",
+                                                "color": "#F44E3B"
+                                              }
+                                            ]
+                                          },
+                                          { "id": "404", "text": "GN额定功率", "children": [{ "id": "405", "text": "50KW" }] },
+                                          {
+                                            "id": "406",
+                                            "text": "日发电量",
+                                            "children": [
+                                              {
+                                                "id": "407",
+                                                "text": "xxxKWH",
+                                                "name": "NJSK20250001WX01YB01FH02GD03GN01",
+                                                "key": "dayEnergy",
+                                                "unit": "KWH",
+                                                "color": "#F44E3B"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "id": "408",
+                                            "text": "总发电量",
+                                            "children": [
+                                              {
+                                                "id": "409",
+                                                "text": "xxxxxKWH",
+                                                "name": "NJSK20250001WX01YB01FH02GD03GN01",
+                                                "key": "allEnergy",
+                                                "unit": "KWH",
+                                                "color": "#F44E3B"
+                                              }
+                                            ]
+                                          },
+                                          { "id": "410", "text": "控制属性", "children": [{ "id": "411", "text": "监控" }] },
+                                          {
+                                            "id": "412",
+                                            "text": "安装地点",
+                                            "children": [{ "id": "413", "text": "宿舍楼顶，机房外墙" }]
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "id": "414",
+                                        "text": "GD03说明",
+                                        "children": [
+                                          {
+                                            "id": "415",
+                                            "text": "并网柜",
+                                            "children": [
+                                              {
+                                                "id": "416",
+                                                "text": "实时功率",
+                                                "children": [
+                                                  {
+                                                    "id": "417",
+                                                    "text": "xxxKW",
+                                                    "name": "NJSK20250001WX01YB01FH02GD03",
+                                                    "key": "pwn",
+                                                    "unit": "KW",
+                                                    "color": "#F44E3B"
+                                                  }
+                                                ]
+                                              },
+                                              { "id": "418", "text": "额定功率", "children": [{ "id": "419", "text": "50KW" }] },
+                                              {
+                                                "id": "420",
+                                                "text": "安装地点",
+                                                "children": [{ "id": "421", "text": "宿舍楼顶，机房内" }]
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "id": "422",
+                                            "text": "供电局受控？",
+                                            "children": [{ "id": "423", "text": "不受控" }]
+                                          },
+                                          {
+                                            "id": "424",
+                                            "text": "用户是否要监测数据？",
+                                            "children": [{ "id": "425", "text": "是" }]
+                                          },
+                                          {
+                                            "id": "426",
+                                            "text": "多功能表互感器变比",
+                                            "children": [{ "id": "427", "text": "200/5A" }]
+                                          },
+                                          {
+                                            "id": "428",
+                                            "text": "信令箱",
+                                            "children": [
+                                              {
+                                                "id": "429",
+                                                "text": "安装地点",
+                                                "children": [{ "id": "430", "text": "宿舍楼顶，机房内" }]
+                                              },
+                                              {
+                                                "id": "431",
+                                                "text": "信令箱型号",
+                                                "children": [{ "id": "432", "text": "光伏并网柜信令箱（型号R3/GD）" }]
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "id": "433",
+                                    "text": "GD04",
+                                    "children": [
+                                      {
+                                        "id": "434",
+                                        "text": "GN01",
+                                        "children": [
+                                          {
+                                            "id": "435",
+                                            "text": "GN实时功率",
+                                            "children": [
+                                              {
+                                                "id": "436",
+                                                "text": "xxKW",
+                                                "name": "NJSK20250001WX01YB01FH02GD04GN01",
+                                                "key": "pwn",
+                                                "unit": "KW",
+                                                "color": "#F44E3B"
+                                              }
+                                            ]
+                                          },
+                                          { "id": "437", "text": "GN额定功率", "children": [{ "id": "438", "text": "50KW" }] },
+                                          {
+                                            "id": "439",
+                                            "text": "日发电量",
+                                            "children": [
+                                              {
+                                                "id": "440",
+                                                "text": "xxxKWH",
+                                                "name": "NJSK20250001WX01YB01FH02GD04GN01",
+                                                "key": "dayEnergy",
+                                                "unit": "KWH",
+                                                "color": "#F44E3B"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "id": "441",
+                                            "text": "总发电量",
+                                            "children": [
+                                              {
+                                                "id": "442",
+                                                "text": "xxxxxKWH",
+                                                "name": "NJSK20250001WX01YB01FH02GD04GN01",
+                                                "key": "allEnergy",
+                                                "unit": "KWH",
+                                                "color": "#F44E3B"
+                                              }
+                                            ]
+                                          },
+                                          { "id": "443", "text": "控制属性", "children": [{ "id": "444", "text": "监控" }] },
+                                          {
+                                            "id": "445",
+                                            "text": "安装地点",
+                                            "children": [{ "id": "446", "text": "临棚，普冲房西墙外" }]
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "id": "447",
+                                        "text": "GN02",
+                                        "children": [
+                                          {
+                                            "id": "448",
+                                            "text": "GN实时功率",
+                                            "children": [
+                                              {
+                                                "id": "449",
+                                                "text": "xxKW",
+                                                "name": "NJSK20250001WX01YB01FH02GD04GN02",
+                                                "key": "pwn",
+                                                "unit": "KW",
+                                                "color": "#F44E3B"
+                                              }
+                                            ]
+                                          },
+                                          { "id": "450", "text": "GN额定功率", "children": [{ "id": "451", "text": "33KW" }] },
+                                          {
+                                            "id": "452",
+                                            "text": "日发电量",
+                                            "children": [
+                                              {
+                                                "id": "453",
+                                                "text": "xxxKWH",
+                                                "name": "NJSK20250001WX01YB01FH02GD04GN02",
+                                                "key": "dayEnergy",
+                                                "unit": "KWH",
+                                                "color": "#F44E3B"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "id": "454",
+                                            "text": "总发电量",
+                                            "children": [
+                                              {
+                                                "id": "455",
+                                                "text": "xxxxxKWH",
+                                                "name": "NJSK20250001WX01YB01FH02GD04GN02",
+                                                "key": "allEnergy",
+                                                "unit": "KWH",
+                                                "color": "#F44E3B"
+                                              }
+                                            ]
+                                          },
+                                          { "id": "456", "text": "控制属性", "children": [{ "id": "457", "text": "监控" }] },
+                                          {
+                                            "id": "458",
+                                            "text": "安装地点",
+                                            "children": [{ "id": "459", "text": "临棚，普冲房西墙外" }]
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "id": "460",
+                                        "text": "GD04说明",
+                                        "children": [
+                                          {
+                                            "id": "461",
+                                            "text": "并网柜",
+                                            "children": [
+                                              {
+                                                "id": "462",
+                                                "text": "实时功率",
+                                                "children": [
+                                                  {
+                                                    "id": "463",
+                                                    "text": "xxxKW",
+                                                    "name": "NJSK20250001WX01YB01FH02GD04",
+                                                    "key": "pwn",
+                                                    "unit": "KW",
+                                                    "color": "#F44E3B"
+                                                  }
+                                                ]
+                                              },
+                                              { "id": "464", "text": "额定功率", "children": [{ "id": "465", "text": "118KW" }] },
+                                              {
+                                                "id": "466",
+                                                "text": "安装地点",
+                                                "children": [{ "id": "467", "text": "临棚，普冲房配电总箱旁" }]
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "id": "468",
+                                            "text": "供电局受控？",
+                                            "children": [{ "id": "469", "text": "不受控" }]
+                                          },
+                                          {
+                                            "id": "470",
+                                            "text": "用户是否要监测数据？",
+                                            "children": [{ "id": "471", "text": "是" }]
+                                          },
+                                          {
+                                            "id": "472",
+                                            "text": "多功能表互感器变比",
+                                            "children": [{ "id": "473", "text": "200/5A" }]
+                                          },
+                                          {
+                                            "id": "474",
+                                            "text": "信令箱",
+                                            "children": [
+                                              {
+                                                "id": "475",
+                                                "text": "安装地点",
+                                                "children": [{ "id": "476", "text": "临棚，普冲房配电总箱旁" }]
+                                              },
+                                              {
+                                                "id": "477",
+                                                "text": "信令箱型号",
+                                                "children": [{ "id": "478", "text": "光伏并网柜信令箱（型号R3/GD）" }]
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "id": "479",
+                                "text": "FHCD",
+                                "children": [
+                                  {
+                                    "id": "480",
+                                    "text": "CD01",
+                                    "children": [
+                                      {
+                                        "id": "481",
+                                        "text": "CN01",
+                                        "children": [
+                                          {
+                                            "id": "482",
+                                            "text": "CN实时功率",
+                                            "children": [
+                                              {
+                                                "id": "483",
+                                                "text": "xxKW",
+                                                "name": "NJSK20250001WX01YB01FH02CD01CN01",
+                                                "key": "pwn",
+                                                "unit": "KW",
+                                                "color": "#F44E3B"
+                                              }
+                                            ]
+                                          },
+                                          { "id": "484", "text": "CN额定功率", "children": [{ "id": "485", "text": "125KW" }] },
+                                          {
+                                            "id": "486",
+                                            "text": "CN实时电量",
+                                            "children": [
+                                              {
+                                                "id": "487",
+                                                "text": "xxxKWH",
+                                                "name": "NJSK20250001WX01YB01FH02CD01CN01",
+                                                "key": "soc",
+                                                "unit": "KWH",
+                                                "color": "#F44E3B"
+                                              }
+                                            ]
+                                          },
+                                          { "id": "488", "text": "CN额定电量", "children": [{ "id": "489", "text": "250KWH" }] },
+                                          { "id": "490", "text": "控制属性", "children": [{ "id": "491", "text": "监控" }] },
+                                          {
+                                            "id": "492",
+                                            "text": "安装地点",
+                                            "children": [{ "id": "493", "text": "大车间储能柜测试区1" }]
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "id": "494",
+                                        "text": "CN02",
+                                        "children": [
+                                          {
+                                            "id": "495",
+                                            "text": "CN实时功率",
+                                            "children": [
+                                              {
+                                                "id": "496",
+                                                "text": "xxKW",
+                                                "name": "NJSK20250001WX01YB01FH02CD01CN02",
+                                                "key": "pwn",
+                                                "unit": "KW",
+                                                "color": "#F44E3B"
+                                              }
+                                            ]
+                                          },
+                                          { "id": "497", "text": "CN额定功率", "children": [{ "id": "498", "text": "125KW" }] },
+                                          {
+                                            "id": "499",
+                                            "text": "CN实时电量",
+                                            "children": [
+                                              {
+                                                "id": "500",
+                                                "text": "xxxKWH",
+                                                "name": "NJSK20250001WX01YB01FH02CD01CN02",
+                                                "key": "soc",
+                                                "unit": "KWH",
+                                                "color": "#F44E3B"
+                                              }
+                                            ]
+                                          },
+                                          { "id": "501", "text": "CN额定电量", "children": [{ "id": "502", "text": "250KWH" }] },
+                                          { "id": "503", "text": "控制属性", "children": [{ "id": "504", "text": "监控" }] },
+                                          {
+                                            "id": "505",
+                                            "text": "安装地点",
+                                            "children": [{ "id": "506", "text": "大车间储能柜测试区2" }]
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "id": "507",
+                                        "text": "CD01说明",
+                                        "children": [
+                                          {
+                                            "id": "508",
+                                            "text": "并网柜",
+                                            "children": [
+                                              {
+                                                "id": "509",
+                                                "text": "实时功率",
+                                                "children": [
+                                                  {
+                                                    "id": "510",
+                                                    "text": "xxKW",
+                                                    "name": "NJSK20250001WX01YB01FH02CD01",
+                                                    "key": "pwn",
+                                                    "unit": "KW",
+                                                    "color": "#F44E3B"
+                                                  }
+                                                ]
+                                              },
+                                              { "id": "511", "text": "额定功率", "children": [{ "id": "512", "text": "332KW" }] },
+                                              {
+                                                "id": "513",
+                                                "text": "安装地点",
+                                                "children": [{ "id": "514", "text": "大车间配电间内靠近配电总箱" }]
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "id": "515",
+                                            "text": "供电局受控？",
+                                            "children": [{ "id": "516", "text": "不受控" }]
+                                          },
+                                          {
+                                            "id": "517",
+                                            "text": "用户是否要监测数据？",
+                                            "children": [{ "id": "518", "text": "是" }]
+                                          },
+                                          {
+                                            "id": "519",
+                                            "text": "多功能表互感器变比",
+                                            "children": [{ "id": "520", "text": "600/5A" }]
+                                          },
+                                          {
+                                            "id": "521",
+                                            "text": "信令箱",
+                                            "children": [
+                                              {
+                                                "id": "522",
+                                                "text": "安装地点",
+                                                "children": [{ "id": "523", "text": "大车间配电间内靠近配电总箱" }]
+                                              },
+                                              {
+                                                "id": "524",
+                                                "text": "信令箱型号",
+                                                "children": [{ "id": "525", "text": "储能并网柜信令箱（型号R3/CD）" }]
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "id": "526",
+                                "text": "FH02说明",
+                                "children": [
+                                  {
+                                    "id": "527",
+                                    "text": "用户负荷柜",
+                                    "children": [
+                                      {
+                                        "id": "528",
+                                        "text": "实时功率",
+                                        "children": [
+                                          {
+                                            "id": "529",
+                                            "text": "xxxxKW",
+                                            "name": "NJSK20250001WX01YB01FH02",
+                                            "key": "pwn",
+                                            "unit": "KW",
+                                            "color": "#F44E3B"
+                                          }
+                                        ]
+                                      },
+                                      { "id": "530", "text": "额定功率", "children": [{ "id": "531", "text": "421KW" }] },
+                                      {
+                                        "id": "532",
+                                        "text": "安装地点",
+                                        "children": [{ "id": "533", "text": "大车间一层配电间内" }]
+                                      }
+                                    ]
+                                  },
+                                  { "id": "534", "text": "多功能表互感器变比", "children": [{ "id": "535", "text": "1000/5A" }] },
+                                  {
+                                    "id": "536",
+                                    "text": "信令箱",
+                                    "children": [
+                                      {
+                                        "id": "537",
+                                        "text": "安装地点",
+                                        "children": [{ "id": "538", "text": "大车间一层配电间靠低压总进线柜附近" }]
+                                      },
+                                      {
+                                        "id": "539",
+                                        "text": "信令箱型号",
+                                        "children": [{ "id": "540", "text": "用户负荷柜信令箱（型号R2/FH）" }]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "id": "541",
+                        "text": "YB01说明",
+                        "children": [
+                          {
+                            "id": "542",
+                            "text": "用户低压进线总柜",
+                            "children": [
+                              {
+                                "id": "543",
+                                "text": "实时功率",
+                                "children": [
+                                  {
+                                    "id": "544",
+                                    "text": "xxxxKW",
+                                    "name": "NJSK20250001WX01YB01",
+                                    "key": "pwn",
+                                    "unit": "KW",
+                                    "color": "#F44E3B"
+                                  }
+                                ]
+                              },
+                              { "id": "545", "text": "额定功率", "children": [{ "id": "546", "text": "1250KW" }] },
+                              {
+                                "id": "547",
+                                "text": "安装地点",
+                                "children": [{ "id": "548", "text": "配电房变压器低压侧总开关" }]
+                              }
+                            ]
+                          },
+                          { "id": "549", "text": "多功能表互感器变比", "children": [{ "id": "550", "text": "2500/5A" }] },
+                          {
+                            "id": "551",
+                            "text": "信令箱",
+                            "children": [
+                              { "id": "552", "text": "安装地点", "children": [{ "id": "553", "text": "配电房低压总柜附近" }] },
+                              {
+                                "id": "554",
+                                "text": "信令箱型号",
+                                "children": [{ "id": "555", "text": "用户变信令箱（型号R2/YB）" }]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "556",
+                "text": "WX01说明",
+                "children": [
+                  { "id": "557", "text": "WX额定输入功率值", "children": [{ "id": "558", "text": "1250KW" }] },
+                  { "id": "559", "text": "是否容许余电上网", "children": [{ "id": "560", "text": "是" }] },
+                  { "id": "561", "text": "WX额定上网功率值", "children": [{ "id": "562", "text": "800KW" }] },
+                  {
+                    "id": "563",
+                    "text": "WX实时输入/输出功率值",
+                    "children": [
+                      {
+                        "id": "564",
+                        "text": "xxxxKW",
+                        "name": "NJSK20250001WX01YB01",
+                        "key": "pwn",
+                        "unit": "KW",
+                        "color": "#F44E3B"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "565",
+                    "text": "信令箱",
+                    "children": [
+                      { "id": "566", "text": "安装地点", "children": [{ "id": "567", "text": "大车间研发办公室" }] },
+                      { "id": "568", "text": "信令箱型号", "children": [{ "id": "569", "text": "主控信令箱（型号R1）" }] }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "version": "v3.6.0",
+  "title": "展会实时展图"
+}

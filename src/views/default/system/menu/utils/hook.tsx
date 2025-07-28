@@ -1,5 +1,5 @@
 import editForm from "../form.vue";
-import { handleTree } from "@/utils/tree";
+import { listToTree } from "@/utils/tree";
 import { message } from "@/utils/message";
 import { getMenuList } from "@/api/system";
 import { transformI18n } from "@/plugins/i18n";
@@ -107,7 +107,7 @@ export function useMenu() {
       // 前端搜索菜单名称
       newData = newData.filter(item => transformI18n(item.title).includes(form.title));
     }
-    dataList.value = handleTree(newData); // 处理成树结构
+    dataList.value = listToTree(newData); // 处理成树结构
     setTimeout(() => {
       loading.value = false;
     }, 500);

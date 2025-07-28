@@ -29,6 +29,12 @@ import "element-plus/dist/index.css";
 // 导入字体图标
 import "./assets/iconfont/iconfont.js";
 import "./assets/iconfont/iconfont.css";
+// 导入思维导图图标
+import "@/assets/icon-font/iconfont.css";
+import "@/assets/icon-font/iconfont.css";
+
+import "viewerjs/dist/viewer.css";
+import VueViewer from "v-viewer";
 
 const app = createApp(App);
 
@@ -68,6 +74,7 @@ const initPlatformConfig = async () => {
       .use(useElementPlus)
       .use(Table)
       .use(useVxeTable)
+      .use(VueViewer)
       .use(PureDescriptions)
       .use(useEcharts)
       .use(MtForm)

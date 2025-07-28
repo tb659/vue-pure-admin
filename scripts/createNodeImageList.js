@@ -1,0 +1,56 @@
+import fs from "fs";
+import { dirname, join } from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+const fileDest = join(__dirname, "../src/assets/xmind/svg");
+const targetDest = join(__dirname, "../src/views/admin/xmind/config/image.js");
+
+const run = dir => {
+  let dirs = fs.readdirSync(dir);
+  dirs.forEach(item => {
+    let cur = join(dir, item);
+    if (fs.statSync(cur).isDirectory()) {
+      walkDir(cur, item);
+    }
+  });
+};
+
+const list = [];
+const importList = [];
+const walkDir = (dir, item) => {
+  let files = fs.readdirSync(dir);
+  let name = files.find(file => {
+    return !/\./.test(file);
+  });
+  let fileList = files.filter(file => {
+    return /\.svg$/.test(file);
+  });
+  let itemList = [];
+  fileList.forEach(file => {
+    let fileName = item + "_" + file.replace(/\.svg$/, "").replaceAll("-", "");
+    importList.push(`import ${fileName} from "@/assets/xmind/svg/${item}/${file}"`);
+    itemList.push({
+      url: fileName,
+      width: 100,
+      height: 100,
+    });
+  });
+  list.push({
+    name,
+    list: itemList,
+  });
+  const content = `
+// @ts-nocheck
+
+// 该文件请运行npm run createNodeImageList命令自动生成
+${importList.join("\n")}
+export default ${JSON.stringify(list, null, 2).replace(/(url":\s*)"([^"]+)"(,)/g, "$1$2$3")}
+`;
+  fs.writeFileSync(targetDest, content);
+};
+
+run(fileDest);
+console.log("运行成功");

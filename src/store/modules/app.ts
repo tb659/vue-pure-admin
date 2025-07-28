@@ -95,7 +95,7 @@ export const useAppStore = () => {
         },
       },
       persist: {
-        paths: ["sidebar", "layout", "device", "viewportSize", "sortSwap", "leftMixNavFixed"],
+        pick: ["sidebar", "layout", "device", "viewportSize", "sortSwap", "leftMixNavFixed"],
       },
     });
   }
