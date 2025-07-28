@@ -4,6 +4,7 @@ import { menuApi } from "@/api/system/menu";
 import { required } from "@/utils/validator";
 import { useForm } from "@/hooks/web/useForm";
 import { eachTree, listToTree } from "@/utils/tree";
+import { ADMIN_ROLE_EMBED } from "@/utils/constants";
 
 defineOptions({
   name: "WriteForm",
@@ -64,6 +65,7 @@ watch(
 watch(
   () => props.currentRow,
   currentRow => {
+    formMethods.setSchema([{ field: "status", path: "componentProps.disabled", value: currentRow?.embed === ADMIN_ROLE_EMBED }]);
     if (!currentRow) return;
     setValues(currentRow);
   },
