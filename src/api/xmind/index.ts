@@ -1,6 +1,8 @@
 import exampleData from "simple-mind-map/example/exampleData";
 import { simpleDeepClone } from "simple-mind-map/src/utils/index";
 import { emitter } from "@/utils/mitt";
+import { responsiveStorageNameSpace } from "@/config";
+import { useXmindStoreHook } from "@/store/modules/xmind";
 
 exampleData.root = {
   data: {
@@ -9,9 +11,9 @@ exampleData.root = {
   children: [],
 };
 
-const SIMPLE_MIND_MAP_DATA = "SIMPLE_MIND_MAP_DATA";
-const SIMPLE_MIND_MAP_LANG = "SIMPLE_MIND_MAP_LANG";
-const SIMPLE_MIND_MAP_LOCAL_CONFIG = "SIMPLE_MIND_MAP_LOCAL_CONFIG";
+const SIMPLE_MIND_MAP_DATA = responsiveStorageNameSpace() + "SIMPLE_MIND_MAP_DATA";
+const SIMPLE_MIND_MAP_LANG = responsiveStorageNameSpace() + "SIMPLE_MIND_MAP_LANG";
+const SIMPLE_MIND_MAP_LOCAL_CONFIG = responsiveStorageNameSpace() + "SIMPLE_MIND_MAP_LOCAL_CONFIG";
 
 /**
  * @Desc: 克隆思维导图数据，去除激活状态
@@ -32,17 +34,17 @@ const copyMindMapTreeData = (tree, root) => {
  * @Desc: 获取缓存的思维导图数据
  */
 export const getData = () => {
-  // const store = localStorage.getItem(SIMPLE_MIND_MAP_DATA);
-  // if (store === null) {
-  return simpleDeepClone(exampleData);
-  // } else {
-  //   try {
-  //     return JSON.parse(store);
-  //   } catch (error) {
-  //     console.log(error);
-  //     return simpleDeepClone(exampleData);
-  //   }
-  // }
+  const store = localStorage.getItem(SIMPLE_MIND_MAP_DATA);
+  if (store === null) {
+    return simpleDeepClone(exampleData);
+  } else {
+    try {
+      return JSON.parse(store);
+    } catch (error) {
+      console.log(error);
+      return simpleDeepClone(exampleData);
+    }
+  }
 };
 
 /**
@@ -62,6 +64,7 @@ export const storeData = data => {
     emitter.emit("write_local_file", originData);
     const dataStr = JSON.stringify(originData);
     localStorage.setItem(SIMPLE_MIND_MAP_DATA, dataStr);
+    useXmindStoreHook().setMindMapData(originData);
   } catch (error) {
     console.log(error);
   }
