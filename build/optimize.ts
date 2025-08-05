@@ -53,6 +53,7 @@ const include = [
   "@infectoone/vue-ganttastic",
   "@wangeditor/editor-for-vue",
   "vuedraggable/src/vuedraggable",
+  "simple-mind-map",
 ];
 
 /**
