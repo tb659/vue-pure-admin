@@ -29,9 +29,9 @@ export type Events = {
   showImport: Function;
   showExport: Function;
   close_node_icon_toolbar: Function;
-  execCommand: Function;
-  paddingChange: Function;
-  exportData: Function;
+  execCommand: any;
+  paddingChange: Function | object;
+  exportData: any;
   startTextEdit: Function;
   endTextEdit: Function;
   createAssociativeLine: Function;
@@ -45,6 +45,24 @@ export type Events = {
   toggle_mini_map: any;
   show_search: any;
   closeSideBar: any;
+  showNodeLink: Function;
+  showNodeNote: Function;
+  showNodeTag: Function;
+  showNodeIcon: Function;
+  hideNoteContent: Function;
+  scale: Function;
+  svg_mousedown: Function;
+  hide_text_edit: Function;
+  showShortcutKey: Function;
+  showStructure: Function;
+  setMindMapData: Function | object;
+  node_contextmenu: Function;
+  node_click: Function;
+  draw_click: Function;
+  expand_btn_click: Function;
+  mouseup: Function;
+  scrollbar_change: Function;
+  rich_text_selection_change: Function;
 };
 
 export const emitter: Emitter<Events> = mitt<Events>();

@@ -7,15 +7,18 @@ const loadOption = {
 };
 let loading;
 let loadingCount = 0;
-const startLoading = () => {
-  loading = ElLoading.service(loadOption);
+const startLoading = (text = "Loading...") => {
+  loading = ElLoading.service({
+    ...loadOption,
+    text,
+  });
 };
 const endLoading = () => {
   loading.close();
 };
-export const showLoading = () => {
+export const showLoading = (text = "Loading...") => {
   if (loadingCount == 0) {
-    startLoading();
+    startLoading(text);
   }
   loadingCount += 1;
 };

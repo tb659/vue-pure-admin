@@ -22,7 +22,6 @@ export function formatXmindData(data, resData = []) {
         data.data.text = `${isEmptyVal(value) ? "--" : (value / 100) * 250}${data.unit}`;
       }
       data.data.color = data.color;
-      data.data.uid = data.uid;
       // console.log(`${data.fullText} : ${data.data.text}`, {
       //   ...itemData,
       //   ...data,
@@ -45,7 +44,9 @@ export function updateRequestData(mindMap, resData) {
       const targetNode = mindMap.renderer.findNodeByUid(listItem.data.uid);
       const resItem = resData.find(resItem => resItem.name === listItem.name);
       if (resItem && !isEmptyVal(resItem[listItem.key])) {
-        const value = resItem[listItem.key];
+        // const value = resItem[listItem.key];
+        const value = parseInt(Math.random() * 1000);
+        // console.log(`${listItem.fullText} : ${listItem.data.text}`, value);
         let text = `${isEmptyVal(value) ? "--" : value}${listItem.unit}`;
         if (listItem.key === "soc") {
           text = `${isEmptyVal(value) ? "--" : (value / 100) * 250}${listItem.unit}`;

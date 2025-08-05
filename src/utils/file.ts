@@ -139,15 +139,13 @@ export function downloadFileBlob(data, contentType, contentDisposition) {
  * @param {string} fileName
  * @return {*}
  */
-export const exportFileByLink = (params, api) => {
+export const exportFileByLink = (api, params) => {
   let url = httpConfig.exportUrl + api;
   url = formatUrl(url, params);
   console.log("fetch------url", url);
   fetch(`${url}`, {
     method: "GET",
-    headers: {
-      [TOKEN_KEY]: getToken(),
-    },
+    headers: new Headers({ [TOKEN_KEY]: String(getToken()) }),
   }).then(res => {
     res.blob().then(blob => {
       // 创建a标签，并处理二级制数据
@@ -172,5 +170,18 @@ export const exportFileByLink = (params, api) => {
       window.URL.revokeObjectURL(aLink.href);
       document.body.removeChild(aLink);
     });
+  });
+};
+
+/**
+ * @Desc: 文件转buffer
+ */
+export const fileToBuffer = file => {
+  return new Promise(r => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      r(reader.result);
+    };
+    reader.readAsArrayBuffer(file);
   });
 };
