@@ -156,6 +156,8 @@ export type xmindType = {
     openNodeRichText: boolean; // 是否开启节点富文本
     useLeftKeySelectionRightKeyDrag: boolean; // 鼠标行为
     isShowScrollbar: boolean; // 是否显示滚动条
+    mousewheelAction: string; // 鼠标滚轮动作
+    mousewheelZoomActionReverse: boolean; // 鼠标滚轮动作反向
   };
   activeSidebar: string; // 当前显示的侧边栏
   isDark: boolean; // 是否是暗黑模式

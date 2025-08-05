@@ -14,6 +14,8 @@ export const useXmindStore = defineStore(`${responsiveStorageNameSpace()}store_x
       openNodeRichText: true, // 是否开启节点富文本
       useLeftKeySelectionRightKeyDrag: false, // 鼠标行为
       isShowScrollbar: false, // 是否显示滚动条
+      mousewheelAction: "", // 鼠标滚轮动作
+      mousewheelZoomActionReverse: false, // 鼠标滚轮动作反向
     },
     activeSidebar: "", // 当前显示的侧边栏
     isDark: false, // 是否是暗黑模式
@@ -21,6 +23,9 @@ export const useXmindStore = defineStore(`${responsiveStorageNameSpace()}store_x
     isReadonly: true, // 是否只读
   }),
   getters: {
+    getMindMapData(state) {
+      return state.mindMapData;
+    },
     getLocalConfig(state) {
       return state.localConfig;
     },
@@ -35,6 +40,9 @@ export const useXmindStore = defineStore(`${responsiveStorageNameSpace()}store_x
     },
     getIsReadonly(state) {
       return state.isReadonly;
+    },
+    getIsOutlineEdit(state) {
+      return state.isOutlineEdit;
     },
   },
   actions: {
@@ -94,7 +102,7 @@ export const useXmindStore = defineStore(`${responsiveStorageNameSpace()}store_x
             },
           },
         };
-        this.mindMapData = data.data;
+        this.mindMapData = data.data.mindMapData;
       } catch (error) {
         console.log(error);
       }
