@@ -3,7 +3,7 @@ import { computed } from "vue";
 import { clone } from "@pureadmin/utils";
 import { transformI18n } from "@/plugins/i18n";
 import ElTreeLine from "@/components/ReTreeLine";
-import { extractPathList, deleteChildren } from "@/utils/tree";
+import { getTreeUniqueId, deleteChildrenIfHasOne } from "@/utils/tree";
 import { usePermissionStoreHook } from "@/store/modules/permission";
 
 defineOptions({
@@ -12,9 +12,9 @@ defineOptions({
 
 const menusTree = clone(usePermissionStoreHook().wholeMenus, true);
 const menusData = computed(() => {
-  return deleteChildren(menusTree);
+  return deleteChildrenIfHasOne(menusTree);
 });
-const expandedKeys = extractPathList(menusData.value);
+const expandedKeys = getTreeUniqueId(menusData.value);
 const dataProps = {
   value: "uniqueId",
   children: "children",

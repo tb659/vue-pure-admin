@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { deleteChildren, getNodeByUniqueId, appendFieldByUniqueId } from "@/utils/tree";
+import { deleteChildrenIfHasOne, getNodeByUniqueId, appendFieldByUniqueId } from "@/utils/tree";
 import { useDetail } from "./hooks";
 import { ref, computed } from "vue";
 import { clone } from "@pureadmin/utils";
@@ -15,7 +15,7 @@ const { toDetail, router } = useDetail();
 const menusTree = clone(usePermissionStoreHook().wholeMenus, true);
 
 const treeData = computed(() => {
-  return appendFieldByUniqueId(deleteChildren(menusTree), 0, {
+  return appendFieldByUniqueId(deleteChildrenIfHasOne(menusTree), 0, {
     disabled: true,
   });
 });

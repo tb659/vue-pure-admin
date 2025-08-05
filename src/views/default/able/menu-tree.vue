@@ -4,7 +4,7 @@ import { clone } from "@pureadmin/utils";
 import type { ElTreeV2 } from "element-plus";
 import { transformI18n } from "@/plugins/i18n";
 import { useRenderIcon } from "@/components/ReIcon/src/hooks";
-import { extractPathList, deleteChildren } from "@/utils/tree";
+import { extractPathList, deleteChildrenIfHasOne } from "@/utils/tree";
 import { usePermissionStoreHook } from "@/store/modules/permission";
 import type { TreeNode } from "element-plus/es/components/tree-v2/src/types";
 import NodeTree from "~icons/ri/node-tree";
@@ -28,7 +28,7 @@ const treeRef = ref<InstanceType<typeof ElTreeV2>>();
 const menusTree = clone(usePermissionStoreHook().wholeMenus, true);
 
 const menusData = computed(() => {
-  return deleteChildren(menusTree);
+  return deleteChildrenIfHasOne(menusTree);
 });
 
 const expandedKeys = extractPathList(menusData.value);
