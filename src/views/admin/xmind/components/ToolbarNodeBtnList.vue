@@ -107,9 +107,7 @@ onBeforeUnmount(() => {
       <div
         v-if="item === 'back'"
         class="toolbarBtn"
-        :class="{
-          disabled: readonly || backEnd,
-        }"
+        :class="{ disabled: readonly || backEnd }"
         @click="emit('execCommand', 'BACK')"
       >
         <span class="icon iconfont iconhoutui-shi" />
@@ -118,9 +116,7 @@ onBeforeUnmount(() => {
       <div
         v-if="item === 'forward'"
         class="toolbarBtn"
-        :class="{
-          disabled: readonly || forwardEnd,
-        }"
+        :class="{ disabled: readonly || forwardEnd }"
         @click="emit('execCommand', 'FORWARD')"
       >
         <span class="icon iconfont iconqianjin1" />
@@ -129,10 +125,7 @@ onBeforeUnmount(() => {
       <div
         v-if="item === 'painter'"
         class="toolbarBtn"
-        :class="{
-          disabled: activeNodes.length <= 0 || hasGeneralization,
-          active: isInPainter,
-        }"
+        :class="{ disabled: activeNodes.length <= 0 || hasGeneralization, active: isInPainter }"
         @click="emit('startPainter')"
       >
         <span class="icon iconfont iconjiedian" />
@@ -141,9 +134,7 @@ onBeforeUnmount(() => {
       <div
         v-if="item === 'siblingNode'"
         class="toolbarBtn"
-        :class="{
-          disabled: activeNodes.length <= 0 || hasRoot || hasGeneralization,
-        }"
+        :class="{ disabled: activeNodes.length <= 0 || hasRoot || hasGeneralization }"
         @click="emit('execCommand', 'INSERT_NODE')"
       >
         <span class="icon iconfont iconjiedian" />
@@ -152,9 +143,7 @@ onBeforeUnmount(() => {
       <div
         v-if="item === 'childNode'"
         class="toolbarBtn"
-        :class="{
-          disabled: activeNodes.length <= 0 || hasGeneralization,
-        }"
+        :class="{ disabled: activeNodes.length <= 0 || hasGeneralization }"
         @click="emit('execCommand', 'INSERT_CHILD_NODE')"
       >
         <span class="icon iconfont icontianjiazijiedian" />
@@ -163,9 +152,7 @@ onBeforeUnmount(() => {
       <div
         v-if="item === 'deleteNode'"
         class="toolbarBtn"
-        :class="{
-          disabled: activeNodes.length <= 0,
-        }"
+        :class="{ disabled: activeNodes.length <= 0 }"
         @click="emit('execCommand', 'REMOVE_NODE')"
       >
         <span class="icon iconfont iconshanchu" />
@@ -174,64 +161,32 @@ onBeforeUnmount(() => {
       <div
         v-if="item === 'image'"
         class="toolbarBtn"
-        :class="{
-          disabled: activeNodes.length <= 0,
-        }"
+        :class="{ disabled: activeNodes.length <= 0 }"
         @click="emit('showNodeImage')"
       >
         <span class="icon iconfont iconimage" />
         <span class="text">{{ $t("toolbar.image") }}</span>
       </div>
-      <div
-        v-if="item === 'icon'"
-        class="toolbarBtn"
-        :class="{
-          disabled: activeNodes.length <= 0,
-        }"
-        @click="showNodeIcon"
-      >
+      <div v-if="item === 'icon'" class="toolbarBtn" :class="{ disabled: activeNodes.length <= 0 }" @click="showNodeIcon">
         <span class="icon iconfont iconxiaolian" />
         <span class="text">{{ $t("toolbar.icon") }}</span>
       </div>
-      <div
-        v-if="item === 'link'"
-        class="toolbarBtn"
-        :class="{
-          disabled: activeNodes.length <= 0,
-        }"
-        @click="emit('showNodeLink')"
-      >
+      <div v-if="item === 'link'" class="toolbarBtn" :class="{ disabled: activeNodes.length <= 0 }" @click="emit('showNodeLink')">
         <span class="icon iconfont iconchaolianjie" />
         <span class="text">{{ $t("toolbar.link") }}</span>
       </div>
-      <div
-        v-if="item === 'note'"
-        class="toolbarBtn"
-        :class="{
-          disabled: activeNodes.length <= 0,
-        }"
-        @click="emit('showNodeNote')"
-      >
+      <div v-if="item === 'note'" class="toolbarBtn" :class="{ disabled: activeNodes.length <= 0 }" @click="emit('showNodeNote')">
         <span class="icon iconfont iconflow-Mark" />
         <span class="text">{{ $t("toolbar.note") }}</span>
       </div>
-      <div
-        v-if="item === 'tag'"
-        class="toolbarBtn"
-        :class="{
-          disabled: activeNodes.length <= 0,
-        }"
-        @click="emit('showNodeTag')"
-      >
+      <div v-if="item === 'tag'" class="toolbarBtn" :class="{ disabled: activeNodes.length <= 0 }" @click="emit('showNodeTag')">
         <span class="icon iconfont iconbiaoqian" />
         <span class="text">{{ $t("toolbar.tag") }}</span>
       </div>
       <div
         v-if="item === 'summary'"
         class="toolbarBtn"
-        :class="{
-          disabled: activeNodes.length <= 0 || hasRoot || hasGeneralization,
-        }"
+        :class="{ disabled: activeNodes.length <= 0 || hasRoot || hasGeneralization }"
         @click="emit('execCommand', 'ADD_GENERALIZATION')"
       >
         <span class="icon iconfont icongaikuozonglan" />
@@ -240,9 +195,7 @@ onBeforeUnmount(() => {
       <div
         v-if="item === 'associativeLine'"
         class="toolbarBtn"
-        :class="{
-          disabled: activeNodes.length <= 0 || hasGeneralization,
-        }"
+        :class="{ disabled: activeNodes.length <= 0 || hasGeneralization }"
         @click="emit('createAssociativeLine')"
       >
         <span class="icon iconfont iconlianjiexian" />
@@ -251,9 +204,7 @@ onBeforeUnmount(() => {
       <div
         v-if="item === 'formula'"
         class="toolbarBtn"
-        :class="{
-          disabled: activeNodes.length <= 0 || hasGeneralization,
-        }"
+        :class="{ disabled: activeNodes.length <= 0 || hasGeneralization }"
         @click="showFormula"
       >
         <span class="icon iconfont icongongshi" />

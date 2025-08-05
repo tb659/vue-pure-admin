@@ -3,7 +3,8 @@ import { getLocalConfig } from "@/api/xmind";
 import { useXmindStoreHook } from "@/store/modules/xmind";
 import { onBeforeMount, ref, watch, computed } from "vue";
 import Edit from "./components/Edit.vue";
-// import { hideLoading, showLoading } from "@/utils/loading";
+import { hideLoading, showLoading } from "@/utils/loading";
+import { $t, transformI18n } from "@/plugins/i18n";
 
 defineOptions({
   name: "Xmind",
@@ -12,7 +13,6 @@ defineOptions({
 const show = ref(false);
 const isDark = computed(() => useXmindStoreHook().getIsDark);
 const activeSidebar = computed(() => useXmindStoreHook().getActiveSidebar);
-const localConfig = computed(() => useXmindStoreHook().getLocalConfig);
 
 function initLocalConfig() {
   let config = getLocalConfig();
@@ -35,8 +35,10 @@ watch(
 );
 onBeforeMount(async () => {
   initLocalConfig();
+  // showLoading(transformI18n($t("other.loading")));
   await useXmindStoreHook().getUserMindMapData();
   show.value = true;
+  hideLoading();
   setBodyDark();
 });
 </script>

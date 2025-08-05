@@ -2,13 +2,21 @@
 /**
  * @Desc: 导航器工具栏
  */
+
+// 缩放
 import Scale from "./Scale.vue";
+// 搜索
 import Search from "./Search.vue";
+// 全屏
 import Fullscreen from "./Fullscreen.vue";
+// 鼠标操作
 import MouseAction from "./MouseAction.vue";
+// 迷你地图
+import NavigatorMap from "./NavigatorMap.vue";
+
 import { langList } from "../config";
 import { emitter } from "@/utils/mitt";
-import { ref, defineProps, computed, nextTick } from "vue";
+import { ref, computed, nextTick } from "vue";
 import { storeLang, getLang } from "@/api/xmind";
 import { useXmindStoreHook } from "@/store/modules/xmind";
 import { useTranslationLang } from "@/layout/hooks/useTranslationLang";
@@ -56,7 +64,7 @@ const toggleDark = () => {
 <template>
   <div class="navigatorContainer" :class="{ isDark: isDark }">
     <!-- 中英文 -->
-    <div v-show="false" class="item">
+    <div class="item">
       <el-select v-model="lang" size="small" style="width: 100px" @change="onLangChange">
         <el-option v-for="item in langList" :key="item.value" :label="item.name" :value="item.value" />
       </el-select>
@@ -68,10 +76,10 @@ const toggleDark = () => {
     </div>
     <!-- 鼠标左右键 -->
     <div class="item">
-      <MouseAction :isDark="isDark" :mindMap="mindMap" />
+      <MouseAction :mindMap="mindMap" />
     </div>
     <!-- 迷你地图 -->
-    <div v-show="false" class="item">
+    <div class="item">
       <el-tooltip
         effect="dark"
         :content="openMiniMap ? $t('navigatorToolbar.closeMiniMap') : $t('navigatorToolbar.openMiniMap')"
@@ -79,9 +87,10 @@ const toggleDark = () => {
       >
         <div class="btn iconfont icondaohang1" @click="toggleMiniMap" />
       </el-tooltip>
+      <NavigatorMap :mindMap="mindMap" />
     </div>
     <!-- 只读/编辑 -->
-    <div v-show="false" class="item">
+    <div class="item">
       <el-tooltip
         effect="dark"
         :content="isReadonly ? $t('navigatorToolbar.edit') : $t('navigatorToolbar.readonly')"
@@ -99,7 +108,7 @@ const toggleDark = () => {
       <Scale :isDark="isDark" :mindMap="mindMap" />
     </div>
     <!-- 主题 -->
-    <div v-show="false" class="item">
+    <div class="item">
       <div class="btn iconfont" :class="[isDark ? 'iconmoon_line' : 'iconlieri']" @click="toggleDark" />
     </div>
   </div>

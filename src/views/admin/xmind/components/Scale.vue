@@ -2,7 +2,7 @@
 /**
  * @Desc: 放大缩小
  */
-import { ref, defineProps, watch } from "vue";
+import { ref, watch } from "vue";
 import { $t, transformI18n } from "@/plugins/i18n";
 import { Plus, Minus } from "@element-plus/icons-vue";
 

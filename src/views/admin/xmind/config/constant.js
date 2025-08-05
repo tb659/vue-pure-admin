@@ -1,63 +1,117 @@
 // @ts-nocheck
 
 //  布局结构图片映射
+import structuresLogicalStructureImg from "@/assets/xmind/img/structures/logicalStructure.png";
+import structuresMindMapImg from "@/assets/xmind/img/structures/mindMap.png";
+import structuresOrganizationStructureImg from "@/assets/xmind/img/structures/organizationStructure.png";
+import structuresCatalogOrganizationImg from "@/assets/xmind/img/structures/catalogOrganization.png";
+import structuresTimelineImg from "@/assets/xmind/img/structures/timeline.png";
+import structuresTimeline2Img from "@/assets/xmind/img/structures/timeline2.png";
+import structuresFishboneImg from "@/assets/xmind/img/structures/fishbone.png";
+import structuresVerticalTimelineImg from "@/assets/xmind/img/structures/verticalTimeline.png";
+
 export const layoutImgMap = {
-  logicalStructure: import("@/assets/xmind/img/structures/logicalStructure.png"),
-  mindMap: import("@/assets/xmind/img/structures/mindMap.png"),
-  organizationStructure: import("@/assets/xmind/img/structures/organizationStructure.png"),
-  catalogOrganization: import("@/assets/xmind/img/structures/catalogOrganization.png"),
-  timeline: import("@/assets/xmind/img/structures/timeline.png"),
-  timeline2: import("@/assets/xmind/img/structures/timeline2.png"),
-  fishbone: import("@/assets/xmind/img/structures/fishbone.png"),
-  verticalTimeline: import("@/assets/xmind/img/structures/verticalTimeline.png"),
+  logicalStructure: structuresLogicalStructureImg,
+  mindMap: structuresMindMapImg,
+  organizationStructure: structuresOrganizationStructureImg,
+  catalogOrganization: structuresCatalogOrganizationImg,
+  timeline: structuresTimelineImg,
+  timeline2: structuresTimeline2Img,
+  fishbone: structuresFishboneImg,
+  verticalTimeline: structuresVerticalTimelineImg,
 };
+
+import themesDefault from "@/assets/xmind/img/themes/default.jpg";
+import themesClassic from "@/assets/xmind/img/themes/classic.jpg";
+import themesMinions from "@/assets/xmind/img/themes/minions.jpg";
+import themesPinkGrape from "@/assets/xmind/img/themes/pinkGrape.jpg";
+import themesMint from "@/assets/xmind/img/themes/mint.jpg";
+import themesGold from "@/assets/xmind/img/themes/gold.jpg";
+import themesVitalityOrange from "@/assets/xmind/img/themes/vitalityOrange.jpg";
+import themesGreenLeaf from "@/assets/xmind/img/themes/greenLeaf.jpg";
+import themesDark2 from "@/assets/xmind/img/themes/dark2.jpg";
+import themesSkyGreen from "@/assets/xmind/img/themes/skyGreen.jpg";
+import themesClassic2 from "@/assets/xmind/img/themes/classic2.jpg";
+import themesClassic3 from "@/assets/xmind/img/themes/classic3.jpg";
+import themesClassic4 from "@/assets/xmind/img/themes/classic4.jpg";
+import themesClassicGreen from "@/assets/xmind/img/themes/classicGreen.jpg";
+import themesClassicBlue from "@/assets/xmind/img/themes/classicBlue.jpg";
+import themesBlueSky from "@/assets/xmind/img/themes/blueSky.jpg";
+import themesBrainImpairedPink from "@/assets/xmind/img/themes/brainImpairedPink.jpg";
+import themesDark from "@/assets/xmind/img/themes/dark.jpg";
+import themesEarthYellow from "@/assets/xmind/img/themes/earthYellow.jpg";
+import themesFreshGreen from "@/assets/xmind/img/themes/freshGreen.jpg";
+import themesFreshRed from "@/assets/xmind/img/themes/freshRed.jpg";
+import themesRomanticPurple from "@/assets/xmind/img/themes/romanticPurple.jpg";
+import themesSimpleBlack from "@/assets/xmind/img/themes/simpleBlack.jpg";
+import themesCourseGreen from "@/assets/xmind/img/themes/courseGreen.jpg";
+import themesCoffee from "@/assets/xmind/img/themes/coffee.jpg";
+import themesRedSpirit from "@/assets/xmind/img/themes/redSpirit.jpg";
+import themesBlackHumour from "@/assets/xmind/img/themes/blackHumour.jpg";
+import themesLateNightOffice from "@/assets/xmind/img/themes/lateNightOffice.jpg";
+import themesBlackGold from "@/assets/xmind/img/themes/blackGold.jpg";
+import themesAutumn from "@/assets/xmind/img/themes/autumn.jpg";
+import themesAvocado from "@/assets/xmind/img/themes/avocado.jpg";
+import themesOrangeJuice from "@/assets/xmind/img/themes/orangeJuice.jpg";
+import themesOreo from "@/assets/xmind/img/themes/oreo.jpg";
+import themesShallowSea from "@/assets/xmind/img/themes/shallowSea.jpg";
+import themesLemonBubbles from "@/assets/xmind/img/themes/lemonBubbles.jpg";
+import themesRose from "@/assets/xmind/img/themes/rose.jpg";
+import themesSeaBlueLine from "@/assets/xmind/img/themes/seaBlueLine.jpg";
+import themesNeonLamp from "@/assets/xmind/img/themes/neonLamp.jpg";
+import themesDarkNightLceBlade from "@/assets/xmind/img/themes/darkNightLceBlade.jpg";
+import themesMorandi from "@/assets/xmind/img/themes/morandi.jpg";
+import themesClassic5 from "@/assets/xmind/img/themes/classic5.jpg";
+import themesDark3 from "@/assets/xmind/img/themes/dark3.jpg";
+import themesDark4 from "@/assets/xmind/img/themes/dark4.jpg";
+import themesCactus from "@/assets/xmind/img/themes/cactus.jpg";
 
 //  主题图片映射
 export const themeMap = {
-  default: import("@/assets/xmind/img/themes/default.jpg"),
-  classic: import("@/assets/xmind/img/themes/classic.jpg"),
-  minions: import("@/assets/xmind/img/themes/minions.jpg"),
-  pinkGrape: import("@/assets/xmind/img/themes/pinkGrape.jpg"),
-  mint: import("@/assets/xmind/img/themes/mint.jpg"),
-  gold: import("@/assets/xmind/img/themes/gold.jpg"),
-  vitalityOrange: import("@/assets/xmind/img/themes/vitalityOrange.jpg"),
-  greenLeaf: import("@/assets/xmind/img/themes/greenLeaf.jpg"),
-  dark2: import("@/assets/xmind/img/themes/dark2.jpg"),
-  skyGreen: import("@/assets/xmind/img/themes/skyGreen.jpg"),
-  classic2: import("@/assets/xmind/img/themes/classic2.jpg"),
-  classic3: import("@/assets/xmind/img/themes/classic3.jpg"),
-  classic4: import("@/assets/xmind/img/themes/classic4.jpg"),
-  classicGreen: import("@/assets/xmind/img/themes/classicGreen.jpg"),
-  classicBlue: import("@/assets/xmind/img/themes/classicBlue.jpg"),
-  blueSky: import("@/assets/xmind/img/themes/blueSky.jpg"),
-  brainImpairedPink: import("@/assets/xmind/img/themes/brainImpairedPink.jpg"),
-  dark: import("@/assets/xmind/img/themes/dark.jpg"),
-  earthYellow: import("@/assets/xmind/img/themes/earthYellow.jpg"),
-  freshGreen: import("@/assets/xmind/img/themes/freshGreen.jpg"),
-  freshRed: import("@/assets/xmind/img/themes/freshRed.jpg"),
-  romanticPurple: import("@/assets/xmind/img/themes/romanticPurple.jpg"),
-  simpleBlack: import("@/assets/xmind/img/themes/simpleBlack.jpg"),
-  courseGreen: import("@/assets/xmind/img/themes/courseGreen.jpg"),
-  coffee: import("@/assets/xmind/img/themes/coffee.jpg"),
-  redSpirit: import("@/assets/xmind/img/themes/redSpirit.jpg"),
-  blackHumour: import("@/assets/xmind/img/themes/blackHumour.jpg"),
-  lateNightOffice: import("@/assets/xmind/img/themes/lateNightOffice.jpg"),
-  blackGold: import("@/assets/xmind/img/themes/blackGold.jpg"),
-  autumn: import("@/assets/xmind/img/themes/autumn.jpg"),
-  avocado: import("@/assets/xmind/img/themes/avocado.jpg"),
-  orangeJuice: import("@/assets/xmind/img/themes/orangeJuice.jpg"),
-  oreo: import("@/assets/xmind/img/themes/oreo.jpg"),
-  shallowSea: import("@/assets/xmind/img/themes/shallowSea.jpg"),
-  lemonBubbles: import("@/assets/xmind/img/themes/lemonBubbles.jpg"),
-  rose: import("@/assets/xmind/img/themes/rose.jpg"),
-  seaBlueLine: import("@/assets/xmind/img/themes/seaBlueLine.jpg"),
-  neonLamp: import("@/assets/xmind/img/themes/neonLamp.jpg"),
-  darkNightLceBlade: import("@/assets/xmind/img/themes/darkNightLceBlade.jpg"),
-  morandi: import("@/assets/xmind/img/themes/morandi.jpg"),
-  classic5: import("@/assets/xmind/img/themes/classic5.jpg"),
-  dark3: import("@/assets/xmind/img/themes/dark3.jpg"),
-  dark4: import("@/assets/xmind/img/themes/dark4.jpg"),
-  cactus: import("@/assets/xmind/img/themes/cactus.jpg"),
+  default: themesDefault,
+  classic: themesClassic,
+  minions: themesMinions,
+  pinkGrape: themesPinkGrape,
+  mint: themesMint,
+  gold: themesGold,
+  vitalityOrange: themesVitalityOrange,
+  greenLeaf: themesGreenLeaf,
+  dark2: themesDark2,
+  skyGreen: themesSkyGreen,
+  classic2: themesClassic2,
+  classic3: themesClassic3,
+  classic4: themesClassic4,
+  classicGreen: themesClassicGreen,
+  classicBlue: themesClassicBlue,
+  blueSky: themesBlueSky,
+  brainImpairedPink: themesBrainImpairedPink,
+  dark: themesDark,
+  earthYellow: themesEarthYellow,
+  freshGreen: themesFreshGreen,
+  freshRed: themesFreshRed,
+  romanticPurple: themesRomanticPurple,
+  simpleBlack: themesSimpleBlack,
+  courseGreen: themesCourseGreen,
+  coffee: themesCoffee,
+  redSpirit: themesRedSpirit,
+  blackHumour: themesBlackHumour,
+  lateNightOffice: themesLateNightOffice,
+  blackGold: themesBlackGold,
+  autumn: themesAutumn,
+  avocado: themesAvocado,
+  orangeJuice: themesOrangeJuice,
+  oreo: themesOreo,
+  shallowSea: themesShallowSea,
+  lemonBubbles: themesLemonBubbles,
+  rose: themesRose,
+  seaBlueLine: themesSeaBlueLine,
+  neonLamp: themesNeonLamp,
+  darkNightLceBlade: themesDarkNightLceBlade,
+  morandi: themesMorandi,
+  classic5: themesClassic5,
+  dark3: themesDark3,
+  dark4: themesDark4,
+  cactus: themesCactus,
 };
 
 // 公式列表

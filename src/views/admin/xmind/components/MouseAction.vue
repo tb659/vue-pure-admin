@@ -14,12 +14,11 @@ const props = defineProps({
   mindMap: {
     type: Object,
   },
-  isDark: {
-    type: Boolean,
-  },
 });
 
 const useLeftKeySelectionRightKeyDrag = computed(() => useXmindStoreHook().getLocalConfig.useLeftKeySelectionRightKeyDrag);
+
+const isDark = computed(() => useXmindStoreHook().getIsDark);
 
 function toggleAction() {
   let val = !useLeftKeySelectionRightKeyDrag.value;

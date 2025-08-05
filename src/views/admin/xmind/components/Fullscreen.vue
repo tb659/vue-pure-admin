@@ -2,12 +2,12 @@
 /**
  * @Desc: 全屏
  */
-import { defineProps, onMounted, watch } from "vue";
+import { onMounted, watch } from "vue";
 import { fullscrrenEvent, fullScreen } from "@/utils/fullScreen";
 import { $t, transformI18n } from "@/plugins/i18n";
 
 defineOptions({
-  name: "Scale",
+  name: "FullScreen",
 });
 
 const props = defineProps({
@@ -54,7 +54,7 @@ onMounted(() => {
     </el-tooltip>
     <!-- 全屏编辑 -->
     <el-tooltip class="item" effect="dark" :content="transformI18n($t('fullscreen.fullscreenEdit'))" placement="top">
-      <div v-show="false" class="btn iconfont iconquanping1" @click="toFullscreenEdit" />
+      <div class="btn iconfont iconquanping1" @click="toFullscreenEdit" />
     </el-tooltip>
   </div>
 </template>

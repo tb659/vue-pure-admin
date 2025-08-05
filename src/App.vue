@@ -17,7 +17,7 @@ import zhCn from "element-plus/es/locale/lang/zh-cn";
 import plusEn from "plus-pro-components/es/locale/lang/en";
 import plusZhCn from "plus-pro-components/es/locale/lang/zh-cn";
 import { useSettingStore } from "@/store/modules/settings";
-import { storageLocal } from "@pureadmin/utils";
+// import { storageLocal } from "@pureadmin/utils";
 
 export default defineComponent({
   name: "app",
@@ -28,11 +28,11 @@ export default defineComponent({
   },
   computed: {
     currentLocale() {
-      return useSettingStore().getLocale.locale === "zh" ? { ...zhCn, ...plusZhCn } : { ...en, ...plusEn };
+      return useSettingStore().getLocale?.locale === "zh" ? { ...zhCn, ...plusZhCn } : { ...en, ...plusEn };
     },
   },
   beforeCreate() {
-    console.log(storageLocal);
+    // console.log(storageLocal);
     const { version, name: title } = __APP_INFO__.pkg;
     const { VITE_PUBLIC_PATH, MODE } = import.meta.env;
     // https://github.com/guMcrey/version-rocket/blob/main/README.zh-CN.md#api

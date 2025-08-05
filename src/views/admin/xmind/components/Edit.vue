@@ -1,45 +1,77 @@
 <script setup lang="ts">
+/**
+ * @description: xmind 主入口
+ * @return {*}
+ */
+
+// xmind 实例
 import MindMap from "simple-mind-map";
+// 迷你地图
 import MiniMap from "simple-mind-map/src/plugins/MiniMap.js";
+// 水印
 import Watermark from "simple-mind-map/src/plugins/Watermark.js";
+// 键盘导航
 import KeyboardNavigation from "simple-mind-map/src/plugins/KeyboardNavigation.js";
+// 导出 pdf
 import ExportPDF from "simple-mind-map/src/plugins/ExportPDF.js";
+// 导出 xmind
 import ExportXMind from "simple-mind-map/src/plugins/ExportXMind.js";
+// 导出
 import Export from "simple-mind-map/src/plugins/Export.js";
+// 拖动
 import Drag from "simple-mind-map/src/plugins/Drag.js";
+// 选择
 import Select from "simple-mind-map/src/plugins/Select.js";
+// 富文本
 import RichText from "simple-mind-map/src/plugins/RichText.js";
+// 关联线
 import AssociativeLine from "simple-mind-map/src/plugins/AssociativeLine.js";
+// 触摸事件
 import TouchEvent from "simple-mind-map/src/plugins/TouchEvent.js";
+// 节点图片调整
 import NodeImgAdjust from "simple-mind-map/src/plugins/NodeImgAdjust.js";
+// 搜索
 import SearchPlugin from "simple-mind-map/src/plugins/Search.js";
+// 绘制
 import Painter from "simple-mind-map/src/plugins/Painter.js";
+// 滚动条
 import ScrollbarPlugin from "simple-mind-map/src/plugins/Scrollbar.js";
+// 公式
 import Formula from "simple-mind-map/src/plugins/Formula.js";
 // import Cooperate from "simple-mind-map/src/plugins/Cooperate.js";
 
-// import Toolbar from "./Toolbar.vue";
-// import OutlineSidebar from "./OutlineSidebar".vue;
-// import Style from "./Style".vue;
-// import BaseStyle from "./BaseStyle".vue;
-// import Theme from "./Theme".vue;
-// import Structure from "./Structure".vue;
-// import Count from "./Count".vue;
+// 工具栏
+import Toolbar from "./Toolbar.vue";
+// 导航器工具栏
 import NavigatorToolbar from "./NavigatorToolbar.vue";
-// import ShortcutKey from "./ShortcutKey.vue";
-// import Contextmenu from "./Contextmenu.vue";
-// import RichTextToolbar from "./RichTextToolbar.vue";
-// import NodeNoteContentShow from "./NodeNoteContentShow.vue.vue";
-// import Navigator from "./Navigator.vue";
-// import NodeImgPreview from "./NodeImgPreview.vue";
-// import SidebarTrigger from "./SidebarTrigger.vue";
-// import FormulaSidebar from "./FormulaSidebar.vue";
+import NodeIconSidebar from "./NodeIconSidebar.vue";
+import NodeIconToolbar from "./NodeIconToolbar.vue";
+// 侧边栏触发器
+import SidebarTrigger from "./SidebarTrigger.vue";
+// 节点样式设置
+import NodeStyle from "./NodeStyle.vue";
+// 基础样式
+import BaseStyle from "./BaseStyle.vue";
+// 主题
+import Theme from "./Theme.vue";
+// 结构
+import Structure from "./Structure.vue";
+// 大纲
+import OutlineSidebar from "./OutlineSidebar.vue";
+// 大纲编辑
+import OutlineEdit from "./OutlineEdit.vue";
+// 快捷键
+import ShortcutKey from "./ShortcutKey.vue";
+// 字数及节点数量统计
+import Count from "./Count.vue";
+// 右键
+import Contextmenu from "./Contextmenu.vue";
+// 是否显示滚动条
+import Scrollbar from "./Scrollbar.vue";
+// 富文本编辑工具栏
+import RichTextToolbar from "./RichTextToolbar.vue";
 // import Color from './Color.vue'
 // import CustomNodeContent from "./CustomNodeContent.vue";
-// import NodeIconSidebar from "./NodeIconSidebar.vue";
-// import NodeIconToolbar from "./NodeIconToolbar.vue";
-// import OutlineEdit from "./OutlineEdit.vue";
-// import Scrollbar from "./Scrollbar.vue";
 
 import { computed, onMounted, ref, toRaw, watch, onBeforeUnmount, unref } from "vue";
 import { ElNotification } from "element-plus";
@@ -63,20 +95,21 @@ defineOptions({
 });
 
 // 注册插件
-MindMap.usePlugin(MiniMap)
-  .usePlugin(Watermark)
-  .usePlugin(Drag)
-  .usePlugin(KeyboardNavigation)
-  .usePlugin(ExportPDF)
-  .usePlugin(ExportXMind)
-  .usePlugin(Export)
-  .usePlugin(Select)
-  .usePlugin(AssociativeLine)
-  .usePlugin(NodeImgAdjust)
-  .usePlugin(TouchEvent)
-  .usePlugin(SearchPlugin)
-  .usePlugin(Painter)
-  .usePlugin(Formula);
+MindMap.usePlugin(MiniMap) // 迷你地图
+  .usePlugin(Watermark) // 水印
+  .usePlugin(Drag) // 拖动
+  .usePlugin(KeyboardNavigation) // 键盘导航
+  .usePlugin(ExportPDF) // 导出 pdf
+  .usePlugin(ExportXMind) // 导出 xmind
+  .usePlugin(Export) // 导出
+  .usePlugin(Select) // 选择
+  .usePlugin(AssociativeLine) // 关联线
+  .usePlugin(NodeImgAdjust) // 节点图片调整
+  .usePlugin(TouchEvent) // 触摸事件
+  .usePlugin(SearchPlugin) // 搜索
+  .usePlugin(Painter) // 绘制
+  .usePlugin(ScrollbarPlugin) // 滚动条
+  .usePlugin(Formula); // 公式
 // .usePlugin(Cooperate)// 协同插件
 
 // 注册自定义主题
@@ -85,7 +118,7 @@ customThemeList.forEach(item => {
 });
 
 const { VITE_PUBLIC_PATH } = import.meta.env;
-const localXmindData = ref(null);
+const localXmindData = ref(useXmindStoreHook().getMindMapData);
 const timer = ref(null);
 const route = useRoute();
 const enableShowLoading = ref(true);
@@ -101,7 +134,7 @@ const isShowScrollbar = computed(() => useXmindStoreHook().getLocalConfig.isShow
 const useLeftKeySelectionRightKeyDrag = computed(() => useXmindStoreHook().getLocalConfig.useLeftKeySelectionRightKeyDrag);
 
 watch(
-  () => openNodeRichText,
+  () => openNodeRichText.value,
   () => {
     if (openNodeRichText.value) {
       addRichTextPlugin();
@@ -111,7 +144,7 @@ watch(
   },
 );
 watch(
-  () => isShowScrollbar,
+  () => isShowScrollbar.value,
   () => {
     if (isShowScrollbar.value) {
       addScrollbarPlugin();
@@ -152,6 +185,10 @@ function handleHideLoading() {
     enableShowLoading.value = false;
     hideLoading();
   }
+}
+// 渲染结束后关闭loading
+function handleSetMindMapData(data) {
+  mindMapData.value = data;
 }
 /**
  * @Desc: 获取思维导图数据，实际应该调接口获取
@@ -577,7 +614,7 @@ function cooperateTest() {
 async function getRequestData() {
   const res = xmindRequestData;
 
-  if (!localXmindData.value) {
+  if (!localXmindData.value?.root?.data) {
     axios.get(`${VITE_PUBLIC_PATH}xmind.json`).then(data => {
       localXmindData.value = data.data.root;
       addFullTextToChildren(localXmindData.value);
@@ -589,20 +626,22 @@ async function getRequestData() {
     updateRequestData(getMindMap(), res.data);
     storeData(localXmindData.value);
   }
-  // 延迟一秒后继续调用接口查询
-  await new Promise(resolve => (timer.value = setTimeout(resolve, 3000)));
 
   // console.log("后台数据------", res.data);
   // console.log("xmind--原始数据------", unref(localXmindData.value));
-  console.log("xmind--展示数据------", getMindMap().getData());
-  getRequestData();
+  // console.log("xmind--展示数据------", getMindMap().getData());
+
+  // 延迟一秒后继续调用接口查询
+  // await new Promise(resolve => (timer.value = setTimeout(resolve, 3000)));
+  // getRequestData();
 }
 
 onMounted(async () => {
-  removeData();
-  showLoading();
+  // removeData();
+  useXmindStoreHook().setActiveSidebar(null);
+  showLoading(transformI18n($t("other.loading")));
   // showNewFeatureInfo();
-  getDataValue();
+  // getDataValue();
   init();
 
   emitter.on("execCommand", execCommand);
@@ -615,10 +654,22 @@ onMounted(async () => {
   emitter.on("startPainter", handleStartPainter);
   emitter.on("node_tree_render_end", handleHideLoading);
   emitter.on("showLoading", handleShowLoading);
+  emitter.on("setMindMapData", handleSetMindMapData);
   window.addEventListener("resize", handleResize);
 });
 
 onBeforeUnmount(() => {
+  emitter.off("execCommand", execCommand);
+  emitter.off("paddingChange", onPaddingChange);
+  emitter.off("exportData", exportData);
+  emitter.off("setData", setData);
+  emitter.off("startTextEdit", handleStartTextEdit);
+  emitter.off("endTextEdit", handleEndTextEdit);
+  emitter.off("createAssociativeLine", handleCreateLineFromActiveNode);
+  emitter.off("startPainter", handleStartPainter);
+  emitter.off("node_tree_render_end", handleHideLoading);
+  emitter.off("setMindMapData", handleSetMindMapData);
+  window.removeEventListener("resize", handleResize);
   window.removeEventListener("resize", handleResize);
   clearTimeout(timer.value);
 });
@@ -626,26 +677,37 @@ onBeforeUnmount(() => {
 <template>
   <div class="editContainer">
     <div ref="mindMapContainer" class="mindMapContainer" />
-    <!-- <Toolbar v-if="!isZenMode" /> -->
-    <!-- <Count v-if="!isZenMode" :mindMap="mindMap" /> -->
-    <!-- <Navigator :mindMap="mindMap" /> -->
+    <!-- 工具栏 -->
+    <Toolbar v-if="!isZenMode" :mindMap="mindMap" />
+    <!-- 导航器工具栏 -->
     <NavigatorToolbar v-if="!isZenMode" :mindMap="mindMap" />
-    <!-- <OutlineSidebar :mindMap="mindMap" /> -->
-    <!-- <Style v-if="!isZenMode" /> -->
-    <!-- <BaseStyle :data="mindMapData" :mindMap="mindMap" /> -->
-    <!-- <Theme v-if="mindMap" :mindMap="mindMap" /> -->
-    <!-- <Structure :mindMap="mindMap" /> -->
-    <!-- <ShortcutKey /> -->
-    <!-- <Contextmenu v-if="mindMap" :mindMap="mindMap" /> -->
-    <!-- <RichTextToolbar v-if="mindMap" :mindMap="mindMap" /> -->
-    <!-- <NodeNoteContentShow v-if="mindMap" :mindMap="mindMap" /> -->
-    <!-- <NodeImgPreview v-if="mindMap" :mindMap="mindMap" /> -->
-    <!-- <SidebarTrigger v-if="!isZenMode" /> -->
-    <!-- <NodeIconSidebar v-if="mindMap" :mindMap="mindMap" /> -->
-    <!-- <NodeIconToolbar v-if="mindMap" :mindMap="mindMap" /> -->
-    <!-- <OutlineEdit v-if="mindMap" :mindMap="mindMap" /> -->
-    <!-- <Scrollbar v-if="isShowScrollbar && mindMap" :mindMap="mindMap" /> -->
-    <!-- <FormulaSidebar v-if="mindMap" :mindMap="mindMap" /> -->
+    <!-- 节点图标 -->
+    <NodeIconSidebar v-if="mindMap" :mindMap="mindMap" />
+    <NodeIconToolbar v-if="mindMap" :mindMap="mindMap" />
+    <!-- 侧边栏触发器 -->
+    <SidebarTrigger v-if="!isZenMode" />
+    <!-- 节点样式设置 -->
+    <NodeStyle v-if="!isZenMode" />
+    <!-- 基础样式 -->
+    <BaseStyle :data="mindMapData" :mindMap="mindMap" />
+    <!-- 主题 -->
+    <Theme v-if="mindMap" :mindMap="mindMap" />
+    <!-- 结构 -->
+    <Structure :mindMap="mindMap" />
+    <!-- 大纲 -->
+    <OutlineSidebar :mindMap="mindMap" />
+    <!-- 大纲编辑 -->
+    <OutlineEdit v-if="mindMap" :mindMap="mindMap" />
+    <!-- 快捷键 -->
+    <ShortcutKey />
+    <!-- 字数及节点数量统计 -->
+    <Count v-if="!isZenMode" :mindMap="mindMap" />
+    <!-- 右键 -->
+    <Contextmenu v-if="mindMap" :mindMap="mindMap" />
+    <!-- 是否显示滚动条 -->
+    <Scrollbar v-if="isShowScrollbar && mindMap" :mindMap="mindMap" />
+    <!-- 富文本编辑工具栏 -->
+    <RichTextToolbar v-if="mindMap" :mindMap="mindMap" />
   </div>
 </template>
 

@@ -1,18 +1,30 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onBeforeUnmount, nextTick, watch } from "vue";
-// import NodeImage from "./NodeImage";
-// import NodeHyperlink from "./NodeHyperlink";
-// import NodeIcon from "./NodeIcon";
-// import NodeNote from "./NodeNote";
-// import NodeTag from "./NodeTag";
-// import Export from "./Export";
-// import Import from "./Import";
+// 节点图片
+import NodeImage from "./NodeImage.vue";
+// 节点图片预览
+import NodeImgPreview from "./NodeImgPreview.vue";
+// 节点图标
+import NodeIcon from "./NodeIcon.vue";
+// 节点超链接
+import NodeHyperlink from "./NodeHyperlink.vue";
+// 节点备注
+import NodeNote from "./NodeNote.vue";
+import NodeNoteContentShow from "./NodeNoteContentShow.vue";
+// 节点标签
+import NodeTag from "./NodeTag.vue";
+// 公式
+import FormulaSidebar from "./FormulaSidebar.vue";
+// xmind 导入
+import Import from "./Import.vue";
+// xmind 导出
+import Export from "./Export.vue";
 import { ElNotification } from "element-plus";
 import exampleData from "simple-mind-map/example/exampleData";
 import ToolbarNodeBtnList from "./ToolbarNodeBtnList.vue";
 import { throttle } from "simple-mind-map/src/utils/index";
 import { useXmindStoreHook } from "@/store/modules/xmind";
-import { msg } from "@/utils/message";
+import { msg } from "@/utils/msg";
 import { $t, transformI18n } from "@/plugins/i18n";
 import { emitter } from "@/utils/mitt";
 import { getData } from "@/api/xmind";
@@ -20,6 +32,12 @@ import { hideLoading, showLoading } from "@/utils/loading";
 
 defineOptions({
   name: "Toolbar",
+});
+
+const props = defineProps({
+  mindMap: {
+    type: Object,
+  },
 });
 
 /**
@@ -242,7 +260,7 @@ const createLocalFile = async content => {
     if (!_fileHandle) {
       return;
     }
-    showLoading();
+    showLoading(transformI18n($t("toolbar.creatingTip")));
     fileHandle = _fileHandle;
     useXmindStoreHook().setIsHandleLocalFile(true);
     isFullDataFile.value = true;
@@ -297,7 +315,7 @@ onBeforeUnmount(() => {
           </template>
         </el-popover>
       </div>
-      <!-- 导出 -->
+      <!-- 本地文件 -->
       <div class="toolbarBlock">
         <div class="toolbarBtn" @click="createNewLocalFile">
           <span class="icon iconfont iconxinjian" />
@@ -321,13 +339,25 @@ onBeforeUnmount(() => {
         </div>
       </div>
     </div>
-    <!-- <NodeImage />
-    <NodeHyperlink />
+    <!-- 节点图片 -->
+    <NodeImage />
+    <!-- 节点图片预览 -->
+    <NodeImgPreview v-if="mindMap" :mindMap="mindMap" />
+    <!-- 节点图标 -->
     <NodeIcon />
+    <!-- 节点超链接 -->
+    <NodeHyperlink />
+    <!-- 节点备注 -->
     <NodeNote />
+    <NodeNoteContentShow />
+    <!-- 节点标签 -->
     <NodeTag />
+    <!-- 公式 -->
+    <FormulaSidebar v-if="mindMap" :mindMap="mindMap" />
+    <!-- xmind 导入 -->
+    <Import />
+    <!-- xmind 导出 -->
     <Export />
-    <Import /> -->
   </div>
 </template>
 
