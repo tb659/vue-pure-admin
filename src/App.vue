@@ -16,8 +16,8 @@ import en from "element-plus/es/locale/lang/en";
 import zhCn from "element-plus/es/locale/lang/zh-cn";
 import plusEn from "plus-pro-components/es/locale/lang/en";
 import plusZhCn from "plus-pro-components/es/locale/lang/zh-cn";
-import { useSettingStore } from "@/store/modules/settings";
-// import { storageLocal } from "@pureadmin/utils";
+import { useSettingStoreHook } from "@/store/modules/settings";
+// import { storageLocal, useGlobal } from "@pureadmin/utils";
 
 export default defineComponent({
   name: "app",
@@ -28,7 +28,7 @@ export default defineComponent({
   },
   computed: {
     currentLocale() {
-      return useSettingStore().getLocale?.locale === "zh" ? { ...zhCn, ...plusZhCn } : { ...en, ...plusEn };
+      return useSettingStoreHook().getLocale?.locale === "zh" ? { ...zhCn, ...plusZhCn } : { ...en, ...plusEn };
     },
   },
   beforeCreate() {

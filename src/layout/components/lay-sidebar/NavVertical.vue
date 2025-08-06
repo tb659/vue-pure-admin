@@ -3,7 +3,7 @@ import { useRoute } from "vue-router";
 import { emitter } from "@/utils/mitt";
 import { useNav } from "@/layout/hooks/useNav";
 import { isAllEmpty } from "@pureadmin/utils";
-import { useSettingStore } from "@/store/modules/settings";
+import { useSettingStoreHook } from "@/store/modules/settings";
 import { findRouteByPath, getParentPaths } from "@/router/utils";
 import { usePermissionStoreHook } from "@/store/modules/permission";
 import { ref, computed, watch, onMounted, onBeforeUnmount } from "vue";
@@ -14,7 +14,7 @@ import LaySidebarCenterCollapse from "../lay-sidebar/components/SidebarCenterCol
 
 const route = useRoute();
 const isShow = ref(false);
-const showLogo = ref(useSettingStore().getConfigure.showLogo);
+const showLogo = ref(useSettingStoreHook().getConfigure.showLogo);
 
 const { device, pureApp, isCollapse, tooltipEffect, menuSelect, toggleSideBar } = useNav();
 

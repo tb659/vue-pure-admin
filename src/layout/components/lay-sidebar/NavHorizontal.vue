@@ -8,7 +8,7 @@ import LaySearch from "../lay-search/index.vue";
 import LayNotice from "../lay-notice/index.vue";
 import LayLogout from "../lay-logout/index.vue";
 import { ref, nextTick, computed, onMounted } from "vue";
-import { useSettingStore } from "@/store/modules/settings";
+import { useSettingStoreHook } from "@/store/modules/settings";
 import { useTranslationLang } from "../../hooks/useTranslationLang";
 import { usePermissionStoreHook } from "@/store/modules/permission";
 import LaySidebarItem from "../lay-sidebar/components/SidebarItem.vue";
@@ -17,7 +17,7 @@ import LaySidebarFullScreen from "../lay-sidebar/components/SidebarFullScreen.vu
 import Setting from "~icons/ri/settings-3-line";
 
 const menuRef = ref();
-const showLogo = ref(useSettingStore().getConfigure.showLogo);
+const showLogo = ref(useSettingStoreHook().getConfigure.showLogo);
 
 const { t, route } = useTranslationLang(menuRef);
 const { title, onPanel, getLogo, backTopMenu } = useNav();

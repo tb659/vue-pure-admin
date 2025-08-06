@@ -5,10 +5,10 @@ import { emitter } from "@/utils/mitt";
 import LayPanel from "../lay-panel/index.vue";
 import { useNav } from "@/layout/hooks/useNav";
 import { useAppStoreHook } from "@/store/modules/app";
+import { useDark, debounce, isNumber } from "@pureadmin/utils";
 import { useMultiTagsStoreHook } from "@/store/modules/multiTags";
 import Segmented, { type OptionsType } from "@/components/ReSegmented";
 import { useDataThemeChange } from "@/layout/hooks/useDataThemeChange";
-import { useDark, useGlobal, debounce, isNumber } from "@pureadmin/utils";
 
 import Check from "~icons/ep/check";
 import LeftArrow from "~icons/ri/arrow-left-s-line?width=20&height=20";
@@ -16,7 +16,7 @@ import RightArrow from "~icons/ri/arrow-right-s-line?width=20&height=20";
 import DayIcon from "@/assets/svg/day.svg?component";
 import DarkIcon from "@/assets/svg/dark.svg?component";
 import SystemIcon from "@/assets/svg/system.svg?component";
-import { useSettingStore } from "@/store/modules/settings";
+import { useSettingStoreHook } from "@/store/modules/settings";
 
 const { t } = useI18n();
 const { device } = useNav();
@@ -134,26 +134,26 @@ if (unref(layoutTheme)) {
 }
 
 /** 默认灵动模式 */
-const markValue = ref(useSettingStore().getConfigure?.showModel ?? "smart");
+const markValue = ref(useSettingStoreHook().getConfigure?.showModel ?? "smart");
 
 /** 默认点击模式 */
-const mixMenuTrigger = ref(useSettingStore().getConfigure?.mixMenuTrigger ?? "hover");
+const mixMenuTrigger = ref(useSettingStoreHook().getConfigure?.mixMenuTrigger ?? "hover");
 
 /** 默认侧边栏Logo */
-const logoVal = ref(useSettingStore().getConfigure?.showLogo ?? true);
+const logoVal = ref(useSettingStoreHook().getConfigure?.showLogo ?? true);
 
 /** 默认设置 */
 const settings = reactive({
-  stretch: useSettingStore().getConfigure.stretch,
-  showModel: useSettingStore().getConfigure.showModel,
-  showLogo: useSettingStore().getConfigure.showLogo,
-  fixedHeader: useSettingStore().getConfigure.fixedHeader,
-  hideSideBar: useSettingStore().getConfigure.hideSideBar,
-  multiTagsCache: useSettingStore().getConfigure.multiTagsCache,
-  tabsVal: useSettingStore().getConfigure.hideTabs,
-  hideFooter: useSettingStore().getConfigure.hideFooter,
-  greyVal: useSettingStore().getConfigure.grey,
-  weakVal: useSettingStore().getConfigure.weak,
+  stretch: useSettingStoreHook().getConfigure.stretch,
+  showModel: useSettingStoreHook().getConfigure.showModel,
+  showLogo: useSettingStoreHook().getConfigure.showLogo,
+  fixedHeader: useSettingStoreHook().getConfigure.fixedHeader,
+  hideSideBar: useSettingStoreHook().getConfigure.hideSideBar,
+  multiTagsCache: useSettingStoreHook().getConfigure.multiTagsCache,
+  tabsVal: useSettingStoreHook().getConfigure.hideTabs,
+  hideFooter: useSettingStoreHook().getConfigure.hideFooter,
+  greyVal: useSettingStoreHook().getConfigure.grey,
+  weakVal: useSettingStoreHook().getConfigure.weak,
 });
 
 /** 获取主题色样式 */
@@ -174,16 +174,16 @@ const showThemeColors = computed(() => {
 function setLayoutModel(layout: Layout) {
   layoutTheme.value.layout = layout;
   window.document.body.setAttribute("layout", layout);
-  useSettingStore().setLayout({
+  useSettingStoreHook().setLayout({
     key: "",
     value: {
       layout,
       theme: layoutTheme.value.theme,
-      darkMode: useSettingStore().getLayout.darkMode,
-      sidebarStatus: useSettingStore().getLayout.sidebarStatus,
-      epThemeColor: useSettingStore().getLayout.epThemeColor,
-      themeColor: useSettingStore().getLayout.themeColor,
-      overallStyle: useSettingStore().getLayout.overallStyle,
+      darkMode: useSettingStoreHook().getLayout.darkMode,
+      sidebarStatus: useSettingStoreHook().getLayout.sidebarStatus,
+      epThemeColor: useSettingStoreHook().getLayout.epThemeColor,
+      themeColor: useSettingStoreHook().getLayout.themeColor,
+      overallStyle: useSettingStoreHook().getLayout.overallStyle,
     },
   });
   useAppStoreHook().setLayout(layout);
@@ -226,7 +226,7 @@ function onMenuTriggerChange({ option }) {
 
 /** 存储配置 */
 function storageConfigureChange<T>(key: string, val: T): void {
-  useSettingStore().setConfigure({
+  useSettingStoreHook().setConfigure({
     key,
     value: val,
   });
@@ -286,7 +286,7 @@ const weekChange = (value): void => {
 };
 
 /** 监听布局变化 */
-watch(useSettingStore().getLayout, ({ layout }) => {
+watch(useSettingStoreHook().getLayout, ({ layout }) => {
   switch (layout["layout"]) {
     case "vertical":
       toggleClass(true, "is-select", unref(verticalRef));

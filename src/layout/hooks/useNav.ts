@@ -6,13 +6,13 @@ import Avatar from "@/assets/user.jpg";
 import { getTopMenu } from "@/router/utils";
 import { useFullscreen } from "@vueuse/core";
 import type { routeMetaType } from "../types";
+import { isAllEmpty } from "@pureadmin/utils";
 import { transformI18n } from "@/plugins/i18n";
 import { router, remainingPaths } from "@/router";
 import { computed, type CSSProperties } from "vue";
 import { useAppStoreHook } from "@/store/modules/app";
 import { useUserStoreHook } from "@/store/modules/user";
-import { useGlobal, isAllEmpty } from "@pureadmin/utils";
-import { useSettingStore } from "@/store/modules/settings";
+import { useSettingStoreHook } from "@/store/modules/settings";
 import { useEpThemeStoreHook } from "@/store/modules/epTheme";
 import { usePermissionStoreHook } from "@/store/modules/permission";
 import ExitFullscreen from "~icons/ri/fullscreen-exit-fill";
@@ -94,18 +94,17 @@ export function useNav() {
     return pureApp.getDevice;
   });
 
-  const { $config } = useGlobal<GlobalPropertiesApi>();
   const layout = computed(() => {
-    return useSettingStore().getLayout.layout;
+    return useSettingStoreHook().getLayout.layout;
   });
 
   const title = computed(() => {
-    return $config.Title;
+    return pureApp.getTitle;
   });
 
   /** 动态title */
   function changeTitle(meta: routeMetaType) {
-    const Title = getConfig().Title;
+    const Title = pureApp.getTitle;
     if (Title) document.title = `${transformI18n(meta.title)} | ${Title}`;
     else document.title = transformI18n(meta.title);
   }

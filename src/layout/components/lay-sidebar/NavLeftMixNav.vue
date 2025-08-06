@@ -12,7 +12,7 @@ import { emitter } from "@/utils/mitt";
 import { useNav } from "@/layout/hooks/useNav";
 import { transformI18n } from "@/plugins/i18n";
 import { useAppStoreHook } from "@/store/modules/app";
-import { useSettingStore } from "@/store/modules/settings";
+import { useSettingStoreHook } from "@/store/modules/settings";
 import { useRenderIcon } from "@/components/ReIcon/src/hooks";
 import { GROUP_MENU } from "@/utils/constants";
 import { findRouteByPath, getParentPaths } from "@/router/utils";
@@ -24,8 +24,8 @@ import PushpinFill from "~icons/ri/pushpin-fill";
 const route = useRoute();
 const router = useRouter();
 const isShow = ref(false);
-const showLogo = ref(useSettingStore().getConfigure.showLogo);
-const mixMenuTrigger = ref(useSettingStore().getConfigure.mixMenuTrigger);
+const showLogo = ref(useSettingStoreHook().getConfigure.showLogo);
+const mixMenuTrigger = ref(useSettingStoreHook().getConfigure.mixMenuTrigger);
 const leftMixNavFixed = computed(() => useAppStoreHook().getLeftMixNavFixed);
 
 const menuRef = ref();
@@ -50,7 +50,7 @@ const {
   resolvePath,
 } = useNav();
 
-const stretch = useSettingStore().getConfigure.stretch;
+const stretch = useSettingStoreHook().getConfigure.stretch;
 
 const getElMenuItemClass = computed(() => {
   return (routeItem): string[] => {

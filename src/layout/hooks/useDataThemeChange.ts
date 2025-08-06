@@ -6,7 +6,7 @@ import { routerArrays } from "@/layout/types";
 import { router, resetRouter } from "@/router";
 import type { themeColorsType } from "../types";
 import { useAppStoreHook } from "@/store/modules/app";
-import { useSettingStore } from "@/store/modules/settings";
+import { useSettingStoreHook } from "@/store/modules/settings";
 import { useEpThemeStoreHook } from "@/store/modules/epTheme";
 import { darken, lighten, storageLocal } from "@pureadmin/utils";
 import { useMultiTagsStoreHook } from "@/store/modules/multiTags";
@@ -32,8 +32,8 @@ export function useDataThemeChange() {
     { color: "#52c41a", themeColor: "auroraGreen" },
   ]);
 
-  const dataTheme = ref<boolean>(useSettingStore().getLayout.darkMode);
-  const overallStyle = ref<string>(useSettingStore().getLayout.overallStyle);
+  const dataTheme = ref<boolean>(useSettingStoreHook().getLayout.darkMode);
+  const overallStyle = ref<string>(useSettingStoreHook().getLayout.overallStyle);
   const body = document.documentElement as HTMLElement;
 
   function toggleClass(flag: boolean, clsName: string, target?: HTMLElement) {
@@ -48,15 +48,15 @@ export function useDataThemeChange() {
     layoutTheme.value.theme = theme;
     document.documentElement.setAttribute("data-theme", theme);
     // 如果非isClick，保留之前的themeColor
-    const storageThemeColor = useSettingStore().getLayout.themeColor;
-    useSettingStore().setLayout({
+    const storageThemeColor = useSettingStoreHook().getLayout.themeColor;
+    useSettingStoreHook().setLayout({
       key: "",
       value: {
         layout: layout.value,
         theme,
         darkMode: dataTheme.value,
-        sidebarStatus: useSettingStore().getLayout.sidebarStatus,
-        epThemeColor: useSettingStore().getLayout.epThemeColor,
+        sidebarStatus: useSettingStoreHook().getLayout.sidebarStatus,
+        epThemeColor: useSettingStoreHook().getLayout.epThemeColor,
         themeColor: isClick ? theme : storageThemeColor,
         overallStyle: overallStyle.value,
       },
@@ -101,7 +101,7 @@ export function useDataThemeChange() {
     if (dataTheme.value) {
       document.documentElement.classList.add("dark");
     } else {
-      if (useSettingStore().getLayout.themeColor === "light") {
+      if (useSettingStoreHook().getLayout.themeColor === "light") {
         setLayoutThemeColor("light", false);
       }
       document.documentElement.classList.remove("dark");

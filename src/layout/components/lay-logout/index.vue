@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { getConfig } from "@/config";
 import { useNav } from "@/layout/hooks/useNav";
 import { useTranslationLang } from "@/layout/hooks/useTranslationLang";
 
@@ -17,7 +18,7 @@ import LogoutCircleRLine from "~icons/ri/logout-circle-r-line";
     </span>
     <template #dropdown>
       <el-dropdown-menu class="logout">
-        <el-dropdown-item @click="toAccountSettings">
+        <el-dropdown-item v-if="getConfig().ShowProfile" @click="toAccountSettings">
           <IconifyIconOffline :icon="AccountSettingsIcon" style="margin: 5px" />
           {{ t("buttons.pureAccountSettings") }}
         </el-dropdown-item>

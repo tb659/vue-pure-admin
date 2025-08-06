@@ -1,15 +1,18 @@
 import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { routerArrays } from "../types";
-import { useMultiTagsStore } from "@/store/modules/multiTags";
-import { useSettingStore } from "@/store/modules/settings";
+import { useMultiTagsStoreHook } from "@/store/modules/multiTags";
+import { useSettingStoreHook } from "@/store/modules/settings";
 
 export function useLayout() {
-  const settingStore = useSettingStore();
+  const settingStore = useSettingStoreHook();
   const initStorage = () => {
     /** 路由 */
-    if (useMultiTagsStore().multiTagsCache && (!useSettingStore().getTags || useSettingStore().getTags.length === 0)) {
-      useSettingStore().setTags({ value: routerArrays });
+    if (
+      useMultiTagsStoreHook().multiTagsCache &&
+      (!useSettingStoreHook().getTags || useSettingStoreHook().getTags.length === 0)
+    ) {
+      useSettingStoreHook().setTags({ value: routerArrays });
     }
 
     /** 国际化 */
@@ -18,11 +21,11 @@ export function useLayout() {
 
   /** 清空缓存后从platform-config.json读取默认配置并赋值到storage中 */
   const layout = computed(() => {
-    return useSettingStore().getLayout.layout;
+    return useSettingStoreHook().getLayout.layout;
   });
 
   const layoutTheme = computed(() => {
-    return useSettingStore().getLayout;
+    return useSettingStoreHook().getLayout;
   });
 
   return {

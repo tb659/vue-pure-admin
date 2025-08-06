@@ -79,6 +79,11 @@ declare global {
   interface PlatformConfigs {
     Version?: string;
     Title?: string;
+    ShowI18N?: boolean;
+    ShowTheme?: boolean;
+    ShowSearch?: boolean;
+    ShowNotice?: boolean;
+    ShowProfile?: boolean;
     FixedHeader?: boolean;
     HideSideBar?: boolean;
     MultiTagsCache?: boolean;
@@ -103,10 +108,6 @@ declare global {
     TooltipEffect?: Effect;
     ResponsiveStorageNameSpace?: string;
     MenuSearchHistory?: number;
-    ShowI18N?: boolean;
-    ShowTheme?: boolean;
-    ShowSearch?: boolean;
-    ShowNotice?: boolean;
     MixMenuTrigger?: "hover" | "click";
     LeftMixNavFixed?: boolean;
     ContentFullScreen?: boolean;
@@ -119,43 +120,6 @@ declare global {
         zoom?: number;
       };
     };
-  }
-
-  /**
-   * 与 `PlatformConfigs` 类型不同，这里是缓存到浏览器本地存储的类型声明
-   * @see {@link https://pure-admin.cn/pages/config/#platform-config-json}
-   */
-  interface StorageConfigs {
-    version?: string;
-    title?: string;
-    fixedHeader?: boolean;
-    hideSideBar?: boolean;
-    multiTagsCache?: boolean;
-    keepAlive?: boolean;
-    locale?: string;
-    layout?: Layout;
-    theme?: string;
-    darkMode?: boolean;
-    grey?: boolean;
-    weak?: boolean;
-    hideTabs?: boolean;
-    hideFooter?: boolean;
-    sidebarStatus?: boolean;
-    epThemeColor?: string;
-    themeColor?: string;
-    overallStyle?: string;
-    showLogo?: boolean;
-    showModel?: string;
-    menuSearchHistory?: number;
-    mapConfigure?: {
-      amapKey?: string;
-      options: {
-        resizeEnable?: boolean;
-        center?: number[];
-        zoom?: number;
-      };
-    };
-    username?: string;
   }
 
   /**
@@ -194,7 +158,6 @@ declare global {
    */
   interface GlobalPropertiesApi {
     $echarts: ECharts;
-    $storage: ResponsiveStorage;
     $config: PlatformConfigs;
   }
 

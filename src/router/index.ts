@@ -1,14 +1,14 @@
 import "@/utils/sso";
-import { getConfig } from "@/config";
 import NProgress from "@/utils/progress";
 import { transformI18n } from "@/plugins/i18n";
 import { getUser } from "@/store/modules/user";
 import { buildHierarchyTree } from "@/utils/tree";
 import remainingRouter from "./modules/remaining";
+import { useAppStoreHook } from "@/store/modules/app";
 import { getToken, removeToken } from "@/utils/cookie";
-import { isUrl, openLink, isAllEmpty, cloneDeep } from "@pureadmin/utils";
 import { useMultiTagsStoreHook } from "@/store/modules/multiTags";
 import { usePermissionStoreHook } from "@/store/modules/permission";
+import { isUrl, openLink, isAllEmpty, cloneDeep } from "@pureadmin/utils";
 import {
   ascending,
   getTopMenu,
@@ -105,7 +105,7 @@ router.beforeEach((to: ToRouteType, _from, next) => {
   if (!externalLink) {
     to.matched.some(item => {
       if (!item.meta.title) return "";
-      const Title = getConfig().Title;
+      const Title = useAppStoreHook().getTitle;
       if (Title) document.title = `${transformI18n(item.meta.title)} | ${Title}`;
       else document.title = transformI18n(item.meta.title);
     });

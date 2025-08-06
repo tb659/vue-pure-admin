@@ -6,7 +6,7 @@ import { useTags } from "@/layout/hooks/useTag";
 import BackTopIcon from "@/assets/svg/back_top.svg?component";
 import { h, computed, Transition, defineComponent } from "vue";
 import { usePermissionStoreHook } from "@/store/modules/permission";
-import { useSettingStore } from "@/store/modules/settings";
+import { useSettingStoreHook } from "@/store/modules/settings";
 import { getConfig } from "@/config";
 import { isNumber } from "@/utils/is";
 
@@ -28,19 +28,19 @@ const transitions = computed(() => {
 });
 
 const hideTabs = computed(() => {
-  return useSettingStore().getConfigure.hideTabs;
+  return useSettingStoreHook().getConfigure.hideTabs;
 });
 
 const hideFooter = computed(() => {
-  return useSettingStore().getConfigure.hideFooter;
+  return useSettingStoreHook().getConfigure.hideFooter;
 });
 
 const stretch = computed(() => {
-  return useSettingStore().getConfigure.stretch;
+  return useSettingStoreHook().getConfigure.stretch;
 });
 
 const layout = computed(() => {
-  return useSettingStore().getLayout.layout === "vertical";
+  return useSettingStoreHook().getLayout.layout === "vertical";
 });
 
 const getMainWidth = computed(() => {

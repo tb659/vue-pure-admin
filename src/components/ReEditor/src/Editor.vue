@@ -3,15 +3,15 @@ import { onBeforeUnmount, computed, type PropType, unref, nextTick, ref, watch, 
 import { Editor, Toolbar } from "@wangeditor/editor-for-vue";
 import { type IDomEditor, type IEditorConfig, i18nChangeLanguage } from "@wangeditor/editor";
 import propTypes from "@/utils/propTypes";
-import { isNumber, storageLocal } from "@pureadmin/utils";
+import { isNumber } from "@pureadmin/utils";
 import { TOKEN_KEY } from "@/utils/constants";
-import { responsiveStorageNameSpace } from "@/config";
+import { useSettingStoreHook } from "@/store/modules/settings";
 import { httpConfig } from "@/utils/http/config";
 import { getToken } from "@/utils/auth";
 import { msg } from "@/utils/msg";
 import { merge } from "lodash-es";
 
-let locale = storageLocal().getItem<StorageConfigs>(`${responsiveStorageNameSpace}locale`)?.locale;
+let locale = useSettingStoreHook().getLocale.locale ?? "zh";
 locale === "zh" && (locale = "zh-CN"); // 处理编辑器中文
 
 i18nChangeLanguage(locale);

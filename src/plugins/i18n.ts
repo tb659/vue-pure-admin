@@ -8,6 +8,10 @@ import { storageLocal, isObject } from "@pureadmin/utils";
 import enLocale from "element-plus/es/locale/lang/en";
 import zhLocale from "element-plus/es/locale/lang/zh-cn";
 
+interface I18nType {
+  locale: string;
+}
+
 const siphonI18n = (function () {
   // 仅初始化一次国际化配置
   const cache = Object.fromEntries(
@@ -100,7 +104,7 @@ export const $t = (key: string) => key;
 
 export const i18n: I18n = createI18n({
   legacy: false,
-  locale: storageLocal().getItem<StorageConfigs>(`${responsiveStorageNameSpace()}locale`)?.locale ?? "zh",
+  locale: storageLocal().getItem<I18nType>(`${responsiveStorageNameSpace()}locale`)?.locale ?? "zh",
   fallbackLocale: "en",
   messages: localesConfigs,
 });

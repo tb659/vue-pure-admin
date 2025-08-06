@@ -33,13 +33,13 @@ const { t } = useTranslationLang();
 
     <div v-if="layout === 'vertical' || layout === 'leftMix'" class="vertical-header-right">
       <!-- 菜单搜索 -->
-      <LaySearch id="header-search" />
+      <LaySearch v-if="getConfig().ShowSearch" id="header-search" />
       <!-- 国际化 -->
       <LayI18n v-if="getConfig().ShowI18N" />
       <!-- 全屏 -->
       <LaySidebarFullScreen id="full-screen" />
       <!-- 消息通知 -->
-      <LayNotice id="header-notice" />
+      <LayNotice v-if="getConfig().ShowNotice" id="header-notice" />
       <!-- 退出登录 -->
       <LayLogout />
       <!-- 系统设置 -->

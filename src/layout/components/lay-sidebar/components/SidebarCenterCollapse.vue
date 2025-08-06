@@ -2,7 +2,7 @@
 import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { useNav } from "@/layout/hooks/useNav";
-import { useSettingStore } from "@/store/modules/settings";
+import { useSettingStoreHook } from "@/store/modules/settings";
 
 import ArrowLeft from "~icons/ri/arrow-left-double-fill";
 
@@ -21,7 +21,7 @@ const iconClass = computed(() => {
   return ["w-[16px]", "h-[16px]"];
 });
 
-const themeColor = computed(() => useSettingStore().getLayout.themeColor);
+const themeColor = computed(() => useSettingStoreHook().getLayout.themeColor);
 
 const emit = defineEmits<{
   (e: "toggleClick"): void;

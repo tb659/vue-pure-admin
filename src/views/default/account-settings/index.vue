@@ -6,7 +6,7 @@ import { ReText } from "@/components/ReText";
 import Profile from "./components/Profile.vue";
 import Preferences from "./components/Preferences.vue";
 import SecurityLog from "./components/SecurityLog.vue";
-import { useSettingStore } from "@/store/modules/settings";
+import { useSettingStoreHook } from "@/store/modules/settings";
 import { deviceDetection } from "@pureadmin/utils";
 import AccountManagement from "./components/AccountManagement.vue";
 import { useDataThemeChange } from "@/layout/hooks/useDataThemeChange";
@@ -24,7 +24,7 @@ defineOptions({
 const router = useRouter();
 const isOpen = ref(deviceDetection() ? false : true);
 onBeforeMount(() => {
-  useDataThemeChange().dataThemeChange(useSettingStore().getLayout.overallStyle);
+  useDataThemeChange().dataThemeChange(useSettingStoreHook().getLayout.overallStyle);
 });
 
 const userInfo = ref<UserInfo>({

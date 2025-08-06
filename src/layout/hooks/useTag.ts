@@ -4,7 +4,7 @@ import { useRoute, useRouter } from "vue-router";
 import { transformI18n, $t } from "@/plugins/i18n";
 import { useMultiTagsStoreHook } from "@/store/modules/multiTags";
 import { isEqual, isBoolean, toggleClass, hasClass } from "@pureadmin/utils";
-import { useSettingStore, useSettingStoreHook } from "@/store/modules/settings";
+import { useSettingStoreHook } from "@/store/modules/settings";
 
 import Fullscreen from "~icons/ri/fullscreen-fill";
 import ExitFullscreen from "~icons/ri/fullscreen-exit-fill";
@@ -31,9 +31,9 @@ export function useTags() {
   const isScrolling = ref(false);
 
   /** 显示模式，默认灵动模式 */
-  const showModel = ref(useSettingStore().getConfigure.showModel);
+  const showModel = ref(pureSetting.getConfigure.showModel);
   /** 是否隐藏标签页，默认显示 */
-  const showTags = ref(useSettingStore().getConfigure.hideTabs);
+  const showTags = ref(pureSetting.getConfigure.hideTabs);
   const multiTags: any = computed(() => {
     return useMultiTagsStoreHook().multiTags;
   });
@@ -178,7 +178,7 @@ export function useTags() {
 
   onMounted(() => {
     if (!showModel.value) {
-      useSettingStore().setConfigure({ key: "showModel", value: "card" });
+      pureSetting.setConfigure({ key: "showModel", value: "card" });
     }
   });
 

@@ -2,7 +2,7 @@
 import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { useNav } from "@/layout/hooks/useNav";
-import { useSettingStore } from "@/store/modules/settings";
+import { useSettingStoreHook } from "@/store/modules/settings";
 
 import MenuFold from "~icons/ri/menu-fold-fill";
 
@@ -21,7 +21,7 @@ const iconClass = computed(() => {
   return ["ml-4", "mb-1", "w-[16px]", "h-[16px]", "inline-block!", "align-middle", "cursor-pointer", "duration-[100ms]"];
 });
 
-const themeColor = computed(() => useSettingStore().getLayout.themeColor);
+const themeColor = computed(() => useSettingStoreHook().getLayout.themeColor);
 
 const emit = defineEmits<{
   (e: "toggleClick"): void;
