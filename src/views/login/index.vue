@@ -140,7 +140,14 @@ watch(loginDay, value => {
     <img :src="bg" class="wave" />
     <div class="flex-c absolute right-5 top-3">
       <!-- 主题 -->
-      <el-switch v-model="dataTheme" inline-prompt :active-icon="dayIcon" :inactive-icon="darkIcon" @change="dataThemeChange" />
+      <el-switch
+        v-if="getConfig().ShowTheme"
+        v-model="dataTheme"
+        inline-prompt
+        :active-icon="dayIcon"
+        :inactive-icon="darkIcon"
+        @change="dataThemeChange"
+      />
       <!-- 国际化 -->
       <LayI18n v-if="getConfig().ShowI18N" />
     </div>

@@ -104,6 +104,7 @@ declare global {
     ResponsiveStorageNameSpace?: string;
     MenuSearchHistory?: number;
     ShowI18N?: boolean;
+    ShowTheme?: boolean;
     ShowSearch?: boolean;
     ShowNotice?: boolean;
     MixMenuTrigger?: "hover" | "click";

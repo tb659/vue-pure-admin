@@ -209,7 +209,7 @@ onBeforeUnmount(() => {
     <div :style="{ width: isOpenSubMenu ? '180px' : '0' }" class="left-mix-sub-item">
       <div class="flex items-center justify-between sidebar-wrap">
         <div class="sidebar-title">
-          <span v-if="!stretch">{{ title }}</span>
+          <span v-if="!stretch" class="ml-[10px]">{{ title }}</span>
         </div>
         <el-tooltip
           popper-style="pointer-events: none"

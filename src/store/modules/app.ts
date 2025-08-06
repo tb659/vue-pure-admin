@@ -3,7 +3,7 @@ import {
   type AppType,
   store,
   getConfig,
-  storageLocal,
+  // storageLocal,
   deviceDetection,
   responsiveStorageNameSpace,
   type AppStore,
@@ -76,7 +76,7 @@ export const useAppStore = () => {
             this.sidebar.isClickCollapse = !this.sidebar.opened;
             layout.sidebarStatus = this.sidebar.opened;
           }
-          storageLocal().setItem(`${responsiveStorageNameSpace()}layout`, layout);
+          // storageLocal().setItem(`${responsiveStorageNameSpace()}layout`, layout);
         },
         toggleDevice(device) {
           this.device = device;

@@ -186,9 +186,9 @@ onUnmounted(() => {
     <template #header>
       <div>
         基于
-        <el-link type="primary" :underline="false" href="https://github.com/mqttjs/MQTT.js" target="_blank"> MQTT.js </el-link>
+        <el-link type="primary" underline="never" href="https://github.com/mqttjs/MQTT.js" target="_blank"> MQTT.js </el-link>
         和 免费的公共MQTT代理
-        <el-link type="primary" :underline="false" href="broker.emqx.io" target="_blank"> EMQX </el-link>
+        <el-link type="primary" underline="never" href="broker.emqx.io" target="_blank"> EMQX </el-link>
         实现的一套 MQTT 客户端
       </div>
       <el-link

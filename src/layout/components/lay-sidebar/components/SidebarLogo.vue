@@ -14,10 +14,10 @@ const { title, layout, getLogo } = useNav();
     <transition name="sidebarLogoFade">
       <router-link v-if="collapse" key="collapse" :title="title" class="sidebar-logo-link" :to="getTopMenu()?.path ?? '/'">
         <img :src="getLogo()" alt="logo" />
-        <span v-if="layout !== 'leftMix'" class="sidebar-title">{{ title }}</span>
       </router-link>
       <router-link v-else key="expand" :title="title" class="sidebar-logo-link" :to="getTopMenu()?.path ?? '/'">
         <img :src="getLogo()" alt="logo" />
+        {{ layout }}
         <span v-if="layout !== 'leftMix'" class="sidebar-title">{{ title }}</span>
       </router-link>
     </transition>
@@ -36,6 +36,7 @@ const { title, layout, getLogo } = useNav();
     flex-wrap: nowrap;
     align-items: center;
     height: 100%;
+    padding: 0 10px;
 
     img {
       display: inline-block;

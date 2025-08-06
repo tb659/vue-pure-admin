@@ -133,7 +133,8 @@ const LayHeader = defineComponent({
       },
       {
         default: () => [
-          !pureSetting.getLayout.contentFullScreen && (layout.value.includes("vertical") || layout.value.includes("topMix"))
+          !pureSetting.getLayout.contentFullScreen &&
+          (layout.value.includes("vertical") || layout.value.includes("leftMix") || layout.value.includes("topMix"))
             ? h(LayNavbar)
             : null,
           !pureSetting.getLayout.contentFullScreen && layout.value.includes("horizontal") ? h(NavHorizontal) : null,

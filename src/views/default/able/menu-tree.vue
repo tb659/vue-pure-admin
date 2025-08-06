@@ -4,7 +4,7 @@ import { clone } from "@pureadmin/utils";
 import type { ElTreeV2 } from "element-plus";
 import { transformI18n } from "@/plugins/i18n";
 import { useRenderIcon } from "@/components/ReIcon/src/hooks";
-import { extractPathList, deleteChildrenIfHasOne } from "@/utils/tree";
+import { getTreeUniqueId, deleteChildrenIfHasOne } from "@/utils/tree";
 import { usePermissionStoreHook } from "@/store/modules/permission";
 import type { TreeNode } from "element-plus/es/components/tree-v2/src/types";
 import NodeTree from "~icons/ri/node-tree";
@@ -31,7 +31,7 @@ const menusData = computed(() => {
   return deleteChildrenIfHasOne(menusTree);
 });
 
-const expandedKeys = extractPathList(menusData.value);
+const expandedKeys = getTreeUniqueId(menusData.value);
 
 const onQueryChanged = (query: string) => {
   (treeRef as any).value!.filter(query);
