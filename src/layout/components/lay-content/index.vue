@@ -4,7 +4,7 @@ import LayFrame from "../lay-frame/index.vue";
 import LayFooter from "../lay-footer/index.vue";
 import { useTags } from "@/layout/hooks/useTag";
 import BackTopIcon from "@/assets/svg/back_top.svg?component";
-import { h, computed, Transition, defineComponent } from "vue";
+import { h, computed, Transition, defineComponent, ref, onMounted } from "vue";
 import { usePermissionStoreHook } from "@/store/modules/permission";
 import { useSettingStoreHook } from "@/store/modules/settings";
 import { getConfig } from "@/config";
@@ -85,10 +85,13 @@ const transitionMain = defineComponent({
     );
   },
 });
+
+const showBacktop = ref(false);
+onMounted(() => (showBacktop.value = true));
 </script>
 
 <template>
-  <section :class="[fixedHeader ? 'app-main' : 'app-main-nofixed-header']" :style="getSectionStyle">
+  <section :class="[fixedHeader ? 'app-main' : 'app-main-nofixed-header', 'app-main-wrap']" :style="getSectionStyle">
     <router-view>
       <template #default="{ Component, route }">
         <LayFrame :currComp="Component" :currRoute="route">
@@ -109,7 +112,7 @@ const transitionMain = defineComponent({
                 'flex-direction': 'column',
               }"
             >
-              <el-backtop :title="t('buttons.pureBackTop')" target=".app-main .el-scrollbar__wrap">
+              <el-backtop v-if="showBacktop" :title="t('buttons.pureBackTop')" target=".app-main-wrap .el-scrollbar__wrap">
                 <BackTopIcon />
               </el-backtop>
               <div class="grow">
