@@ -2,7 +2,6 @@
 import { onMounted, ref, computed, onBeforeUnmount } from "vue";
 import { useXmindStoreHook } from "@/store/modules/xmind";
 import { emitter } from "@/utils/mitt";
-import { $t, transformI18n } from "@/plugins/i18n";
 defineOptions({
   name: "Scrollbar",
 });
@@ -15,7 +14,6 @@ const props = defineProps({
 
 const horizontalScrollbarRef = ref(null);
 const verticalScrollbarRef = ref(null);
-const timer = ref(null);
 const resizeTimer = ref(null);
 const verticalScrollbarStyle = ref({});
 const horizontalScrollbarStyle = ref({});
