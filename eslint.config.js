@@ -58,12 +58,6 @@ export default defineConfig([
           varsIgnorePattern: "^_",
         },
       ],
-      "prettier/prettier": [
-        "error",
-        {
-          endOfLine: "auto",
-        },
-      ],
     },
   },
   ...tseslint.config({

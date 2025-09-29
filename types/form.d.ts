@@ -21,8 +21,6 @@ import type {
   UploadProps,
 } from "element-plus";
 import type { IEditorConfig } from "@wangeditor/editor";
-import type { JsonEditorProps } from "@/components/JsonEditor";
-import type { IAgreeProps } from "@/components/IAgree";
 import type { CSSProperties } from "vue";
 
 declare global {
@@ -88,9 +86,7 @@ declare global {
     EDITOR = "Editor",
     TREE_SELECT = "TreeSelect",
     UPLOAD = "Upload",
-    JSON_EDITOR = "JsonEditor",
     ICON_PICKER = "IconPicker",
-    I_AGREE = "IAgree",
     MT_UPLOAD = "MtUpload",
     ICON_SELECT = "IconSelect",
   }
@@ -649,8 +645,6 @@ declare global {
       | InputPasswordComponentProps
       | TreeSelectComponentProps
       | UploadComponentProps
-      | JsonEditorProps
-      | IAgreeProps
       | any;
     /** 初始值 */
     value?: any;

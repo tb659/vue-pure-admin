@@ -1,5 +1,5 @@
 import type { VNode } from "vue";
-import { isFunction } from "@pureadmin/utils";
+import { isFunction } from "@/utils/is";
 import { type MessageHandler, type ElMessageBoxOptions, ElMessage, ElMessageBox } from "element-plus";
 
 type messageStyle = "el" | "antd";
@@ -9,21 +9,18 @@ interface MessageParams extends ElMessageBoxOptions {
   // ! message 独有
   /** 显示时间，单位为毫秒。设为 `0` 则不会自动关闭，`element-plus` 默认是 `3000` ，平台改成默认 `2000` */
   duration?: number;
-  /** `Message` 距离窗口顶部的偏移量，默认 `16` */
+  /** `Message` 距离窗口顶部的偏移量，默认 `20` */
   offset?: number;
   /** 合并内容相同的消息，不支持 `VNode` 类型的消息，默认值 `false` */
   grouping?: boolean;
   /** 关闭时的回调函数, 参数为被关闭的 `message` 实例 */
-  onClose?: Function | null;
-  /** 是否纯色，默认 `false` */
-  plain?: boolean;
-  /** 重复次数，类似于 `Badge` 。当和 `grouping` 属性一起使用时作为初始数量使用，默认值 `1` */
-  repeatNum?: number;
+  onClose?: () => void;
+  // ! messageBox 独有
+  /** 文字是否居中，默认值 `false` */
+  center?: boolean;
   // ! message messageBox 共有
   /** 设置组件的根元素，默认 `document.body` */
   appendTo?: string | HTMLElement;
-  /** 文字是否居中，默认值 `false` */
-  center?: boolean;
   /** 消息风格，可选 `el` 、`antd` ，默认 `antd` */
   customClass?: messageStyle;
   /** 是否将 `message` 属性作为 `HTML` 片段处理，默认 `false` */
@@ -37,9 +34,9 @@ interface MessageParams extends ElMessageBoxOptions {
   // ! 自定义
   infoType?: messageTypes;
   /** 确定时的回调事件 */
-  confirmBack?: Function;
+  confirmBack?: (result?: any) => void;
   /** 取消时的回调事件 */
-  cancelBack?: Function;
+  cancelBack?: (error?: any) => void;
 }
 
 /** 用法非常简单，参考 src/views/components/message/index.vue 文件 */
@@ -58,7 +55,6 @@ class Message {
       const {
         icon,
         type = "info",
-        plain = false,
         dangerouslyUseHTMLString = false,
         customClass = "antd",
         duration = 3000,
@@ -66,14 +62,12 @@ class Message {
         offset = 20,
         appendTo = document.body,
         grouping = false,
-        repeatNum = 1,
         onClose,
       } = params;
 
       return ElMessage({
         message,
         type,
-        plain,
         icon,
         dangerouslyUseHTMLString,
         duration,
@@ -81,7 +75,6 @@ class Message {
         offset,
         appendTo,
         grouping,
-        repeatNum,
         // 全局搜 pure-message 即可知道该类的样式位置
         customClass: customClass === "antd" ? "pure-message" : "",
         onClose: () => (isFunction(onClose) ? onClose() : null),
@@ -123,42 +116,73 @@ class Message {
     this.info(message, { ...(params || {}), type: "error" });
   }
 
-  box(boxType: string, info: string | VNode | (() => VNode), title: string, params?: MessageParams) {
+  /**
+   * 基础弹框方法，返回 Promise 以支持链式调用
+   */
+  private box(
+    boxType: "alert" | "confirm" | "prompt",
+    info: string | VNode | (() => VNode),
+    title: string,
+    params?: MessageParams,
+  ): Promise<any> {
     const {
       infoType = "warning",
       cancelButtonText = "取消",
       confirmButtonText = "确定",
-      confirmBack = () => {},
-      cancelBack = () => {},
-    } = params;
+      confirmBack,
+      cancelBack,
+      ...restParams
+    } = params || {};
 
-    return ElMessageBox[boxType](info || "消息提示", title || "系统提示", {
-      type: infoType,
-      cancelButtonText,
-      cancelButtonClass: `${boxType}-cancel-button-class`,
-      confirmButtonText,
-      confirmButtonClass: `${boxType}-confirm-button-class`,
-      dangerouslyUseHTMLString: true,
-      ...params,
-    })
-      .then(async () => {
-        (await isFunction(confirmBack)) && confirmBack();
+    return new Promise((resolve, reject) => {
+      ElMessageBox[boxType](info || "消息提示", title || "系统提示", {
+        type: infoType,
+        cancelButtonText,
+        cancelButtonClass: `${boxType}-cancel-button-class`,
+        confirmButtonText,
+        confirmButtonClass: `${boxType}-confirm-button-class`,
+        dangerouslyUseHTMLString: true,
+        ...restParams,
       })
-      .catch(async () => {
-        (await isFunction(cancelBack)) && cancelBack();
-      });
+        .then(async result => {
+          if (isFunction(confirmBack)) {
+            await confirmBack(result);
+          }
+          resolve(result);
+        })
+        .catch(async error => {
+          if (isFunction(cancelBack)) {
+            await cancelBack(error);
+          }
+          // 只有当用户点击取消按钮时才 reject，关闭弹窗不 reject
+          if (error === "cancel" || error === "close") {
+            reject(error);
+          } else {
+            resolve(error); // 其他情况（如点击确定）仍然 resolve
+          }
+        });
+    });
   }
 
-  alert(info: string | VNode | (() => VNode), title: string, params?: MessageParams) {
-    this.box("alert", info, title, params);
+  /**
+   * Alert 弹框，返回 Promise
+   */
+  alert(info: string | VNode | (() => VNode), title: string, params?: MessageParams): Promise<any> {
+    return this.box("alert", info, title, params);
   }
 
-  confirm(info: string | VNode | (() => VNode), title: string, params?: MessageParams) {
-    this.box("confirm", info, title, params);
+  /**
+   * Confirm 确认框，返回 Promise
+   */
+  confirm(info: string | VNode | (() => VNode), title: string, params?: MessageParams): Promise<any> {
+    return this.box("confirm", info, title, params);
   }
 
-  prompt(info: string | VNode | (() => VNode), title: string, params?: MessageParams) {
-    this.box("prompt", info, title, params);
+  /**
+   * Prompt 输入框，返回 Promise
+   */
+  prompt(info: string | VNode | (() => VNode), title: string, params?: MessageParams): Promise<any> {
+    return this.box("prompt", info, title, params);
   }
 }
 
