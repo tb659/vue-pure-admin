@@ -9,7 +9,6 @@ export default [
     meta: {
       title: $t("menus.pureLogin"),
       showLink: false,
-      rank: 101,
     },
   },
   // 全屏403（无权访问）页面
@@ -20,18 +19,6 @@ export default [
     meta: {
       title: $t("menus.pureAccessDenied"),
       showLink: false,
-      rank: 102,
-    },
-  },
-  // 全屏404（页面不存在）页面
-  {
-    path: "/:pathMatch(.*)*",
-    name: "PageNotFound",
-    component: () => import("@/views/error/404.vue"),
-    meta: {
-      title: $t("menus.purePageNotFound"),
-      showLink: false,
-      rank: 103,
     },
   },
   // 全屏500（服务器出错）页面
@@ -42,7 +29,6 @@ export default [
     meta: {
       title: $t("menus.pureServerError"),
       showLink: false,
-      rank: 104,
     },
   },
   {
@@ -51,7 +37,6 @@ export default [
     meta: {
       title: $t("status.pureLoad"),
       showLink: false,
-      rank: 105,
     },
     children: [
       {
@@ -68,7 +53,6 @@ export default [
     meta: {
       title: $t("buttons.pureAccountSettings"),
       showLink: false,
-      rank: 106,
     },
   },
   // 下面是一个无layout菜单的例子（一个全屏空白页面），因为这种情况极少发生，所以只需要在前端配置即可（配置路径：src/router/modules/remaining.ts）
@@ -79,7 +63,6 @@ export default [
     meta: {
       title: $t("menus.pureEmpty"),
       showLink: false,
-      rank: 107,
     },
   },
 ] satisfies Array<RouteConfigsTable>;
