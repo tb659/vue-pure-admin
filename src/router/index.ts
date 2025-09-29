@@ -76,6 +76,14 @@ export const router: Router = createRouter({
   },
 });
 
+/** 记录已经加载的页面路径 */
+const loadedPaths = new Set<string>();
+
+/** 重置已加载页面记录 */
+export function resetLoadedPaths() {
+  loadedPaths.clear();
+}
+
 /** 重置路由 */
 export function resetRouter() {
   router.clearRoutes();
@@ -84,6 +92,7 @@ export function resetRouter() {
   }
   router.options.routes = formatTwoStageRoutes(formatFlatteningRoutes(buildHierarchyTree(ascending(routes.flat(Infinity)))));
   usePermissionStoreHook().clearAllCachePage();
+  resetLoadedPaths();
 }
 
 /** 路由白名单 */
@@ -92,6 +101,12 @@ const whiteList = ["/login"];
 const { VITE_HIDE_HOME } = import.meta.env;
 
 router.beforeEach((to: ToRouteType, _from, next) => {
+  to.meta.loaded = loadedPaths.has(to.path);
+
+  if (!to.meta.loaded) {
+    NProgress.start();
+  }
+
   if (to.meta?.keepAlive) {
     handleAliveRoute(to, "add");
     // 页面整体刷新和点击标签页刷新
@@ -179,7 +194,8 @@ router.beforeEach((to: ToRouteType, _from, next) => {
   }
 });
 
-router.afterEach(() => {
+router.afterEach(to => {
+  loadedPaths.add(to.path);
   NProgress.done();
 });
 
