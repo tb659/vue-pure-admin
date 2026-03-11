@@ -156,7 +156,7 @@ watch(
                         <el-button
                           v-show="item.conditionTypeList.length"
                           link
-                          class="ml-[12px] !text-sky-500"
+                          class="ml-[12px] text-sky-500!"
                           @click="handleDelCondition('type', item, 0)"
                         >
                           删除
@@ -199,7 +199,7 @@ watch(
                           <el-button
                             v-show="item.conditionNumberList.length < 2"
                             link
-                            class="ml-[12px] !text-sky-500"
+                            class="ml-[12px] text-sky-500!"
                             @click="handleAddCondition('number', item)"
                           >
                             添加

@@ -1,14 +1,19 @@
 {
+  "editor.formatOnSave": false, //保存自动格式化
+  "editor.formatOnType": false, //键入一行是否格式化
+  "editor.formatOnSaveMode": "modifications", // 仅格式化修改过的代码行，而不是整个文件
+  "editor.codeActionsOnSave": {
+    "source.fixAll.stylelint": "never",
+    "source.fixAll.eslint": "never"
+  },
+
   "tailwindCSS.experimental.configFile": "src/style/tailwind.css",
-  "editor.formatOnType": true,
-  "editor.formatOnSave": true,
   "[vue]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "editor.tabSize": 2,
   "editor.formatOnPaste": true,
   "editor.guides.bracketPairs": "active",
-  "files.autoSave": "off",
   "git.confirmSync": false,
   "workbench.startupEditor": "newUntitledFile",
   "editor.suggestSelection": "first",
@@ -19,15 +24,6 @@
     "comments": true,
     "strings": true
   },
-  "files.associations": {
-    "editor.snippetSuggestions": "top"
-  },
-  "[css]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "explicit"
-  },
   "i18n-ally.localesPaths": "locales",
   "i18n-ally.keystyle": "nested",
   "i18n-ally.sortKeys": true,
@@ -37,14 +33,6 @@
   "i18n-ally.displayLanguage": "zh-CN",
   "i18n-ally.enabledFrameworks": ["vue"],
   "iconify.excludes": ["el"],
-  "vsmqtt.brokerProfiles": [
-    {
-      "name": "broker.emqx.io",
-      "host": "broker.emqx.io/mqtt",
-      "port": 1883,
-      "clientId": "vsmqtt_client_db34"
-    }
-  ],
   "vscodeCustomCodeColor.highlightValue": ["v-loading", "v-auth", "v-copy", "v-longpress", "v-optimize", "v-perms", "v-ripple"],
   "vscodeCustomCodeColor.highlightValueColor": "#b392f0"
 }

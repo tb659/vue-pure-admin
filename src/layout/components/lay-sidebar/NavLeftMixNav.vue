@@ -266,10 +266,10 @@ onBeforeUnmount(() => {
 
 <style scoped>
 .menu-item-class {
-  @apply !h-full flex flex-col justify-center;
+  @apply h-full! flex flex-col justify-center;
 }
 
 .icon-class {
-  @apply w-[20px] h-[20px] !mr-[10px] cursor-pointer duration-[100ms];
+  @apply w-[20px] h-[20px] mr-[10px]! cursor-pointer duration-[100ms];
 }
 </style>

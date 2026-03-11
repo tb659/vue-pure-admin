@@ -5,6 +5,7 @@ import { viteBuildInfo } from "./info";
 import svgLoader from "vite-svg-loader";
 import Icons from "unplugin-icons/vite";
 import type { PluginOption } from "vite";
+import { envReload } from "./env-reload";
 import vueJsx from "@vitejs/plugin-vue-jsx";
 import tailwindcss from "@tailwindcss/vite";
 import { configCompressPlugin } from "./compress";
@@ -23,6 +24,7 @@ export function getPluginsList(
   const lifecycle = process.env.npm_lifecycle_event;
   const isRemoveConsole = () => (VITE_REMOVE_CONSOLE ? removeConsole({ external: ["src/assets/iconfont/iconfont.js"] }) : null);
   return [
+    envReload(),
     tailwindcss(),
     vue({
       template: {
